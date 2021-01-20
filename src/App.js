@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter,Route} from "react-router-dom";
 import SplashScreen from "./Components/SplashScreen/SplashScreen";
-
+import 'bootstrap'
 
 
 function App() {
