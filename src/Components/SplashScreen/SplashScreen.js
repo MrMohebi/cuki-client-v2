@@ -23,7 +23,6 @@ class SplashScreen extends React.Component{
                 <div className='d-flex h-100 justify-content-center'>
                     <div className='splashScreenImage'/>
                 </div>
-                <BottomNavBar />
             </div>
         )
     }

@@ -1,11 +1,13 @@
 import React from "react";
-import {FaBeer} from 'react-icons/fa'
+import {AiOutlineHome,AiOutlineShoppingCart} from 'react-icons/ai'
 import './css/style.css'
 class BottomNavBar extends React.Component{
     render() {
         return(
             <div className='bottomNavBarMain'>
-                <h3> Lets go for a <FaBeer />? </h3>
+                <AiOutlineHome size='50px' />
+                <AiOutlineShoppingCart size='50px' />
+
             </div>
         )
     }
