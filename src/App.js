@@ -11,6 +11,7 @@ function App() {
       <BrowserRouter>
         <Route exact path='/' component={SplashScreen}/>
         <Route path='/t' component={BottomNavBar}/>
+        <Route path='/tt' component={BottomNavBar}/>
       </BrowserRouter>
     </React.Fragment>
   );
