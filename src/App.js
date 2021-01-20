@@ -9,10 +9,8 @@ function App() {
   return (
     <React.Fragment>
       <BrowserRouter>
-        <Route path='/' component={SplashScreen}/>
+        <Route exact path='/' component={SplashScreen}/>
         <Route path='/t' component={BottomNavBar}/>
-
-
       </BrowserRouter>
     </React.Fragment>
   );
