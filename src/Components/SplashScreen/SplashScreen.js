@@ -1,6 +1,5 @@
 import React from "react";
 import './css/style.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
 import * as requests from '../../ApiRequests/ApiRequests'
 
 class SplashScreen extends React.Component{
