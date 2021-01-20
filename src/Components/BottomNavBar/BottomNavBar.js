@@ -5,7 +5,7 @@ class BottomNavBar extends React.Component{
     render() {
         return(
             <div className='bottomNavBarMain'>
-                <AiOutlineHome  size={50} />
+                <AiOutlineHome size={50} />
                 <AiOutlineShoppingCart size={50}/>
                 <AiOutlineHeart size={50} />
                 <AiOutlineUser size={50} />
