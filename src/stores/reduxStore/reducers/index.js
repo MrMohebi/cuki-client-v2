@@ -5,8 +5,15 @@ import reducerFrontStates from "./reducerFrontStates";
 import reducerTempData from "./reducerTempData";
 
 export const rootReducer =  combineReducers({
-    rFrontStates:reducerFrontStates,
-    rUserInfo:reducerUser,
     rRestaurantInfo:reducerRestaurant,
-    rTempData:reducerTempData
+    rUserInfo:reducerUser,
+    rFrontStates:reducerFrontStates,
+    rTempData:reducerTempData,
 });
+
+export const initsNames2reducerName = {
+    __init__RestaurantInfo:'rRestaurantInfo',
+    __init__UserInfo:'rUserInfo',
+    __init__FrontStates:"rFrontStates",
+    __init__TempData:'rTempData',
+}
