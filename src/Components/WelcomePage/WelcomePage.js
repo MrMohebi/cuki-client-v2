@@ -11,9 +11,14 @@ class WelcomePage extends React.Component{
                     <span>  app</span>
                 </p>
                 <p className="welcomePageFrames">
-                    <span className="welcomePageDescriptionH">دوست داری چی بخوری؟</span>
+                    <span className="welcomePageDescriptionH">      دوست داری چی بخوری؟</span>
                     <br/>
                     <span className="welcomePageDescription">اینجا میتونی غذاهای مورد علاقتو</span>
+                    <br/>
+                    <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
+                    <br/>
+                    <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
+                    <div className="chefImage"/>
                 </p>
 
             </div>
