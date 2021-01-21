@@ -8,7 +8,8 @@ class SplashScreen extends React.Component{
     }
 
     goMainPage = (response) =>{
-        if(response.statusCode === 200){
+
+        if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
             //this.props.history.push("/main");
             console.log("data was fetch and saved in redux")
             console.log(response)
@@ -16,7 +17,7 @@ class SplashScreen extends React.Component{
     }
 
     getData = () =>{
-        requests.getRestaurantInfo(this.goMainPage());
+        requests.getRestaurantInfo(this.goMainPage);
     }
 
     render() {
