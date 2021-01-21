@@ -1,11 +1,9 @@
 import React from "react";
-import {AiOutlineHome, AiOutlineShoppingCart, AiOutlineHeart, AiOutlineUser} from 'react-icons/ai'
 import './css/style.css'
-import {blue} from "@material-ui/core/colors";
 class WelcomePage extends React.Component{
     render() {
         return(
-            <div >
+            <div>
                 <p className="welcomePageHeader">
                     <span className="textColor">cuki </span>
                     <span>  app</span>

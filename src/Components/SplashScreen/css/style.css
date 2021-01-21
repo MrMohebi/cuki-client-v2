@@ -1,10 +1,14 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .mainSplashScreen{
+.mainSplashScreen{
     background-color: #FFECDF;
     height: 100%;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .splashScreenImage{
-    background: url("../../../assets/img/splashicon.png") no-repeat center;
+    background: url("../../../assets/img/SplashScreen/splashicon.png") no-repeat center;
     background-size: 95%;
     height: 200px;
     width: 200px;
