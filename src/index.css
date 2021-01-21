@@ -5,9 +5,30 @@ html, body,#root{
   text-align: center;
   max-width: 500px;
 }
-*{
-  max-width: 500px !important;
+.max500{
+  max-width: 500px;
 }
+@font-face {
+  font-family: 'AppIranSans';
+  src: local('AppIranSans'), url(./assets/fonts/MobileFonts/IRANSansMobile.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Aviny';
+  src: local('Aviny'), url(./assets/fonts/aviny.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Eurose';
+  src: local('Eurose'), url(./assets/fonts/Eurose.TTF) format('truetype');
+}
+@font-face {
+  font-family: 'EuroseBold';
+  src: local('EuroseBold'), url(./assets/fonts/EuroseBold.TTF) format('truetype');
+}
+@font-face {
+  font-family: 'KingArthurSpecialNormal';
+  src: local('KingArthurSpecialNormal'), url(./assets/fonts/KingArthurSpecialNormal.ttf) format('truetype');
+}
+
 
 
 
