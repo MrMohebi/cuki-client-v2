@@ -1,0 +1,31 @@
+.welcomePageHeader{
+    position: absolute;
+    right: 35px;
+    bottom: 89%;
+    font-family: Eurose;
+    font-size: 35px;
+}
+ .textColor{
+     color : #F07A3E;
+ }
+.welcomePageFrames{
+    position: absolute;
+    left: 5%;
+    top: 50px;
+    border-radius: 25px;
+    background:#FFFAEF;
+    padding: 20px;
+    width: 300px;
+    height: 300px;
+}
+.welcomePageDescriptionH{
+    font-family: IRANSans;
+    font-weight: bold;
+    font-size:25px ;
+}
+.welcomePageDescription{
+
+}
+
+
+
