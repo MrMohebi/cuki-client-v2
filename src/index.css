@@ -8,6 +8,9 @@ html, body,#root{
 .max500{
   max-width: 500px;
 }
+*{
+  user-select: none;
+}
 @font-face {
   font-family: 'AppIranSans';
   src: local('AppIranSans'), url(./assets/fonts/MobileFonts/IRANSansMobile.ttf) format('truetype');
