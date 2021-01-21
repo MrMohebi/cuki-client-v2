@@ -18,6 +18,7 @@ class WelcomePage extends React.Component{
                     <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
                     <br/>
                     <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
+                    <div className="chefImage"/>
                 </p>
 
             </div>

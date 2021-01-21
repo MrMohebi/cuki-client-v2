@@ -28,6 +28,14 @@
     padding-left: 50px;
     font-size: 15px;
 }
+.chefImage{
+    background: url("../../../assets/img/WelcomPage/cheficon.png") ;
+    background-size: 95%;
+    height: 200px;
+    width: 200px;
+    margin: auto;
+}
+
 
 
 
