@@ -10,10 +10,30 @@
     padding: 0 0 8px 0;
 }
 .BottomNavigationIcons{
+    transition: all 0.8s ease !important;
     background-repeat: no-repeat !important;
     background-size: 85% !important;
     background-position: center !important;
+    transform: scale(1.1) !important;
 }
+
+.BottomNavigationIcons:active{
+    transition: all 0.8s ease !important;
+    background-repeat: no-repeat !important;
+    background-size: 85% !important;
+    background-position: center !important;
+    transform: scale(1.8) !important;
+}
+.BottomNavigationIcons:after{
+    transition: all 0.8s ease !important;
+    background-repeat: no-repeat !important;
+    background-size: 85% !important;
+    background-position: center !important;
+    transform: scale(1.1) !important;
+}
+
+
+
 .navLinkBottomNav{
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
