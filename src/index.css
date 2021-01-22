@@ -4,6 +4,7 @@ html, body,#root{
   height: 100%;
   text-align: center;
   max-width: 500px;
+  overflow: hidden;
 }
 .max500{
   max-width: 500px;
