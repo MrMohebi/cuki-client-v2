@@ -22,7 +22,7 @@
     background-repeat: no-repeat !important;
     background-size: 85% !important;
     background-position: center !important;
-    transform: scale(1.8) !important;
+    transform: scale(1.4) !important;
 }
 .BottomNavigationIcons:after{
     transition: all 0.8s ease !important;
