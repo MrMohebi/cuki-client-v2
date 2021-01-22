@@ -21,11 +21,70 @@ class CategoryPage extends React.Component {
                 </div>
 
                 <div className='categoryPageContainer'>
-                    <div className="categoryPageEachCategory">
-                        <img className="categoryPageEachCategoryImage" />
-                        <span className="categoryPageEachCategoryName">برگر</span>
+                    <div className='heightFitContent'>
+
+                    <div className='categoryPageEachCategoryContainer'>
+                        <div className="categoryPageEachCategory">
+                            <div className="categoryPageEachCategoryImage" style={{
+                                background: 'url(/img/categories/irani.png)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat'
+                            }}/>
+                            <span className="categoryPageEachCategoryName">برگر</span>
+                        </div>
+                    </div>
+
+                    <div className='categoryPageEachCategoryContainer'>
+                        <div className="categoryPageEachCategory">
+                            <div className="categoryPageEachCategoryImage" style={{
+                                background: 'url(/img/categories/irani.png)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat'
+                            }}/>
+                            <span className="categoryPageEachCategoryName">برگر</span>
+                        </div>
+                    </div>
+
+                    <div className='categoryPageEachCategoryContainer'>
+                        <div className="categoryPageEachCategory">
+                            <div className="categoryPageEachCategoryImage" style={{
+                                background: 'url(/img/categories/irani.png)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat'
+                            }}/>
+                            <span className="categoryPageEachCategoryName">برگر</span>
+                        </div>
+                    </div>
+                    <div className='categoryPageEachCategoryContainer'>
+                        <div className="categoryPageEachCategory">
+                            <div className="categoryPageEachCategoryImage" style={{
+                                background: 'url(/img/categories/irani.png)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat'
+                            }}/>
+                            <span className="categoryPageEachCategoryName">برگر</span>
+                        </div>
+                    </div>
+
+                    <div className='categoryPageEachCategoryContainer'>
+                        <div className="categoryPageEachCategory">
+                            <div className="categoryPageEachCategoryImage" style={{
+                                background: 'url(/img/categories/irani.png)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat'
+                            }}/>
+                            <span className="categoryPageEachCategoryName">برگر</span>
+                        </div>
+                    </div>
                     </div>
                 </div>
+
+
             </React.Fragment>
         )
 

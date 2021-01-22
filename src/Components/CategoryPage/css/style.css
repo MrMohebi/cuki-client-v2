@@ -1,12 +1,65 @@
-.flex1{
+.flex1 {
     flex: 1;
 }
-.categoryPageContainer{
-    background-color: #FFF1DA;
+
+.categoryPageContainer {
+    background-color: #fff1da;
     margin: 20px auto auto auto;
     height: calc(100% - 120px);
     width: 90%;
     border-radius: 20px;
     display: flex;
     flex-flow: row wrap;
+    padding: 0 15px 10px 15px;
+    overflow: scroll;
+}
+
+.categoryPageEachCategoryImage {
+    height: 45px;
+    width: 45px;
+    border: none;
+    margin: 10px auto 0px auto;
+}
+
+.categoryPageEachCategory {
+    transition: all 0.2s ease;
+    height: 85px;
+    width: 85px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 2px 4px 3px 0px #b9b9b9;
+    display: flex;
+    flex-flow: column;
+}
+.categoryPageEachCategory:active {
+    transition: all 0.2s ease;
+    height: 85px;
+    width: 85px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 2px 2px 0px 0px #b9b9b9;
+    display: flex;
+    flex-flow: column;
+}
+
+.heightFitContent {
+    height: max-content;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+
+.categoryPageEachCategoryContainer {
+    margin-top: 50px;
+    width: 33.3333333%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.categoryPageEachCategoryName {
+    font-family: AppIranSans;
+    font-weight: bold;
 }
