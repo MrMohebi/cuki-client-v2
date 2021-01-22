@@ -16,7 +16,7 @@ class WelcomePage extends React.Component{
                     <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
                     <br/>
                     <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
-                    <div className="chefImage"/>
+                    <div className="chefImage" style={{background:'url("./img/WelcomPage/cheficon.png")',backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}}/>
                 </p>
 
             </div>

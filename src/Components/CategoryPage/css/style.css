@@ -1,0 +1,12 @@
+.flex1{
+    flex: 1;
+}
+.categoryPageContainer{
+    background-color: #FFF1DA;
+    margin: 20px auto auto auto;
+    height: calc(100% - 120px);
+    width: 90%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: row wrap;
+}

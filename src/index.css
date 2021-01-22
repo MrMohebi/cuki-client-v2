@@ -9,6 +9,9 @@ html, body,#root{
 .max500{
   max-width: 500px;
 }
+.IranSans{
+  font-family: AppIranSans;
+}
 *{
   user-select: none;
 }
@@ -16,6 +19,7 @@ html, body,#root{
   font-family: 'AppIranSans';
   src: local('AppIranSans'), url(./assets/fonts/MobileFonts/IRANSansMobile.ttf) format('truetype');
 }
+
 @font-face {
   font-family: 'Aviny';
   src: local('Aviny'), url(./assets/fonts/aviny.ttf) format('truetype');

@@ -8,8 +8,6 @@
 }
 
 .splashScreenImage{
-    background: url("../../../assets/img/SplashScreen/splashicon.png") no-repeat center;
-    background-size: 95%;
     height: 200px;
     width: 200px;
     margin: auto;

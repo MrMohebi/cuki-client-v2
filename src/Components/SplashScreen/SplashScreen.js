@@ -24,7 +24,7 @@ class SplashScreen extends React.Component{
         return(
             <div className='mainSplashScreen'>
                 <div className='d-flex h-100 justify-content-center'>
-                    <div className='splashScreenImage'/>
+                    <div className='splashScreenImage' style={{background:'url(./img/SplashScreen/splashicon.png)',backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}}/>
                 </div>
             </div>
         )
