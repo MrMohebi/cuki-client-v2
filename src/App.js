@@ -6,6 +6,7 @@ import BottomNavBar from "./Components/BottomNavBar/BottomNavBar";
 import WelcomePage from "./Components/WelcomePage/WelcomePage";
 import './index.css'
 import CategoryPage from "./Components/CategoryPage/Category";
+import FoodListPage from "./Components/FoodListPage/FoodListPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' component={BottomNavBar}/>
         <Route path='/t' component={WelcomePage}/>
         <Route path='/category' component={CategoryPage}/>
+        <Route path='/fl' component={FoodListPage}/>
 
       </BrowserRouter>
     </React.Fragment>
