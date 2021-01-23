@@ -1,5 +1,5 @@
 export const __init__RestaurantInfo = {
-    englishName:"shilan coffeeshop restaurant",
+    englishName:"cuki",
     foods: [],
     assets: [],
     comments: [],
