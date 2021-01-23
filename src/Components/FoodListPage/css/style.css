@@ -1,0 +1,77 @@
+.foodListPageHeader {
+
+}
+
+.foodListPageContainer {
+    background-color: #D4EBEF;
+    margin: 20px auto auto auto;
+    height: calc(100% - 120px);
+    width: 90%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0 15px 10px 15px;
+    overflow: scroll;
+}
+
+.foodListEachFood {
+    margin-top: 50px;
+    height: 145px;
+    width: 127px;
+    background-color: #fff;
+    border-radius: 20px 35px 20px 20px;
+    display: flex;
+    flex-flow: column;
+    box-shadow: 1px 2px 0px 0px #b9b9b9;
+}
+
+
+.foodListEachFoodContainer {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.priceAndImage{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.eachFoodPrice{
+    font-family: KingArthurSpecialNormal;
+    font-weight: normal;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+    padding-left: 15px;
+}
+.foodName{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: Aviny;
+    font-size: 25px;
+}
+.eachFoodImage{
+    height: 65px;
+    width: 65px;
+    overflow: hidden;
+    border-radius: 50px;
+    margin-right: -10px;
+    margin-top: -10px;
+}
+.foodDetails{
+    font-family:AppIranSansLight ;
+    width: 85%;
+    overflow:hidden;
+    white-space: nowrap;
+    font-size: 12px;
+    margin-top: 12px;
+    padding: 0 5px 0 5px ;
+    direction: rtl;
+    text-overflow: ellipsis;
+
+}
+

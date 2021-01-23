@@ -28,10 +28,11 @@
     background-color: white;
     border: none;
     border-radius: 20px;
-    box-shadow: 2px 4px 3px 0px #b9b9b9;
+    box-shadow: 1px 2px 0px 0px #b9b9b9;
     display: flex;
     flex-flow: column;
 }
+
 .categoryPageEachCategory:active {
     transition: all 0.2s ease;
     height: 85px;
@@ -39,7 +40,7 @@
     background-color: white;
     border: none;
     border-radius: 20px;
-    box-shadow: 2px 2px 0px 0px #b9b9b9;
+    box-shadow: 0px 0px 0px 0px #b9b9b9;
     display: flex;
     flex-flow: column;
 }
@@ -48,8 +49,8 @@
     height: max-content;
     display: flex;
     flex-flow: row wrap;
+    width: 100%;
 }
-
 
 .categoryPageEachCategoryContainer {
     margin-top: 50px;

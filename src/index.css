@@ -21,6 +21,12 @@ html, body,#root{
 }
 
 @font-face {
+  font-family: 'AppIranSansLight';
+  src: local('AppIranSans'), url(./assets/fonts/MobileFonts/IRANSansMobile_Light.ttf) format('truetype');
+}
+
+
+@font-face {
   font-family: 'Aviny';
   src: local('Aviny'), url(./assets/fonts/aviny.ttf) format('truetype');
 }
@@ -52,4 +58,14 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
