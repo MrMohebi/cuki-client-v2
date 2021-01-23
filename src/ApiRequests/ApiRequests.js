@@ -8,7 +8,7 @@ const BASE_API_URL = "https://api.cuki.ir/v201/"
 
 export const getRestaurantInfo = (callbackFunction)=>{
     let englishName = getReduxStore('englishName')
-    $.post(BASE_API_URL+ "getAllRestaurantData.fetch.php" ,{english_name:englishName}).then(res=>{
+    $.post(BASE_API_URL+ "getAllRestaurantData.fetch.php" ,{englishName}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         if(res.statusCode === 200){
             actions.restaurantSetData(res.data)
