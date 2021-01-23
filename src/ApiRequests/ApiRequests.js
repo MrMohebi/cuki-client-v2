@@ -2,7 +2,7 @@ import $ from 'jquery';
 import getReduxStore from "../stores/reduxStore/getRedux";
 import * as actions from "../stores/reduxStore/actions"
 
-const BASE_API_URL = "https://api.cuki.ir/201/"
+const BASE_API_URL = "https://api.cuki.ir/v201/"
 
 
 
