@@ -2,29 +2,6 @@
     flex: 1;
 }
 
-@media only screen and (max-width: 360px) {
-
-    .categoryPageEachCategoryImage {
-        height: 35px !important;
-        width: 35px !important;
-        border: none;
-        margin: 10px auto 0px auto;
-    }
-
-    .categoryPageEachCategory {
-        transition: all 0.2s ease;
-        height: 70px !important;
-        width: 70px !important;
-        background-color: white;
-        border: none;
-        border-radius: 20px;
-        box-shadow: 1px 2px 0px 0px #b9b9b9;
-        display: flex;
-        flex-flow: column;
-    }
-
-}
-
 .categoryPageContainer {
     background-color: #fff1da;
     margin: 20px auto auto auto;
@@ -68,12 +45,6 @@
     flex-flow: column;
 }
 
-.heightFitContent {
-    height: max-content;
-    display: flex;
-    flex-flow: row wrap;
-    width: 100%;
-}
 
 .categoryPageEachCategoryContainer {
     margin-top: 50px;

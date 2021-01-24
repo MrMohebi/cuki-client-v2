@@ -18,61 +18,64 @@ import uo from './img/userOut.png'
 
 class BottomNavBar extends React.Component {
     state = {
-        iconSize: "25px",
+        iconSize: "30px",
     }
 
 
     render() {
         return (
-            <div className='bottomNavBarMain' onContextMenu={(e) => {
-                e.preventDefault()
-            }}>
-                <NavLink className='navLinkBottomNav' to={"/t"}>
-                    {window.location.pathname === "/t" ?
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`, background:`url(${cf})`}}/>
-                        :
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${co})`}}/>
-                    }
-                </NavLink>
-                <NavLink className='navLinkBottomNav' to={"/t1"}>
-                    {window.location.pathname === "/t1" ?
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${chf})`}}/>
-                        :
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${cho})`}}/>
-                    }
-                </NavLink>
-                <NavLink className='navLinkBottomNav' to={"/fl"}>
-                    {window.location.pathname === "/fl" ?
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${hf})`}}/>
-                        :
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${ho})`}}/>
-                    }
-                </NavLink>
-                <NavLink className='navLinkBottomNav' to={"/t4"}>
-                    {window.location.pathname === "/t4" ?
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${hef})`}}/>
-                        :
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${heo})`}}/>
-                    }
-                </NavLink>
-                <NavLink className='navLinkBottomNav' to={"/t5"}>
-                    {window.location.pathname === "/t5" ?
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${uf})`}}/>
-                        :
-                        <IconButton className='BottomNavigationIcons'
-                                    style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${uo})`}}/>
-                    }
-                </NavLink>
+            <div className='w-100 d-flex justify-content-center position-absolute bottomNavContainer '>
+                <div className='bottomNavBarMain' onContextMenu={(e) => {
+                    e.preventDefault()
+                }}>
+                    <NavLink className='navLinkBottomNav' to={"/t"}>
+                        {window.location.pathname === "/t" ?
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`, background:`url(${cf})`}}/>
+                            :
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${co})`}}/>
+                        }
+                    </NavLink>
+                    <NavLink className='navLinkBottomNav' to={"/t1"}>
+                        {window.location.pathname === "/t1" ?
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${chf})`}}/>
+                            :
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${cho})`}}/>
+                        }
+                    </NavLink>
+                    <NavLink className='navLinkBottomNav' to={"/fl"}>
+                        {window.location.pathname === "/fl" ?
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${hf})`}}/>
+                            :
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${ho})`}}/>
+                        }
+                    </NavLink>
+                    <NavLink className='navLinkBottomNav' to={"/t4"}>
+                        {window.location.pathname === "/t4" ?
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${hef})`}}/>
+                            :
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${heo})`}}/>
+                        }
+                    </NavLink>
+                    <NavLink className='navLinkBottomNav' to={"/t5"}>
+                        {window.location.pathname === "/t5" ?
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${uf})`}}/>
+                            :
+                            <IconButton className='BottomNavigationIcons'
+                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${uo})`}}/>
+                        }
+                    </NavLink>
+                </div>
             </div>
+
         )
     }
 }

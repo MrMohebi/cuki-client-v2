@@ -5,7 +5,7 @@ import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRight
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
 
-class CategoryPage extends React.Component {
+class BillPage extends React.Component {
     render() {
         return (
             <React.Fragment>
@@ -19,7 +19,6 @@ class CategoryPage extends React.Component {
                     </div>
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
-
 
                 <div className='categoryPageContainer'>
                     <div className='heightFitContent'>
@@ -92,4 +91,4 @@ class CategoryPage extends React.Component {
     }
 }
 
-export default CategoryPage;
+export default BillPage;

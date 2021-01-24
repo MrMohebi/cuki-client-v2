@@ -3,11 +3,11 @@ html, body,#root{
   padding: 0;
   height: 100%;
   text-align: center;
-  max-width: 500px;
+  max-width: 800px;
   overflow: hidden;
 }
 .max500{
-  max-width: 500px;
+  max-width: 800px;
 }
 .IranSans{
   font-family: AppIranSans;
