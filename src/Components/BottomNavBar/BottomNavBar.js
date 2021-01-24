@@ -18,7 +18,7 @@ import uo from './img/userOut.png'
 
 class BottomNavBar extends React.Component {
     state = {
-        iconSize: "30px",
+        iconSize: "27px",
     }
 
 

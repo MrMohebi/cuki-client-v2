@@ -24,6 +24,10 @@ html, body,#root{
   font-family: 'AppIranSansLight';
   src: local('AppIranSans'), url(./assets/fonts/MobileFonts/IRANSansMobile_Light.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'AppIranSansMedium';
+  src: local('AppIranSans'), url(./assets/fonts/MobileFonts/IRANSansMobile_Medium.ttf) format('truetype');
+}
 
 
 @font-face {
@@ -60,12 +64,12 @@ code {
     monospace;
 }
 
-.example::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.example {
+*{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }

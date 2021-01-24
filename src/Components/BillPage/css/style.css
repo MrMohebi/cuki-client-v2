@@ -1,9 +1,5 @@
-.flex1 {
-    flex: 1;
-}
-
-.categoryPageContainer {
-    background-color: #fff1da;
+.BillPageContainer {
+    background-color: #ffe1e3;
     margin: 20px auto auto auto;
     height: calc(100% - 120px);
     width: 90%;
@@ -13,48 +9,23 @@
     padding: 0 15px 10px 15px;
     overflow: scroll;
 }
+.billItemsContainer{
+height: calc(100% - 120px);
 
-.categoryPageEachCategoryImage {
-    height: 45px;
-    width: 45px;
-    border: none;
-    margin: 10px auto 0px auto;
 }
-
-.categoryPageEachCategory {
-    transition: all 0.2s ease;
-    height: 85px;
-    width: 85px;
-    background-color: white;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 1px 2px 0px 0px #b9b9b9;
-    display: flex;
-    flex-flow: column;
+.totalPriceAndTextHolder{
+    height: 30px;
+    font-family: AppIranSansMedium;
+    align-items: center;
 }
-
-.categoryPageEachCategory:active {
-    transition: all 0.2s ease;
-    height: 85px;
-    width: 85px;
-    background-color: white;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0px 0px 0px 0px #b9b9b9;
-    display: flex;
-    flex-flow: column;
-}
-
-
-.categoryPageEachCategoryContainer {
-    margin-top: 50px;
-    width: 33.3333333%;
-    text-align: center;
+.BillSubmitButton{
+    width: 100%;
+    background-color: #988AA8;
+    height: 40px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
-}
-
-.categoryPageEachCategoryName {
-    font-family: AppIranSans;
-    font-weight: bold;
+    align-items: center;
+    font-family: AppIranSansMedium;
+    color: white;
 }

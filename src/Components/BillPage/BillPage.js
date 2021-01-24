@@ -3,7 +3,8 @@ import './css/style.css'
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
-
+import AddRoundedIcon from '@material-ui/icons/AddRounded';
+import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
 
 class BillPage extends React.Component {
     render() {
@@ -19,72 +20,26 @@ class BillPage extends React.Component {
                     </div>
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
-
-                <div className='categoryPageContainer'>
-                    <div className='heightFitContent'>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
+                <div className='BillPageContainer'>
+                    <div className='w-100 billItemsContainer pt-4'>
+                        <div className='w-100 d-flex justify-content-between align-items-center flex-row-reverse IranSans'>
+                            <span>پیتزا قارچ و خامه</span>
+                            <span>39 T</span>
+                            <div>
+                                <AddRoundedIcon/>
+                                <span>2</span>
+                                <RemoveRoundedIcon/>
+                            </div>
                         </div>
                     </div>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
+                    <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
+                        <span>20T</span>
+                        <span>جمع نهایی فاکتور</span>
                     </div>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
+                    <div className='BillSubmitButton'>
+                        <span>پرداخت</span>
                     </div>
                 </div>
-
-
             </React.Fragment>
         )
 

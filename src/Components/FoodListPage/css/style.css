@@ -11,6 +11,7 @@
 }
 
 .foodListEachFood {
+    transition: all 0.2s ease;
     margin-top: 50px;
     height: 145px;
     width: 127px;
@@ -23,6 +24,8 @@
 
 @media only screen and (max-width: 360px) {
     .foodListEachFood {
+        transition: all 0.2s ease;
+
         margin-top: 50px;
         height: 110px;
         width: 95px;
@@ -43,13 +46,18 @@
         font-size: smaller !important;
     }
     .foodName{
+        transition: all 0.2s ease;
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
         font-family: Aviny;
         font-size: medium !important;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     .eachFoodImage{
+        transition: all 0.2s ease;
+
         height: 45px !important;
         width: 45px !important;
         overflow: hidden;
@@ -58,6 +66,7 @@
         margin-top: -15px !important;
     }
     .foodDetails{
+        transition: all 0.2s ease;
         font-family:AppIranSansLight ;
         width: 85%;
         overflow:hidden;
@@ -92,12 +101,14 @@
 
 
 .priceAndImage{
+    transition: all 0.2s ease;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     align-items: center;
 }
 .eachFoodPrice{
+    transition: all 0.2s ease;
     font-family: KingArthurSpecialNormal;
     font-weight: normal;
     height: 100%;
@@ -106,13 +117,17 @@
     padding-left: 15px;
 }
 .foodName{
+    transition: all 0.2s ease;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     font-family: Aviny;
     font-size: 25px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .eachFoodImage{
+    transition: all 0.2s ease;
     height: 65px;
     width: 65px;
     overflow: hidden;
