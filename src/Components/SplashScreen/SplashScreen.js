@@ -1,6 +1,7 @@
 import React from "react";
 import './css/style.css';
 import * as requests from '../../ApiRequests/ApiRequests'
+import foodsListAdaptor from "../../functions/foodsListAdaptor";
 
 class SplashScreen extends React.Component{
     componentDidMount() {
@@ -11,8 +12,10 @@ class SplashScreen extends React.Component{
 
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
             //this.props.history.push("/main");
-            console.log("data was fetch and saved in redux")
+            console.log("converted:");
+            console.log(foodsListAdaptor(response.data.foods));
             console.log(response)
+
         }
     }
 
