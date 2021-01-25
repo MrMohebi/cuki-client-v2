@@ -12,10 +12,9 @@ class SplashScreen extends React.Component{
 
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
             //this.props.history.push("/main");
-            console.log("converted:");
+
             console.log(foodsListAdaptor(response.data.foods));
             console.log(response)
-
         }
     }
 
