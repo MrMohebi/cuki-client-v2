@@ -8,6 +8,7 @@ import './index.css'
 import CategoryPage from "./Components/CategoryPage/Category";
 import FoodListPage from "./Components/FoodListPage/FoodListPage";
 import BillPage from "./Components/BillPage/BillPage";
+import ProfilePage from "./Components/ProfilePage/ProfilePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/category' component={CategoryPage}/>
         <Route path='/fl' component={FoodListPage}/>
         <Route path='/b' component={BillPage}/>
+        <Route path='/p' component={ProfilePage}/>
 
       </BrowserRouter>
     </React.Fragment>
