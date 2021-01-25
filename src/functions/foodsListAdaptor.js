@@ -33,12 +33,40 @@ const convertedInfoSample = {
         "otherParts":["..."]
     },
     restaurant:{
-        appetizer: {persianName:"", foodList:[{name:"", price:""}, {name:"", price:""}, ]},
-        burger: {persianName:"", foodList:[{name:"", price:""}, ]},
+        appetizer: {
+            persianName:"",
+            englishName:"",
+            logo:"",
+            status:"",
+            rank:"",
+            averageColor:"",
+            foodList:[{name:"", price:""}, {name:"", price:""}, ]},
+        burger: {
+            persianName:"",
+            englishName:"",
+            logo:"",
+            status:"",
+            rank:"",
+            averageColor:"",
+            foodList:[{name:"", price:""}, ]},
     },
     coffeeshop:{
-        hotDrink:{persianName:"", foodList:[{name:"", price:""}, ]},
-        cake:{persianName:"", foodList:[{name:"", price:""}, ]},
+        hotDrink:{
+            persianName:"",
+            englishName:"",
+            logo:"",
+            status:"",
+            rank:"",
+            averageColor:"",
+            foodList:[{name:"", price:""}, ]},
+        cake:{
+            persianName:"",
+            englishName:"",
+            logo:"",
+            status:"",
+            rank:"",
+            averageColor:"",
+            foodList:[{name:"", price:""}, ]},
     }
 }
 
@@ -48,51 +76,52 @@ const convertedInfoSample = {
 // ************************************************************
 // ************************************************************
 
-const restaurantPersianGroups = {
-    appetizer:'پیش غذا',
-    burger: 'برگر',
-    pizza: 'پیتزا' ,
-    panini:'پنینی' ,
-    main:'غذای اصلی',
-    irani: 'ایرانی' ,
-    dessert:'دسر' ,
-    pasta: 'پاستا',
-    drink:"نوشیدنی"
-};
-const coffeeshopPersianGroups = {
-    mohito:"موهیتو",
-    hotDrink:"نوشیدنی های گرم",
-    cake:"کیک",
-    brewed:"دم کرده",
-    shake:'شیک'
-}
 
 
-const persianGroups = {
-    coffeeshopPersianGroups: {
-            mohito:"موهیتو",
-            hotDrink:"نوشیدنی های گرم",
-            cake:"کیک",
-            brewed:"دم کرده",
-            shake:'شیک'
-        },
-    restaurantPersianGroups:{
-        appetizer:'پیش غذا',
-        burger: 'برگر',
-        pizza: 'پیتزا' ,
-        panini:'پنینی' ,
-        main:'غذای اصلی',
-        irani: 'ایرانی' ,
-        dessert:'دسر' ,
-        pasta: 'پاستا',
-        drink:"نوشیدنی"
+
+export default function foodsListAdaptor (apiFoodsList){
+    let final = {
+        parts:[],
+        partsCategories:{},
     }
+    apiFoodsList.map(eFood=>{
+        if(final.parts.indexOf(eFood.group.type) === -1){
+            // init new food kind
+            final.parts.push(eFood.group.type);
+            final.partsCategories[eFood.group.type] = []
+            final[eFood.group.type] = {};
+        }
+
+        if(final.partsCategories[eFood.group.type].indexOf(eFood.group.englishName) === -1){
+            // init new food group
+            final.partsCategories[eFood.group.type].push(eFood.group.englishName);
+            final[eFood.group.type][eFood.group.englishName] = {
+                persianName:eFood.group.persianName,
+                englishName:eFood.group.englishName,
+                logo:eFood.group.logo,
+                status:eFood.group.status,
+                rank:eFood.group.rank,
+                averageColor:eFood.group.averageColor,
+                foodList:[],
+            }
+        }
+        // add food
+        final[eFood.group.type][eFood.group.englishName].foodList.push(eFood)
+    })
+    return final;
 }
 
 
-export default function foodsListAdaptor (apiFoodsList, persianNames){
 
-}
+
+
+
+
+
+
+
+
+
 
 
 
