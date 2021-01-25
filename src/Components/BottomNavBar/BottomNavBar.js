@@ -3,6 +3,7 @@ import './css/style.css'
 import {NavLink} from "react-router-dom";
 import 'animate.css/animate.css'
 
+
 import {IconButton} from '@material-ui/core';
 
 import cf from './img/cartFill.png'
@@ -28,8 +29,8 @@ class BottomNavBar extends React.Component {
                 <div className='bottomNavBarMain' onContextMenu={(e) => {
                     e.preventDefault()
                 }}>
-                    <NavLink className='navLinkBottomNav' to={"/t"}>
-                        {window.location.pathname === "/t" ?
+                    <NavLink className='navLinkBottomNav' to={"/b"}>
+                        {window.location.pathname === "/b" ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`, background:`url(${cf})`}}/>
                             :
