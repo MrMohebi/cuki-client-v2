@@ -29,6 +29,7 @@ class WelcomePage extends React.Component {
                             backgroundRepeat: 'no-repeat'
                         }}/>
                     </div>
+
                     <div className="text-right">
                         <span className="welcomePageDescription">اینجا میتونی غذاهای مورد علاقتو</span>
                         <br/>
@@ -36,7 +37,7 @@ class WelcomePage extends React.Component {
                         <br/>
                         <span className="welcomePageDescription">حتی میتونی دونگی پرداخت کنی</span>
                     </div>
-                    <br/>
+
                     <div className="chefImage" style={{
                         background: 'url("./img/WelcomPage/cheficon.png")',
                         backgroundSize: 'cover',
