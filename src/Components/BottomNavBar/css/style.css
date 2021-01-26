@@ -43,11 +43,4 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-.selectedNavBarAnimation {
-    animation-name: animation;
-    animation-duration: 0.5s;
-}
 
-@keyframes animation {
-
-}
