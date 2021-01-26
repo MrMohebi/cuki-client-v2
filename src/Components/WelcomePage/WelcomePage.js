@@ -9,7 +9,7 @@ class WelcomePage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="forLittlePhones">
                 <p className="welcomePageHeader">
                     <span className="textColor">Cuki </span>
                     <span>  app</span>
@@ -29,8 +29,6 @@ class WelcomePage extends React.Component {
                             backgroundRepeat: 'no-repeat'
                         }}/>
                     </div>
-
-                    <br/>
                     <div className="text-right">
                         <span className="welcomePageDescription">اینجا میتونی غذاهای مورد علاقتو</span>
                         <br/>
@@ -45,7 +43,7 @@ class WelcomePage extends React.Component {
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat'
                     }}/>
-                    <br/>
+
                 </p>
                 <br/>
                 <div className="welcomePageFrames2">
@@ -60,8 +58,6 @@ class WelcomePage extends React.Component {
                                 backgroundRepeat: 'no-repeat',
                             }}></div>
                             <span className="burgersAndDonatDescription">کافی شاپ</span>
-                                <br/>
-                                <br/>
                         </p>
                         <p className="openIcons">
                             <div className="burger" style={{
@@ -71,12 +67,9 @@ class WelcomePage extends React.Component {
                                 backgroundRepeat: 'no-repeat',
                             }}></div>
                             <span className="burgersAndDonatDescription">رستوران</span>
-                            <br/>
-                            <br/>
                         </p>
                         <p className="openIcons">
                             tour
-                            <br/>
                             <br/>
                             <br/>
                         </p>

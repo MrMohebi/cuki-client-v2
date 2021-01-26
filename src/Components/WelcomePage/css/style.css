@@ -15,7 +15,7 @@
     padding: 15px;
     margin: auto;
     width: 85%;
-    height: 90%;
+    height: 370px;
 }
 .welcomePageDescriptionH{
     font-family: AppIranSans;
@@ -39,7 +39,6 @@
     background:#FFFAEF;
     margin: auto;
     width: 85%;
-    height: 90%;
     flex-direction: row;
 }
 .shakeHands{
@@ -110,6 +109,30 @@
     font-family: AppIranSans;
     font-size: 15px;
     margin-bottom: 20px;
+}
+@media only screen and (max-height:700px){
+.forLittlePhones{
+    height: 300px;
+}
+    .burgersAndDonatDescription {
+        font-family: AppIranSans;
+        font-size: 10px;
+        margin-bottom: 20px;
+    }
+    .chefImage {
+        background-size: 95%;
+        height: 150px;
+        width: 150px;
+        margin: auto;
+    }
+    .welcomePageFrames1 {
+        border-radius: 25px;
+        background: #fffaef;
+        padding: 15px;
+        margin: auto;
+        width: 85%;
+        height: 300px;
+    }
 }
 
 
