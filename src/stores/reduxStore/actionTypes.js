@@ -6,6 +6,7 @@ export const CONVERT_TRACKING_ID_TO_ORDER_OBJECT = "convertTrackingIdToOrderObje
 export const DELETE_USER_ALL_DATA = "deleteAllUserData";
 
 export const SET_RESTAURANT_DATA = "setRestaurantData"
+export const SET_FOOD_LIST_CONVERTED = "setFoodListConverted"
 
 export const MISSING_USER_INFO = "missingUserInfo"
 export const SET_V_CODE = "setVCode"

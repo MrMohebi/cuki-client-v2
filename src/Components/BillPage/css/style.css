@@ -11,7 +11,9 @@
 }
 .billItemsContainer{
 height: calc(100% - 120px);
-
+}
+.swipeable-list-item__content{
+    background-color: transparent !important;
 }
 
 .totalPriceAndTextHolder{
