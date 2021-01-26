@@ -6,6 +6,10 @@ html, body,#root{
   max-width: 800px;
   overflow: hidden;
 }
+a{
+  text-decoration: none ;
+  color: black !important;
+}
 .max500{
   max-width: 800px;
 }

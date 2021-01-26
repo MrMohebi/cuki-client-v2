@@ -27,8 +27,8 @@
         transition: all 0.2s ease;
 
         margin-top: 50px;
-        height: 110px;
-        width: 95px;
+        height: 130px;
+        width: 110px;
         background-color: #fff;
         border-radius: 20px 35px 20px 20px;
         display: flex;
@@ -53,11 +53,11 @@
         font-family: Aviny;
         font-size: medium !important;
         white-space: nowrap;
+        margin-top: 10px !important;
         text-overflow: ellipsis;
     }
     .eachFoodImage{
         transition: all 0.2s ease;
-
         height: 55px !important;
         width: 55px !important;
         overflow: hidden;
@@ -72,7 +72,7 @@
         overflow:hidden;
         white-space: nowrap;
         font-size: 9px !important;
-        margin-top: 12px;
+        margin-top: 20px !important;
         padding: 0 5px 0 5px ;
         direction: rtl;
         text-overflow: ellipsis;

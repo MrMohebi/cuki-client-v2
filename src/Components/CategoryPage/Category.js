@@ -4,36 +4,36 @@ import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRo
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import {connect} from "react-redux";
+import {NavLink} from "react-router-dom";
 
 
 class CategoryPage extends React.Component {
 
     state = {
         categoryList: <div></div>,
-
     }
 
     componentDidMount() {
-        console.log(this.props.foodListConverted.partsCategories[this.props.match.params])
-        // let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params].map(eachCategory => {
-        //     let persianName = this.props.foodListConverted[this.props.match.params][eachCategory].persianName
-        //     return (
-        //         <div className='categoryPageEachCategoryContainer'>
-        //             <div className="categoryPageEachCategory">
-        //                 <div className="categoryPageEachCategoryImage" style={{
-        //                     background: 'url(/img/categories/irani.png)',
-        //                     backgroundSize: 'cover',
-        //                     backgroundPosition: 'center',
-        //                     backgroundRepeat: 'no-repeat'
-        //                 }}/>
-        //                 <span className="categoryPageEachCategoryName">{persianName}</span>
-        //             </div>
-        //         </div>
-        //     )
-        // })
-        // this.setState({
-        //     categoryList:listOfCategories,
-        // })
+        let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params.part.toString()].map(eachCategory => {
+            let persianName = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].persianName
+            let logo = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].logo.toString()
+            return (
+                <NavLink to={'/foodList/'+this.props.match.params.part.toString()+'/'+eachCategory.toString()} className='categoryPageEachCategoryContainer'>
+                    <div  className="categoryPageEachCategory">
+                        <div className="categoryPageEachCategoryImage" style={{
+                            background: 'url(/img/categories/'+ `${logo}`+'.png)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat'
+                        }}/>
+                        <span className="categoryPageEachCategoryName">{persianName}</span>
+                    </div>
+                </NavLink>
+            )
+        })
+        this.setState({
+            categoryList:listOfCategories,
+        })
 
     }
 

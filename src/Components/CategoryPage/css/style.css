@@ -13,8 +13,8 @@
 
     .categoryPageEachCategory {
         transition: all 0.2s ease;
-        height: 70px !important;
-        width: 70px !important;
+        height: 75px !important;
+        width: 75px !important;
         background-color: white;
         border: none;
         border-radius: 20px;

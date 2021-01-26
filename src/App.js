@@ -18,7 +18,7 @@ function App() {
         <Route path='/' component={BottomNavBar}/>
         <Route path='/t' component={WelcomePage}/>
         <Route path='/category/:part' component={CategoryPage}/>
-        <Route path='/fl' component={FoodListPage}/>
+        <Route path='/foodList/:part/:category' component={FoodListPage}/>
         <Route path='/b' component={BillPage}/>
         <Route path='/p' component={ProfilePage}/>
 
