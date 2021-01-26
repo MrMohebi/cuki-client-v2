@@ -13,6 +13,7 @@
 height: calc(100% - 120px);
 
 }
+
 .totalPriceAndTextHolder{
     height: 30px;
     font-family: AppIranSansMedium;
@@ -28,4 +29,13 @@ height: calc(100% - 120px);
     align-items: center;
     font-family: AppIranSansMedium;
     color: white;
+}
+.umberInDe{
+    width: 80px;
+}
+.NumberOfFoodsBill{
+    font-size: 1rem;
+}
+.eachFoodPriceBill{
+    font-size: 0.8rem;
 }

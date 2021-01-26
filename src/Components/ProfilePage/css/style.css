@@ -1,0 +1,52 @@
+.profilePageContainer{
+    background-color: #ffe1e3;
+    margin: 20px auto auto auto;
+    height: calc(100% - 120px);
+    width: 90%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0 15px 10px 15px;
+    overflow: scroll;
+}
+.profileNavigate{
+    font-size: 14px;
+    height: 25px;
+}
+.profileNavigateActive{
+    font-size: 14px;
+    height: 25px;
+    border-bottom: solid 1px gray;
+}
+
+@media only screen and (max-width: 360px) {
+    .profileNavigate{
+        font-size: 13px !important;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .profileNavigate{
+        font-size: 18px !important;
+    }
+}
+.profileHistoryContainer{
+    background-color: #fff;
+    width: 90%;
+    height: calc(100% - 70px);
+    border-radius: 14px;
+}
+.historyOrderDate{
+    width: 25%;
+    font-family: AppIranSansMedium;
+    font-size: 14px;
+}
+.historyOrderName{
+    width: 85%;
+    overflow:hidden;
+    white-space: nowrap;
+    font-size: 12px;
+    direction: rtl;
+    text-overflow: ellipsis;
+    font-family: AppIranSansLight;
+}
+

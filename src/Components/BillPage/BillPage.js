@@ -5,6 +5,7 @@ import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRight
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
+import {SwipeableList, SwipeableListItem} from '@sandstreamdev/react-swipeable-list';
 
 class BillPage extends React.Component {
     render() {
@@ -22,15 +23,32 @@ class BillPage extends React.Component {
                 </div>
                 <div className='BillPageContainer'>
                     <div className='w-100 billItemsContainer pt-4'>
-                        <div className='w-100 d-flex justify-content-between align-items-center flex-row-reverse IranSans'>
-                            <span>پیتزا قارچ و خامه</span>
-                            <span>39 T</span>
-                            <div>
-                                <AddRoundedIcon/>
-                                <span>2</span>
-                                <RemoveRoundedIcon/>
-                            </div>
-                        </div>
+                        <SwipeableList>
+                            <SwipeableListItem swipeStartThreshold={500}
+                                swipeLeft={{
+                                    content: <div></div>,
+                                    action: () => console.info('swipe action triggered')
+                                }}
+                                swipeRight={{
+                                    content: <div></div>,
+                                    action: () => console.info('swipe action triggered')
+                                }}
+
+                            >
+                                <div
+                                    className='w-100 d-flex justify-content-between align-items-center flex-row-reverse IranSans'>
+                                    <span>پیتزا قارچ و خامه</span>
+                                    <span className='eachFoodPriceBill'>39 T</span>
+                                    <div className='d-flex justify-content-between umberInDe'>
+                                        <AddRoundedIcon/>
+                                        <span className='NumberOfFoodsBill'>2</span>
+                                        <RemoveRoundedIcon/>
+                                    </div>
+                                </div>
+                            </SwipeableListItem>
+
+                        </SwipeableList>
+
                     </div>
                     <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
                         <span>20T</span>

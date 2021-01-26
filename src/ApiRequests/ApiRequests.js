@@ -13,7 +13,6 @@ export const getRestaurantInfo = (callbackFunction)=>{
         if(res.statusCode === 200){
             actions.restaurantSetData(res.data)
         }
-        console.log(res)
         callbackFunction(res);
     })
 }

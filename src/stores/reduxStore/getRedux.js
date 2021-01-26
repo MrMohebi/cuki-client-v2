@@ -5,7 +5,6 @@ import * as initReducers from "./reducers/__init__Reducers"
 export default function getReduxStore(key){
     for(let iName in initsNames2reducerName){
         if(Object.keys(initReducers[iName]).indexOf(key) !== -1){
-            console.log(store.getState()[initsNames2reducerName[iName]]);
             return store.getState()[initsNames2reducerName[iName]][key];
         }
     }
