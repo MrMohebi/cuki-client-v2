@@ -27,9 +27,11 @@ class FoodListPage extends Component {
                                      backgroundPosition: 'center'
                                  }}/>
                         </div>
-                        <div className='foodName'>{eachFood.name}</div>
+                        <div className='w-100 justify-content-center d-flex'>
+                            <div className='foodName'>{eachFood.name}</div>
+                        </div>
                         <div className='w-100 d-flex justify-content-center'>
-                            <div className='foodDetails'>{eachFood.details}</div>
+                            <div className='foodDetails'>{eachFood.details.join(' ')}</div>
                         </div>
                     </div>
                 </div>

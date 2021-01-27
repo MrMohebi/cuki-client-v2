@@ -34,7 +34,6 @@ class CategoryPage extends React.Component {
         this.setState({
             categoryList:listOfCategories,
         })
-
     }
 
     render() {

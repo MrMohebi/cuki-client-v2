@@ -16,7 +16,7 @@ class WelcomePage extends React.Component {
                 </p>
                 <p className="welcomePageFrames1">
                     <div className='HandAndHeaderText'>
-                        <span className="welcomePageDescriptionH">      دوست داری چی بخوری؟</span>
+                        <span className="welcomePageDescriptionH"> دوست داری چی بخوری؟</span>
                         <div onClick={(d) => {
                             d.target.classList.add("element")
                              setTimeout(()=>{
