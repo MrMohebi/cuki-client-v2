@@ -19,7 +19,7 @@
     border-radius: 20px 35px 20px 20px;
     display: flex;
     flex-flow: column;
-    box-shadow: 1px 2px 0px 0px #b9b9b9;
+    box-shadow: 1px 2px 0px 0px #E0DEDE;
 }
 
 @media only screen and (max-width: 360px) {
@@ -46,7 +46,7 @@
     }
     .foodName{
         transition: all 0.2s ease;
-        width: 100%;
+        width: 90%;
         white-space: nowrap;
         overflow: hidden;
         font-family: Aviny;
@@ -62,8 +62,8 @@
         width: 55px !important;
         overflow: hidden;
         border-radius: 50px;
-        margin-right: -10px;
-        margin-top: -15px !important;
+        margin-right: 0px;
+        /*margin-top: 5px !important;*/
     }
     .foodDetails{
         transition: all 0.2s ease;
@@ -72,7 +72,7 @@
         overflow:hidden;
         white-space: nowrap;
         font-size: 0.5rem !important;
-        margin-top: 20px !important;
+        margin-top: 15px !important;
         padding: 0 5px 0 5px ;
         direction: rtl;
         text-overflow: ellipsis;
@@ -112,8 +112,10 @@
     font-weight: normal;
     height: 100%;
     text-align: center;
-    line-height: 50px;
-    padding-left: 15px;
+    line-height: 60px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    padding-left: 10px;
 }
 .foodName{
     transition: all 0.2s ease;
@@ -133,19 +135,18 @@
     width: 65px;
     overflow: hidden;
     border-radius: 50px;
-    margin-right: -10px;
-    margin-top: -10px;
+
 }
 .foodDetails{
-    font-family:AppIranSansLight ;
-    width: 85%;
-    overflow:hidden;
-    white-space: nowrap;
-    font-size: 0.7rem;
-    margin-top: 12px;
-    padding: 0 5px 0 5px ;
-    direction: rtl;
-    text-overflow: ellipsis;
+font-family:AppIranSansLight ;
+width: 85%;
+overflow:hidden;
+white-space: nowrap;
+font-size: 0.7rem;
+margin-top: 12px;
+padding: 0 5px 0 5px ;
+direction: rtl;
+text-overflow: ellipsis;
 
 }
 

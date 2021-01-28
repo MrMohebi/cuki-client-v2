@@ -44,21 +44,23 @@ class ProfilePage extends React.Component {
                             })
                         }}> سفارش های من</span>
                     </div>
-                    <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
-                        <TextField className='rtl mt-2' id="standard-basic" label="اسم و فامیل" />
-                        <TextField className='rtl mt-2' id="standard-basic" label="تاریخ تولد" />
-                        <TextField className='rtl mt-2' id="standard-basic" label="شغل" />
-                        <div className='w-100 d-flex justify-content-center'>
-                            <div className='profileSubmitButton mt-4 IranSans'> ویرایش</div>
+                    <div className='w-100'>
+                        <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
+                            <TextField className='rtl mt-2' id="standard-basic" label="اسم و فامیل" />
+                            <TextField className='rtl mt-2' id="standard-basic" label="تاریخ تولد" />
+                            <TextField className='rtl mt-2' id="standard-basic" label="شغل" />
+                            <div className='w-100 d-flex justify-content-center'>
+                                <div className='profileSubmitButton mt-4 IranSans'> ویرایش</div>
+                            </div>
                         </div>
-                    </div>
-                    <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
-                        <span className='IranSans'>200</span>
-                        <span className='IranSans '>مجموع خرید </span>
-                    </div>
-                    <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
-                        <span className='IranSans'>200</span>
-                        <span className='IranSans'>امتیاز</span>
+                        <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
+                            <span className='IranSans'>200</span>
+                            <span className='IranSans '>مجموع خرید </span>
+                        </div>
+                        <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
+                            <span className='IranSans'>200</span>
+                            <span className='IranSans'>امتیاز</span>
+                        </div>
                     </div>
 
                 </div>

@@ -11,10 +11,17 @@
     min-height: 420px !important;
 }
 .profileNavigate{
+    transition: all 0.2s ease;
     font-size: 14px;
     height: 25px;
+    border-bottom: gray solid 0px;
+    font-weight: normal;
 }
 .profileNavigateActive{
+    transition: all 0.2s ease;
+
+    font-size: 14px;
+    height: 25px;
     border-bottom: gray solid 1px;
     font-weight: bold;
 }
@@ -86,6 +93,10 @@
     font-weight: bold;
     color: #565656;
     white-space: nowrap;
+    font-size: 0.8rem !important;
+}
+.MuiInput-underline:after{
+    border-bottom: 2px solid #ffe1e3 !important;
 }
 .profileSubmitButton{
     background-color: #F7899B;
