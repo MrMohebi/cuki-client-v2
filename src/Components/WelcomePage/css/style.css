@@ -39,6 +39,7 @@
     background:#FFFAEF;
     margin: auto;
     width: 85%;
+    height: 100px;
     flex-direction: row;
 }
 .shakeHands{
@@ -86,8 +87,8 @@
     border-radius: 25px;
     background-color: #FFFFFF;
     width: 23%;
-    height: 50%;
-    margin-bottom: auto;
+    height: 60px;
+    margin: auto;
 }
 .donat{
     text-align: center;
@@ -108,7 +109,6 @@
 .burgersAndDonatDescription{
     font-family: AppIranSans;
     font-size: 15px;
-    margin-bottom: 20px;
 }
 @media only screen and (max-height:700px){
 .forLittlePhones{
@@ -117,7 +117,6 @@
     .burgersAndDonatDescription {
         font-family: AppIranSans;
         font-size: 10px;
-        margin-bottom: 20px;
     }
     .chefImage {
         background-size: 95%;
