@@ -4,8 +4,9 @@ export const __init__RestaurantInfo = {
     assets: [],
     comments: [],
     allTableList: [],
+    restaurantInfo: [],
     reservedTableList: [],
-    restaurantInfo: []
+    foodListConverted:{},
 }
 
 export const __init__UserInfo = {

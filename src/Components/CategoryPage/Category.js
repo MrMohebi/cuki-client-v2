@@ -3,9 +3,39 @@ import './css/style.css'
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+import {connect} from "react-redux";
+import {NavLink} from "react-router-dom";
 
 
 class CategoryPage extends React.Component {
+
+    state = {
+        categoryList: <div></div>,
+    }
+
+    componentDidMount() {
+        let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params.part.toString()].map(eachCategory => {
+            let persianName = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].persianName
+            let logo = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].logo.toString()
+            return (
+                <NavLink to={'/foodList/'+this.props.match.params.part.toString()+'/'+eachCategory.toString()} className='categoryPageEachCategoryContainer'>
+                    <div  className="categoryPageEachCategory">
+                        <div className="categoryPageEachCategoryImage" style={{
+                            background: 'url(/img/categories/'+ `${logo}`+'.png)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat'
+                        }}/>
+                        <span className="categoryPageEachCategoryName">{persianName}</span>
+                    </div>
+                </NavLink>
+            )
+        })
+        this.setState({
+            categoryList:listOfCategories,
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -20,68 +50,9 @@ class CategoryPage extends React.Component {
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
 
-
                 <div className='categoryPageContainer'>
                     <div className='heightFitContent'>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
-
-                    <div className='categoryPageEachCategoryContainer'>
-                        <div className="categoryPageEachCategory">
-                            <div className="categoryPageEachCategoryImage" style={{
-                                background: 'url(/img/categories/irani.png)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat'
-                            }}/>
-                            <span className="categoryPageEachCategoryName">برگر</span>
-                        </div>
-                    </div>
+                        {this.state.categoryList}
                     </div>
                 </div>
 
@@ -92,4 +63,16 @@ class CategoryPage extends React.Component {
     }
 }
 
-export default CategoryPage;
+const mapStateToProps = (store) => {
+    return {
+        foodListConverted: store.rRestaurantInfo.foodListConverted
+    }
+}
+
+const mapDispatchToProps = () => {
+    return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryPage);
+
+

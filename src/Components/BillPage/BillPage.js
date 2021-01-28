@@ -5,7 +5,8 @@ import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRight
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
-import {SwipeableList, SwipeableListItem} from '@sandstreamdev/react-swipeable-list';
+import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
+import '@sandstreamdev/react-swipeable-list/dist/styles.css';
 
 class BillPage extends React.Component {
     render() {
@@ -24,7 +25,7 @@ class BillPage extends React.Component {
                 <div className='BillPageContainer'>
                     <div className='w-100 billItemsContainer pt-4'>
                         <SwipeableList>
-                            <SwipeableListItem swipeStartThreshold={500}
+                            <SwipeableListItem
                                 swipeLeft={{
                                     content: <div></div>,
                                     action: () => console.info('swipe action triggered')
@@ -56,6 +57,7 @@ class BillPage extends React.Component {
                         <span>پرداخت</span>
                     </div>
                 </div>
+
             </React.Fragment>
         )
 

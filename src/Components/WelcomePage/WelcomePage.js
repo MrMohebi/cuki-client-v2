@@ -1,5 +1,5 @@
 import React from "react";
-import './css/style.css'
+import './css/style.css';
 
 class WelcomePage extends React.Component {
     state = {
@@ -16,7 +16,7 @@ class WelcomePage extends React.Component {
                 </p>
                 <p className="welcomePageFrames1">
                     <div className='HandAndHeaderText'>
-                        <span className="welcomePageDescriptionH">      دوست داری چی بخوری؟</span>
+                        <span className="welcomePageDescriptionH"> دوست داری چی بخوری؟</span>
                         <div onClick={(d) => {
                             d.target.classList.add("element")
 
@@ -45,7 +45,7 @@ class WelcomePage extends React.Component {
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat'
                     }}/>
-
+                    <br/>
                 </p>
                 <br/>
                 <div className="welcomePageFrames2">
@@ -59,6 +59,8 @@ class WelcomePage extends React.Component {
                                 backgroundRepeat: 'no-repeat',
                             }}></div>
                             <span className="burgersAndDonatDescription">کافی شاپ</span>
+                                <br/>
+                                <br/>
                         </p>
                         <p className="openIcons">
                             <div className="burger" style={{
@@ -68,9 +70,12 @@ class WelcomePage extends React.Component {
                                 backgroundRepeat: 'no-repeat',
                             }}></div>
                             <span className="burgersAndDonatDescription">رستوران</span>
+                            <br/>
+                            <br/>
                         </p>
                         <p className="openIcons">
                             tour
+                            <br/>
                             <br/>
                             <br/>
                         </p>

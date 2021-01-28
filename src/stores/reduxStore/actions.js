@@ -177,3 +177,12 @@ export const setTour360Photo = (photo) =>{
     })
 }
 
+export const setFoodListConverted = (foodListConverted) =>{
+    store.dispatch({
+        type: actionTypes.SET_FOOD_LIST_CONVERTED,
+        payload:{
+            foodListConverted
+        }
+    })
+}
+

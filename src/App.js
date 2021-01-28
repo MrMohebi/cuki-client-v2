@@ -15,10 +15,10 @@ function App() {
     <React.Fragment>
       <BrowserRouter>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path='/' component={BottomNavBar}/>
+        <Route path={['/category','/t','/foodList']} component={BottomNavBar}/>
         <Route path='/t' component={WelcomePage}/>
-        <Route path='/category' component={CategoryPage}/>
-        <Route path='/fl' component={FoodListPage}/>
+        <Route path='/category/:part' component={CategoryPage}/>
+        <Route path='/foodList/:part/:category' component={FoodListPage}/>
         <Route path='/b' component={BillPage}/>
         <Route path='/p' component={ProfilePage}/>
 

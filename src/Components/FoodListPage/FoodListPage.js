@@ -7,6 +7,41 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
 
 class FoodListPage extends Component {
+
+    state={
+        foodList:<div></div>,
+    }
+    componentDidMount() {
+        let foodList= this.props.foodListConverted[this.props.match.params.part.toString()][this.props.match.params.category].foodList.map(eachFood=>{
+            return(
+                <div className='foodListEachFoodContainer'>
+                    <div className='foodListEachFood'>
+                        <div className='priceAndImage'>
+                                    <span className='eachFoodPrice'>
+                                        {eachFood.price / 1000} T
+                                    </span>
+                            <div className='eachFoodImage'
+                                 style={{
+                                     background: `url(${eachFood.thumbnail})`,
+                                     backgroundSize: 'cover',
+                                     backgroundPosition: 'center'
+                                 }}/>
+                        </div>
+                        <div className='w-100 justify-content-center d-flex'>
+                            <div className='foodName'>{eachFood.name}</div>
+                        </div>
+                        <div className='w-100 d-flex justify-content-center'>
+                            <div className='foodDetails'>{eachFood.details.join(' ')}</div>
+                        </div>
+                    </div>
+                </div>
+            )
+        })
+        this.setState({
+            foodList:foodList
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -23,121 +58,22 @@ class FoodListPage extends Component {
 
                 <div className='foodListPageContainer'>
                     <div className='heightFitContent'>
-
-
-                        <div className='foodListEachFoodContainer'>
-                            <div className='foodListEachFood'>
-                                <div className='priceAndImage'>
-                                    <span className='eachFoodPrice'>
-                                        23T
-                                    </span>
-                                    <div className='eachFoodImage'
-                                         style={{
-                                             background: 'url(/img/tempImages/foodTest.png)',
-                                             backgroundSize: 'cover',
-                                             backgroundPosition: 'center'
-                                         }}/>
-                                </div>
-                                <div className='foodName'>
-                                    پیتزا پپرونی
-                                </div>
-                                <div className='w-100 d-flex justify-content-center'>
-                                    <div className='foodDetails'>
-                                        پپرونی / پنیرپیتزا / پنیرگودا
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='foodListEachFoodContainer'>
-                            <div className='foodListEachFood'>
-                                <div className='priceAndImage'>
-                                    <span className='eachFoodPrice'>
-                                        23T
-                                    </span>
-                                    <div className='eachFoodImage'
-                                         style={{
-                                             background: 'url(/img/tempImages/foodTest.png)',
-                                             backgroundSize: 'cover',
-                                             backgroundPosition: 'center'
-                                         }}/>
-                                </div>
-                                <div className='foodName'>
-                                    پیتزا پپرونی
-                                </div>
-                                <div className='w-100 d-flex justify-content-center'>
-                                    <div className='foodDetails'>
-                                        پپرونی / پنیرپیتزا / پنیرگودا
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className='foodListEachFoodContainer'>
-                            <div className='foodListEachFood'>
-                                <div className='priceAndImage'>
-                                    <span className='eachFoodPrice'>
-                                        23T
-                                    </span>
-                                    <div className='eachFoodImage'
-                                         style={{
-                                             background: 'url(/img/tempImages/foodTest.png)',
-                                             backgroundSize: 'cover',
-                                             backgroundPosition: 'center'
-                                         }}/>
-                                </div>
-                                <div className='foodName'>
-                                    پیتزا پپرونی
-                                </div>
-                                <div className='w-100 d-flex justify-content-center'>
-                                    <div className='foodDetails'>
-                                        پپرونی / پنیرپیتزا / پنیرگودا
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div className='foodListEachFoodContainer'>
-                            <div className='foodListEachFood'>
-                                <div className='priceAndImage'>
-                                    <span className='eachFoodPrice'>
-                                        23T
-                                    </span>
-                                    <div className='eachFoodImage'
-                                         style={{
-                                             background: 'url(/img/tempImages/foodTest.png)',
-                                             backgroundSize: 'cover',
-                                             backgroundPosition: 'center'
-                                         }}/>
-                                </div>
-                                <div className='foodName'>
-                                    پیتزا پپرونی
-                                </div>
-                                <div className='w-100 d-flex justify-content-center'>
-                                    <div className='foodDetails'>
-                                        پپرونی / پنیرپیتزا / پنیرگودا
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        {this.state.foodList}
                     </div>
                 </div>
             </React.Fragment>
         )
-
     }
 }
 
-function mapStateToProps(state) {
-    return {};
+const mapStateToProps = (store) => {
+    return {
+        foodListConverted: store.rRestaurantInfo.foodListConverted
+    }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {};
+const mapDispatchToProps = () => {
+    return {}
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(FoodListPage);

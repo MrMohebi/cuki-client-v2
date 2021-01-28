@@ -2,6 +2,9 @@ import React from "react";
 import './css/style.css';
 import * as requests from '../../ApiRequests/ApiRequests'
 import foodsListAdaptor from "../../functions/foodsListAdaptor";
+import {connect} from 'react-redux';
+import * as actions from '../../stores/reduxStore/actions';
+
 
 class SplashScreen extends React.Component{
     componentDidMount() {
@@ -11,10 +14,13 @@ class SplashScreen extends React.Component{
     goMainPage = (response) =>{
 
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
-            //this.props.history.push("/main");
+            this.props.history.push("/t");
 
-            console.log(foodsListAdaptor(response.data.foods));
-            console.log(response)
+            this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+            setTimeout(()=>{
+                console.log(this.props.foodListConverted)
+            },1000)
+            // console.log(response)
         }
     }
 
@@ -33,4 +39,20 @@ class SplashScreen extends React.Component{
     }
 }
 
-export default SplashScreen;
+const mapStateToProps = (store) => {
+    return {
+        foodListConverted:store.rRestaurantInfo.foodListConverted
+    }
+}
+
+const mapDispatchToProps = () => {
+    return {
+        setFoodListConverted:actions.setFoodListConverted
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen);
+
+
+
+

@@ -9,6 +9,10 @@ export default function reducerRestaurant (state= __init__RestaurantInfo, action
                 draftState.foods = action.payload.restaurantData.foods;
                 draftState.restaurantInfo = action.payload.restaurantData.restaurantInfo;
             });
+        case actionTypes.SET_FOOD_LIST_CONVERTED:
+            return produce(state, draftState =>{
+                draftState.foodListConverted = action.payload.foodListConverted;
+            });
         default:
             return state;
     }

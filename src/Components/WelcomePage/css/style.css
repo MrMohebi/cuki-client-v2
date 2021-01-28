@@ -133,6 +133,10 @@
         height: 300px;
     }
 }
+.welcomePageMainContainer{
+    overflow: scroll;
+    height: calc(100% - 50px);
+}
 
 
 
