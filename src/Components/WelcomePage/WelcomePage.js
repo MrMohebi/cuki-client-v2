@@ -19,6 +19,7 @@ class WelcomePage extends React.Component {
                         <span className="welcomePageDescriptionH">      دوست داری چی بخوری؟</span>
                         <div onClick={(d) => {
                             d.target.classList.add("element")
+
                              setTimeout(()=>{
                                  d.target.classList.remove("element")
                              },1000)
@@ -48,7 +49,6 @@ class WelcomePage extends React.Component {
                 </p>
                 <br/>
                 <div className="welcomePageFrames2">
-                    <br/>
                     <br/>
                     <div className="d-flex justify-content-around">
                         <p className="openIcons" >
