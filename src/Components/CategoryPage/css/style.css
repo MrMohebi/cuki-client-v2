@@ -58,7 +58,7 @@
 .categoryPageContainer {
     background-color: #FFE1E3;
     margin: 20px auto auto auto;
-    height: calc(100% - 120px);
+    height: calc(100% - 100px);
     width: 90%;
     border-radius: 20px;
     display: flex;
@@ -77,7 +77,7 @@
 
 .categoryPageEachCategory {
     transition: all 0.2s ease;
-    height: 85px;
+    height: 95px;
     width: 85px;
     background-color: white;
     border: none;
@@ -115,12 +115,18 @@
     display: flex;
     justify-content: center;
 }
-
+.eachOrderDetailsTotalHolder{
+    font-size: 0.8rem;
+    font-weight: 600;
+}
 .categoryPageEachCategoryName {
-    font-size: 10px;
+    font-size: 0.8rem;
     font-family: AppIranSans;
     font-weight: bold;
-    margin-top: 5px;
+    margin-top: 8px;
     text-decoration: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     text-underline-position: under;
 }
