@@ -4,6 +4,7 @@ import './css/style.css';
 class WelcomePage extends React.Component {
     state = {
         handClass: "shakeHands",
+        allowToShake: true,
 
     }
 
@@ -18,11 +19,19 @@ class WelcomePage extends React.Component {
                     <div className='HandAndHeaderText'>
                         <span className="welcomePageDescriptionH"> دوست داری چی بخوری؟</span>
                         <div onClick={(d) => {
-                            d.target.classList.add("element")
+                            if(this.state.allowToShake){
+                                d.target.classList.add("element")
+                                this.setState({
+                                    allowToShake:false
+                                })
+                                setTimeout(()=>{
+                                    d.target.classList.remove("element")
+                                    this.setState({
+                                        allowToShake:true
+                                    })
+                                },1000)
+                            }
 
-                             setTimeout(()=>{
-                                 d.target.classList.remove("element")
-                             },1000)
                         }} className={this.state.handClass} style={{
                             background: 'url("./img/WelcomPage/shakehands.png")',
                             backgroundSize: 'cover',
