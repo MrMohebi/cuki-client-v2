@@ -10,6 +10,7 @@ import FoodListPage from "./Components/FoodListPage/FoodListPage";
 import BillPage from "./Components/BillPage/BillPage";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import EachOrderHistory from "./Components/EachOrderDetails/EachOrderHistory";
+import LoginVCode from "./Components/LoginVcode/LoginVCode";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/b' component={BillPage}/>
         <Route path='/p' component={ProfilePage}/>
         <Route path='/oh' component={EachOrderHistory}/>
+        <Route path='/l' component={LoginVCode}/>
 
       </BrowserRouter>
     </React.Fragment>

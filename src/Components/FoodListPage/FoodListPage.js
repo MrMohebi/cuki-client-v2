@@ -13,6 +13,7 @@ class FoodListPage extends Component {
         foodList:<div></div>,
     }
     componentDidMount() {
+        console.log(this.props.foodListConverted)
 
         let foodList= this.props.foodListConverted[this.props.match.params.part.toString()][this.props.match.params.category].foodList.map(eachFood=>{
             let colors = RandomColor.RandomColor()

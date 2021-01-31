@@ -1,0 +1,24 @@
+.loginPageContainer{
+    background-color: #DDEEE2;
+    margin: 20px auto auto auto;
+    height: calc(100% - 100px);
+    width: 90%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0 15px 10px 15px;
+    overflow: scroll;
+
+}
+.centerItemsHolder{
+    display: flex;
+    flex-flow: column;
+}
+.LoginPhoneTextHolder{
+    font-size: 0.8rem;
+    text-align: right;
+}
+.LoginPhoneDetailHolder{
+    font-size: 0.7rem;
+    text-align: right;
+}

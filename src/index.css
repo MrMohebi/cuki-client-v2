@@ -16,6 +16,9 @@ a{
 .IranSans{
   font-family: AppIranSans;
 }
+.IranSansLight{
+  font-family: AppIranSansLight;
+}
 *{
   user-select: none;
 }

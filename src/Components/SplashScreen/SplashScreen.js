@@ -20,7 +20,7 @@ class SplashScreen extends React.Component{
             setTimeout(()=>{
                 console.log(this.props.foodListConverted)
             },1000)
-            // console.log(response)
+            console.log(response)
         }
     }
 

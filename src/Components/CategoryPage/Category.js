@@ -17,6 +17,7 @@ class CategoryPage extends React.Component {
         let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params.part.toString()].map(eachCategory => {
             let persianName = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].persianName
             let logo = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].logo.toString()
+            let color = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].averageColor.toString()
             return (
                 <NavLink to={'/foodList/'+this.props.match.params.part.toString()+'/'+eachCategory.toString()} className='categoryPageEachCategoryContainer'>
                     <div  className="categoryPageEachCategory">
@@ -26,7 +27,7 @@ class CategoryPage extends React.Component {
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
                         }}/>
-                        <span className="categoryPageEachCategoryName">{persianName}</span>
+                        <span className="categoryPageEachCategoryName" style={{color:color}}>{persianName}</span>
                     </div>
                 </NavLink>
             )
