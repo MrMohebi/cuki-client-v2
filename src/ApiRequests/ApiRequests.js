@@ -16,3 +16,14 @@ export const getRestaurantInfo = (callbackFunction)=>{
         callbackFunction(res);
     })
 }
+
+
+export const sendVCode = (callbackFunction,phone)=>{
+    $.post(BASE_API_URL+ "sendVCode.add.php" ,{phone:phone}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        if(res.statusCode === 200){
+
+        }
+        callbackFunction(res);
+    })
+}

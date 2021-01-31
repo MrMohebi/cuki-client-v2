@@ -8,17 +8,94 @@
     flex-flow: row wrap;
     padding: 0 15px 10px 15px;
     overflow: scroll;
-
+    min-height: 350px;
 }
 .centerItemsHolder{
     display: flex;
     flex-flow: column;
+    width: 75%;
 }
 .LoginPhoneTextHolder{
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-align: right;
 }
 .LoginPhoneDetailHolder{
-    font-size: 0.7rem;
+    font-size: 0.5rem;
     text-align: right;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-top: 10px;
+}
+.LoginInput label{
+    right: 100% !important;
+    left: 0 !important;
+}
+.LoginPhoneInput div:after{
+    border-bottom: 2px solid #67815d !important;
+}
+
+.phoneInputStarter{
+    font: inherit;
+}
+.LoginPhoneInput div input{
+    height: 1rem !important;
+}
+.loginSubmitButton{
+    background-color: #988AA8;
+    color: white;
+    font-weight: bold;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    width: 120px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 40px;
+    line-height: 40px;
+    opacity: 0;
+}
+.LoginPhoneInput{
+    margin-top: 40px !important;
+}
+.VCodePhoneTextHolder{
+    font-family: AppIranSans;
+    font-size: 0.8rem;
+    text-align: right;
+}
+.VCodePhoneHolder{
+font-size: 0.7rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.editPhoneNumberButton{
+    width: 3.5rem;
+    height: 1rem;
+    background-color: #679774;
+    right: 0;
+    margin-left: auto;
+    border-radius: 5px;
+    font-size: 0.4rem;
+    text-align: center;
+    line-height: 1rem;
+    color: white;
+    font-family: IRANSans;
+    margin-top: 5px;
+}
+
+.vCodeSubmitButton{
+    background-color: #988AA8;
+    color: white;
+    font-weight: bold;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    width: 120px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 40px;
+    line-height: 40px;
 }
