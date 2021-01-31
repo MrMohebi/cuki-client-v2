@@ -4,6 +4,7 @@ import './css/style.css'
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+import * as RandomColor from '../../functions/RandomColor'
 
 
 class FoodListPage extends Component {
@@ -12,10 +13,12 @@ class FoodListPage extends Component {
         foodList:<div></div>,
     }
     componentDidMount() {
+
         let foodList= this.props.foodListConverted[this.props.match.params.part.toString()][this.props.match.params.category].foodList.map(eachFood=>{
+            let colors = RandomColor.RandomColor()
             return(
                 <div className='foodListEachFoodContainer'>
-                    <div className='foodListEachFood'>
+                    <div className='foodListEachFood' style={{backgroundColor:colors.background}}>
                         <div className='priceAndImage'>
                                     <span className='eachFoodPrice'>
                                         {eachFood.price / 1000} T
@@ -28,7 +31,7 @@ class FoodListPage extends Component {
                                  }}/>
                         </div>
                         <div className='w-100 justify-content-center d-flex'>
-                            <div className='foodName'>{eachFood.name}</div>
+                            <div className='foodName' style={{color:colors.foreground}} >{eachFood.name}</div>
                         </div>
                         <div className='w-100 d-flex justify-content-center'>
                             <div className='foodDetails'>{eachFood.details.join(' ')}</div>

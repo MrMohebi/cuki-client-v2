@@ -22,6 +22,10 @@ class BottomNavBar extends React.Component {
         iconSize: "27px",
     }
 
+    componentDidMount() {
+        console.log(window.location.pathname)
+    }
+
     render() {
         return (
             <div className='w-100 d-flex justify-content-center position-absolute bottomNavContainer '>
@@ -29,7 +33,7 @@ class BottomNavBar extends React.Component {
                     e.preventDefault()
                 }}>
                     <NavLink className='navLinkBottomNav' to={"/category/restaurant"}>
-                        {window.location.pathname === "/category" ?
+                        {window.location.pathname.includes("/category")  ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`, background:`url(${cf})`}}/>
                             :
@@ -38,7 +42,7 @@ class BottomNavBar extends React.Component {
                         }
                     </NavLink>
                     <NavLink className='navLinkBottomNav' to={"/category"}>
-                        {window.location.pathname === "/t1" ?
+                        {window.location.pathname.includes("/category") ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${chf})`}}/>
                             :
@@ -47,7 +51,7 @@ class BottomNavBar extends React.Component {
                         }
                     </NavLink>
                     <NavLink className='navLinkBottomNav' to={"/fl"}>
-                        {window.location.pathname === "/fl" ?
+                        {window.location.pathname.includes("/category") ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${hf})`}}/>
                             :
@@ -56,7 +60,7 @@ class BottomNavBar extends React.Component {
                         }
                     </NavLink>
                     <NavLink className='navLinkBottomNav' to={"/t4"}>
-                        {window.location.pathname === "/t4" ?
+                        {window.location.pathname.includes("/category") ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${hef})`}}/>
                             :
@@ -65,7 +69,7 @@ class BottomNavBar extends React.Component {
                         }
                     </NavLink>
                     <NavLink className='navLinkBottomNav' to={"/t5"}>
-                        {window.location.pathname === "/t5" ?
+                        {window.location.pathname.includes("/category") ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${uf})`}}/>
                             :

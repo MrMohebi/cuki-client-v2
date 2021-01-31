@@ -1,7 +1,7 @@
 .profilePageContainer{
     background-color: #ffe1e3;
     margin: 20px auto auto auto;
-    height: calc(100% - 120px);
+    height: calc(100% - 100px);
     width: 90%;
     border-radius: 20px;
     display: flex;
@@ -10,21 +10,33 @@
     overflow: scroll;
     min-height: 420px !important;
 }
+
 .profileNavigate{
+    transition: all 0.2s ease;
     font-size: 14px;
     height: 25px;
+    border-bottom: gray solid 0px;
+    font-weight: normal;
 }
+
+
 .profileNavigateActive{
-    border-bottom: gray solid 1px;
+    transition: all 0.1s ease;
+    font-size: 14px;
+    height: 25px;
     font-weight: bold;
+    border-bottom: #ababab solid 0px;
+    border-bottom-width: 1px;
 }
 .profileUserProfileContainer{
+    transition: all 0.2s ease;
     background-color: #fff;
     border-radius: 14px;
     width: 50vw;
     height: 300px;
     padding: 0 20px 0 20px;
     min-height: 250px !important;
+    opacity: 1;
 }
 
 @media only screen and (max-width: 360px) {
@@ -38,10 +50,12 @@
     }
 }
 .profileHistoryContainer{
+    transition: all 0.2s ease;
     background-color: #fff;
     width: 90%;
     height: calc(100% - 70px);
     border-radius: 14px;
+    opacity: 1;
 }
 .historyOrderDate{
     width: 25%;
@@ -86,6 +100,10 @@
     font-weight: bold;
     color: #565656;
     white-space: nowrap;
+    font-size: 0.8rem !important;
+}
+.MuiInput-underline:after{
+    border-bottom: 2px solid #ffe1e3 !important;
 }
 .profileSubmitButton{
     background-color: #F7899B;
@@ -100,6 +118,9 @@
 }
 totalBuyAndPrice{
 flex: 50% 50%;
+}
+.MuiInput-underline:before{
+    border-bottom: 1px solid rgb(115, 115, 115);
 }
 
 
