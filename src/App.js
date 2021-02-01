@@ -11,13 +11,14 @@ import BillPage from "./Components/BillPage/BillPage";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import EachOrderHistory from "./Components/EachOrderDetails/EachOrderHistory";
 import LoginVCode from "./Components/LoginVcode/LoginVCode";
+import SignUpPage from "./Components/SignUpPage/SignUpPage";
 
 function App() {
   return (
     <React.Fragment>
       <BrowserRouter>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path={['/category','/t','/foodList','/oh']} component={BottomNavBar}/>
+        <Route path={['/category','/t','/foodList','/l','/sign']} component={BottomNavBar}/>
         <Route path='/t' component={WelcomePage}/>
         <Route path='/category/:part' component={CategoryPage}/>
         <Route path='/foodList/:part/:category' component={FoodListPage}/>
@@ -25,6 +26,7 @@ function App() {
         <Route path='/p' component={ProfilePage}/>
         <Route path='/oh' component={EachOrderHistory}/>
         <Route path='/l' component={LoginVCode}/>
+        <Route path='/signup' component={SignUpPage}/>
 
       </BrowserRouter>
     </React.Fragment>

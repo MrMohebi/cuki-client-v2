@@ -68,8 +68,8 @@ class BottomNavBar extends React.Component {
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${heo})`}}/>
                         }
                     </NavLink>
-                    <NavLink className='navLinkBottomNav' to={"/t5"}>
-                        {window.location.pathname.includes("/category") ?
+                    <NavLink className='navLinkBottomNav' to={"/l"}>
+                        {window.location.pathname.includes("/l") ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${uf})`}}/>
                             :

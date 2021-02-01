@@ -94,8 +94,6 @@
     direction: rtl !important;
 }
 .MuiInputLabel-formControl{
-    right: 10px !important;
-    left: 100% !important;
     font-family: AppIranSansLight !important;
     font-weight: bold;
     color: #565656;
@@ -121,6 +119,10 @@ flex: 50% 50%;
 }
 .MuiInput-underline:before{
     border-bottom: 1px solid rgb(115, 115, 115);
+}
+.profileInputs label{
+    left: auto;
+    right: 0;
 }
 
 

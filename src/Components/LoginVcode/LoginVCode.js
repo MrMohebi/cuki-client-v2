@@ -7,20 +7,23 @@ import {TextField} from "@material-ui/core";
 import 'animate.css/animate.css'
 import VerificationCodeInput from '../VerificationCodeInput/vCodeInput'
 import * as requests from '../../ApiRequests/ApiRequests.js'
+import * as actions from "../../stores/reduxStore/actions";
+import {connect} from "react-redux";
 
 class LoginVCode extends React.Component {
     state = {
         userPhoneNumber: 0,
-        buttonDefaultClass: 'loginSubmitButton IranSansLight animate__animated   ',
+        buttonDefaultClass: 'loginSubmitButton IranSansLight animate__animated ',
         buttonAnimationClasses: '',
         phoneNumberContainerClass: 'd-none',
-        VCodeContainerClass: 'd-none  ',
+        VCodeContainerClass: 'd-none ',
     }
 
     componentDidMount() {
         this.setState({
             phoneNumberContainerClass: 'animate__animated animate__fadeInUp'
         })
+        console.log(this.props.sentVCode)
     }
 
     onInputChange(stateToChange, value) {
@@ -31,9 +34,19 @@ class LoginVCode extends React.Component {
         requests.sendVCode(this.codeWasCorrect, phone)
     }
 
-    checkCallbackData = (res) => {
-        console.log(res)
+    checkCallbackData = (data) => {
+        console.log(data)
+        if (data.statusCode === 200){
+            if (data.data.isUserInfoSaved){
+                this.props.history.push('/p')
+            }else{
+                this.props.history.push('/signup')
+            }
+        }
     }
+    //data:
+    // isUserInfoSaved: true
+    // token: "c3908b970642bfd6398617115ced6064b0872be14a8e514f0d88fe203c5be3da"
 
     codeWasCorrect = (vCode) => {
         requests.checkCode(this.checkCallbackData, '09031232531', vCode)
@@ -100,7 +113,7 @@ class LoginVCode extends React.Component {
                                                 phoneNumberContainerClass: 'd-none',
                                                 VCodeContainerClass: 'animate__animated animate__fadeInUp flex-column d-flex'
                                             })
-                                        }, 500)
+                                        }, 200)
                                     }}
                                          className={this.state.buttonDefaultClass + this.state.buttonAnimationClasses}>
                                         ارسال کد
@@ -115,7 +128,17 @@ class LoginVCode extends React.Component {
                                         className='IranSans VCodePhoneTextHolder'>کد ارسال شده به شماره زیر رو وارد کن</span>
                                     <span className='IranSansLight VCodePhoneHolder text-right'>09031232531</span>
                                     <div className='text-right'>
-                                        <div className='editPhoneNumberButton'>
+
+                                        <div onClick={()=>{
+                                            this.setState({
+                                                VCodeContainerClass: 'animate__animated animate__fadeOutLeftBig flex-column d-flex'
+                                            })
+                                            setTimeout(()=>{
+                                                this.setState({
+                                                    VCodeContainerClass:'d-none',
+                                                    phoneNumberContainerClass: 'animate__animated animate__fadeInUp'                                                })
+                                            },500)
+                                        }} className='editPhoneNumberButton'>
                                             ویرایش
                                         </div>
                                     </div>
@@ -132,4 +155,19 @@ class LoginVCode extends React.Component {
     }
 }
 
-export default LoginVCode;
+
+const mapStateToProps = (store) => {
+    return {
+        sentVCode:store.rFrontStates.sentVCode,
+        foodListConverted: store.rRestaurantInfo.foodListConverted
+
+    }
+}
+
+const mapDispatchToProps = () => {
+    return {
+        setSentVCode:actions.setSentVCode()
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginVCode);

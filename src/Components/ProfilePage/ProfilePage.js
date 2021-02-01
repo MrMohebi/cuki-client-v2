@@ -67,9 +67,9 @@ class ProfilePage extends React.Component {
     }
     clubElement = <div className='w-100'>
         <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
-            <TextField className='rtl mt-2' id="standard-basic" label="اسم و فامیل" />
-            <TextField className='rtl mt-2' id="standard-basic" label="تاریخ تولد" />
-            <TextField className='rtl mt-2' id="standard-basic" label="شغل" />
+            <TextField className='rtl mt-2 profileInputs' id="standard-basic" label="اسم و فامیل" />
+            <TextField className='rtl mt-2 profileInputs' id="standard-basic" label="تاریخ تولد" />
+            <TextField className='rtl mt-2 profileInputs' id="standard-basic" label="شغل" />
             <div className='w-100 d-flex justify-content-center'>
                 <div className='profileSubmitButton mt-4 IranSans'> ویرایش</div>
             </div>
@@ -83,6 +83,7 @@ class ProfilePage extends React.Component {
             <span className='IranSans'>امتیاز</span>
         </div>
     </div>
+
     historyElement =   <div className='w-100 profileHistoryContainer mt-3'>
         <div className='w-100 d-flex justify-content-between align-items-center pt-4'>
             <span className='historyOrderDate'>250T</span>
