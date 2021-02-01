@@ -3,7 +3,7 @@ import './css/style.css'
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 import KeyboardArrowLeftRoundedIcon from "@material-ui/icons/KeyboardArrowLeftRounded";
 import KeyboardArrowRightRoundedIcon from "@material-ui/icons/KeyboardArrowRightRounded";
-import {InputAdornment, TextField} from "@material-ui/core";
+import {TextField} from "@material-ui/core";
 import 'animate.css/animate.css'
 import VerificationCodeInput from '../VerificationCodeInput/vCodeInput'
 import * as requests from '../../ApiRequests/ApiRequests.js'
@@ -11,23 +11,32 @@ import * as requests from '../../ApiRequests/ApiRequests.js'
 class LoginVCode extends React.Component {
     state = {
         userPhoneNumber: 0,
-        buttonDefaultClass:'loginSubmitButton IranSansLight animate__animated   ',
-        buttonAnimationClasses:'',
+        buttonDefaultClass: 'loginSubmitButton IranSansLight animate__animated   ',
+        buttonAnimationClasses: '',
+        phoneNumberContainerClass: 'd-none',
+        VCodeContainerClass: 'd-none  ',
+    }
 
+    componentDidMount() {
+        this.setState({
+            phoneNumberContainerClass: 'animate__animated animate__fadeInUp'
+        })
     }
 
     onInputChange(stateToChange, value) {
         this.state[stateToChange] = value
-        console.log(this.state.userPhoneNumber)
     }
 
-    sendCode = (phone)=>{
-        // requests.sendVCode(this.codeWasCorrect(),'09031232531')
-        console.log(phone)
+    sendCode = (phone) => {
+        requests.sendVCode(this.codeWasCorrect, phone)
     }
 
-    codeWasCorrect(res){
+    checkCallbackData = (res) => {
         console.log(res)
+    }
+
+    codeWasCorrect = (vCode) => {
+        requests.checkCode(this.checkCallbackData, '09031232531', vCode)
     }
 
     render() {
@@ -46,18 +55,74 @@ class LoginVCode extends React.Component {
                 <div className='loginPageContainer'>
                     <div className='loginCenterContainer d-flex w-100 justify-content-center h-100 align-items-center'>
                         <div className='centerItemsHolder'>
-                            {/*{this.phoneNumberSection}*/}
+
+
                             <React.Fragment>
-                                <span className='IranSans VCodePhoneTextHolder'>کد ارسال شده به شماره زیر رو وارد کن</span>
-                                <span className='IranSansLight VCodePhoneHolder text-right'>09031232531</span>
-                                <div className='text-right'>
-                                    <div className='editPhoneNumberButton'>
-                                        ویرایش
+                                <div className={this.state.phoneNumberContainerClass}>
+                                    <span className=' IranSans LoginPhoneTextHolder'>شماره موبایلت رو وارد کن </span>
+                                    <span className='IranSansLight LoginPhoneDetailHolder'>تا با ارسال کد ورود صفحه شخصیت امنیت داشته باشه</span>
+                                    <TextField type='number' className='LoginPhoneInput' onChange={(e) => {
+                                        if (parseInt(e.target.value).toString() !== "NaN" && e.target.value.length < 10) {
+                                            this.state.userPhoneNumber = '09' + e.target.value.toString()
+                                        } else {
+                                            e.target.value = e.target.value.slice(0, -1)
+                                        }
+                                        if (e.target.value.length === 9) {
+                                            this.setState({
+                                                buttonAnimationClasses: 'animate__fadeInUp'
+                                            })
+                                            this.state.userPhoneNumber = '09' + e.target.value.toString()
+                                        } else if (this.state.buttonAnimationClasses !== '') {
+                                            this.setState({
+                                                buttonAnimationClasses: 'animate__fadeOutDown'
+                                            })
+                                            setTimeout(() => {
+                                                if (this.state.buttonAnimationClasses === 'animate__fadeOutDown')
+                                                    this.setState({
+                                                        buttonAnimationClasses: ''
+                                                    })
+                                            }, 1000)
+                                        }
+                                    }}
+                                               InputProps={{
+                                                   // startAdornment: <InputAdornment position="start">09</InputAdornment>,
+                                                   startAdornment: <span className='phoneInputStarter'>09</span>
+                                                   ,
+                                               }}
+                                    />
+                                    <div onClick={() => {
+                                        this.sendCode(this.state.userPhoneNumber);
+                                        this.setState({
+                                            phoneNumberContainerClass: ' animate__animated animate__fadeOutLeftBig'
+                                        })
+                                        setTimeout(() => {
+                                            this.setState({
+                                                phoneNumberContainerClass: 'd-none',
+                                                VCodeContainerClass: 'animate__animated animate__fadeInUp flex-column d-flex'
+                                            })
+                                        }, 500)
+                                    }}
+                                         className={this.state.buttonDefaultClass + this.state.buttonAnimationClasses}>
+                                        ارسال کد
                                     </div>
                                 </div>
-                                <VerificationCodeInput sendCode ={this.codeWasCorrect}/>
-                                <div onClick={this.sendCode(this.state.userPhoneNumber)} className={'vCodeSubmitButton IranSansLight'}>تایید</div>
+                            </React.Fragment>
 
+
+                            <React.Fragment>
+                                <div className={this.state.VCodeContainerClass}>
+                                    <span
+                                        className='IranSans VCodePhoneTextHolder'>کد ارسال شده به شماره زیر رو وارد کن</span>
+                                    <span className='IranSansLight VCodePhoneHolder text-right'>09031232531</span>
+                                    <div className='text-right'>
+                                        <div className='editPhoneNumberButton'>
+                                            ویرایش
+                                        </div>
+                                    </div>
+                                    <VerificationCodeInput sendCode={this.codeWasCorrect}/>
+                                    <div className={'vCodeSubmitButton IranSansLight'}>تایید
+                                    </div>
+                                </div>
                             </React.Fragment>
                         </div>
                     </div>
@@ -65,47 +130,6 @@ class LoginVCode extends React.Component {
             </React.Fragment>
         )
     }
-
-    phoneNumberSection = <React.Fragment>
-        <span className='IranSans LoginPhoneTextHolder'>شماره موبایلت رو وارد کن </span>
-        <span className='IranSansLight LoginPhoneDetailHolder'>تا با ارسال کد ورود صفحه شخصیت امنیت داشته باشه</span>
-        {/*<TextField className='LoginInput' label="Size" id="standard-size-small"/>*/}
-        <TextField type='number' className='LoginPhoneInput' onChange={(e) => {
-            console.log(e.target.value.length)
-            if (parseInt(e.target.value).toString() !== "NaN" && e.target.value.length < 10) {
-                this.state.userPhoneNumber = '09' + e.target.value.toString()
-            } else {
-                e.target.value = e.target.value.slice(0,-1)
-            }
-            if (e.target.value.length === 9) {
-                console.log('button Enabled')
-                this.setState({
-                    buttonAnimationClasses:'animate__fadeInUp'
-                })
-                this.state.userPhoneNumber = '09' + e.target.value.toString()
-            }else if (this.state.buttonAnimationClasses !== ''){
-                this.setState({
-                    buttonAnimationClasses:'animate__fadeOutDown'
-                })
-                setTimeout(()=>{
-                    if (this.state.buttonAnimationClasses === 'animate__fadeOutDown')
-                        this.setState({
-                            buttonAnimationClasses:''
-                        })
-                },1000)
-            }
-        }}
-                   InputProps={{
-                       // startAdornment: <InputAdornment position="start">09</InputAdornment>,
-                       startAdornment: <span className='phoneInputStarter'>09</span>
-                       ,
-                   }}
-        />
-        <div onClick={this.sendCode(this.state.userPhoneNumber)} className={this.state.buttonDefaultClass + this.state.buttonAnimationClasses}>
-            ارسال کد
-        </div>
-    </React.Fragment>
-    // vCodeSection =
 }
 
 export default LoginVCode;

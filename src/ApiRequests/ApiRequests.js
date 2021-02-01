@@ -27,3 +27,11 @@ export const sendVCode = (callbackFunction,phone)=>{
         callbackFunction(res);
     })
 }
+
+
+export const checkCode = (callbackFunction, phone, vCode)=>{
+    $.post(BASE_API_URL+ "login.modify.php" ,{phone:phone,vCode:vCode}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
