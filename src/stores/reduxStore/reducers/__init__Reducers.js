@@ -31,7 +31,7 @@ export const __init__UserInfo = {
 
 export const __init__FrontStates = {
     missingUserInfo: false,
-    sentVCode: false,
+    VCodeSent: false,
     tour360Photo:"",
 }
 

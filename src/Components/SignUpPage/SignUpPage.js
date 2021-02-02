@@ -58,9 +58,7 @@ class SignUpPage extends React.Component {
                             this.state.name = e.target.value
                         }} id="standard-basic" className='defaultInputUi' label="شغل"/>
                         <div onClick={() => {
-                            if (this.state.name.length > 3) {
-                                requests.signUp(this.backFunction,this.props.token,this.state.name,this.state.birthday,this.state.job)
-                            }
+
                         }} className={'signupSubmitButton IranSansLight'}>تایید
                         </div>
                     </div>

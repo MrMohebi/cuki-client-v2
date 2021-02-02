@@ -7,7 +7,7 @@ export default function reducerFrontStates (state = __init__FrontStates, action)
     switch (action.type) {
         case actionTypes.SET_V_CODE:
             return produce(state, draftState =>{
-                draftState.sentVCode = action.payload.sentVCode;
+                draftState.VCodeSent = action.payload.sentVCode;
             });
         case actionTypes.MISSING_USER_INFO:
             return produce(state, draftState =>{

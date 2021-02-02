@@ -23,7 +23,17 @@ class LoginVCode extends React.Component {
         this.setState({
             phoneNumberContainerClass: 'animate__animated animate__fadeInUp'
         })
-        console.log(this.props.sentVCode)
+
+        setTimeout(()=>{
+            console.log(this.props.VCodeSent)
+        },1000)
+
+        if (this.props.VCodeSent){
+            this.setState({
+                phoneNumberContainerClass: 'd-none',
+                VCodeContainerClass: 'animate__animated animate__fadeInUp flex-column d-flex'
+            })
+        }
     }
 
     onInputChange(stateToChange, value) {
@@ -35,7 +45,6 @@ class LoginVCode extends React.Component {
     }
 
     checkCallbackData = (data) => {
-        console.log(data)
         if (data.statusCode === 200){
             if (data.data.isUserInfoSaved){
                 this.props.history.push('/p')
@@ -44,12 +53,11 @@ class LoginVCode extends React.Component {
             }
         }
     }
-    //data:
-    // isUserInfoSaved: true
-    // token: "c3908b970642bfd6398617115ced6064b0872be14a8e514f0d88fe203c5be3da"
+
 
     codeWasCorrect = (vCode) => {
         requests.checkCode(this.checkCallbackData, '09031232531', vCode)
+        this.props.setSentVCode(true);
     }
 
     render() {
@@ -68,8 +76,6 @@ class LoginVCode extends React.Component {
                 <div className='loginPageContainer'>
                     <div className='loginCenterContainer d-flex w-100 justify-content-center h-100 align-items-center'>
                         <div className='centerItemsHolder'>
-
-
                             <React.Fragment>
                                 <div className={this.state.phoneNumberContainerClass}>
                                     <span className=' IranSans LoginPhoneTextHolder'>شماره موبایلت رو وارد کن </span>
@@ -120,15 +126,12 @@ class LoginVCode extends React.Component {
                                     </div>
                                 </div>
                             </React.Fragment>
-
-
                             <React.Fragment>
                                 <div className={this.state.VCodeContainerClass}>
                                     <span
                                         className='IranSans VCodePhoneTextHolder'>کد ارسال شده به شماره زیر رو وارد کن</span>
                                     <span className='IranSansLight VCodePhoneHolder text-right'>09031232531</span>
                                     <div className='text-right'>
-
                                         <div onClick={()=>{
                                             this.setState({
                                                 VCodeContainerClass: 'animate__animated animate__fadeOutLeftBig flex-column d-flex'
@@ -142,7 +145,7 @@ class LoginVCode extends React.Component {
                                             ویرایش
                                         </div>
                                     </div>
-                                    <VerificationCodeInput sendCode={this.codeWasCorrect}/>
+                                    <VerificationCodeInput sendCode={this.codeWasCorrect} />
                                     <div className={'vCodeSubmitButton IranSansLight'}>تایید
                                     </div>
                                 </div>
@@ -158,15 +161,14 @@ class LoginVCode extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
-        sentVCode:store.rFrontStates.sentVCode,
-        foodListConverted: store.rRestaurantInfo.foodListConverted
+        VCodeSent:store.rFrontStates.VCodeSent,
 
     }
 }
 
 const mapDispatchToProps = () => {
     return {
-        setSentVCode:actions.setSentVCode()
+        setSentVCode:actions.setSentVCode
     }
 }
 
