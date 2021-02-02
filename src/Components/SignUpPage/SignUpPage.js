@@ -33,7 +33,7 @@ class SignUpPage extends React.Component {
                     <ArrowBackRoundedIcon/>
                     <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
                         <KeyboardArrowLeftRoundedIcon/>
-                        <div className='categoryPageSelectorText IranSans'>رستوران</div>
+                        <div className='categoryPageSelectorText IranSans'>کوکی کلاب</div>
                         <KeyboardArrowRightRoundedIcon/>
                     </div>
                     <ArrowBackRoundedIcon className='invisible'/>
