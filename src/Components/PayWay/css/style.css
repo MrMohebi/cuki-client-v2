@@ -13,9 +13,9 @@
 
 .payWayActive{
     transition: all 0.2s ease;
-    background-color: #0057cc;
-    filter: invert(1);
-    color: #000000;
+    background-color: #FFA833;
+
+    color: #fff;
     width: 100px;
     height: 30px;
     border-radius: 16px;
@@ -26,8 +26,6 @@
 .payWayNormal{
     transition: all 0.2s ease;
     background-color: #DBDBDB;
-    width: 100px;
-    height: 30px;
     width: 100px;
     height: 30px;
     border-radius: 16px;
