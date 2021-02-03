@@ -1,10 +1,10 @@
 import React from 'react';
 import {BrowserRouter,Route} from "react-router-dom";
-import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './index.css'
+import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import BottomNavBar from "./Components/BottomNavBar/BottomNavBar";
 import WelcomePage from "./Components/WelcomePage/WelcomePage";
-import './index.css'
 import CategoryPage from "./Components/CategoryPage/Category";
 import FoodListPage from "./Components/FoodListPage/FoodListPage";
 import BillPage from "./Components/BillPage/BillPage";
@@ -12,6 +12,7 @@ import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import EachOrderHistory from "./Components/EachOrderDetails/EachOrderHistory";
 import LoginVCode from "./Components/LoginVcode/LoginVCode";
 import SignUpPage from "./Components/SignUpPage/SignUpPage";
+import PayWay from "./Components/PayWay/PayWay";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path='/oh' component={EachOrderHistory}/>
         <Route path='/l' component={LoginVCode}/>
         <Route path='/signup' component={SignUpPage}/>
+        <Route path='/payway' component={PayWay}/>
 
       </BrowserRouter>
     </React.Fragment>

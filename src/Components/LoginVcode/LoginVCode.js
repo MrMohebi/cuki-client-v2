@@ -46,6 +46,7 @@ class LoginVCode extends React.Component {
 
     checkCallbackData = (data) => {
         if (data.statusCode === 200){
+            this.props.setToken(data.data.token)
             if (data.data.isUserInfoSaved){
                 this.props.history.push('/p')
             }else{
@@ -53,6 +54,8 @@ class LoginVCode extends React.Component {
             }
         }
     }
+    //data: {isUserInfoSaved: false, token: "03cceab736e950edfd544df0305619d386998b28427648dbd9e6a6b04af2ef39"}
+    // statusCode: 200
 
 
     codeWasCorrect = (vCode) => {
@@ -162,13 +165,15 @@ class LoginVCode extends React.Component {
 const mapStateToProps = (store) => {
     return {
         VCodeSent:store.rFrontStates.VCodeSent,
+        token:store.rUserInfo.token,
 
     }
 }
 
 const mapDispatchToProps = () => {
     return {
-        setSentVCode:actions.setSentVCode
+        setSentVCode:actions.setSentVCode,
+        setToken:actions.userSetToken
     }
 }
 

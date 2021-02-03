@@ -1,0 +1,53 @@
+.payWayContainer{
+    background-color: #FFF1DA;
+    margin: 20px auto auto auto;
+    height: calc(100% - 100px);
+    width: 90%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: column;
+    padding: 0 15px 10px 15px;
+    overflow: scroll;
+    min-height: 420px !important;
+}
+
+.payWayActive{
+    transition: all 0.2s ease;
+    background-color: #0057cc;
+    filter: invert(1);
+    color: #000000;
+    width: 100px;
+    height: 30px;
+    border-radius: 16px;
+    font-family:AppIranSansMedium;
+    line-height: 30px;
+    font-size: 0.7rem;
+}
+.payWayNormal{
+    transition: all 0.2s ease;
+    background-color: #DBDBDB;
+    width: 100px;
+    height: 30px;
+    width: 100px;
+    height: 30px;
+    border-radius: 16px;
+    font-family:AppIranSansMedium;
+    line-height: 30px;
+    font-size: 0.7rem;
+}
+.payWayButtonsContainer{
+    height: 80px;
+}
+.payWayOptionsContainer{
+    margin-top: 20px;
+}
+.payWayText{
+    font-size: 0.8rem;
+}
+.mapContainer{
+    width: 100%;
+    background-color: white;
+    height: 300px;
+    min-height: 300px;
+    margin-top: 15px;
+}

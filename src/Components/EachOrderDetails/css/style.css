@@ -18,7 +18,7 @@
     height: 18rem;
     border-radius: 16px;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column;
     overflow: scroll;
     padding: 0px 0 10px 0;
     overflow: scroll;
@@ -61,14 +61,16 @@
         height: 25rem;
         border-radius: 16px;
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: column;
         overflow: scroll;
         padding: 0px 0 10px 0;
 
     }
 
 }
-
+.profileHistoryTextHeader{
+    height: 20px;
+}
 .EachOrderDetailsEachFoodImage {
     transition: all 0.2s ease;
     height: 45px;
