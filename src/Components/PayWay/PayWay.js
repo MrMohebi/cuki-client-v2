@@ -7,8 +7,13 @@ class PayWay extends React.Component{
         inResClass:'',
         onlineClass:'',
         offlineClass:'',
-        inOrOut: 'out',
-        onlineOrCash:'cash'
+        tableClass:'',
+        table:'',
+        addressDetailsClass:'addressDetails',
+        mapClass:'mapContainer',
+        inOrOut: 'in',
+        onlineOrCash:'cash',
+        addressDetails:'',
     }
     componentDidMount() {
         if (this.state.inOrOut === 'in'){
@@ -22,6 +27,21 @@ class PayWay extends React.Component{
         }else{
             this.enableCash()
 
+        }
+        if (this.state.inOrOut === 'in'){
+            this.setState({
+                addressDetailsClass:'d-none',
+                mapClass:'d-none',
+                tableClass:'animate__animated animate__fadeInUp'
+
+            })
+        }else{
+            this.setState({
+                addressDetailsClass:'d-animate__animated animate__fadeInUp',
+                mapClass:'d-animate__animated animate__fadeInUp',
+                tableClass:'d-none'
+
+            })
         }
     }
 
@@ -76,7 +96,13 @@ class PayWay extends React.Component{
 
                         </div>
                     </div>
-                    <div className='mapContainer'/>
+                    <div className={this.state.mapClass}/>
+                    <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
+                        this.setState({
+                            addressDetails:e.target.value.toString(),
+                        })
+                    }}/>
+                    <input className={this.state.tableClass}/>
                     <div className='BillSubmitButton mt-2'>
                         <span>پرداخت</span>
                     </div>
