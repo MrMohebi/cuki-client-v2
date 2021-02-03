@@ -1,0 +1,52 @@
+.dongiPageContainer{
+    background-color: #E1EFF2;
+    margin: 20px auto auto auto;
+    height: calc(100% - 100px);
+    width: 90%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: column;
+    padding: 0 15px 10px 15px;
+    overflow: scroll;
+    min-height: 420px !important;
+}
+.eachDongContainer{
+    background-color: #fff;
+    height: 60px;
+    margin-top: 20px;
+    border-radius: 14px;
+    line-height: 60px;
+    padding: 0 10px 0 10px;
+    display: flex;
+    justify-content: center;
+}
+.eachDongFoodName{
+    font-family: AppIranSans;
+    color: #6D5092;
+    font-size: 0.7rem;
+}
+.DongiPayText{
+    color: black;
+}
+.howMuchContainer{
+    display: flex;
+    flex-flow: column;
+    line-height: 20px;
+    margin-right: 15px;
+    font-size: 0.7rem;
+    justify-content: center;
+}
+.howMuchNumber{
+    border-bottom:solid #8066A0 1px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.greenDongiText{
+    color: #438D48;
+}
+.dongiFromText{
+    margin-right: 15px;
+    font-family: AppIranSans;
+    font-size:0.7rem ;
+
+}

@@ -13,6 +13,7 @@ import EachOrderHistory from "./Components/EachOrderDetails/EachOrderHistory";
 import LoginVCode from "./Components/LoginVcode/LoginVCode";
 import SignUpPage from "./Components/SignUpPage/SignUpPage";
 import PayWay from "./Components/PayWay/PayWay";
+import DongiPage from "./Components/DongiPage/DongiPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path='/l' component={LoginVCode}/>
         <Route path='/signup' component={SignUpPage}/>
         <Route path='/payway' component={PayWay}/>
+        <Route path='/dongi' component={DongiPage}/>
 
       </BrowserRouter>
     </React.Fragment>
