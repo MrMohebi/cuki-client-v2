@@ -1,6 +1,39 @@
-import React from "react";
+import React, {useState} from "react";
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 import './css/style.css'
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet'
+import L from 'leaflet'
+import "leaflet/dist/leaflet.css"
+import markerPNG from './img/marker.png'
+import markerShadowPNG from './img/marker-shadow.png'
+
+let markerIcon = L.icon({
+    iconUrl: markerPNG,
+    shadowUrl: markerShadowPNG,
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+function MyComponent() {
+    let [position, setPosition] = useState(null)
+    const map = useMapEvents({
+        click: (e) => {
+            setPosition(e.latlng)
+            console.log(e.latlng);
+        },
+    })
+    return position === null ? null : (
+        <Marker icon={markerIcon} position={position}>
+            <Popup>You clicked here</Popup>
+        </Marker>
+    )
+}
+
+
 class PayWay extends React.Component{
     state = {
         outResClass:'',
@@ -96,7 +129,14 @@ class PayWay extends React.Component{
 
                         </div>
                     </div>
-                    <div className={this.state.mapClass}/>
+                    <div className={this.state.mapClass}>
+                        <MapContainer zoomControl={false} style={{height: "300px"}} center={[30.287486, 57.052301]} zoom={15} >
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            <MyComponent/>
+                        </MapContainer>
+                    </div>
                     <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
                         this.setState({
                             addressDetails:e.target.value.toString(),
