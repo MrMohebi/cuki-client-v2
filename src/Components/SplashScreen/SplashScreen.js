@@ -1,14 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 import './css/style.css';
 import * as requests from '../../ApiRequests/ApiRequests'
 import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import {connect} from 'react-redux';
 import * as actions from '../../stores/reduxStore/actions';
+import {Snackbar} from "@material-ui/core"
+
 
 
 class SplashScreen extends React.Component{
     componentDidMount() {
         this.getData();
+    }
+
+    state = {
+        openSnackbar: false,
+        snackbarMessage:"فکر کنم اینترنتت قطعه :(",
+    }
+
+    setOpenSnackbar = (status) =>{
+        this.setState({
+            openSnackbar:status
+        })
     }
 
     goMainPage = (response) =>{
@@ -21,6 +34,8 @@ class SplashScreen extends React.Component{
                 console.log(this.props.foodListConverted)
             },1000)
             console.log(response)
+        }else{
+            this.setOpenSnackbar(true)
         }
     }
 
@@ -31,6 +46,11 @@ class SplashScreen extends React.Component{
     render() {
         return(
             <div className='mainSplashScreen'>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                    open={this.state.openSnackbar}
+                    message={this.state.snackbarMessage}
+                />
                 <div className='d-flex h-100 justify-content-center'>
                     <div className='splashScreenImage' style={{background:'url(./img/SplashScreen/splashicon.png)',backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}}/>
                 </div>
