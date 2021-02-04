@@ -23,12 +23,12 @@ class FoodListPage extends Component {
     }
 
     state={
-        foodList:<div></div>,
+        foodList:<div/>,
     }
 
 
     createFoodList = () =>{
-        let foodList= this.props.foodListConverted[this.props.match.params.part.toString()][this.props.match.params.category].foodList.map(eachFood=>{
+        let foodList= this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.map(eachFood=>{
             let colors = RandomColor.RandomColor()
             return(
                 <div key={eachFood['foods_id']} className='foodListEachFoodContainer'>
@@ -60,35 +60,35 @@ class FoodListPage extends Component {
     }
 
     previousPage = () =>{
-        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params.part].indexOf(this.props.match.params.category)
+        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params["part"]].indexOf(this.props.match.params.category)
         if(catIndex !== 0)
-            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][catIndex-1]);
+            this.props.history.push("/category/"+this.props.match.params["part"]+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params["part"]][catIndex-1]);
         else
-            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][this.props.foodListConverted.partsCategories[this.props.match.params.part].length-1]);
+            this.props.history.push("/category/"+this.props.match.params["part"]+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params["part"]][this.props.foodListConverted.partsCategories[this.props.match.params["part"]].length-1]);
 
         this.createFoodList()
     }
 
     nextPage = () =>{
-        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params.part].indexOf(this.props.match.params.category)
-        if(catIndex >= this.props.foodListConverted.partsCategories[this.props.match.params.part].length-1)
-            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][0]);
+        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params["part"]].indexOf(this.props.match.params.category)
+        if(catIndex >= this.props.foodListConverted.partsCategories[this.props.match.params["part"]].length-1)
+            this.props.history.push("/category/"+this.props.match.params["part"]+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params["part"]][0]);
         else
-            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][catIndex+1]);
+            this.props.history.push("/category/"+this.props.match.params["part"]+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params["part"]][catIndex+1]);
 
         this.createFoodList()
     }
 
-    swipeRight = (eventData) =>{
+    swipeRight = () =>{
         this.previousPage()
     }
 
-    swipeLeft = (eventData) =>{
+    swipeLeft = () =>{
         this.nextPage()
     }
 
     handleBack = () =>{
-        this.props.history.push("/category/"+this.props.match.params.part)
+        this.props.history.push("/category/"+this.props.match.params["part"])
     }
 
 
@@ -101,7 +101,7 @@ class FoodListPage extends Component {
                         <ArrowBackRoundedIcon onClick={this.handleBack}/>
                         <div className='headerPageSelector text-center d-flex justify-content-around flex-row'>
                             <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
-                            <div className='categoryPageSelectorText IranSans'>{this.props.foodListConverted[this.props.match.params.part][this.props.match.params.category].persianName}</div>
+                            <div className='categoryPageSelectorText IranSans'>{this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].persianName}</div>
                             <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
                         </div>
                         <ArrowBackRoundedIcon className='invisible'/>
