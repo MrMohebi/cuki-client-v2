@@ -5,20 +5,33 @@ import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRo
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import * as RandomColor from '../../functions/RandomColor'
+import { useSwipeable } from 'react-swipeable';
+
+export const Swipeable = ({children, style, ...props}) => {
+    const handlers = useSwipeable(props);
+    return (<div style={style} { ...handlers }>{children}</div>);
+}
 
 
 class FoodListPage extends Component {
+    componentDidMount() {
+        if(!(this.props.foodListConverted.hasOwnProperty('parts') &&  this.props.foodListConverted.parts.length > 0)){
+            this.props.history.push("/");
+            return ;
+        }
+        this.createFoodList()
+    }
 
     state={
         foodList:<div></div>,
     }
-    componentDidMount() {
-        console.log(this.props.foodListConverted)
 
+
+    createFoodList = () =>{
         let foodList= this.props.foodListConverted[this.props.match.params.part.toString()][this.props.match.params.category].foodList.map(eachFood=>{
             let colors = RandomColor.RandomColor()
             return(
-                <div className='foodListEachFoodContainer'>
+                <div key={eachFood['foods_id']} className='foodListEachFoodContainer'>
                     <div className='foodListEachFood' style={{backgroundColor:colors.background}}>
                         <div className='priceAndImage'>
                                     <span className='eachFoodPrice'>
@@ -46,26 +59,61 @@ class FoodListPage extends Component {
         })
     }
 
+    previousPage = () =>{
+        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params.part].indexOf(this.props.match.params.category)
+        if(catIndex !== 0)
+            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][catIndex-1]);
+        else
+            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][this.props.foodListConverted.partsCategories[this.props.match.params.part].length-1]);
+
+        this.createFoodList()
+    }
+
+    nextPage = () =>{
+        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params.part].indexOf(this.props.match.params.category)
+        if(catIndex >= this.props.foodListConverted.partsCategories[this.props.match.params.part].length-1)
+            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][0]);
+        else
+            this.props.history.push("/category/"+this.props.match.params.part+ "/" +this.props.foodListConverted.partsCategories[this.props.match.params.part][catIndex+1]);
+
+        this.createFoodList()
+    }
+
+    swipeRight = (eventData) =>{
+        this.previousPage()
+    }
+
+    swipeLeft = (eventData) =>{
+        this.nextPage()
+    }
+
+    handleBack = () =>{
+        this.props.history.push("/category/"+this.props.match.params.part)
+    }
+
+
     render() {
         return (
-            <React.Fragment>
-                <div
-                    className='foodListPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                    <ArrowBackRoundedIcon/>
-                    <div className='headerPageSelector text-center d-flex justify-content-around flex-row'>
-                        <KeyboardArrowLeftRoundedIcon/>
-                        <div className='categoryPageSelectorText IranSans'>رستوران</div>
-                        <KeyboardArrowRightRoundedIcon/>
+            <Swipeable style={{height:"100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
+                <React.Fragment>
+                    <div
+                        className='foodListPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                        <ArrowBackRoundedIcon onClick={this.handleBack}/>
+                        <div className='headerPageSelector text-center d-flex justify-content-around flex-row'>
+                            <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
+                            <div className='categoryPageSelectorText IranSans'>{this.props.foodListConverted[this.props.match.params.part][this.props.match.params.category].persianName}</div>
+                            <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
+                        </div>
+                        <ArrowBackRoundedIcon className='invisible'/>
                     </div>
-                    <ArrowBackRoundedIcon className='invisible'/>
-                </div>
 
-                <div className='foodListPageContainer'>
-                    <div className='heightFitContent'>
-                        {this.state.foodList}
+                    <div className='foodListPageContainer'>
+                        <div className='heightFitContent'>
+                            {this.state.foodList}
+                        </div>
                     </div>
-                </div>
-            </React.Fragment>
+                </React.Fragment>
+            }/>
         )
     }
 }
