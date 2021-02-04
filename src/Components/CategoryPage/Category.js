@@ -5,21 +5,34 @@ import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRight
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
+import { useSwipeable } from 'react-swipeable';
 
+export const Swipeable = ({children, style, ...props}) => {
+    const handlers = useSwipeable(props);
+    return (<div style={style} { ...handlers }>{children}</div>);
+}
 
 class CategoryPage extends React.Component {
+    componentDidMount() {
+        if(!(this.props.foodListConverted.hasOwnProperty('parts') &&  this.props.foodListConverted.parts.length > 0)){
+            this.props.history.push("/");
+            return ;
+        }
+        this.createCatList()
 
-    state = {
-        categoryList: <div></div>,
     }
 
-    componentDidMount() {
+    state = {
+        categoryList: <div/>,
+    }
+
+    createCatList = () =>{
         let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params.part.toString()].map(eachCategory => {
             let persianName = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].persianName
             let logo = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].logo.toString()
             let color = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].averageColor.toString()
             return (
-                <NavLink to={'/foodList/'+this.props.match.params.part.toString()+'/'+eachCategory.toString()} className='categoryPageEachCategoryContainer'>
+                <NavLink key={persianName} to={'/foodList/'+this.props.match.params.part.toString()+'/'+eachCategory.toString()} className='categoryPageEachCategoryContainer'>
                     <div  className="categoryPageEachCategory">
                         <div className="categoryPageEachCategoryImage" style={{
                             background: 'url(/img/categories/'+ `${logo}`+'.png)',
@@ -37,30 +50,52 @@ class CategoryPage extends React.Component {
         })
     }
 
+
+    swipeRight = (eventData) =>{
+        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params.part.toString())
+        if(catIndex !== 0)
+            this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex-1]);
+        else
+            this.props.history.push("/category/"+this.props.foodListConverted.parts[this.props.foodListConverted.parts.length-1]);
+
+        this.createCatList()
+    }
+
+    swipeLeft = (eventData) =>{
+        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params.part.toString())
+        if(catIndex >= this.props.foodListConverted.parts.length-1)
+            this.props.history.push("/category/"+this.props.foodListConverted.parts[0]);
+        else
+            this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex+1]);
+
+        this.createCatList()
+    }
+
+
+
     render() {
         return (
-            <React.Fragment>
-                <div
-                    className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                    <ArrowBackRoundedIcon/>
-                    <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
-                        <KeyboardArrowLeftRoundedIcon/>
-                        <div className='categoryPageSelectorText IranSans'>رستوران</div>
-                        <KeyboardArrowRightRoundedIcon/>
+            <Swipeable style={{height:"100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
+                <React.Fragment>
+                    <div
+                        className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                        <ArrowBackRoundedIcon/>
+                        <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
+                            <KeyboardArrowLeftRoundedIcon/>
+                            <div className='categoryPageSelectorText IranSans'>رستوران</div>
+                            <KeyboardArrowRightRoundedIcon/>
+                        </div>
+                        <ArrowBackRoundedIcon className='invisible'/>
                     </div>
-                    <ArrowBackRoundedIcon className='invisible'/>
-                </div>
 
-                <div className='categoryPageContainer'>
-                    <div className='heightFitContent'>
-                        {this.state.categoryList}
+                    <div className='categoryPageContainer'>
+                        <div className='heightFitContent'>
+                            {this.state.categoryList}
+                        </div>
                     </div>
-                </div>
-
-
-            </React.Fragment>
+                </React.Fragment>
+            }/>
         )
-
     }
 }
 

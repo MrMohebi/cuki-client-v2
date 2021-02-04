@@ -20,8 +20,8 @@ function App() {
     <React.Fragment>
       <BrowserRouter>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path={['/category','/t','/foodList','/l','/sign']} component={BottomNavBar}/>
-        <Route path='/t' component={WelcomePage}/>
+        <Route path={['/category','/main','/foodList','/l','/sign']} component={BottomNavBar}/>
+        <Route path='/main' component={WelcomePage}/>
         <Route path='/category/:part' component={CategoryPage}/>
         <Route path='/foodList/:part/:category' component={FoodListPage}/>
         <Route path='/b' component={BillPage}/>
