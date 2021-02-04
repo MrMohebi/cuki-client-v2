@@ -18,12 +18,15 @@ let markerIcon = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
-function MyComponent() {
+function MarkerToolTip() {
     let [position, setPosition] = useState(null)
     const map = useMapEvents({
         click: (e) => {
             setPosition(e.latlng)
             console.log(e.latlng);
+            document.getElementsByClassName('payWayContainer')[0].scrollBy(0,150)
+
+
         },
     })
     return position === null ? null : (
@@ -35,18 +38,25 @@ function MyComponent() {
 
 
 class PayWay extends React.Component{
+
+    constructor(props) {
+        super(props)
+        this.mapDetailsTableContainer = React.createRef()
+    }
+
+
     state = {
         outResClass:'',
         inResClass:'',
         onlineClass:'',
         offlineClass:'',
-        tableClass:'',
+        tableClass:'tableContainerClass',
         table:'',
         addressDetailsClass:'addressDetails',
         mapClass:'mapContainer',
-        inOrOut: 'in',
+        inOrOut: 'out',
         onlineOrCash:'cash',
-        addressDetails:'',
+        addressDetails:'addressDetails',
     }
     componentDidMount() {
         if (this.state.inOrOut === 'in'){
@@ -65,14 +75,14 @@ class PayWay extends React.Component{
             this.setState({
                 addressDetailsClass:'d-none',
                 mapClass:'d-none',
-                tableClass:'animate__animated animate__fadeInUp'
+                tableClass:'animate__animated animate__fadeInUp tableContainerClass'
 
             })
         }else{
             this.setState({
                 addressDetailsClass:'d-animate__animated animate__fadeInUp',
                 mapClass:'d-animate__animated animate__fadeInUp',
-                tableClass:'d-none'
+                tableClass:'d-none tableContainerClass'
 
             })
         }
@@ -81,14 +91,25 @@ class PayWay extends React.Component{
     enableInRes = ()=>{ this.setState({
         inResClass:'payWayActive',
         outResClass:'payWayNormal',
-        inOrOut:'in'
-    })}
+        inOrOut:'in',
+        tableClass:'animate__animated animate__fadeInRight tableContainerClass',
+        mapClass:'animate__animated animate__fadeOut mapContainer d-none',
+        addressDetailsClass:'animate__animated animate__fadeOut d-none'
+    })
+        this.mapDetailsTableContainer.current.style.height = '80px'
+    }
     enableOutRes = ()=>{this.setState({
         inResClass:'payWayNormal',
         outResClass:'payWayActive',
-        inOrOut:'out'
+        inOrOut:'out',
+        tableClass:'h-0Animate',
+        mapClass:'animate__animated animate__fadeIn mapContainer',
+        addressDetailsClass:'addressDetails '
 
-    })}
+    })
+        this.mapDetailsTableContainer.current.style.height = '1000px'
+
+    }
     enableOnline = ()=>{this.setState({
         onlineClass:'payWayActive',
         offlineClass:'payWayNormal',
@@ -110,17 +131,15 @@ class PayWay extends React.Component{
                     </div>
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
-                <div className='payWayContainer'>
+                <div  className='payWayContainer'>
                     <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
                         <span className='IranSans payWayText ' >نحوه پرداخت چجوری باشه؟</span>
                         <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
                             <div className={this.state.onlineClass} onClick={this.enableOnline}
                             >آنلاین</div>
                             <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی</div>
-
                         </div>
                     </div>
-
                     <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
                         <span className='IranSans payWayText ' >تحویل سفارش چطور؟</span>
                         <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
@@ -129,20 +148,28 @@ class PayWay extends React.Component{
 
                         </div>
                     </div>
-                    <div className={this.state.mapClass}>
-                        <MapContainer zoomControl={false} style={{height: "300px"}} center={[30.287486, 57.052301]} zoom={15} >
-                            <TileLayer
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                            <MyComponent/>
-                        </MapContainer>
+                    <div  ref={this.mapDetailsTableContainer} className='mapDetailsTableContainer'>
+                        <div className={this.state.mapClass}>
+                            <MapContainer zoomControl={false} style={{height: "300px"}} center={[30.287486, 57.052301]} zoom={15} >
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <MarkerToolTip/>
+                            </MapContainer>
+                        </div>
+                        <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
+                            this.setState({
+                                addressDetails:e.target.value.toString(),
+                            })
+                        }}/>
+                        <div className={this.state.tableClass}>
+                            <span className='tableTextHolder'>شماره میز</span>
+                            <input placeholder='000' type='number' className='tableInput'/>
+                        </div>
                     </div>
-                    <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
-                        this.setState({
-                            addressDetails:e.target.value.toString(),
-                        })
-                    }}/>
-                    <input className={this.state.tableClass}/>
+
+
+
                     <div className='BillSubmitButton mt-2'>
                         <span>پرداخت</span>
                     </div>

@@ -7,8 +7,8 @@
     display: flex;
     flex-flow: column;
     padding: 0 15px 10px 15px;
-    overflow: scroll;
-    min-height: 420px !important;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 .payWayActive{
@@ -60,4 +60,49 @@
     border: none;
     text-align: right;
     direction: rtl;
+}
+.tableInput{
+    border: none;
+    border-radius: 15px;
+    margin-top: 10px;
+    outline: none;
+    padding: 0 10px 0 10px;
+    height: 30px;
+    width: 60px;
+    margin-right: 0px;
+    margin-left: auto;
+    text-align: center;
+    font-family: AppIranSans;
+    line-height: 35px;
+}
+.tableTextHolder{
+    font-family:AppIranSans;
+    margin-right: 0px;
+    margin-left: auto;
+}
+.tableContainerClass{
+    transition: all 0.2s ease;
+    display: flex;
+    flex-flow: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.h-0Animate{
+    transition: all 0.2s ease;
+    height: 0px;
+    overflow: hidden;
+}
+
+.h-100Animate{
+    transition: all 0.2s ease;
+    height:auto;
+}
+.SubmitButtonContainer{
+    position: absolute;
+    bottom: 0;
+}
+.mapDetailsTableContainer{
+    transition: all 0.8s ease;
+    height: 20px;
+    margin-top: 20px;
 }

@@ -8,6 +8,7 @@
     flex-flow: row wrap;
     padding: 0 15px 10px 15px;
     overflow: scroll;
+    position: relative;
 }
 .billItemsContainer{
 height: calc(100% - 120px);
@@ -32,6 +33,7 @@ height: calc(100% - 120px);
     align-items: center;
     font-family: AppIranSansMedium;
     color: white;
+
 }
 .umberInDe{
     width: 80px;
