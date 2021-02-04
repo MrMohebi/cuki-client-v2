@@ -22,8 +22,8 @@ function App() {
         <Route exact path='/' component={SplashScreen}/>
         <Route path={['/category','/main','/foodList','/l','/sign']} component={BottomNavBar}/>
         <Route path='/main' component={WelcomePage}/>
-        <Route path='/category/:part' component={CategoryPage}/>
-        <Route path='/foodList/:part/:category' component={FoodListPage}/>
+        <Route exact path='/category/:part' component={CategoryPage}/>
+        <Route exact path='/category/:part/:category' component={FoodListPage}/>
         <Route path='/b' component={BillPage}/>
         <Route path='/p' component={ProfilePage}/>
         <Route path='/oh' component={EachOrderHistory}/>

@@ -19,7 +19,6 @@ class CategoryPage extends React.Component {
             return ;
         }
         this.createCatList()
-
     }
 
     state = {
@@ -27,12 +26,12 @@ class CategoryPage extends React.Component {
     }
 
     createCatList = () =>{
-        let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params.part.toString()].map(eachCategory => {
-            let persianName = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].persianName
-            let logo = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].logo.toString()
-            let color = this.props.foodListConverted[this.props.match.params.part.toString()][eachCategory].averageColor.toString()
+        let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params["part"]].map(eachCategory => {
+            let persianName = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].persianName
+            let logo = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].logo
+            let color = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].averageColor.toString()
             return (
-                <NavLink key={persianName} to={'/foodList/'+this.props.match.params.part.toString()+'/'+eachCategory.toString()} className='categoryPageEachCategoryContainer'>
+                <NavLink key={persianName} to={'/category/'+this.props.match.params["part"]+'/'+eachCategory} className='categoryPageEachCategoryContainer'>
                     <div  className="categoryPageEachCategory">
                         <div className="categoryPageEachCategoryImage" style={{
                             background: 'url(/img/categories/'+ `${logo}`+'.png)',
@@ -50,19 +49,8 @@ class CategoryPage extends React.Component {
         })
     }
 
-
-    swipeRight = (eventData) =>{
-        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params.part.toString())
-        if(catIndex !== 0)
-            this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex-1]);
-        else
-            this.props.history.push("/category/"+this.props.foodListConverted.parts[this.props.foodListConverted.parts.length-1]);
-
-        this.createCatList()
-    }
-
-    swipeLeft = (eventData) =>{
-        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params.part.toString())
+    nextPage = () =>{
+        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params["part"])
         if(catIndex >= this.props.foodListConverted.parts.length-1)
             this.props.history.push("/category/"+this.props.foodListConverted.parts[0]);
         else
@@ -71,6 +59,32 @@ class CategoryPage extends React.Component {
         this.createCatList()
     }
 
+    previousPage = () =>{
+        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params["part"])
+        if(catIndex !== 0)
+            this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex-1]);
+        else
+            this.props.history.push("/category/"+this.props.foodListConverted.parts[this.props.foodListConverted.parts.length-1]);
+
+        this.createCatList()
+    }
+
+    swipeRight = () =>{
+        this.previousPage()
+    }
+
+    swipeLeft = () =>{
+        this.nextPage()
+    }
+
+    handleBack = () =>{
+        this.props.history.push("/main")
+    }
+
+    partEnglish2Persian = (englishName) =>{
+        let names = {restaurant:"رستوران", coffeeshop:"کافی شاپ"}
+        return names[englishName]
+    }
 
 
     render() {
@@ -79,11 +93,11 @@ class CategoryPage extends React.Component {
                 <React.Fragment>
                     <div
                         className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                        <ArrowBackRoundedIcon/>
+                        <ArrowBackRoundedIcon onClick={this.handleBack}/>
                         <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
-                            <KeyboardArrowLeftRoundedIcon/>
-                            <div className='categoryPageSelectorText IranSans'>رستوران</div>
-                            <KeyboardArrowRightRoundedIcon/>
+                            <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
+                            <div className='categoryPageSelectorText IranSans'>{this.partEnglish2Persian(this.props.match.params["part"])}</div>
+                            <KeyboardArrowRightRoundedIcon onClick={this.nextPage} />
                         </div>
                         <ArrowBackRoundedIcon className='invisible'/>
                     </div>
