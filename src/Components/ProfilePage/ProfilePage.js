@@ -30,6 +30,9 @@ class ProfilePage extends React.Component {
         navNormalClass:'profileNavigate IranSans text-nowrap',
         UserTabClass:'profileNavigate IranSans text-nowrap',
         HistoryTabClass:'profileNavigate IranSans text-nowrap',
+        clubElementClass:'w-100',
+        historyElementClass:'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeOut d-none',
+
     }
 
 
@@ -38,7 +41,11 @@ class ProfilePage extends React.Component {
             HistoryTabClass:this.state.navNormalClass,
             UserTabClass:this.state.navActiveClass,
             activeProfile:'club',
+            clubElementClass:'w-100 animate__animated animate__fadeIn',
+            historyElementClass:'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeOut d-none',
+
         });
+
     }
 
     historyTabClickHandler = ()=>{
@@ -46,6 +53,8 @@ class ProfilePage extends React.Component {
             HistoryTabClass:this.state.navActiveClass,
             UserTabClass:this.state.navNormalClass,
             activeProfile:'his',
+            clubElementClass:'animate__animated animate__fadeOut d-none',
+            historyElementClass:'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeIn',
         })
     }
 
@@ -67,15 +76,13 @@ class ProfilePage extends React.Component {
     }
 
     swipeRight = () =>{
-        this.setState({
-            activeProfile:"club"
-        })
+        this.userTabClickHandler()
+
     }
 
     swipeLeft = () =>{
-        this.setState({
-            activeProfile:"his"
-        })
+        this.historyTabClickHandler()
+
     }
 
     handleBack = () =>{
@@ -86,6 +93,7 @@ class ProfilePage extends React.Component {
         return (
             <Swipeable style={{height:"100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <React.Fragment>
+                    <div className='animate__animated'></div>
                     <div
                         className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
                         <ArrowBackRoundedIcon/>
@@ -102,7 +110,47 @@ class ProfilePage extends React.Component {
                             <span className={this.state.HistoryTabClass} onClick={this.historyTabClickHandler}> سفارش های من</span>
                         </div>
 
-                        {this.state.activeProfile === 'club' ? this.clubElement : this.historyElement}
+                        {/*{this.state.activeProfile === 'club' ? this.clubElement : this.historyElement}*/}
+                        <div className={this.state.historyElementClass}>
+                            <div className='w-100 d-flex justify-content-between align-items-center pt-4'>
+                                <span className='historyOrderDate'>250T</span>
+                                <span className='historyOrderName'>اسپشیال فلان و فلان وفلان</span>
+                                <span className='historyOrderDate'>8/23</span>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <div className={this.state.clubElementClass}>
+                            <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
+                                <TextField defaultValue={this.props.name} className='rtl mt-2 profileInputs' id="standard-basic" label="اسم و فامیل" />
+                                <TextField defaultValue={this.props.birthday} className='rtl mt-2 profileInputs' id="standard-basic" label="تاریخ تولد" />
+                                <TextField defaultValue={this.props.job} className='rtl mt-2 profileInputs' id="standard-basic" label="شغل" />
+                                <div className='w-100 d-flex justify-content-center'>
+                                    <div className='profileSubmitButton mt-4 IranSans'> ویرایش</div>
+                                </div>
+                            </div>
+                            <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
+                                <span className='IranSans'>{this.props.totalBoughtRestaurant / 1000} T</span>
+                                <span className='IranSans '>مجموع خرید </span>
+                            </div>
+                            <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
+                                <span className='IranSans'>{this.props.scoreRestaurant}</span>
+                                <span className='IranSans'>امتیاز</span>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
 
                     </div>
                 </React.Fragment>
