@@ -1,30 +1,30 @@
 import React from "react";
 import './css/style.css';
 import {connect} from "react-redux";
-import { useSwipeable } from 'react-swipeable';
+import {useSwipeable} from 'react-swipeable';
 
 export const Swipeable = ({children, ...props}) => {
     const handlers = useSwipeable(props);
-    return (<div { ...handlers }>{children}</div>);
+    return (<div {...handlers}>{children}</div>);
 }
 
 class WelcomePage extends React.Component {
-    componentDidMount() {
-        if(!(this.props.foodListConverted.hasOwnProperty('parts') &&  this.props.foodListConverted.parts.length > 0)){
-            this.props.history.push("/");
-        }
-    }
-
     state = {
         handClass: "shakeHands",
         allowToShake: true,
     }
 
-    swipeRight = (eventData) =>{
+    componentDidMount() {
+        if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
+            this.props.history.push("/");
+        }
+    }
+
+    swipeRight = (eventData) => {
         console.log("swiped right", eventData)
     }
 
-    swipeLeft = (eventData) =>{
+    swipeLeft = (eventData) => {
         console.log("swiped left", eventData)
     }
 
@@ -40,17 +40,17 @@ class WelcomePage extends React.Component {
                         <div className='HandAndHeaderText'>
                             <span className="welcomePageDescriptionH"> دوست داری چی بخوری؟</span>
                             <div onClick={(d) => {
-                                if(this.state.allowToShake){
+                                if (this.state.allowToShake) {
                                     d.target.classList.add("element")
                                     this.setState({
-                                        allowToShake:false
+                                        allowToShake: false
                                     })
-                                    setTimeout(()=>{
+                                    setTimeout(() => {
                                         d.target.classList.remove("element")
                                         this.setState({
-                                            allowToShake:true
+                                            allowToShake: true
                                         })
-                                    },1000)
+                                    }, 1000)
                                 }
 
                             }} className={this.state.handClass} style={{
@@ -81,7 +81,7 @@ class WelcomePage extends React.Component {
                     <div className="welcomePageFrames2">
                         <br/>
                         <div className="d-flex justify-content-around">
-                            <p className="openIcons" >
+                            <p className="openIcons">
                                 <div className="donat" style={{
                                     background: 'url("./img/WelcomPage/donat.png")',
                                     backgroundSize: '95%',
@@ -89,8 +89,8 @@ class WelcomePage extends React.Component {
                                     backgroundRepeat: 'no-repeat',
                                 }}/>
                                 <span className="burgersAndDonatDescription">کافی شاپ</span>
-                                    <br/>
-                                    <br/>
+                                <br/>
+                                <br/>
                             </p>
                             <p className="openIcons">
                                 <div className="burger" style={{
@@ -112,7 +112,7 @@ class WelcomePage extends React.Component {
                         </div>
                     </div>
                 </div>
-            } />
+            }/>
         )
     }
 }
