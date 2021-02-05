@@ -11,6 +11,7 @@
     min-height: 420px !important;
 }
 .eachDongContainer{
+    transition: all 0.4s ease;
     background-color: #fff;
     height: 60px;
     margin-top: 20px;
@@ -18,12 +19,47 @@
     line-height: 60px;
     padding: 0 10px 0 10px;
     display: flex;
-    justify-content: center;
+    flex-flow: column;
+    overflow: hidden;
+}
+
+.eachDongContainerOpened{
+    background-color: #fff;
+    height: 140px;
+    margin-top: 20px;
+    border-radius: 14px;
+    line-height: 60px;
+    padding: 0 10px 0 10px;
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+}
+
+
+.eachDongContainerHolders{
+    display: grid;
+    grid-template-areas:
+        "head head head head head"
+        "nav nav nav nav nav ";
+    grid-template-rows: max-content;
+    direction: rtl;
+}
+.SelectNumberDongHolder{
+    grid-area: nav;
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: max-content;
+    text-align: center;
+    align-items: center;
 }
 .eachDongFoodName{
     font-family: AppIranSans;
     color: #6D5092;
     font-size: 0.7rem;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
 }
 .DongiPayText{
     color: black;
@@ -49,4 +85,35 @@
     font-family: AppIranSans;
     font-size:0.7rem ;
 
+}
+.dongNumberOfFood{
+    border-radius: 5px;
+    border: solid #8066A0 1px;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 0.8rem;
+    font-family: AppIranSansMedium;
+
+}
+.dongiArrowDown{
+    transition: all 0.5s ease;
+    color: #8066A0;
+    bottom: 0;
+    text-align: center;
+    left: 0%;
+}
+.dongiArrowDownRotated{
+    transition: all 0.5s ease;
+    color: #8066A0;
+    bottom: 0;
+    text-align: center;
+    left: 0%;
+    transform: rotate(180deg);
+}
+.rotate180deg{
+    transform: rotate(180deg);
+}
+.dongNumberHolder{
+    margin-top: 15px !important;
 }
