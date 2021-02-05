@@ -17,6 +17,30 @@ class ProfilePage extends React.Component {
         UserTabClass:'profileNavigate IranSans text-nowrap',
         HistoryTabClass:'profileNavigate IranSans text-nowrap',
     }
+    componentDidMount() {
+        if (this.props.match.params.part === 'club'){
+            this.userTabClickHandler();
+        }else{
+            this.historyTabClickHandler();
+        }
+    }
+
+    userTabClickHandler = ()=>{
+
+        this.setState({
+            HistoryTabClass:this.state.navNormalClass,
+            UserTabClass:this.state.navActiveClass,
+            activeProfile:'club',
+        });
+
+    }
+    historyTabClickHandler = ()=>{
+        this.setState({
+            HistoryTabClass:this.state.navActiveClass,
+            UserTabClass:this.state.navNormalClass,
+            activeProfile:'his',
+        })
+    }
 
 
     render() {
@@ -32,22 +56,9 @@ class ProfilePage extends React.Component {
                 </div>
                 <div className='profilePageContainer'>
                     <div className='w-100 d-flex justify-content-around pt-3'>
-                        <span className={this.state.UserTabClass} onClick={arg=>{
-                            this.setState({
-                                HistoryTabClass:this.state.navNormalClass,
-                                UserTabClass:this.state.navActiveClass,
-                                activeProfile:'club',
-                            });
-
-                        }}>کوکی کلاب</span>
+                        <span className={this.state.UserTabClass} onClick={this.userTabClickHandler}>کوکی کلاب</span>
                         <span className='profileNavigate profileNavigateActive IranSans  text-nowrap invisible'> سفارش های من</span>
-                        <span className={this.state.HistoryTabClass} onClick={arg=>{
-                            this.setState({
-                                HistoryTabClass:this.state.navActiveClass,
-                                UserTabClass:this.state.navNormalClass,
-                                activeProfile:'his',
-                            })
-                        }}> سفارش های من</span>
+                        <span className={this.state.HistoryTabClass} onClick={this.historyTabClickHandler}> سفارش های من</span>
                     </div>
 
 
@@ -75,7 +86,7 @@ class ProfilePage extends React.Component {
             </div>
         </div>
         <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
-            <span className='IranSans'>200</span>
+            <span className='IranSans'>200 T</span>
             <span className='IranSans '>مجموع خرید </span>
         </div>
         <div className='totalBuyAndPrice w-100 d-flex justify-content-between flex-row mt-3 pr-4 pl-4'>
