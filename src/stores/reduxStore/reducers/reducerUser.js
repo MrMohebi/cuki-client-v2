@@ -17,20 +17,16 @@ export default function reducerUser (state = __init__UserInfo, action) {
             stateUser_Draft.phone = action.payload.userData.phone;
             stateUser_Draft.birthday = action.payload.userData.birthday;
             stateUser_Draft.job = action.payload.userData.job
-            stateUser_Draft.totalBoughtAll = action.payload.userData.totalBought
-            stateUser_Draft.lastLogin = action.payload.userData.lastLogin
-            stateUser_Draft.availableOffCodes = action.payload.userData.availableOffCodes
-            stateUser_Draft.userOffCodeHistory = action.payload.userData.userOffCodeHistory
+            stateUser_Draft.totalBoughtAll = action.payload.userData['allTotalBought']
             stateUser_Draft.favoritePlaces = action.payload.userData.favoritePlaces
         });
     }else if(action.type === actionTypes.SET_CUSTOMER_DATA){
         return produce(state, stateUser_Draft =>{
-            stateUser_Draft.totalBoughtRestaurant = action.payload.customerInfo.totalBought;
-            stateUser_Draft.orderTimesRestaurant = action.payload.customerInfo.orderTimes;
-            stateUser_Draft.scoreRestaurant = action.payload.customerInfo.score;
+            stateUser_Draft.totalBoughtRestaurant = action.payload.customerInfo['totalBought'];
+            stateUser_Draft.orderTimesRestaurant = action.payload.customerInfo['orderTimes'];
+            stateUser_Draft.scoreRestaurant = action.payload.customerInfo['score'];
             stateUser_Draft.rankRestaurant = action.payload.customerInfo.rank;
-            stateUser_Draft.lastOrderRestaurant = action.payload.customerInfo.lastOrderDate;
-            stateUser_Draft.orderListRestaurant = action.payload.customerInfo.orderList;
+            stateUser_Draft.lastOrderRestaurant = action.payload.customerInfo['lastOrderDate'];
         });
     }else if(action.type === actionTypes.CONVERT_TRACKING_ID_TO_ORDER_OBJECT) {
         return produce(state, stateUser_Draft => {
