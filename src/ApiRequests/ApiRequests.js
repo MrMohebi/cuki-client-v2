@@ -42,3 +42,20 @@ export const signUp = (callbackFunction, token, name, birthday, job)=>{
         callbackFunction(res);
     })
 }
+
+export const getUserInfo = (callbackFunction)=>{
+    let token = getReduxStore('token')
+    $.post(BASE_API_URL+ "getUserInfo.fetch.php" ,{token}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
+export const getCustomerInfo = (callbackFunction)=>{
+    let token = getReduxStore('token')
+    let englishName = getReduxStore('englishName')
+    $.post(BASE_API_URL+ "getCustomerInfo.fetch.php" ,{token, englishName}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
