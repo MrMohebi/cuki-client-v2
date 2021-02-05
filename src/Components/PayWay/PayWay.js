@@ -24,7 +24,7 @@ function MarkerToolTip() {
         click: (e) => {
             setPosition(e.latlng)
             console.log(e.latlng);
-            document.getElementsByClassName('payWayContainer')[0].scrollBy(0,150)
+            document.getElementsByClassName('payWayContainer')[0].scrollBy(0,250)
 
 
         },
@@ -57,6 +57,7 @@ class PayWay extends React.Component{
         inOrOut: 'out',
         onlineOrCash:'cash',
         addressDetails:'addressDetails',
+        textHolderDetailsClass:'w-100 IranSans text-right mt-3'
     }
     componentDidMount() {
         if (this.state.inOrOut === 'in'){
@@ -80,9 +81,10 @@ class PayWay extends React.Component{
             })
         }else{
             this.setState({
-                addressDetailsClass:'d-animate__animated animate__fadeInUp',
-                mapClass:'d-animate__animated animate__fadeInUp',
-                tableClass:'d-none tableContainerClass'
+                addressDetailsClass:'d-animate__animated animate__fadeInUp addressDetails',
+                mapClass:'d-animate__animated animate__fadeInUp mapContainer',
+                tableClass:'d-none tableContainerClass',
+
 
             })
         }
@@ -94,7 +96,9 @@ class PayWay extends React.Component{
         inOrOut:'in',
         tableClass:'animate__animated animate__fadeInRight tableContainerClass',
         mapClass:'animate__animated animate__fadeOut mapContainer d-none',
-        addressDetailsClass:'animate__animated animate__fadeOut d-none'
+        addressDetailsClass:'animate__animated animate__fadeOut d-none',
+        textHolderDetailsClass:'d-none'
+
     })
         this.mapDetailsTableContainer.current.style.height = '80px'
     }
@@ -104,7 +108,9 @@ class PayWay extends React.Component{
         inOrOut:'out',
         tableClass:'h-0Animate',
         mapClass:'animate__animated animate__fadeIn mapContainer',
-        addressDetailsClass:'addressDetails '
+        addressDetailsClass:'animate__animated animate__fadeIn addressDetails ',
+        textHolderDetailsClass:'w-100 IranSans text-right mt-3'
+
 
     })
         this.mapDetailsTableContainer.current.style.height = '1000px'
@@ -157,6 +163,7 @@ class PayWay extends React.Component{
                                 <MarkerToolTip/>
                             </MapContainer>
                         </div>
+                        <div className={this.state.textHolderDetailsClass}>: توضیحات</div>
                         <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
                             this.setState({
                                 addressDetails:e.target.value.toString(),
@@ -167,9 +174,6 @@ class PayWay extends React.Component{
                             <input placeholder='000' type='number' className='tableInput'/>
                         </div>
                     </div>
-
-
-
                     <div className='BillSubmitButton mt-2'>
                         <span>پرداخت</span>
                     </div>
