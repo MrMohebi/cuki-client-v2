@@ -89,7 +89,7 @@
 
 .categoryPageEachCategory:active {
     transition: all 0.2s ease;
-    height: 85px;
+    height: 95px;
     width: 85px;
     background-color: white;
     border: none;
