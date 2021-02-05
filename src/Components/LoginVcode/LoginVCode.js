@@ -10,6 +10,7 @@ import * as requests from '../../ApiRequests/ApiRequests.js'
 import * as actions from "../../stores/reduxStore/actions";
 import {connect} from "react-redux";
 
+
 class LoginVCode extends React.Component {
     state = {
         userPhoneNumber: 0,
@@ -20,19 +21,29 @@ class LoginVCode extends React.Component {
     }
 
     componentDidMount() {
+        if(this.isUserLoggedIn()){
+            this.history.push("/profile/club")
+        }
+
         this.setState({
             phoneNumberContainerClass: 'animate__animated animate__fadeInUp'
         })
-
-        setTimeout(()=>{
-            console.log(this.props.VCodeSent)
-        },1000)
 
         if (this.props.VCodeSent){
             this.setState({
                 phoneNumberContainerClass: 'd-none',
                 VCodeContainerClass: 'animate__animated animate__fadeInUp flex-column d-flex'
             })
+        }
+    }
+
+
+    // later add cache check here
+    isUserLoggedIn = () =>{
+        if(this.props.token.length > 20){
+            return true;
+        }else {
+            return false
         }
     }
 
@@ -48,18 +59,16 @@ class LoginVCode extends React.Component {
         if (data.statusCode === 200){
             this.props.setToken(data.data.token)
             if (data.data.isUserInfoSaved){
-                this.props.history.push('/p')
+                this.props.history.push('/profile/club')
             }else{
                 this.props.history.push('/signup')
             }
         }
     }
-    //data: {isUserInfoSaved: false, token: "03cceab736e950edfd544df0305619d386998b28427648dbd9e6a6b04af2ef39"}
-    // statusCode: 200
 
 
     codeWasCorrect = (vCode) => {
-        requests.checkCode(this.checkCallbackData, '09031232531', vCode)
+        requests.checkCode(this.checkCallbackData, this.state.userPhoneNumber, vCode)
         this.props.setSentVCode(true);
     }
 
@@ -133,7 +142,7 @@ class LoginVCode extends React.Component {
                                 <div className={this.state.VCodeContainerClass}>
                                     <span
                                         className='IranSans VCodePhoneTextHolder'>کد ارسال شده به شماره زیر رو وارد کن</span>
-                                    <span className='IranSansLight VCodePhoneHolder text-right'>09031232531</span>
+                                    <span className='IranSansLight VCodePhoneHolder text-right'>{this.state.userPhoneNumber}</span>
                                     <div className='text-right'>
                                         <div onClick={()=>{
                                             this.setState({
@@ -166,14 +175,13 @@ const mapStateToProps = (store) => {
     return {
         VCodeSent:store.rFrontStates.VCodeSent,
         token:store.rUserInfo.token,
-
     }
 }
 
 const mapDispatchToProps = () => {
     return {
         setSentVCode:actions.setSentVCode,
-        setToken:actions.userSetToken
+        setToken:actions.userSetToken,
     }
 }
 
