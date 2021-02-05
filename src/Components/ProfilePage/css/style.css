@@ -10,6 +10,20 @@
     overflow: scroll;
 
 }
+.DatePicker{
+    margin-top: -28px;
+}
+.DatePicker input{
+    width: 100%;
+    opacity: 0;
+}
+
+.-top{
+    position: absolute !important;
+    top: calc(100% + 20px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
 
 .profileNavigate{
     transition: all 0.2s ease;
