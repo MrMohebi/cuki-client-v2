@@ -20,18 +20,17 @@ function App() {
     <React.Fragment>
       <BrowserRouter>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path={['/category','/main','/foodList','/l','/sign']} component={BottomNavBar}/>
+        <Route path={['/category','/main','/profile','/login','/sign','/bill']} component={BottomNavBar}/>
         <Route path='/main' component={WelcomePage}/>
         <Route exact path='/category/:part' component={CategoryPage}/>
         <Route exact path='/category/:part/:category' component={FoodListPage}/>
-        <Route path='/b' component={BillPage}/>
-        <Route path='/p' component={ProfilePage}/>
-        <Route path='/oh' component={EachOrderHistory}/>
-        <Route path='/l' component={LoginVCode}/>
+        <Route path='/bill' component={BillPage}/>
+        <Route path='/profile/:part' component={ProfilePage}/>
+        <Route path='/orderhistory' component={EachOrderHistory}/>
+        <Route path='/login' component={LoginVCode}/>
         <Route path='/signup' component={SignUpPage}/>
         <Route path='/payway' component={PayWay}/>
         <Route path='/dongi' component={DongiPage}/>
-
       </BrowserRouter>
     </React.Fragment>
   );
