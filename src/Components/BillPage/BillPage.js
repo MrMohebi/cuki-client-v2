@@ -56,15 +56,15 @@ class BillPage extends React.Component {
                 <SwipeableListItem key={eachFood["foods_id"]}
                     swipeLeft={{
                         content: <div/>,
-                        action: () => this.handleIncreaseFoodNumber(eachFood["foods_id"])
+                        action: () => this.handleDecreaseFoodNumber(eachFood["foods_id"])
                     }}
                     swipeRight={{
                         content: <div/>,
-                        action: () => this.handleDecreaseFoodNumber(eachFood["foods_id"])
+                        action: () => this.handleIncreaseFoodNumber(eachFood["foods_id"])
                     }}>
                     <div
-                        className='w-100 d-flex justify-content-between align-items-center flex-row-reverse IranSans'>
-                        <span>{eachFood.name}</span>
+                        className='mt-5 w-100 BillRow rtl IranSans'>
+                        <span className='billEachOrderName'>{eachFood.name}</span>
                         <span className='eachFoodPriceBill'>{(eachFood.price * eachFood.number)/1000} T</span>
                         <div className='d-flex justify-content-between umberInDe'>
                             <AddRoundedIcon onClick={()=>(this.handleIncreaseFoodNumber(eachFood["foods_id"]))}/>
@@ -92,9 +92,10 @@ class BillPage extends React.Component {
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
                 <div className='BillPageContainer'>
-                    <div className='w-100 billItemsContainer pt-4'>
+                    <div className='w-100 billItemsContainer '>
                         <SwipeableList>
                             {this.createOrderList()}
+
                         </SwipeableList>
                     </div>
                     <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
