@@ -21,11 +21,11 @@ class WelcomePage extends React.Component {
     }
 
     swipeRight = (eventData) =>{
-        console.log("swiped right")
+        console.log("swiped right", eventData)
     }
 
     swipeLeft = (eventData) =>{
-        console.log("swiped left")
+        console.log("swiped left", eventData)
     }
 
     render() {
@@ -87,7 +87,7 @@ class WelcomePage extends React.Component {
                                     backgroundSize: '95%',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
-                                }}></div>
+                                }}/>
                                 <span className="burgersAndDonatDescription">کافی شاپ</span>
                                     <br/>
                                     <br/>
@@ -98,8 +98,8 @@ class WelcomePage extends React.Component {
                                     backgroundSize: '95%',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
-                                }}></div>
-                                <span className="burgersAndDonatDescription">رستوران</span>
+                                }}/>
+                                <span className="burgersAndDonatDescription" onClick={()=>{this.props.history.push("/category/restaurant")}}>رستوران</span>
                                 <br/>
                                 <br/>
                             </p>
