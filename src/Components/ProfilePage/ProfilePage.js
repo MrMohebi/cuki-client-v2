@@ -8,6 +8,8 @@ import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import DatePicker from 'react-modern-calendar-datepicker';
+import moment from 'jalali-moment'
+import * as ttj from '../../functions/timeStampToJalaliString'
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -26,11 +28,7 @@ class ProfilePage extends React.Component {
         clubElementClass: 'w-100',
         historyElementClass: 'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeOut d-none',
         datePickerValue: {day: 9, month: 3, year: 1381},
-        inputsDisabled:true,
-        name:'Mohammad Elfi Poor',
-        birthday:564654,
-        job:'Rad shodan az divar'
-
+        inputsDisabled: true,
     }
 
     componentDidMount() {
@@ -40,11 +38,30 @@ class ProfilePage extends React.Component {
             this.historyTabClickHandler();
         }
         this.getUserInfo()
-        if (this.state.inputsDisabled){
+        if (this.state.inputsDisabled) {
             this.disableDatePicker()
         }
 
+
+        console.log(this.JalaliToGregorian(1381, 3, 9));
+        let gregorianDate = this.JalaliToGregorian(1381, 3, 9)
+        console.log(this.GregorianToTimeStamp(gregorianDate[0], gregorianDate[1], gregorianDate[2]));
     }
+
+    GregorianToTimeStamp = (year, month, day) => {
+        let newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        return (newDate.getTime() / 1000 + 24 * 60 * 60);
+    }
+
+    JalaliToGregorian = (year, month, day) => {
+        moment.locale('fa')
+        let dateToConvertToGregorian = year.toString() + '/' + month.toString() + '/' + day.toString()
+        let m = moment(dateToConvertToGregorian, 'YYYY/M/D');
+        m.format('YYYY/M/D');
+        let gregorianDate = m._i.split('-').slice(0, 3)
+        return gregorianDate
+    }
+
 
     userTabClickHandler = () => {
         this.setState({
@@ -92,30 +109,36 @@ class ProfilePage extends React.Component {
     swipeLeft = () => {
         this.historyTabClickHandler()
     }
-    enableDatePicker = ()=>{
+    enableDatePicker = () => {
         document.getElementsByClassName('DatePicker')[0].style.pointerEvents = 'all'
     }
-    disableDatePicker = ()=>{
+    disableDatePicker = () => {
         document.getElementsByClassName('DatePicker')[0].style.pointerEvents = 'none'
     }
 
     handleBack = () => {
         this.props.history.push("/main")
     }
-    editAndApplyHandler = (e)=>{
-        if (this.state.inputsDisabled){
+    editAndApplyHandler = (e) => {
+        if (this.state.inputsDisabled) {
             this.setState({
-                inputsDisabled:false
+                inputsDisabled: false
             })
             this.enableDatePicker()
             e.target.innerHTML = "تایید"
-        }else{
+        } else {
             this.setState({
-                inputsDisabled:true
+                inputsDisabled: true
             })
             this.disableDatePicker()
             e.target.innerHTML = "ویرایش"
         }
+    }
+    datePickerChange=(date)=>{
+        this.setState({
+            datePickerValue:date
+        })
+
     }
 
     render() {
@@ -151,26 +174,27 @@ class ProfilePage extends React.Component {
 
                         <div className={this.state.clubElementClass}>
                             <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
-                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.state.name} className='rtl mt-2 profileInputs'
+                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.name}
+                                           className='rtl mt-2 profileInputs'
                                            id="standard-basic" label="اسم و فامیل"/>
-                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.state.birthday} className='rtl mt-2 profileInputs'
+                                <TextField disabled={this.state.inputsDisabled} value={ttj.timeStampToJalali(this.props.birthday)}
+                                           className='rtl mt-2 profileInputs'
                                            id="standard-basic" label="تاریخ تولد"/>
                                 <DatePicker
                                     disabled
                                     value={this.state.datePickerValue}
-                                    onChange={(e) => {
-                                        this.setState({
-                                            datePickerValue: e,
-                                        })
-                                    }}
+                                    onChange={this.datePickerChange}
                                     shouldHighlightWeekends
                                     locale="fa" // add this
                                 />
 
-                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.state.job} className='rtl mt-2 profileInputs'
+                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.job}
+                                           className='rtl mt-2 profileInputs'
                                            id="standard-basic" label="شغل"/>
                                 <div className='w-100 d-flex justify-content-center'>
-                                    <div className='profileSubmitButton mt-4 IranSans' onClick={this.editAndApplyHandler}> ویرایش</div>
+                                    <div className='profileSubmitButton mt-4 IranSans'
+                                         onClick={this.editAndApplyHandler}> ویرایش
+                                    </div>
                                 </div>
                             </div>
                             <div

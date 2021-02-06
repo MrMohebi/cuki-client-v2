@@ -138,5 +138,7 @@ flex: 50% 50%;
     left: auto;
     right: 0;
 }
-
+.profileUserProfileContainer .DatePicker input{
+    width: 110% !important;
+}
 
