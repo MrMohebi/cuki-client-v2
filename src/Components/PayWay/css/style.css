@@ -19,9 +19,16 @@
     width: 100px;
     height: 30px;
     border-radius: 16px;
-    font-family:AppIranSansMedium;
+    font-family: AppIranSansMedium;
     line-height: 30px;
     font-size: 0.7rem;
+    display: flex;
+    flex-flow: row-reverse;
+    justify-content: space-around;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .payWayNormal{
     transition: all 0.2s ease;
@@ -29,9 +36,16 @@
     width: 100px;
     height: 30px;
     border-radius: 16px;
-    font-family:AppIranSansMedium;
+    font-family: AppIranSansMedium;
     line-height: 30px;
     font-size: 0.7rem;
+    display: flex;
+    flex-flow: row-reverse;
+    justify-content: space-around;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .payWayButtonsContainer{
     height: 80px;

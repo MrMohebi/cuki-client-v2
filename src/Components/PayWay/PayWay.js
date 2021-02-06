@@ -11,6 +11,14 @@ import * as requests from "../../ApiRequests/ApiRequests";
 import * as actions from "../../stores/reduxStore/actions";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+import cashBlack from './img/cashBlack.png'
+import cashWhite from './img/cashWhite.png'
+import inRes from './img/inRes.png'
+import outOfRes from './img/outOfRes.png'
+import onlineBlack from './img/onlineBlack.png'
+import onlineWhite from './img/onlineWhite.png'
+import waiterBlack from './img/waiterBlack.png'
+import waiterWhite from './img/waiterWhite.png'
 
 const ReactSwal = withReactContent(Swal)
 
@@ -223,7 +231,10 @@ class PayWay extends React.Component{
                         <span className='IranSans payWayText ' >نحوه پرداخت چجوری باشه؟</span>
                         <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
                             <div className={this.state.onlineClass} onClick={this.enableOnline}
-                            >آنلاین</div>
+                            >آنلاین
+                                <div style={{height:'30px',width:'30px',background:`url(${cashBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                            </div>
+
                             <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی</div>
                         </div>
                     </div>

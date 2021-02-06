@@ -95,7 +95,6 @@ class BillPage extends React.Component {
                     <div className='w-100 billItemsContainer '>
                         <SwipeableList>
                             {this.createOrderList()}
-
                         </SwipeableList>
                     </div>
                     <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>

@@ -12,9 +12,6 @@ class DongiPage extends React.Component {
         document.getElementById(id).classList.toggle('eachDongContainerOpened')
         let arrow = document.getElementById(id).getElementsByClassName('dongiArrowDown')[0]
         arrow.classList.toggle('rotate180deg')
-        // arrow.style.transform > 150 ?arrow.style.transform = 'rotate(0deg)':arrow.style.transform = 'rotate(180deg)'
-        // console.log(document.getElementById(id.toString()))
-        // console.log('ey')
     }
     render() {
         return (
@@ -32,7 +29,6 @@ class DongiPage extends React.Component {
 
                     <div className='w-100 d-flex flex-column '>
                         <div id='anId' className='eachDongContainer position-relative w-100' >
-
                             <div className='eachDongContainerHolders' onClick={()=>{
                                 this.MakeItOpen('anId')
                             }}>
@@ -63,7 +59,6 @@ class DongiPage extends React.Component {
 
                         </div>
                     </div>
-
                     <div className='DongiSubmitButton mt-5'>
                         <span>پرداخت</span>
                     </div>
