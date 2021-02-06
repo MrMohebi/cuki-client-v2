@@ -64,7 +64,9 @@ class DongiPage extends React.Component {
                         </div>
                     </div>
 
-
+                    <div className='DongiSubmitButton mt-5'>
+                        <span>پرداخت</span>
+                    </div>
                 </div>
             </React.Fragment>
         )
