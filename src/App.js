@@ -20,7 +20,7 @@ function App() {
     <React.Fragment>
       <BrowserRouter>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path={['/category','/main','/profile','/login','/sign','/bill']} component={BottomNavBar}/>
+        <Route path={['/category','/main','/profile','/login','/sign','/bill','/payway']} component={BottomNavBar}/>
         <Route path='/main' component={WelcomePage}/>
         <Route exact path='/category/:part' component={CategoryPage}/>
         <Route exact path='/category/:part/:category' component={FoodListPage}/>
