@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import cashBlack from './img/cashBlack.png'
 import cashWhite from './img/cashWhite.png'
-import inRes from './img/inRes.png'
+import inRes from './img/outOfRes.png'
 import outOfRes from './img/outOfRes.png'
 import onlineBlack from './img/onlineBlack.png'
 import onlineWhite from './img/onlineWhite.png'
@@ -73,7 +73,8 @@ class PayWay extends React.Component{
         inOrOut: 'out',
         onlineOrCash:'cash',
         addressDetails: '',
-        textHolderDetailsClass:'w-100 IranSans text-right mt-3'
+        textHolderDetailsClass:'w-100 IranSans text-right mt-3',
+        iconSize:'20px'
     }
     componentDidMount() {
         this.state.inOrOut === 'in' ? this.enableInRes() : this.enableOutRes()
@@ -134,7 +135,8 @@ class PayWay extends React.Component{
         this.setState({
             onlineClass:'payWayNormal',
             offlineClass:'payWayActive',
-            onlineOrCash:'cash'
+            onlineOrCash:'cash',
+            cashIcon:cashBlack
         })
     }
 
@@ -232,17 +234,24 @@ class PayWay extends React.Component{
                         <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
                             <div className={this.state.onlineClass} onClick={this.enableOnline}
                             >آنلاین
-                                <div style={{height:'30px',width:'30px',background:`url(${cashBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${onlineBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                             </div>
 
-                            <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی</div>
+                            <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی
+                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${cashBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                            </div>
                         </div>
                     </div>
                     <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
                         <span className='IranSans payWayText ' >تحویل سفارش چطور؟</span>
                         <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
-                            <div className={this.state.inResClass} onClick={this.enableInRes}>درون رستوران</div>
-                            <div className={this.state.outResClass} onClick={this.enableOutRes}>بیرون بر</div>
+                            <div className={this.state.inResClass +' inResTextSmaller'} onClick={this.enableInRes}>
+                                درون رستوران
+                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${waiterBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                            </div>
+                            <div className={this.state.outResClass} onClick={this.enableOutRes}>بیرون بر
+                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${inRes})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                            </div>
 
                         </div>
                     </div>

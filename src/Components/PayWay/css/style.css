@@ -14,7 +14,6 @@
 .payWayActive{
     transition: all 0.2s ease;
     background-color: #FFA833;
-
     color: #fff;
     width: 100px;
     height: 30px;
@@ -24,12 +23,16 @@
     font-size: 0.7rem;
     display: flex;
     flex-flow: row-reverse;
-    justify-content: space-around;
+    justify-content: space-between;
     background-size: cover;
     background-repeat: no-repeat;
     padding-left: 10px;
     padding-right: 10px;
+    align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 .payWayNormal{
     transition: all 0.2s ease;
     background-color: #DBDBDB;
@@ -41,12 +44,21 @@
     font-size: 0.7rem;
     display: flex;
     flex-flow: row-reverse;
-    justify-content: space-around;
+    justify-content: space-between;
     background-size: cover;
     background-repeat: no-repeat;
     padding-left: 10px;
     padding-right: 10px;
+    align-items: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+.inResTextSmaller{
+    font-size: 0.5rem !important;
+}
+
+
+
 .payWayButtonsContainer{
     height: 80px;
 }
