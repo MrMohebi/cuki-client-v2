@@ -38,6 +38,7 @@ class BillPage extends React.Component {
         // } else {
         //     this.props.history.push('/login')
         // }
+
         console.log("every thing goes well")
     }
 
