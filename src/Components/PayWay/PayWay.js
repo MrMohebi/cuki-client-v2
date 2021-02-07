@@ -13,12 +13,12 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import cashBlack from './img/cashBlack.png'
 import cashWhite from './img/cashWhite.png'
-import inRes from './img/outOfRes.png'
-import outOfRes from './img/outOfRes.png'
 import onlineBlack from './img/onlineBlack.png'
 import onlineWhite from './img/onlineWhite.png'
 import waiterBlack from './img/waiterBlack.png'
 import waiterWhite from './img/waiterWhite.png'
+import outResBlack from './img/outResBlack.png'
+import outResWhite from './img/outResWhite.png'
 
 const ReactSwal = withReactContent(Swal)
 
@@ -74,7 +74,11 @@ class PayWay extends React.Component{
         onlineOrCash:'cash',
         addressDetails: '',
         textHolderDetailsClass:'w-100 IranSans text-right mt-3',
-        iconSize:'20px'
+        iconSize:'20px',
+        onlineIcon:onlineWhite,
+        cashIcon:cashBlack,
+        inResIcon:waiterBlack,
+        outResIcon:outResBlack
     }
     componentDidMount() {
         this.state.inOrOut === 'in' ? this.enableInRes() : this.enableOutRes()
@@ -105,7 +109,9 @@ class PayWay extends React.Component{
             tableClass:'animate__animated animate__fadeInRight tableContainerClass',
             mapClass:'animate__animated animate__fadeOut mapContainer d-none',
             addressDetailsClass:'animate__animated animate__fadeOut d-none',
-            textHolderDetailsClass:'d-none'
+            textHolderDetailsClass:'d-none',
+            outResIcon:outResWhite,
+            inResIcon:waiterBlack
 
         })
         this.mapDetailsTableContainer.current.style.height = '80px'
@@ -119,7 +125,9 @@ class PayWay extends React.Component{
             tableClass:'h-0Animate',
             mapClass:'animate__animated animate__fadeIn mapContainer',
             addressDetailsClass:'animate__animated animate__fadeIn addressDetails ',
-            textHolderDetailsClass:'w-100 IranSans text-right mt-3'
+            textHolderDetailsClass:'w-100 IranSans text-right mt-3',
+            outResIcon:outResBlack,
+            inResIcon:waiterWhite
         })
         this.mapDetailsTableContainer.current.style.height = '1000px'
     }
@@ -128,7 +136,9 @@ class PayWay extends React.Component{
         this.setState({
             onlineClass:'payWayActive',
             offlineClass:'payWayNormal',
-            onlineOrCash:'online'
+            onlineOrCash:'online',
+            onlineIcon:onlineWhite,
+            cashIcon:cashBlack
         })
     }
     enableCash = () =>{
@@ -136,8 +146,10 @@ class PayWay extends React.Component{
             onlineClass:'payWayNormal',
             offlineClass:'payWayActive',
             onlineOrCash:'cash',
-            cashIcon:cashBlack
+            cashIcon:cashWhite,
+            onlineIcon:onlineBlack
         })
+
     }
 
     calTotalPrice = () =>{
@@ -234,11 +246,11 @@ class PayWay extends React.Component{
                         <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
                             <div className={this.state.onlineClass} onClick={this.enableOnline}
                             >آنلاین
-                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${onlineBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.onlineIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                             </div>
 
                             <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی
-                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${cashBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.cashIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                             </div>
                         </div>
                     </div>
@@ -247,10 +259,10 @@ class PayWay extends React.Component{
                         <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
                             <div className={this.state.inResClass +' inResTextSmaller'} onClick={this.enableInRes}>
                                 درون رستوران
-                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${waiterBlack})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                             </div>
                             <div className={this.state.outResClass} onClick={this.enableOutRes}>بیرون بر
-                                <div style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${inRes})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.inResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                             </div>
 
                         </div>

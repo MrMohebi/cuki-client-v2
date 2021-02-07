@@ -132,3 +132,7 @@
     height: 20px;
     margin-top: 20px;
 }
+.payWayButtonIcons{
+    background-size: cover !important;
+    background-position: center !important;
+}
