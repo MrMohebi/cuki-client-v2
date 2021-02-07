@@ -55,14 +55,14 @@ class BillPage extends React.Component {
     createOrderList = () =>{
         return this.props.orderList.map(eachFood => (
                 <SwipeableListItem key={eachFood["foods_id"]}
-                    swipeLeft={{
-                        content: <div/>,
-                        action: () => this.handleDecreaseFoodNumber(eachFood["foods_id"])
-                    }}
-                    swipeRight={{
-                        content: <div/>,
-                        action: () => this.handleIncreaseFoodNumber(eachFood["foods_id"])
-                    }}>
+                                   swipeLeft={{
+                                       content: <div/>,
+                                       action: () => this.handleDecreaseFoodNumber(eachFood["foods_id"])
+                                   }}
+                                   swipeRight={{
+                                       content: <div/>,
+                                       action: () => this.handleIncreaseFoodNumber(eachFood["foods_id"])
+                                   }}>
                     <div
                         className='mt-5 w-100 BillRow rtl IranSans'>
                         <span className='billEachOrderName'>{eachFood.name}</span>
