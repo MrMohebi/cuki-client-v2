@@ -3,7 +3,7 @@ import getReduxStore from "../stores/reduxStore/getRedux";
 import * as actions from "../stores/reduxStore/actions"
 
 const BASE_API_URL = "https://api.cuki.ir/v201/"
-
+const BASE_PAY_URL = "https://pay.cuki.ir/";
 
 
 export const getRestaurantInfo = (callbackFunction)=>{
@@ -70,3 +70,46 @@ export const sendOrder = (callbackFunction,table,address, foodsList)=>{
         callbackFunction(res);
     })
 }
+
+
+export const getPaymentInfoByTrackingId = (callbackFunction, trackingId)=>{
+    let token = getReduxStore('token')
+    $.post(BASE_API_URL+ "getPaymentInfoByTrackingId.fetch.php" ,{token, trackingId}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    }, (e)=>{
+        console.log(e)})
+}
+
+
+export const getOrderByTrackingId = (callbackFunction, trackingId)=>{
+    let token = getReduxStore('token')
+    let englishName = getReduxStore('englishName')
+    $.post(BASE_API_URL+ "getOrderByTrackingId.fetch.php" ,{token, trackingId, englishName}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
+
+
+export const sendPaymentRequestFood = (callbackFunction, items, amount, trackingId)=>{
+    let token = getReduxStore('token')
+    let englishName = getReduxStore('englishName')
+    let newItems = items.filter(eFood=>eFood.number > 0);
+    console.log(token)
+    console.log(englishName)
+    console.log(newItems)
+    console.log(amount)
+    console.log(trackingId)
+
+    $.post(BASE_PAY_URL+ "createpayment.php" ,{englishName, token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
+
+
+
+
