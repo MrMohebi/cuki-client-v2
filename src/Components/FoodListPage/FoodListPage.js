@@ -54,7 +54,7 @@ class FoodListPage extends Component {
         let foodList= this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.map(eachFood=>{
             let colors = RandomColor.RandomColor()
             return(
-                <div key={eachFood['foods_id']} className='foodListEachFoodContainer animate__animated animate__fadeInRight'
+                <div key={eachFood['foods_id']} className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                 onClick={()=>{
                     if (eachFood.status === 'in stock') {
                         this.orderScripts(eachFood.foods_id);
