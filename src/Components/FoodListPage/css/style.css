@@ -22,6 +22,19 @@
     box-shadow: 1px 2px 0px 0px #E0DEDE;
 }
 
+.foodListEachFood:active {
+    transition: all 0.2s ease;
+    margin-top: 50px;
+    height: 175px;
+    width: 150px;
+    background-color: #fff;
+    border-radius: 20px 35px 20px 20px;
+    display: flex;
+    flex-flow: column;
+    box-shadow: 1px 2px 0px 0px #E0DEDE;
+    transform:scale(0.8);
+}
+
 @media only screen and (max-width: 360px) {
     .foodListEachFood {
         transition: all 0.2s ease;
