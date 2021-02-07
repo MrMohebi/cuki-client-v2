@@ -57,7 +57,6 @@ class DongiPage extends React.Component {
     }
 
     getPaidItemsInfo = (trackingId) => {
-        console.log("getPaidItemsInfo")
         requests.getPaymentInfoByTrackingId(this.setPaidItemsToState, trackingId)
     }
 
@@ -159,7 +158,7 @@ class DongiPage extends React.Component {
         })
     }
 
-
+    //TODO if total Number was 0 show paid
     createFoodsList = (orderList, paidList, newFoodInfo ={id:-1}) =>{
         return orderList.map(eFood=>{
             let paidFood = paidList.filter(ePFood=> ePFood.id === eFood.id)[0]
