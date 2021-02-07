@@ -76,7 +76,7 @@ class LoginVCode extends React.Component {
         return (
             <React.Fragment>
                 <div
-                    className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                    className='categoryPageHeader  pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
                     <ArrowBackRoundedIcon/>
                     <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
                         <KeyboardArrowLeftRoundedIcon/>
@@ -122,16 +122,19 @@ class LoginVCode extends React.Component {
                                                }}
                                     />
                                     <div onClick={() => {
-                                        this.sendCode(this.state.userPhoneNumber);
-                                        this.setState({
-                                            phoneNumberContainerClass: ' animate__animated animate__fadeOutLeftBig'
-                                        })
-                                        setTimeout(() => {
+                                        if (this.state.userPhoneNumber.length > 7){
+                                            this.sendCode(this.state.userPhoneNumber);
                                             this.setState({
-                                                phoneNumberContainerClass: 'd-none',
-                                                VCodeContainerClass: 'animate__animated animate__fadeInUp flex-column d-flex'
+                                                phoneNumberContainerClass: ' animate__animated animate__fadeOutLeftBig'
                                             })
-                                        }, 200)
+                                            setTimeout(() => {
+                                                this.setState({
+                                                    phoneNumberContainerClass: 'd-none',
+                                                    VCodeContainerClass: 'animate__animated animate__fadeInUp flex-column d-flex'
+                                                })
+                                            }, 200)
+                                        }
+
                                     }}
                                          className={this.state.buttonDefaultClass + this.state.buttonAnimationClasses}>
                                         ارسال کد
@@ -158,7 +161,7 @@ class LoginVCode extends React.Component {
                                         </div>
                                     </div>
                                     <VerificationCodeInput sendCode={this.codeWasCorrect} />
-                                    <div className={'vCodeSubmitButton IranSansLight'}>تایید
+                                    <div className={'vCodeSubmitButton IranSansLight '}>تایید
                                     </div>
                                 </div>
                             </React.Fragment>
