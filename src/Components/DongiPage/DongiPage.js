@@ -191,8 +191,7 @@ class DongiPage extends React.Component {
                         </div>
                         <span className='dongiFromText'>از</span>
                         <div className='howMuchContainer'>
-                            <div className='howMuchNumber IranSans'><span>تا </span> <span
-                                className='greenDongiText'>{totalNumber} </span></div>
+                            <div className='howMuchNumber IranSans'><span>تا </span> <span className='greenDongiText'>{totalNumber}</span></div>
                             <div className='IranSans'>{totalPrice}T</div>
                         </div>
                     </div>

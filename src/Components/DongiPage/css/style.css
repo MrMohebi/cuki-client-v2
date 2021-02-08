@@ -6,13 +6,12 @@
     border-radius: 20px;
     display: flex;
     flex-flow: column;
-    padding: 0 15px 10px 15px;
+    padding: 0 15px 100px 15px;
     overflow: scroll;
     min-height: 420px !important;
-    position: relative;
 }
 .DongiSubmitButton{
-    width: 95%;
+    width: 85%;
     background-color: #988AA8;
     height: 40px;
     min-height: 40px;
@@ -25,7 +24,8 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0px);
-    bottom: 25px;
+    bottom: 60px;
+    box-shadow: #e1eff2 1px 1px 7px 9px;
 }
 
 .eachDongContainer{
@@ -71,6 +71,7 @@
     text-align: center;
     align-items: center;
 }
+
 .eachDongFoodName{
     font-family: AppIranSans;
     color: #6D5092;
