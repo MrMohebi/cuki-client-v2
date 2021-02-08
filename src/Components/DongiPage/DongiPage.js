@@ -26,7 +26,7 @@ class DongiPage extends React.Component {
 
     componentDidMount() {
         this.getOrderList(this.state.trackingId)
-        // this.timer = setInterval(()=>{this.getPaidItemsInfo(this.state.trackingId)}, 3000)
+        this.timer = setInterval(()=>{this.getPaidItemsInfo(this.state.trackingId)}, 3000)
     }
 
     componentWillUnmount() {
@@ -61,6 +61,7 @@ class DongiPage extends React.Component {
     }
 
     setOrderToState = (res) =>{
+        console.log(res)
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             console.log(JSON.parse(res.data["order_list"]));
             this.setState({
@@ -158,7 +159,6 @@ class DongiPage extends React.Component {
         })
     }
 
-    //TODO if total Number was 0 show paid
     createFoodsList = (orderList, paidList, newFoodInfo ={id:-1}) =>{
         return orderList.map(eFood=>{
             let paidFood = paidList.filter(ePFood=> ePFood.id === eFood.id)[0]
@@ -176,6 +176,7 @@ class DongiPage extends React.Component {
             }
 
             return(
+                totalNumber !==0?
                 <div key={eFood.id} id={eFood.id} className='eachDongContainer position-relative w-100' >
 
                     <div className='eachDongContainerHolders' onClick={()=>{
@@ -207,6 +208,19 @@ class DongiPage extends React.Component {
                     }} className='position-absolute dongiArrowDown w-100 '/>
 
                 </div>
+                    :
+                    <div key={eFood.id} id={eFood.id} className='eachDongContainer position-relative w-100' >
+
+                        <div className='eachDongContainerHolders' >
+                            <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
+                            <span className='IranSans DongiPayText  font-weight-bold'> </span>
+                            <span className='IranSans paidItemsText  font-weight-bold'></span>
+                            <span className='IranSans paidItemsText  '>پرداخت شده </span>
+                            <span className=' font-weight-bold'>{totalPrice}T</span>
+                        </div>
+
+                    </div>
+
             )
         })
     }
