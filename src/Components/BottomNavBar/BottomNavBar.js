@@ -2,6 +2,7 @@ import React from "react";
 import './css/style.css'
 import {NavLink} from "react-router-dom";
 import 'animate.css/animate.css'
+import {connect} from "react-redux";
 
 
 import {IconButton} from '@material-ui/core';
@@ -25,7 +26,6 @@ class BottomNavBar extends React.Component {
     componentDidMount() {
         console.log(window.location.pathname)
     }
-
     render() {
         return (
             <div className='w-100 d-flex justify-content-center position-absolute bottomNavContainer '>
@@ -84,4 +84,15 @@ class BottomNavBar extends React.Component {
     }
 }
 
-export default BottomNavBar;
+const mapStateToProps = (store) => {
+    return {
+        token:store.rUserInfo.token,
+        orderList: store.rTempData.orderList,
+    }
+}
+
+const mapDispatchToProps = () => {
+    return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BottomNavBar);
