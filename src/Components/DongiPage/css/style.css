@@ -26,6 +26,7 @@
     transform: translate(-50%, 0px);
     bottom: 60px;
     box-shadow: #e1eff2 1px 1px 7px 9px;
+    max-width: 500px;
 }
 
 .eachDongContainer{
