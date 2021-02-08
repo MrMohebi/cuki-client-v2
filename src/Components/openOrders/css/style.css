@@ -1,0 +1,12 @@
+.openOrdersContainer{
+    background-color: #e1dfff;
+    margin: 20px auto auto auto;
+    height: calc(100% - 100px);
+    width: 90%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: column;
+    padding: 0 15px 10px 15px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
