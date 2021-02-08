@@ -6,13 +6,15 @@ import {TextField} from "@material-ui/core";
 import './css/style.css'
 import logo from './img/logo.png'
 import * as requests from '../../ApiRequests/ApiRequests'
+import DatePicker from "react-modern-calendar-datepicker";
 
 class SignUpPage extends React.Component {
     state = {
         signUpContainerClass: 'animate__animated animate__fadeInUp signUpContainer d-flex justify-content-center flex-column d-none',
         name: '',
         birthday: '',
-        job: ''
+        job: '',
+        datePickerValue: {day: 9, month: 3, year: 1381},
     }
 
     componentDidMount() {
@@ -23,6 +25,11 @@ class SignUpPage extends React.Component {
 
     backFunction = (res) => {
         console.log(res)
+    }
+    datePickerChange=(date)=>{
+        this.setState({
+            datePickerValue:date
+        })
     }
 
     render() {
@@ -54,9 +61,17 @@ class SignUpPage extends React.Component {
                         <TextField onChange={(e) => {
                             this.state.name = e.target.value
                         }} id="standard-basic" className='defaultInputUi' label="تاریخ تولد"/>
+                        <DatePicker
+                            disabled
+                            value={this.state.datePickerValue}
+                            onChange={this.datePickerChange}
+                            shouldHighlightWeekends
+                            locale="fa" // add this
+                        />
                         <TextField onChange={(e) => {
                             this.state.name = e.target.value
                         }} id="standard-basic" className='defaultInputUi' label="شغل"/>
+
                         <div onClick={() => {
 
                         }} className={'signupSubmitButton IranSansLight'}>تایید

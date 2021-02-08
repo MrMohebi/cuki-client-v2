@@ -32,12 +32,12 @@ class BillPage extends React.Component {
         }
     }
     handleSubmit = () => {
-        // if (this.props.token.length > 20){
-        //     if(this.props.orderList.length > 0)
-        //         this.props.history.push('/pay');
-        // } else {
-        //     this.props.history.push('/login')
-        // }
+        if (this.props.token.length > 20){
+            if(this.props.orderList.length > 0)
+                this.props.history.push('/payway');
+        } else {
+            this.props.history.push('/login')
+        }
 
         console.log("every thing goes well")
     }

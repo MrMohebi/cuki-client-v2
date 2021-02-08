@@ -8,8 +8,9 @@ import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import DatePicker from 'react-modern-calendar-datepicker';
-import moment from 'jalali-moment'
-import * as ttj from '../../functions/timeStampToJalaliString'
+import moment from 'jalali-moment';
+import * as ttj from '../../functions/timeStampToJalaliString';
+import { utils } from 'react-modern-calendar-datepicker';
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -18,6 +19,11 @@ export const Swipeable = ({children, style, ...props}) => {
 
 
 class ProfilePage extends React.Component {
+
+    constructor() {
+        super();
+        this.birthdayRef = React.createRef()
+    }
     state = {
         activeProfile: 'history',
         History: true,
@@ -29,6 +35,10 @@ class ProfilePage extends React.Component {
         historyElementClass: 'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeOut d-none',
         datePickerValue: {day: 9, month: 3, year: 1381},
         inputsDisabled: true,
+        birthday:1022716800,
+        name:'Mohammad',
+        job:'pilot',
+        birthdayInputValue:''
     }
 
     componentDidMount() {
@@ -41,17 +51,44 @@ class ProfilePage extends React.Component {
         if (this.state.inputsDisabled) {
             this.disableDatePicker()
         }
+        this.setState({
 
-
-        console.log(this.JalaliToGregorian(1381, 3, 9));
-        let gregorianDate = this.JalaliToGregorian(1381, 3, 9)
-        console.log(this.GregorianToTimeStamp(gregorianDate[0], gregorianDate[1], gregorianDate[2]));
+        })
+        moment.locale('fa')
+        console.log(this.birthdayRef.current)
+        this.setState({
+            birthdayInput:ttj.timeStampToJalali(this.state.birthday)
+        })
     }
 
-    GregorianToTimeStamp = (year, month, day) => {
-        let newDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        return (newDate.getTime() / 1000 + 24 * 60 * 60);
+    gregorianToTimeStamp = (year,month,day)=>{
+        let mdate = day.toString()+'-'+month+'-'+year+'-'
+        let myDate = "30-05-2002";
+        mdate = mdate.split("-");
+        let newDate = new Date( mdate[2], mdate[1] - 1, mdate[0]);
+        return newDate.getTime()/1000+24*60*60
+
     }
+
+    jalaliToGregorian = (year,month,day)=>{
+        let dateToC = year+'/'+month+'/'+day
+        let myMoment = moment.from(dateToC, 'fa', 'YYYY/MM/DD').locale('en').format('YYYY/MM/DD').split('/');
+        let tempYear = myMoment[0]
+        let tempMonth = myMoment[1]
+        let tempDay = myMoment[2]
+        return {year:tempYear,month:tempMonth,day:tempDay}
+    }
+    timeStampToJalali(timeStamp){
+        moment.locale('fa')
+        return moment.unix(timeStamp - 24*60*60).format("MM/DD/YYYY").split('/')
+    }
+
+   timeStampToGregorian(timeStamp){
+        moment.locale('lt')
+        return moment.unix(timeStamp - 24*60*60).format("MM/DD/YYYY").split('/')
+    }
+
+
 
     JalaliToGregorian = (year, month, day) => {
         moment.locale('fa')
@@ -138,6 +175,24 @@ class ProfilePage extends React.Component {
         this.setState({
             datePickerValue:date
         })
+        this.state.datePickerValue = date
+        let year = this.state.datePickerValue.year
+        let month = this.state.datePickerValue.month
+        let day = this.state.datePickerValue.day
+        let gregorian = this.jalaliToGregorian(year,month,day)
+        let timestamp = this.gregorianToTimeStamp(gregorian.year,gregorian.month,gregorian.day)
+        console.log(timestamp)
+        this.setState({
+            birthday:timestamp,
+            birthdayInputValue:ttj.timeStampToJalali(timestamp -24*60*60)
+        })
+
+
+
+
+
+    }
+    setUserDataToUi = ()=>{
 
     }
 
@@ -174,10 +229,10 @@ class ProfilePage extends React.Component {
 
                         <div className={this.state.clubElementClass}>
                             <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
-                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.name}
+                                <TextField disabled={this.state.inputsDisabled} value={this.state.name}
                                            className='rtl mt-2 profileInputs'
                                            id="standard-basic" label="اسم و فامیل"/>
-                                <TextField disabled={this.state.inputsDisabled} value={ttj.timeStampToJalali(this.props.birthday)}
+                                <TextField  ref={this.birthdayRef} disabled={this.state.inputsDisabled} value={this.state.birthdayInputValue}
                                            className='rtl mt-2 profileInputs'
                                            id="standard-basic" label="تاریخ تولد"/>
                                 <DatePicker
@@ -188,7 +243,7 @@ class ProfilePage extends React.Component {
                                     locale="fa" // add this
                                 />
 
-                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.job}
+                                <TextField disabled={this.state.inputsDisabled} value={this.state.job}
                                            className='rtl mt-2 profileInputs'
                                            id="standard-basic" label="شغل"/>
                                 <div className='w-100 d-flex justify-content-center'>
@@ -235,6 +290,7 @@ const mapDispatchToProps = () => {
     return {
         setUserData: actions.userSetData,
         setCustomerData: actions.userSetCustomerInfo,
+
     }
 }
 

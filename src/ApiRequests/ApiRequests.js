@@ -43,6 +43,13 @@ export const signUp = (callbackFunction, token, name, birthday, job)=>{
     })
 }
 
+export const changeUserInfo = (callbackFunction, token, name, birthday, job)=>{
+    $.post(BASE_API_URL+ "changeUserInfo.modify.php" ,{token:token,name:name,birthday:birthday,job:job}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
 export const getUserInfo = (callbackFunction)=>{
     let token = getReduxStore('token')
     $.post(BASE_API_URL+ "getUserInfo.fetch.php" ,{token}).then(res=>{
@@ -50,6 +57,7 @@ export const getUserInfo = (callbackFunction)=>{
         callbackFunction(res);
     })
 }
+
 
 export const getCustomerInfo = (callbackFunction)=>{
     let token = getReduxStore('token')
