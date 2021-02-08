@@ -9,10 +9,25 @@ import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable
 import '@sandstreamdev/react-swipeable-list/dist/styles.css';
 import {connect} from "react-redux";
 import * as actions from "../../stores/reduxStore/actions";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content'
 
+const ReactSwal = withReactContent(Swal)
 
 
 class BillPage extends React.Component {
+
+    componentDidMount() {
+        if(this.props.orderList.length <= 0){
+            ReactSwal.fire({
+                title: '): هیچی رو سفارش ندادی ها',
+                icon: 'info',
+                confirmButtonText: "راس میگی، حله",
+                timer: 2000,
+            })
+            setTimeout(()=>{this.props.history.goBack()}, 2500)
+        }
+    }
 
 
     sumTotalOrderPrice = () => {
@@ -38,8 +53,6 @@ class BillPage extends React.Component {
         } else {
             this.props.history.push('/login')
         }
-
-        console.log("every thing goes well")
     }
 
     handleIncreaseFoodNumber =(foodId) =>{

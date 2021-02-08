@@ -85,8 +85,7 @@ export const getPaymentInfoByTrackingId = (callbackFunction, trackingId)=>{
     $.post(BASE_API_URL+ "getPaymentInfoByTrackingId.fetch.php" ,{token, trackingId}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
-    }, (e)=>{
-        console.log(e)})
+    })
 }
 
 
@@ -105,12 +104,6 @@ export const sendPaymentRequestFood = (callbackFunction, items, amount, tracking
     let token = getReduxStore('token')
     let englishName = getReduxStore('englishName')
     let newItems = items.filter(eFood=>eFood.number > 0);
-    console.log(token)
-    console.log(englishName)
-    console.log(newItems)
-    console.log(amount)
-    console.log(trackingId)
-
     $.post(BASE_PAY_URL+ "createpayment.php" ,{englishName, token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);

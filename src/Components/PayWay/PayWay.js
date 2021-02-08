@@ -205,8 +205,6 @@ class PayWay extends React.Component{
     }
 
     callbackSendOrder = (res) =>{
-        console.log(res);
-        console.log(res.statusCode)
         if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
             this.props.setTrackingId(res.data.trackingId)
             ReactSwal.fire({
@@ -219,7 +217,7 @@ class PayWay extends React.Component{
                 if(this.state.onlineOrCash === "cash"){
                     this.props.history.push("/main")
                 }else {
-                    this.props.history.push("/dongi")
+                    this.props.history.push("/dongi?trackingId="+res.data.trackingId)
                 }
             })
         }

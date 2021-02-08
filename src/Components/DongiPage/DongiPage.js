@@ -47,9 +47,6 @@ class DongiPage extends React.Component {
         document.getElementById(id).classList.toggle('eachDongContainerOpened')
         let arrow = document.getElementById(id).getElementsByClassName('dongiArrowDown')[0]
         arrow.classList.toggle('rotate180deg')
-        // arrow.style.transform > 150 ?arrow.style.transform = 'rotate(0deg)':arrow.style.transform = 'rotate(180deg)'
-        // console.log(document.getElementById(id.toString()))
-        // console.log('ey')
     }
 
     getOrderList = (trackingId) =>{
@@ -61,9 +58,7 @@ class DongiPage extends React.Component {
     }
 
     setOrderToState = (res) =>{
-        console.log(res)
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
-            console.log(JSON.parse(res.data["order_list"]));
             this.setState({
                 orderList:JSON.parse(res.data["order_list"])
             })
@@ -72,7 +67,6 @@ class DongiPage extends React.Component {
     }
 
     setPaidItemsToState = (res) => {
-        console.log(res);
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             let newSavedPaidItems = [];
             res.data.map(ePaid => {
@@ -213,7 +207,7 @@ class DongiPage extends React.Component {
                         <div className='eachDongContainerHolders' >
                             <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
                             <span className='IranSans DongiPayText  font-weight-bold'> </span>
-                            <span className='IranSans paidItemsText  font-weight-bold'></span>
+                            <span className='IranSans paidItemsText  font-weight-bold'/>
                             <span className='IranSans paidItemsText  '>پرداخت شده </span>
                             <span className=' font-weight-bold'>{totalPrice}T</span>
                         </div>
@@ -245,10 +239,12 @@ class DongiPage extends React.Component {
             return false;
         }
         requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.selectedToPay, totalPrice ,this.state.trackingId);
+        this.setState({
+            selectedToPay:[]
+        })
     }
 
     callbackPaymentRequest = (res) => {
-        console.log(res);
         if (res.statusCode === 200) {
             ReactSwal.fire({
                 title: 'تمومه',
