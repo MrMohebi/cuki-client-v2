@@ -217,9 +217,9 @@ class PayWay extends React.Component{
                     " : شماره سفارش" + res.data.trackingId
             }).then(() => {
                 if(this.state.onlineOrCash === "cash"){
-                    this.history.push("/main")
+                    this.props.history.push("/main")
                 }else {
-                    this.history.push("/dongi")
+                    this.props.history.push("/dongi")
                 }
             })
         }
