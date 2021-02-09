@@ -111,6 +111,13 @@ export const sendPaymentRequestFood = (callbackFunction, items, amount, tracking
 }
 
 
-
+export const getOpenOrders = (callbackFunction)=>{
+    let token = getReduxStore('token')
+    let englishName = getReduxStore('englishName')
+    $.post(BASE_API_URL+ "getOpenOrders.fetch.php" ,{englishName, token}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
 
 
