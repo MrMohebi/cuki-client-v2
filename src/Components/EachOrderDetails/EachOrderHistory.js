@@ -2,8 +2,56 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 import './css/style.css'
+import * as randomColors from '../../functions/RandomColor'
+
+
 
 class EachOrderHistory extends React.Component {
+    state = {
+        foods:<div></div>,
+    }
+
+    componentDidMount() {
+        this.createFoods()
+    }
+
+    createFoods = ()=>{
+        let testFoods = [
+            {name:'',price:123},
+        ]
+        let allFoods = testFoods.map(eFood =>{
+            let color = randomColors.RandomColor()
+            console.log(color)
+            return(
+                <div className='eachOrderDetailsEachFoodContainer'>
+                    <div className='eachOrderDetailsEachFood' style={{color:color.foreground,backgroundColor:color.background}}>
+                        <div className='priceAndImage'>
+                                    <span className='EachOrderDetailsEachFoodPrice'>
+                                        25 T
+                                    </span>
+                            <div className='EachOrderDetailsEachFoodImage'
+                                 style={{
+                                     background: `url(https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png)`,
+                                     backgroundSize: 'cover',
+                                     backgroundPosition: 'center'
+                                 }}/>
+                        </div>
+                        <span className='eachOrderDetailsFoodNumber text-left pl-3'>x2</span>
+                        <div className='w-100 justify-content-center d-flex'>
+                            <div className='EachOrderDetailsEachFoodName'>اسپشیالینو</div>
+                        </div>
+                        <div className='w-100 d-flex justify-content-center'>
+                            <div className='EachOrderDetailsFoodDetails'>چوب درخت ماکارونی</div>
+                        </div>
+                    </div>
+                </div>
+            )
+            }
+        )
+        this.setState({
+            foods:allFoods
+        })
+    }
     render() {
         return (
             <React.Fragment>
@@ -23,104 +71,7 @@ class EachOrderHistory extends React.Component {
                             <span className='IranSans '>22:43</span>
                         </div>
                         <div className='d-flex flex-wrap justify-content-between'>
-
-                            <div className='eachOrderDetailsEachFoodContainer'>
-                                <div className='eachOrderDetailsEachFood'>
-                                    <div className='priceAndImage'>
-                                    <span className='EachOrderDetailsEachFoodPrice'>
-                                        25 T
-                                    </span>
-                                        {/*TODO change colors to random colors after map */}
-                                        <div className='EachOrderDetailsEachFoodImage'
-                                             style={{
-                                                 background: `url(https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png)`,
-                                                 backgroundSize: 'cover',
-                                                 backgroundPosition: 'center'
-                                             }}/>
-                                    </div>
-                                    <span className='eachOrderDetailsFoodNumber text-left pl-3'>x2</span>
-                                    <div className='w-100 justify-content-center d-flex'>
-                                        <div className='EachOrderDetailsEachFoodName'>اسپشیالینو</div>
-                                    </div>
-                                    <div className='w-100 d-flex justify-content-center'>
-                                        <div className='EachOrderDetailsFoodDetails'>چوب درخت ماکارونی</div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className='eachOrderDetailsEachFoodContainer'>
-                                <div className='eachOrderDetailsEachFood'>
-                                    <div className='priceAndImage'>
-                                    <span className='EachOrderDetailsEachFoodPrice'>
-                                        25 T
-                                    </span>
-                                        {/*TODO change colors to random colors after map */}
-                                        <div className='EachOrderDetailsEachFoodImage'
-                                             style={{
-                                                 background: `url(https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png)`,
-                                                 backgroundSize: 'cover',
-                                                 backgroundPosition: 'center'
-                                             }}/>
-                                    </div>
-                                    <span className='eachOrderDetailsFoodNumber text-left pl-3'>x2</span>
-                                    <div className='w-100 justify-content-center d-flex'>
-                                        <div className='EachOrderDetailsEachFoodName'>اسپشیالینو</div>
-                                    </div>
-                                    <div className='w-100 d-flex justify-content-center'>
-                                        <div className='EachOrderDetailsFoodDetails'>چوب درخت ماکارونی</div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className='eachOrderDetailsEachFoodContainer'>
-                                <div className='eachOrderDetailsEachFood'>
-                                    <div className='priceAndImage'>
-                                    <span className='EachOrderDetailsEachFoodPrice'>
-                                        25 T
-                                    </span>
-                                        {/*TODO change colors to random colors after map */}
-                                        <div className='EachOrderDetailsEachFoodImage'
-                                             style={{
-                                                 background: `url(https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png)`,
-                                                 backgroundSize: 'cover',
-                                                 backgroundPosition: 'center'
-                                             }}/>
-                                    </div>
-                                    <span className='eachOrderDetailsFoodNumber text-left pl-3'>x2</span>
-                                    <div className='w-100 justify-content-center d-flex'>
-                                        <div className='EachOrderDetailsEachFoodName'>اسپشیالینو</div>
-                                    </div>
-                                    <div className='w-100 d-flex justify-content-center'>
-                                        <div className='EachOrderDetailsFoodDetails'>چوب درخت ماکارونی</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='eachOrderDetailsEachFoodContainer'>
-                                <div className='eachOrderDetailsEachFood'>
-                                    <div className='priceAndImage'>
-                                    <span className='EachOrderDetailsEachFoodPrice'>
-                                        25 T
-                                    </span>
-                                        {/*TODO change colors to random colors after map */}
-                                        <div className='EachOrderDetailsEachFoodImage'
-                                             style={{
-                                                 background: `url(https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png)`,
-                                                 backgroundSize: 'cover',
-                                                 backgroundPosition: 'center'
-                                             }}/>
-                                    </div>
-                                    <span className='eachOrderDetailsFoodNumber text-left pl-3'>x2</span>
-                                    <div className='w-100 justify-content-center d-flex'>
-                                        <div className='EachOrderDetailsEachFoodName'>اسپشیالینو</div>
-                                    </div>
-                                    <div className='w-100 d-flex justify-content-center'>
-                                        <div className='EachOrderDetailsFoodDetails'>چوب درخت ماکارونی</div>
-                                    </div>
-                                </div>
-                            </div>
+                            {this.state.foods}
                         </div>
 
 
