@@ -278,13 +278,16 @@ class DongiPage extends React.Component {
         }
     }
 
+    handleBack = () => {
+        this.props.history.goBack()
+    }
 
     render() {
         return (
             <React.Fragment>
                 <div
                     className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                    <ArrowBackRoundedIcon/>
+                    <ArrowBackRoundedIcon onClick={this.handleBack}/>
                     <div className='text-center d-flex justify-content-around flex-row'>
                         <div className='IranSans'>نحوه پرداخت</div>
                     </div>
