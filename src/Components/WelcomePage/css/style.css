@@ -1,15 +1,16 @@
-.welcomePageHeader{
+.welcomePageHeader {
     font-family: Eurose;
     font-size: 30px;
     text-align: right;
-    padding-right:5%;
+    padding-right: 5%;
     margin: 10px;
 }
 
- .textColor{
-     color : #F07A3E;
- }
-.welcomePageFrames1{
+.textColor {
+    color: #F07A3E;
+}
+
+.welcomePageFrames1 {
     border-radius: 25px;
     background: #fffaef;
     padding: 15px;
@@ -17,80 +18,92 @@
     width: 85%;
     height: 370px;
 }
-.welcomePageDescriptionH{
+
+.welcomePageDescriptionH {
     font-family: AppIranSans;
     margin-bottom: 10px;
     font-weight: bold;
-    font-size:23px ;
+    font-size: 23px;
     white-space: nowrap;
 }
-.welcomePageDescription{
+
+.welcomePageDescription {
     font-family: AppIranSans;
     font-size: 13px;
 }
-.chefImage{
+
+.chefImage {
     background-size: 95%;
     height: 200px;
     width: 200px;
     margin: auto;
 }
-.welcomePageFrames2{
+
+.welcomePageFrames2 {
     border-radius: 25px;
-    background:#FFFAEF;
-    margin: auto;
-    width: 85%;
-    height: 100px;
-    flex-direction: row;
+    background: #FFF7F7;
+    width: 100%;
+    height: calc(100% - 120px);
 }
-.shakeHands{
+
+.shakeHands {
     background-size: 100%;
     height: 40px;
     width: 40px;
 }
-@media only screen and (max-width:350px) {
-.shakeHands{
-    background-size: 100%;
-    height: 30px;
-    width: 30px;
-}
-    .welcomePageDescriptionH{
-        font-size:15px ;
+
+@media only screen and (max-width: 350px) {
+    .shakeHands {
+        background-size: 100%;
+        height: 30px;
+        width: 30px;
+    }
+
+    .welcomePageDescriptionH {
+        font-size: 15px;
     }
 }
 
-.HandAndHeaderText{
+.HandAndHeaderText {
     display: flex;
     flex-flow: row-reverse;
     justify-content: space-between;
     align-items: center;
 }
+
 .element {
     animation: pulse 1s;
-    transform-origin: 60% 60% ;
+    transform-origin: 60% 60%;
 }
 
 @keyframes pulse {
     0% {
         transform: rotate(0deg);
     }
-    25%{
+    25% {
         transform: rotate(-20deg);
     }
-    75%{
+    75% {
         transform: rotate(20deg);
     }
     100% {
         transform: rotate(0deg);
     }
 }
-.openIcons{
+
+.openIcons {
     border-radius: 25px;
     background-color: #FFFFFF;
-    width: 23%;
-    height: 60px;
-    margin: auto;
+    width: 22vw;
+    height: 22vw;
+    margin: 20px auto;
+    box-shadow: 0px 2px 1px #e2e2e2;
+    font-family: AppIranSansMedium;
+    font-weight: bold;
+    font-size: 0.5rem;
 }
-.donat{
+
+.donat {
     text-align: center;
     margin-top: -20px;
     margin-left: auto;
@@ -98,7 +111,8 @@
     width: 50px;
     height: 50px;
 }
-.burger{
+
+.burger {
     text-align: center;
     margin-top: -20px;
     margin-left: auto;
@@ -106,24 +120,29 @@
     width: 50px;
     height: 50px;
 }
-.burgersAndDonatDescription{
+
+.burgersAndDonatDescription {
     font-family: AppIranSans;
     font-size: 15px;
 }
-@media only screen and (max-height:700px){
-.forLittlePhones{
-    height: 300px;
-}
+
+@media only screen and (max-height: 700px) {
+    .forLittlePhones {
+        height: 300px;
+    }
+
     .burgersAndDonatDescription {
         font-family: AppIranSans;
         font-size: 10px;
     }
+
     .chefImage {
         background-size: 95%;
         height: 150px;
         width: 150px;
         margin: auto;
     }
+
     .welcomePageFrames1 {
         border-radius: 25px;
         background: #fffaef;
@@ -133,7 +152,8 @@
         height: 300px;
     }
 }
-.welcomePageMainContainer{
+
+.welcomePageMainContainer {
     overflow: scroll;
     height: calc(100% - 50px);
 }
