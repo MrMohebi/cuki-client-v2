@@ -1,9 +1,59 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
+import * as requests from "../../ApiRequests/ApiRequests"
+import * as actions from "../../stores/reduxStore/actions"
+import moment from "jalali-moment"
 import './css/style.css'
 
 class OpenOrders extends Component {
+    componentDidMount() {
+        this.getOpenOrders()
+    }
+
+    state = {
+        openOrdersList: [],
+        openOrdersListDiv: <div/>,
+    }
+
+    getOpenOrders=()=>{
+        requests.getOpenOrders(this.callbackOpenOrders);
+    }
+
+    callbackOpenOrders = (res) =>{
+        console.log(res);
+        if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+            this.setState({
+                openOrdersList : res.data,
+                openOrdersListDiv: this.createOpenOrderList(res.data)
+            })
+        }
+    }
+
+    handleSelectOrder = (orderInfo) =>{
+        this.props.setTempOpenOrderInfo(orderInfo);
+        this.props.history.push("/openOrderHistory")
+    }
+
+    createOpenOrderList = (openOrders) =>{
+        return openOrders.map(eOrder=>{
+            let orderList = JSON.parse(eOrder['order_list'])
+            let orderTime = moment.unix(parseInt(eOrder['ordered_date'])).format("HH:mm")
+            return(
+                <div key={eOrder["orders_id"]} onClick={()=>(this.handleSelectOrder(eOrder))} className='eachOpenOrderContainer position-relative w-100'>
+                    <div className='w-100 d-flex justify-content-between mt-1'>
+                        <span className='IranSans paidItemsText'>{eOrder["paid_amount"] ? (parseInt(eOrder["paid_amount"]) / 1000) : 0}T </span>
+                        <span className='IranSans openOrdersNames'>{orderList.map(eFood=>(eFood.name)).join(" / ")}</span>
+                    </div>
+                    <div className='w-100 d-flex justify-content-between mt-1'>
+                        <span className='IranSans'>{parseInt(eOrder["total_price"]) / 1000}T</span>
+                        <span className='IranSans'>{orderTime}</span>
+                    </div>
+                </div>
+            )
+        })
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -16,17 +66,7 @@ class OpenOrders extends Component {
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
                 <div className='openOrdersContainer'>
-                    <div className='eachOpenOrderContainer position-relative w-100'>
-                        <div className='w-100 d-flex justify-content-between mt-1'>
-                            <span className='IranSans paidItemsText'>64T </span>
-                            <span className='IranSans openOrdersNames'>شیلان برگر /  بابونه / پیتزا</span>
-                        </div>
-                        <div className='w-100 d-flex justify-content-between mt-1'>
-                            <span className='IranSans'>250 T</span>
-                            <span className='IranSans'>16:32</span>
-                        </div>
-
-                    </div>
+                    {this.state.openOrdersListDiv}
                 </div>
             </React.Fragment>
         );
@@ -37,8 +77,10 @@ function mapStateToProps(state) {
     return {};
 }
 
-function mapDispatchToProps(dispatch) {
-    return {};
+function mapDispatchToProps() {
+    return {
+        setTempOpenOrderInfo: actions.setTempOpenOrderInfo
+    };
 }
 
 
