@@ -186,3 +186,13 @@ export const setFoodListConverted = (foodListConverted) =>{
     })
 }
 
+
+export const setTempOpenOrderInfo = (orderInfo) =>{
+    store.dispatch({
+        type: actionTypes.SET_TEMP_OPEN_ORDER_INFO,
+        payload:{
+            orderInfo
+        }
+    })
+}
+

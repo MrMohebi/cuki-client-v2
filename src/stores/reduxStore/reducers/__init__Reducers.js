@@ -37,6 +37,7 @@ export const __init__FrontStates = {
 
 
 export const __init__TempData = {
+    tempOpenOrderInfo:{},
     orderList: [],
     trackingId: 0,
     openOrdersTrackingId : [],
