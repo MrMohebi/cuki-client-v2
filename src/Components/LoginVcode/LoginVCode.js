@@ -22,7 +22,7 @@ class LoginVCode extends React.Component {
 
     componentDidMount() {
         if(this.isUserLoggedIn()){
-            this.history.push("/profile/club")
+            this.props.history.push("/profile/club")
         }
 
         this.setState({

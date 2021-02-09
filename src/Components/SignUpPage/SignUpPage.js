@@ -7,9 +7,9 @@ import './css/style.css'
 import logo from './img/logo.png'
 import * as requests from '../../ApiRequests/ApiRequests'
 import DatePicker from "react-modern-calendar-datepicker";
-import * as times from "../../functions/timeStampToJalaliString";
 import * as actions from "../../stores/reduxStore/actions";
 import {connect} from "react-redux";
+import moment from "jalali-moment";
 
 class SignUpPage extends React.Component {
     state = {
@@ -26,30 +26,20 @@ class SignUpPage extends React.Component {
             signUpContainerClass: 'animate__animated animate__fadeInUp signUpContainer d-flex justify-content-center flex-column'
         })
     }
-
-    backFunction = (res) => {
-        console.log(res)
-    }
     signUpDatePickerChange=(date)=>{
         this.setState({
-            datePickerValue:date
-        })
-        this.state.datePickerValue = date
-        let year = this.state.datePickerValue.year
-        let month = this.state.datePickerValue.month
-        let day = this.state.datePickerValue.day
-        let gregorian = times.jalaliToGregorian(year,month,day)
-        let timestamp = times.gregorianToTimeStamp(gregorian.year,gregorian.month,gregorian.day)
-        this.state.birthday=timestamp;
-        this.setState({
-            birthdayInputValue:times.timeStampToJalali(timestamp -24*60*60),
+            datePickerValue:date,
+            birthday:moment(date.year+'/'+date.month+'/'+date.day,'jYYYY/jM/jD').unix(),
+            birthdayInputValue:date.year+'/'+date.month+'/'+date.day,
         })
     }
     signUpRequest = ()=>{
-        requests.signUp(this.signUpBackFunction,this.props.token,this.state.name,this.state.birthday,this.state.job)
+        requests.signUp(this.signUpBackFunction,this.state.name,this.state.birthday,this.state.job)
     }
     signUpBackFunction = (res)=>{
-        console.log(res)
+        if (res.hasOwnProperty('statusCode')&& res.statusCode === 200){
+            this.props.history.push('/main')
+        }
     }
 
     render() {
@@ -78,20 +68,21 @@ class SignUpPage extends React.Component {
                         <TextField onChange={(e) => {
                             this.state.name = e.target.value
                         }} id="standard-basic" className='defaultInputUi' label="اسم و فامیل"/>
+
+
                         <TextField onFocus={()=>{
                             document.getElementsByClassName('DatePicker__input')[0].focus()
-                        }} onChange={(e) => {
-                            this.state.name = e.target.value
-                        }} id="standard-basic" value={this.state.birthdayInputValue} className='defaultInputUi' label="تاریخ تولد"/>
+                        }}  id="standard-basic" value={this.state.birthdayInputValue} className='defaultInputUi' label="تاریخ تولد"/>
+
                         <DatePicker
                             disabled
                             value={this.state.datePickerValue}
                             onChange={this.signUpDatePickerChange}
                             shouldHighlightWeekends
-                            locale="fa" // add this
+                            locale="fa"
                         />
                         <TextField onChange={(e) => {
-                            this.state.name = e.target.value
+                            this.state.job = e.target.value
                         }} id="standard-basic" className='defaultInputUi' label="شغل"/>
 
                         <div onClick={this.signUpRequest} className={'signupSubmitButton IranSansLight'}>تایید

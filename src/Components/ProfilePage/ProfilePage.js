@@ -9,7 +9,6 @@ import {useSwipeable} from 'react-swipeable';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import DatePicker from 'react-modern-calendar-datepicker';
 import moment from 'jalali-moment';
-import * as times from '../../functions/timeStampToJalaliString';
 
 
 export const Swipeable = ({children, style, ...props}) => {
@@ -42,22 +41,13 @@ class ProfilePage extends React.Component {
     }
 
     componentDidMount() {
-
-        if (this.props.match.params['part'] === 'club') {
-            this.userTabClickHandler();
-        } else {
-            this.historyTabClickHandler();
-        }
+        this.props.match.params['part'] === 'club' ?this.userTabClickHandler():this.historyTabClickHandler()
         this.getUserInfo()
         if (this.state.inputsDisabled) {
             this.disableDatePicker()
         }
         this.setState({
-
-        })
-        moment.locale('fa')
-        this.setState({
-            birthdayInput:times.timeStampToJalali(this.state.birthday)
+            birthdayInputValue:moment.unix(this.props.birthday).format('jYYYY/jM/jD')
         })
     }
     userTabClickHandler = () => {
@@ -86,8 +76,12 @@ class ProfilePage extends React.Component {
     }
 
     callbackGetUserInfo = (res) => {
+
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
-            this.props.setUserData(res.data);
+
+            let fixedData = res.data
+            fixedData.birthday= parseInt(fixedData.birthday)
+            this.props.setUserData(fixedData);
         }
     }
 
@@ -96,6 +90,7 @@ class ProfilePage extends React.Component {
             this.props.setCustomerData(res.data);
         }
     }
+    createOrdersHistory
 
     swipeRight = () => {
         this.userTabClickHandler()
@@ -112,7 +107,7 @@ class ProfilePage extends React.Component {
     }
 
     handleBack = () => {
-        this.props.history.push("/main")
+        this.props.history.goBack()
     }
     editAndApplyHandler = (e) => {
         if (this.state.inputsDisabled) {
@@ -131,28 +126,16 @@ class ProfilePage extends React.Component {
         }
     }
     editUserData = ()=> {
-        requests.changeUserInfo(this.changeUserDataBackFunction,this.props.token,this.state.name,this.state.birthday,this.state.job)
+        requests.changeUserInfo(()=>{},this.props.token,this.state.name,this.state.birthday,this.state.job)
     }
-    changeUserDataBackFunction = (res)=>{
-        console.log(res)
 
-    }
     datePickerChange=(date)=>{
         this.setState({
-            datePickerValue:date
-        })
-        this.state.datePickerValue = date
-        let year = this.state.datePickerValue.year
-        let month = this.state.datePickerValue.month
-        let day = this.state.datePickerValue.day
-        let gregorian = times.jalaliToGregorian(year,month,day)
-        let timestamp = times.gregorianToTimeStamp(gregorian.year,gregorian.month,gregorian.day)
-        this.state.birthday=timestamp;
-        this.setState({
-            birthdayInputValue:times.timeStampToJalali(timestamp -24*60*60),
+            datePickerValue:date,
+            birthday:moment(date.year+'/'+date.month+'/'+date.day,'jYYYY/jM/jD').unix(),
+            birthdayInputValue:date.year+'/'+date.month+'/'+date.day,
         })
     }
-
 
     render() {
         return (
@@ -160,7 +143,7 @@ class ProfilePage extends React.Component {
                 <React.Fragment>
                     <div
                         className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                        <ArrowBackRoundedIcon/>
+                        <ArrowBackRoundedIcon onClick={this.handleBack}/>
                         <div className='text-center d-flex justify-content-around flex-row'>
                             <div className='IranSans'>پروفایل</div>
                         </div>
@@ -181,6 +164,10 @@ class ProfilePage extends React.Component {
                                 <span className='historyOrderDate'>250T</span>
                                 <span className='historyOrderName'>اسپشیال فلان و فلان وفلان</span>
                                 <span className='historyOrderDate'>8/23</span>
+                            </div><div className='w-100 d-flex justify-content-between align-items-center pt-4'>
+                                <span className='historyOrderDate'>250T</span>
+                                <span className='historyOrderName'>اسپشیال فلان و فلان وفلان</span>
+                                <span className='historyOrderDate'>8/23</span>
                             </div>
                         </div>
 
@@ -198,7 +185,7 @@ class ProfilePage extends React.Component {
                                     value={this.state.datePickerValue}
                                     onChange={this.datePickerChange}
                                     shouldHighlightWeekends
-                                    locale="fa" // add this
+                                    locale="fa"
                                 />
 
                                 <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.job} onChange={e=>this.state.job = e.target.value}

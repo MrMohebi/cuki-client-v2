@@ -36,8 +36,9 @@ export const checkCode = (callbackFunction, phone, vCode)=>{
     })
 }
 
-export const signUp = (callbackFunction, token, name, birthday, job)=>{
-    $.post(BASE_API_URL+ "signup.modify.php" ,{token:token,name:name,birthday:birthday,job:job}).then(res=>{
+export const signUp = (callbackFunction, name, birthday, job)=>{
+    let token = getReduxStore('token')
+    $.post(BASE_API_URL+ "signup.modify.php" ,{token,name:name,birthday:birthday,job:job}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
