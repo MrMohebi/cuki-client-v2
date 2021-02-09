@@ -7,8 +7,25 @@
     display: flex;
     flex-flow: column;
     padding: 0 15px 10px 15px;
+    position: relative;
     overflow: scroll;
     min-height: 420px !important;
+}
+.openOrderHistorySubmit{
+    width: 85%;
+    background-color: #988AA8;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    font-family: AppIranSansMedium;
+    color: white;
+    bottom: 10px;
+    transform: translate(-50%);
 }
 
 .eachOrderDetailsFoodsContainer {

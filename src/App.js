@@ -9,12 +9,13 @@ import CategoryPage from "./Components/CategoryPage/Category";
 import FoodListPage from "./Components/FoodListPage/FoodListPage";
 import BillPage from "./Components/BillPage/BillPage";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
-import EachOrderHistory from "./Components/EachOrderDetails/EachOrderHistory";
+import EachOrderHistory from "./Components/OpenOrderHistory/OpenOrderHistory";
 import LoginVCode from "./Components/LoginVcode/LoginVCode";
 import SignUpPage from "./Components/SignUpPage/SignUpPage";
 import PayWay from "./Components/PayWay/PayWay";
 import DongiPage from "./Components/DongiPage/DongiPage";
 import openOrders from "./Components/openOrders/openOrders";
+import OpenOrdersHistory from "./Components/OpenOrderHistory/OpenOrderHistory";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path='/payway' component={PayWay}/>
         <Route path='/dongi' component={DongiPage}/>
         <Route path='/openOrders' component={openOrders}/>
+        <Route path='/openOrderHistory' component={OpenOrdersHistory}/>
       </BrowserRouter>
     </React.Fragment>
   );

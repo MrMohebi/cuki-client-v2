@@ -74,10 +74,6 @@ class EachOrderHistory extends React.Component {
                             {this.state.foods}
                         </div>
 
-
-
-
-
                     </div>
                     <div className='mt-3 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span className=''>230 T</span>
@@ -96,7 +92,6 @@ class EachOrderHistory extends React.Component {
                         <span className=''>85421037</span>
                         <span className='eachOrderDetailsTotalHolder'>شماره سفارش</span>
                     </div>
-
                 </div>
             </React.Fragment>
 
