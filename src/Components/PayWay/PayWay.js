@@ -28,10 +28,10 @@ let markerIcon = L.icon({
     iconUrl: markerPNG,
     shadowUrl: markerShadowPNG,
 
-    iconSize:     [38, 95], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
+    iconSize:     [40, 60], // size of the icon
+    shadowSize:   [40, 30], // size of the shadow
+    iconAnchor:   [20, 60], // point of the icon which will correspond to marker's location
+    shadowAnchor: [0, 30],  // the same for the shadow
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
