@@ -7,6 +7,9 @@ import './css/style.css'
 import logo from './img/logo.png'
 import * as requests from '../../ApiRequests/ApiRequests'
 import DatePicker from "react-modern-calendar-datepicker";
+import * as times from "../../functions/timeStampToJalaliString";
+import * as actions from "../../stores/reduxStore/actions";
+import {connect} from "react-redux";
 
 class SignUpPage extends React.Component {
     state = {
@@ -15,6 +18,7 @@ class SignUpPage extends React.Component {
         birthday: '',
         job: '',
         datePickerValue: {day: 9, month: 3, year: 1381},
+        birthdayInputValue:''
     }
 
     componentDidMount() {
@@ -26,10 +30,26 @@ class SignUpPage extends React.Component {
     backFunction = (res) => {
         console.log(res)
     }
-    datePickerChange=(date)=>{
+    signUpDatePickerChange=(date)=>{
         this.setState({
             datePickerValue:date
         })
+        this.state.datePickerValue = date
+        let year = this.state.datePickerValue.year
+        let month = this.state.datePickerValue.month
+        let day = this.state.datePickerValue.day
+        let gregorian = times.jalaliToGregorian(year,month,day)
+        let timestamp = times.gregorianToTimeStamp(gregorian.year,gregorian.month,gregorian.day)
+        this.state.birthday=timestamp;
+        this.setState({
+            birthdayInputValue:times.timeStampToJalali(timestamp -24*60*60),
+        })
+    }
+    signUpRequest = ()=>{
+        requests.signUp(this.signUpBackFunction,this.props.token,this.state.name,this.state.birthday,this.state.job)
+    }
+    signUpBackFunction = (res)=>{
+        console.log(res)
     }
 
     render() {
@@ -58,13 +78,15 @@ class SignUpPage extends React.Component {
                         <TextField onChange={(e) => {
                             this.state.name = e.target.value
                         }} id="standard-basic" className='defaultInputUi' label="اسم و فامیل"/>
-                        <TextField onChange={(e) => {
+                        <TextField onFocus={()=>{
+                            document.getElementsByClassName('DatePicker__input')[0].focus()
+                        }} onChange={(e) => {
                             this.state.name = e.target.value
-                        }} id="standard-basic" className='defaultInputUi' label="تاریخ تولد"/>
+                        }} id="standard-basic" value={this.state.birthdayInputValue} className='defaultInputUi' label="تاریخ تولد"/>
                         <DatePicker
                             disabled
                             value={this.state.datePickerValue}
-                            onChange={this.datePickerChange}
+                            onChange={this.signUpDatePickerChange}
                             shouldHighlightWeekends
                             locale="fa" // add this
                         />
@@ -72,9 +94,7 @@ class SignUpPage extends React.Component {
                             this.state.name = e.target.value
                         }} id="standard-basic" className='defaultInputUi' label="شغل"/>
 
-                        <div onClick={() => {
-
-                        }} className={'signupSubmitButton IranSansLight'}>تایید
+                        <div onClick={this.signUpRequest} className={'signupSubmitButton IranSansLight'}>تایید
                         </div>
                     </div>
                 </div>
@@ -83,4 +103,21 @@ class SignUpPage extends React.Component {
     }
 }
 
-export default SignUpPage;
+const mapStateToProps = (store) => {
+    return {
+        token: store.rUserInfo.token,
+        name: store.rUserInfo.name,
+        birthday: store.rUserInfo.birthday,
+        job: store.rUserInfo.job,
+    }
+}
+
+const mapDispatchToProps = () => {
+    return {
+        setUserData: actions.userSetData,
+        setCustomerData: actions.userSetCustomerInfo,
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

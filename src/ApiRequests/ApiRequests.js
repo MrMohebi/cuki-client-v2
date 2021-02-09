@@ -37,7 +37,7 @@ export const checkCode = (callbackFunction, phone, vCode)=>{
 }
 
 export const signUp = (callbackFunction, token, name, birthday, job)=>{
-    $.post(BASE_API_URL+ "login.modify.php" ,{token:token,name:name,birthday:birthday,job:job}).then(res=>{
+    $.post(BASE_API_URL+ "signup.modify.php" ,{token:token,name:name,birthday:birthday,job:job}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
