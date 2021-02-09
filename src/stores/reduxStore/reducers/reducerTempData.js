@@ -85,7 +85,6 @@ export default function reducerTempData (state = __init__TempData, action) {
                 draftState.openOrdersInfo = {};
                 draftState.openOrdersTrackingId = [];
             });
-
         case actionTypes.SET_TEMP_OPEN_ORDER_INFO:
             return produce(state, draftState=>{
                 draftState.tempOpenOrderInfo = action.payload.orderInfo;

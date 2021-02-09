@@ -6,9 +6,9 @@ import * as randomColors from '../../functions/RandomColor'
 
 
 
-class EachOrderHistory extends React.Component {
+class OpenOrdersHistory extends React.Component {
     state = {
-        foods:<div></div>,
+        foods:<div/>,
     }
 
     componentDidMount() {
@@ -20,32 +20,32 @@ class EachOrderHistory extends React.Component {
             {name:'',price:123},
         ]
         let allFoods = testFoods.map(eFood =>{
-            let color = randomColors.RandomColor()
-            console.log(color)
-            return(
-                <div className='eachOrderDetailsEachFoodContainer'>
-                    <div className='eachOrderDetailsEachFood' style={{color:color.foreground,backgroundColor:color.background}}>
-                        <div className='priceAndImage'>
+                let color = randomColors.RandomColor()
+                console.log(color)
+                return(
+                    <div className='eachOrderDetailsEachFoodContainer'>
+                        <div className='eachOrderDetailsEachFood' style={{color:color.foreground,backgroundColor:color.background}}>
+                            <div className='priceAndImage'>
                                     <span className='EachOrderDetailsEachFoodPrice'>
                                         25 T
                                     </span>
-                            <div className='EachOrderDetailsEachFoodImage'
-                                 style={{
-                                     background: `url(https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png)`,
-                                     backgroundSize: 'cover',
-                                     backgroundPosition: 'center'
-                                 }}/>
-                        </div>
-                        <span className='eachOrderDetailsFoodNumber text-left pl-3'>x2</span>
-                        <div className='w-100 justify-content-center d-flex'>
-                            <div className='EachOrderDetailsEachFoodName'>اسپشیالینو</div>
-                        </div>
-                        <div className='w-100 d-flex justify-content-center'>
-                            <div className='EachOrderDetailsFoodDetails'>چوب درخت ماکارونی</div>
+                                <div className='EachOrderDetailsEachFoodImage'
+                                     style={{
+                                         background: `url(https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png)`,
+                                         backgroundSize: 'cover',
+                                         backgroundPosition: 'center'
+                                     }}/>
+                            </div>
+                            <span className='eachOrderDetailsFoodNumber text-left pl-3'>x2</span>
+                            <div className='w-100 justify-content-center d-flex'>
+                                <div className='EachOrderDetailsEachFoodName'>اسپشیالینو</div>
+                            </div>
+                            <div className='w-100 d-flex justify-content-center'>
+                                <div className='EachOrderDetailsFoodDetails'>چوب درخت ماکارونی</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )
+                )
             }
         )
         this.setState({
@@ -74,6 +74,10 @@ class EachOrderHistory extends React.Component {
                             {this.state.foods}
                         </div>
 
+
+
+
+
                     </div>
                     <div className='mt-3 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span className=''>230 T</span>
@@ -92,6 +96,11 @@ class EachOrderHistory extends React.Component {
                         <span className=''>85421037</span>
                         <span className='eachOrderDetailsTotalHolder'>شماره سفارش</span>
                     </div>
+                    <div className='openOrderHistorySubmit mt-2' onClick={this.handleSubmit}>
+                        <span>پرداخت</span>
+                    </div>
+
+
                 </div>
             </React.Fragment>
 
@@ -109,4 +118,4 @@ const mapDispatchToProps = () => {
     return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EachOrderHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(OpenOrdersHistory);
