@@ -181,7 +181,6 @@ class ProfilePage extends React.Component {
         let day = this.state.datePickerValue.day
         let gregorian = this.jalaliToGregorian(year,month,day)
         let timestamp = this.gregorianToTimeStamp(gregorian.year,gregorian.month,gregorian.day)
-        console.log(timestamp)
         this.setState({
             birthday:timestamp,
             birthdayInputValue:ttj.timeStampToJalali(timestamp -24*60*60)
