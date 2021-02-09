@@ -16,14 +16,14 @@ class OpenOrders extends Component {
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
                 <div className='openOrdersContainer'>
-                    <div className='eachDongContainer position-relative w-100' >
-
-                        <div className='eachDongContainerHolders' >
-                            <span className='eachDongFoodName font-weight-bold'>پیتزا پپرونی بدون اسپشیال برگر</span>
-                            <span className='IranSans DongiPayText  '> 16:22</span>
-                            <span className='IranSans '>28/3</span>
-                            <span className='IranSans paidItemsText  '>65T</span>
-                            <span className='IranSans'>150T</span>
+                    <div className='eachOpenOrderContainer position-relative w-100'>
+                        <div className='w-100 d-flex justify-content-between mt-1'>
+                            <span className='IranSans paidItemsText'>64T </span>
+                            <span className='IranSans openOrdersNames'>شیلان برگر /  بابونه / پیتزا</span>
+                        </div>
+                        <div className='w-100 d-flex justify-content-between mt-1'>
+                            <span className='IranSans'>250 T</span>
+                            <span className='IranSans'>16:32</span>
                         </div>
 
                     </div>
@@ -34,18 +34,12 @@ class OpenOrders extends Component {
 }
 
 function mapStateToProps(state) {
-    return {
-
-
-    };
+    return {};
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-
-
-    };
+    return {};
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(OpenOrders);
+export default connect(mapStateToProps, mapDispatchToProps)(OpenOrders);
