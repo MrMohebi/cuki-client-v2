@@ -70,6 +70,7 @@
     height: calc(100% - 70px);
     border-radius: 14px;
     opacity: 1;
+    overflow: scroll;
 }
 .historyOrderDate{
     width: 25%;
@@ -94,6 +95,7 @@
         width: 50vw;
         height: 300px;
         padding: 0 100px 0 100px;
+
     }
 }
 @media only screen and (max-width: 360px) {
