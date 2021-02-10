@@ -90,7 +90,6 @@ class ProfilePage extends React.Component {
             this.props.setCustomerData(res.data);
         }
     }
-    createOrdersHistory
 
     swipeRight = () => {
         this.userTabClickHandler()
@@ -159,18 +158,19 @@ class ProfilePage extends React.Component {
 
                         {/*{this.state.activeProfile === 'club' ? this.clubElement : this.historyElement}*/}
                         <div className={this.state.historyElementClass}>
-
-                            <div className='w-100 d-flex justify-content-between align-items-center pt-4'>
-                                <span className='historyOrderDate'>250T</span>
-                                <span className='historyOrderName'>اسپشیال فلان و فلان وفلان</span>
-                                <span className='historyOrderDate'>8/23</span>
-                            </div><div className='w-100 d-flex justify-content-between align-items-center pt-4'>
-                                <span className='historyOrderDate'>250T</span>
-                                <span className='historyOrderName'>اسپشیال فلان و فلان وفلان</span>
-                                <span className='historyOrderDate'>8/23</span>
-                            </div>
+                            {
+                                this.props.orderHistoryRestaurant.map(eOrder=>{
+                                    let orderList = JSON.parse(eOrder['order_list']);
+                                    return(
+                                        <div key={eOrder['orders_id']} className='w-100 d-flex justify-content-between align-items-center pt-4'>
+                                            <span className='historyOrderDate'>{eOrder['total_price'] / 1000}T</span>
+                                            <span className='historyOrderName'>{orderList.map(eFood=>(eFood.name)).join("، ")}</span>
+                                            <span className='historyOrderDate'>{moment.utc(parseInt(eOrder['ordered_date'])).format("jM/jD")}</span>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
-
 
                         <div className={this.state.clubElementClass}>
                             <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
@@ -228,6 +228,7 @@ const mapStateToProps = (store) => {
         orderTimesRestaurant: store.rUserInfo.orderTimesRestaurant,
         scoreRestaurant: store.rUserInfo.scoreRestaurant,
         lastOrderRestaurant: store.rUserInfo.lastOrderRestaurant,
+        orderHistoryRestaurant: store.rUserInfo.orderHistoryRestaurant,
     }
 }
 

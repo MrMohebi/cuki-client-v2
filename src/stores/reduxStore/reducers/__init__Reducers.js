@@ -24,7 +24,7 @@ export const __init__UserInfo = {
     scoreRestaurant: 0,
     orderTimesRestaurant: 0,
     totalBoughtRestaurant: 0,
-    orderListRestaurant: [],
+    orderHistoryRestaurant: [],
     lastOrderRestaurant :"",
     moreOrderedFoods:[]
 }

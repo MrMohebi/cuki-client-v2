@@ -2,7 +2,6 @@ export const SET_PHONE = "setPhone"
 export const SET_TOKEN = "setToken"
 export const SET_USER_DATA = "setUserData"
 export const SET_CUSTOMER_DATA = "setCustomerData"
-export const CONVERT_TRACKING_ID_TO_ORDER_OBJECT = "convertTrackingIdToOrderObject";
 export const DELETE_USER_ALL_DATA = "deleteAllUserData";
 
 export const SET_RESTAURANT_DATA = "setRestaurantData"

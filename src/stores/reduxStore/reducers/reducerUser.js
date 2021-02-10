@@ -27,10 +27,7 @@ export default function reducerUser (state = __init__UserInfo, action) {
             stateUser_Draft.scoreRestaurant = action.payload.customerInfo['score'];
             stateUser_Draft.rankRestaurant = action.payload.customerInfo.rank;
             stateUser_Draft.lastOrderRestaurant = action.payload.customerInfo['lastOrderDate'];
-        });
-    }else if(action.type === actionTypes.CONVERT_TRACKING_ID_TO_ORDER_OBJECT) {
-        return produce(state, stateUser_Draft => {
-            stateUser_Draft.orderListRestaurant = action.payload.orderObjects;
+            stateUser_Draft.orderHistoryRestaurant = action.payload.customerInfo['orderList'];
         });
     }else if(action.type === actionTypes.DELETE_USER_ALL_DATA){
         return __init__UserInfo

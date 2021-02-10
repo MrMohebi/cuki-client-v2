@@ -152,7 +152,6 @@ const mapStateToProps = (store) => {
         foods: store.rRestaurantInfo.foods,
         foodListConverted: store.rRestaurantInfo.foodListConverted,
         orderList: store.rTempData.orderList,
-        historyOrderListRestaurant: store.rUserInfo.orderListRestaurant,
         trackingId: store.rTempData.trackingId,
     }
 }
