@@ -99,16 +99,16 @@ export const userSetCustomerInfo = (customerInfo) =>{
     })
 }
 
-
-export const userConvertTrackingIdToOrderObject = (orderObjects) =>{
-    store.dispatch({
-        type: actionTypes.CONVERT_TRACKING_ID_TO_ORDER_OBJECT,
-        payload:{
-            orderObjects
-        }
-    })
-}
-
+//
+// export const userConvertTrackingIdToOrderObject = (orderObjects) =>{
+//     store.dispatch({
+//         type: actionTypes.CONVERT_TRACKING_ID_TO_ORDER_OBJECT,
+//         payload:{
+//             orderObjects
+//         }
+//     })
+// }
+//
 
 export const setTrackingId = (trackingId) =>{
     store.dispatch({
