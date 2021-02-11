@@ -28,12 +28,7 @@ class SplashScreen extends React.Component{
 
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
             this.props.history.push("/main");
-
             this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
-            setTimeout(()=>{
-                console.log(this.props.foodListConverted)
-            },1000)
-            console.log(response)
         }else{
             this.setOpenSnackbar(true)
         }
