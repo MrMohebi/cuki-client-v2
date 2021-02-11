@@ -136,6 +136,11 @@ class ProfilePage extends React.Component {
         })
     }
 
+    handleSelectEachOrderHistory = (orderInfo) =>{
+        this.props.setTempHistoryOrderInfo(orderInfo)
+        this.props.history.push("/eachOrderHistoryDetails")
+    }
+
     render() {
         return (
             <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
@@ -162,7 +167,7 @@ class ProfilePage extends React.Component {
                                 this.props.orderHistoryRestaurant.map(eOrder=>{
                                     let orderList = JSON.parse(eOrder['order_list']);
                                     return(
-                                        <div key={eOrder['orders_id']} className='w-100 d-flex justify-content-between align-items-center pt-4'>
+                                        <div key={eOrder['orders_id']} onClick={()=>(this.handleSelectEachOrderHistory(eOrder))} className='w-100 d-flex justify-content-between align-items-center pt-4'>
                                             <span className='historyOrderDate'>{eOrder['total_price'] / 1000}T</span>
                                             <span className='historyOrderName'>{orderList.map(eFood=>(eFood.name)).join("، ")}</span>
                                             <span className='historyOrderDate'>{moment.utc(parseInt(eOrder['ordered_date'])).format("jM/jD")}</span>
@@ -236,7 +241,7 @@ const mapDispatchToProps = () => {
     return {
         setUserData: actions.userSetData,
         setCustomerData: actions.userSetCustomerInfo,
-
+        setTempHistoryOrderInfo: actions.setTempHistoryOrderInfo,
     }
 }
 

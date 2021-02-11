@@ -7,7 +7,7 @@ import moment from "jalali-moment"
 
 
 
-class EachOrderHistory extends React.Component {
+class EachOpenOrderDetails extends React.Component {
     state = {
         foods:<div/>,
     }
@@ -117,4 +117,4 @@ const mapDispatchToProps = () => {
     return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EachOrderHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(EachOpenOrderDetails);

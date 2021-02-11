@@ -39,7 +39,7 @@ class OpenOrders extends Component {
 
     handleSelectOrder = (orderInfo) =>{
         this.props.setTempOpenOrderInfo(orderInfo);
-        this.props.history.push("/openOrderHistory")
+        this.props.history.push("/eachOpenOrderDetails")
     }
 
     createOpenOrderList = (openOrders) =>{
