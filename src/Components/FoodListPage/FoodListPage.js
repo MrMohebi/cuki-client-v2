@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import moment from "jalali-moment"
 import './css/style.css'
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
@@ -7,6 +8,7 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import * as RandomColor from '../../functions/RandomColor'
 import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
+import * as requests from "../../ApiRequests/ApiRequests"
 import tf from "./img/testFood.png";
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
@@ -25,7 +27,9 @@ class FoodListPage extends Component {
         allowToFillComments: true,
         commentsFilled: false,
         commentInputClass: ' d-none',
-        canUserComment: false
+        canLeaveComment: false,
+        commentsListDiv: <div/>,
+        lastCommentDate: Math.floor(Date.now() / 1000),
     }
 
     componentDidMount() {
@@ -70,7 +74,7 @@ class FoodListPage extends Component {
     }
 
     commentsFullPage = () => {
-        if (this.state.canUserComment)
+        if (this.state.canLeaveComment)
             this.enableComment()
 
         document.getElementsByClassName('foodDetailsComments')[0].style.height = '100%'
@@ -82,7 +86,7 @@ class FoodListPage extends Component {
         this.state.commentsFilled = false
     }
 
-    foodDetails = (active) => {
+    foodDetails = (active, foodInfo) => {
         if (active) {
             this.setState({
                 foodDetails: <div onContextMenu={(e) => {
@@ -105,25 +109,22 @@ class FoodListPage extends Component {
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat'
                             }} className='foodDetailsImg'/>
-                            <div className='foodDetailsPrice'>32 T</div>
+                            <div className='foodDetailsPrice'>{foodInfo.price / 1000} T</div>
                         </div>
-                        <div className='foodDetailsDetails'>خمیر مخصوص ایتالیایی/فلفل دلمه ای/قارچ/پنیرموزارلا خمیر
-                            مخصوص ایتالیایی/فلفل
-                            دلمه ای/قارچ/پنیرموزارلا
-                        </div>
+                        <div className='foodDetailsDetails'>{foodInfo.details.join(" / ")}</div>
                         <div className='foodDetailsTimesAndOrderTimeContainer'>
                             <div className='timesOrderedContainer'>
                                 <span className='timesAndOrderTimeText'> تعداد دفعات سفارش غذا</span>
-                                <span>X 25</span>
+                                <span>X {foodInfo.order_times}</span>
                             </div>
                             <div className='timesOrderedContainer'>
                                 <span className='timesAndOrderTimeText mt-2'>زمان تقریبی آماده شدن</span>
-                                <span className='rtl mt-2'><span>25</span> دقیقه </span>
+                                <span className='rtl mt-2'>{foodInfo.delivery_time > 0 ?  (<span>{foodInfo.delivery_time}</span> + "دقیقه") : " والا به منم نگفتن :("}</span>
                             </div>
                         </div>
 
                         <div className='foodDetailsComments'>
-                            {this.state.canUserComment ?
+                            {this.state.canLeaveComment ?
                                 <div onClick={() => {
                                     this.commentsFullPage()
                                 }}
@@ -144,14 +145,7 @@ class FoodListPage extends Component {
 
                             }
 
-                            <Swipeable onSwipedUp={() => {
-                                this.commentsFullPage()
-                            }}
-                                       onSwipedDown={() => {
-                                           this.commentsMiniPage()
-
-                                       }}
-
+                            <Swipeable onSwipedUp={() => {this.commentsFullPage()}} onSwipedDown={() => {this.commentsMiniPage()}}
                                        children={
                                            <div onClick={() => {
                                                this.state.commentsFilled ? this.commentsMiniPage() : this.commentsFullPage()
@@ -160,57 +154,54 @@ class FoodListPage extends Component {
                                                <div className='littleCommentPin'/>
                                            </div>
                                        }/>
-                            <div onScroll={(e) => {
-                            }} className='mainCommentContainer'>
-                                <textarea className={'newCommentInput ' + this.state.commentInputClass}/>
-                                <span className={'sendCommentButton ' + this.state.commentInputClass} onClick={(e) => {
-                                    this.sendComment(e.target)
-                                }}>ارسال</span>
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span
-                                        className='eachCommentContent'>غدا خوشمزه بود ولی احساس میشد کمی نپخته است</span>
-                                </div>
+                                <div onScroll={(e) => {
+                                }} className='mainCommentContainer'>
+                                    <textarea className={'newCommentInput ' + this.state.commentInputClass}/>
+                                    <span className={'sendCommentButton ' + this.state.commentInputClass} onClick={(e) => {
+                                        this.sendComment(e.target)
+                                    }}>ارسال</span>
 
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'>فاطمه سجادیان</span>
-                                    <span className='eachCommentTime'>10/6</span>
-                                    <span
-                                        className='eachCommentContent'>خیلی خوب بود مخصوصا اون پیاز داغای روی غدا</span>
-                                </div>
+                                    {this.state.commentsListDiv}
 
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'>محمد مهدی محبی</span>
-                                    <span className='eachCommentTime'>10/6</span>
-                                    <span className='eachCommentContent'>غدا بد نبود میتونست بهتر باشه اگه یکم بیشتر بهش زرد جوبه اضافه میکردن</span>
                                 </div>
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span
-                                        className='eachCommentContent'>غدا خوشمزه بود ولی احساس میشد کمی نپخته است</span>
-                                </div>
-
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'>فاطمه سجادیان</span>
-                                    <span className='eachCommentTime'>10/6</span>
-                                    <span
-                                        className='eachCommentContent'>خیلی خوب بود مخصوصا اون پیاز داغای روی غدا</span>
-                                </div>
-
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'>محمد مهدی محبی</span>
-                                    <span className='eachCommentTime'>10/6</span>
-                                    <span className='eachCommentContent'>غدا بد نبود میتونست بهتر باشه اگه یکم بیشتر بهش زرد جوبه اضافه میکردن</span>
-                                </div>
-
-                            </div>
                         </div>
                     </div>
                 </div>
             })
         }
+    }
+
+    createCommentsList = (previousListDiv, newCommentList) =>{
+        return previousListDiv.concat(
+            newCommentList.map(eComment=>{
+                return(
+                    <div className='eachComment'>
+                        <span className='eachCommentName'>{eComment.name}</span>
+                        <span className='eachCommentTime'>{moment.utc(parseInt(eComment['commented_date'])).format("jM/jD")}</span>
+                        <span className='eachCommentContent'>{eComment.body}</span>
+                    </div>
+                )
+            })
+        )
+    }
+
+    getComments = (foodId) =>{
+        requests.getCommentsByFoodId(this.callbackGetComments, foodId, this.state.lastCommentDate, 10)
+    }
+
+    callbackGetComments = (res) =>{
+        console.log(res);
+        let comments = []
+        let canLeaveComment = false
+        if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+            comments = res.data.comments
+            canLeaveComment = res.data['isAllowedLeaveComment']
+        }
+        this.setState({
+            canLeaveComment,
+            commentsListDiv: this.createCommentsList(this.state.commentsListDiv, comments),
+            lastCommentDate: comments[comments.length-1]['commented_date']
+        })
     }
 
     createFoodList = () => {
@@ -230,7 +221,8 @@ class FoodListPage extends Component {
                          this.state.allowToShow = true
                          setTimeout(() => {
                              if (this.state.allowToShow) {
-                                 this.foodDetails(true)
+                                 this.getComments(eachFood['foods_id']);
+                                 this.foodDetails(true, eachFood);
                              }
                          }, 1000)
 

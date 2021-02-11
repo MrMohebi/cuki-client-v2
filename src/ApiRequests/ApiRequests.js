@@ -122,3 +122,13 @@ export const getOpenOrders = (callbackFunction, dToken = null)=>{
 }
 
 
+
+
+export const getCommentsByFoodId = (callbackFunction, foodId, lastOneDate, number)=>{
+    let token = getReduxStore('token')
+    let englishName = getReduxStore('englishName')
+    $.post(BASE_API_URL+ "getCommentsByFoodId.fetch.php" ,{englishName, token, foodId, lastDate:lastOneDate, number}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
