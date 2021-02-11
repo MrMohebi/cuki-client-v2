@@ -14,7 +14,7 @@
     transition: all 0.2s ease;
     margin-top: 50px;
     height: 175px;
-    width: 150px;
+    width: 140px;
     background-color: #fff;
     border-radius: 20px 35px 20px 20px;
     display: flex;
@@ -32,9 +32,22 @@
     display: flex;
     flex-flow: column;
     box-shadow: 1px 2px 0px 0px #E0DEDE;
-    transform:scale(0.8);
+    transform: scale(0.8);
 }
-
+@media only screen and (max-width:300px) {
+    .foodListEachFood {
+        transition: all 0.2s ease;
+        margin-top: 50px;
+        height: 150px;
+        width: 120px;
+        background-color: #fff;
+        border-radius: 20px 35px 20px 20px;
+        display: flex;
+        flex-flow: column;
+        box-shadow: 1px 2px 0px 0px #b9b9b9;
+        transform: scale(0.8) !important;
+    }
+}
 @media only screen and (max-width: 360px) {
     .foodListEachFood {
         transition: all 0.2s ease;
@@ -46,6 +59,7 @@
         display: flex;
         flex-flow: column;
         box-shadow: 1px 2px 0px 0px #b9b9b9;
+        transform: scale(0.98);
     }
 
     .foodListEachFood:active {
@@ -61,7 +75,7 @@
         transform: scale(0.8);
     }
 
-    .eachFoodPrice{
+    .eachFoodPrice {
         font-family: KingArthurSpecialNormal;
         font-weight: normal;
         height: 100%;
@@ -70,7 +84,8 @@
         padding-left: 15px;
         font-size: smaller !important;
     }
-    .foodName{
+
+    .foodName {
         transition: all 0.2s ease;
         width: 90%;
         white-space: nowrap;
@@ -82,7 +97,8 @@
         text-overflow: ellipsis;
         direction: rtl;
     }
-    .eachFoodImage{
+
+    .eachFoodImage {
         transition: all 0.2s ease;
         height: 55px !important;
         width: 55px !important;
@@ -91,20 +107,19 @@
         margin-right: 0px;
         /*margin-top: 5px !important;*/
     }
-    .foodDetails{
+
+    .foodDetails {
         transition: all 0.2s ease;
-        font-family:AppIranSansLight ;
+        font-family: AppIranSansLight;
         width: 85%;
-        overflow:hidden;
+        overflow: hidden;
         white-space: nowrap;
         font-size: 0.5rem !important;
         margin-top: 15px !important;
-        padding: 0 5px 0 5px ;
+        padding: 0 5px 0 5px;
         direction: rtl;
         text-overflow: ellipsis;
     }
-
-
 
 
 }
@@ -125,14 +140,15 @@
 }
 
 
-.priceAndImage{
+.priceAndImage {
     transition: all 0.2s ease;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     align-items: center;
 }
-.eachFoodPrice{
+
+.eachFoodPrice {
     transition: all 0.2s ease;
     font-family: KingArthurSpecialNormal;
     font-weight: normal;
@@ -143,7 +159,8 @@
     white-space: nowrap;
     padding-left: 10px;
 }
-.foodName{
+
+.foodName {
     transition: all 0.2s ease;
     width: 80%;
     white-space: nowrap;
@@ -155,7 +172,8 @@
     direction: rtl;
     margin-top: 10px;
 }
-.eachFoodImage{
+
+.eachFoodImage {
     transition: all 0.2s ease;
     height: 65px;
     width: 65px;
@@ -163,21 +181,24 @@
     border-radius: 50px;
     box-shadow: -3px 11px 1rem #adadad9c;
 }
-.foodDetails{
-font-family:AppIranSansLight;
-width: 85%;
-overflow:hidden;
-white-space: nowrap;
-font-size: 0.7rem;
-margin-top: 18px;
-padding: 0 5px 0 5px ;
-direction: rtl;
-text-overflow: ellipsis;
+
+.foodDetails {
+    font-family: AppIranSansLight;
+    width: 85%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    margin-top: 18px;
+    padding: 0 5px 0 5px;
+    direction: rtl;
+    text-overflow: ellipsis;
 }
-.littlePinHolder{
+
+.littlePinHolder {
     height: 20px;
     top: 0;
 }
+
 .foodDetailsMain {
     width: 90%;
     height: 95%;
@@ -281,7 +302,8 @@ text-overflow: ellipsis;
     width: 80%;
     margin: 10px 0 auto auto;
     display: block;
-    border-bottom: solid #afafaf 1px;}
+    border-bottom: solid #afafaf 1px;
+}
 
 .eachCommentName {
     width: 100%;
@@ -297,6 +319,8 @@ text-overflow: ellipsis;
     text-align: right;
     direction: rtl;
     font-size: 0.8rem;
+    margin-top: 5px;
+
 }
 
 .eachCommentContent {
@@ -305,6 +329,7 @@ text-overflow: ellipsis;
     text-align: right;
     direction: rtl;
     font-size: 0.8rem;
+    margin-top: 6px;
 }
 
 * {
@@ -319,7 +344,8 @@ text-overflow: ellipsis;
     background: #0000002e;
     z-index: 99;
 }
-.newCommentContainer{
+
+.newCommentContainer {
     width: 40%;
     position: absolute;
     bottom: 10px;
@@ -333,7 +359,8 @@ text-overflow: ellipsis;
     align-items: center;
     padding: 0 5px 0 20px;
 }
-.newCommentPenContainer{
+
+.newCommentPenContainer {
     height: 22px;
     width: 22px;
     border-radius: 100px;
@@ -342,10 +369,53 @@ text-overflow: ellipsis;
     justify-content: center;
     display: flex;
 }
-.newCommentTextContainer{
+
+.newCommentTextContainer {
     font-family: AppIranSans;
     color: white;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    margin-right: 20px;
+}
 
+.newCommentInput {
+    min-height: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: none;
+    outline: none;
+    border-radius: 10px 10px 0 0;
+    direction: rtl;
+    text-align: right;
+    font-size: 0.8rem;
+    resize: none;
+    padding: 10px;
+    font-family: AppIranSans;
+}
+
+.sendCommentButton {
+    background-color: white;
+    min-height: 40px;
+    line-height: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border:none;
+    text-align: right;
+    color: orange;
+    padding-right: 10px;
+    font-family: AppIranSansMedium;
+}
+.cannotComment{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 30px;
+    border-radius: 100px;
+    background-color: #343434;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px 0 20px;
 }
 

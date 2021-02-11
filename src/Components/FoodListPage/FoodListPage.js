@@ -9,6 +9,8 @@ import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
 import tf from "./img/testFood.png";
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
     return (<div style={style} {...handlers}>{children}</div>);
@@ -21,7 +23,9 @@ class FoodListPage extends Component {
         foodDetails: <div/>,
         allowToShow: false,
         allowToFillComments: true,
-        commentsFilled:false
+        commentsFilled: false,
+        commentInputClass: ' d-none',
+        canUserComment: false
     }
 
     componentDidMount() {
@@ -53,6 +57,30 @@ class FoodListPage extends Component {
             }
         }
     }
+    sendComment = (e) => {
+        e.value = ''
+    }
+    enableComment = () => {
+        document.getElementsByClassName('newCommentInput')[0].classList.remove('d-none')
+        document.getElementsByClassName('sendCommentButton')[0].classList.remove('d-none')
+    }
+    disableComment = () => {
+        document.getElementsByClassName('newCommentInput')[0].classList.add('d-none')
+        document.getElementsByClassName('sendCommentButton')[0].classList.add('d-none')
+    }
+
+    commentsFullPage = () => {
+        if (this.state.canUserComment)
+            this.enableComment()
+
+        document.getElementsByClassName('foodDetailsComments')[0].style.height = '100%'
+        this.state.commentsFilled = true
+    }
+    commentsMiniPage = () => {
+        this.disableComment()
+        document.getElementsByClassName('foodDetailsComments')[0].style.height = '45%'
+        this.state.commentsFilled = false
+    }
 
     foodDetails = (active) => {
         if (active) {
@@ -60,7 +88,7 @@ class FoodListPage extends Component {
                 foodDetails: <div onContextMenu={(e) => {
                     e.preventDefault()
                 }} onClick={(e) => {
-                    if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain')){
+                    if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain')) {
                         this.setState({
                             foodDetails: <div/>
                         })
@@ -95,81 +123,88 @@ class FoodListPage extends Component {
                         </div>
 
                         <div className='foodDetailsComments'>
-                            <div onClick={()=>{
-                            }} className='newCommentContainer'>
-                                <span className='newCommentTextContainer'>نوشتن نظر</span>
-                                <div className='newCommentPenContainer'>
-                                    <CreateOutlinedIcon fontSize={"small"}/>
+                            {this.state.canUserComment ?
+                                <div onClick={() => {
+                                    this.commentsFullPage()
+                                }}
+                                     className='newCommentContainer'>
+                                    <span className='newCommentTextContainer'>نوشتن نظر</span>
+                                    <div className='newCommentPenContainer'>
+                                        <CreateOutlinedIcon fontSize={"small"}/>
+                                    </div>
                                 </div>
-                            </div>
+
+                                :
+                                <div className='cannotComment'>
+                                    <span className='newCommentTextContainer'>هنوز نمیتونی نظری بنویسی</span>
+                                    <div className='newCommentPenContainer'>
+                                        <HelpOutlineIcon fontSize={"small"}/>
+                                    </div>
+                                </div>
+
+                            }
+
                             <Swipeable onSwipedUp={() => {
-                                document.getElementsByClassName('foodDetailsComments')[0].style.height = '100%'
-                                this.state.commentsFilled = true
+                                this.commentsFullPage()
                             }}
                                        onSwipedDown={() => {
-                                           document.getElementsByClassName('foodDetailsComments')[0].style.height = '45%'
-                                           this.state.commentsFilled = true
+                                           this.commentsMiniPage()
+
                                        }}
+
                                        children={
-                                           <div className='w-100 littlePinHolder'>
+                                           <div onClick={() => {
+                                               this.state.commentsFilled ? this.commentsMiniPage() : this.commentsFullPage()
+                                           }
+                                           } className='w-100 littlePinHolder'>
                                                <div className='littleCommentPin'/>
                                            </div>
                                        }/>
-                            <div onScroll={(e)=>{
+                            <div onScroll={(e) => {
                             }} className='mainCommentContainer'>
+                                <textarea className={'newCommentInput ' + this.state.commentInputClass}/>
+                                <span className={'sendCommentButton ' + this.state.commentInputClass} onClick={(e) => {
+                                    this.sendComment(e.target)
+                                }}>ارسال</span>
                                 <div className='eachComment'>
                                     <span className='eachCommentName'> محمد کریمدادی</span>
                                     <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
+                                    <span
+                                        className='eachCommentContent'>غدا خوشمزه بود ولی احساس میشد کمی نپخته است</span>
                                 </div>
 
                                 <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
+                                    <span className='eachCommentName'>فاطمه سجادیان</span>
+                                    <span className='eachCommentTime'>10/6</span>
+                                    <span
+                                        className='eachCommentContent'>خیلی خوب بود مخصوصا اون پیاز داغای روی غدا</span>
                                 </div>
 
                                 <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
+                                    <span className='eachCommentName'>محمد مهدی محبی</span>
+                                    <span className='eachCommentTime'>10/6</span>
+                                    <span className='eachCommentContent'>غدا بد نبود میتونست بهتر باشه اگه یکم بیشتر بهش زرد جوبه اضافه میکردن</span>
                                 </div>
-
                                 <div className='eachComment'>
                                     <span className='eachCommentName'> محمد کریمدادی</span>
                                     <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
+                                    <span
+                                        className='eachCommentContent'>غدا خوشمزه بود ولی احساس میشد کمی نپخته است</span>
                                 </div>
 
                                 <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
+                                    <span className='eachCommentName'>فاطمه سجادیان</span>
+                                    <span className='eachCommentTime'>10/6</span>
+                                    <span
+                                        className='eachCommentContent'>خیلی خوب بود مخصوصا اون پیاز داغای روی غدا</span>
                                 </div>
 
                                 <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
+                                    <span className='eachCommentName'>محمد مهدی محبی</span>
+                                    <span className='eachCommentTime'>10/6</span>
+                                    <span className='eachCommentContent'>غدا بد نبود میتونست بهتر باشه اگه یکم بیشتر بهش زرد جوبه اضافه میکردن</span>
                                 </div>
 
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
-                                </div>
-
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
-                                </div>
-
-                                <div className='eachComment'>
-                                    <span className='eachCommentName'> محمد کریمدادی</span>
-                                    <span className='eachCommentTime'>10/5</span>
-                                    <span className='eachCommentContent'>هم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسیدهم کیفیت غدا خوب بود هم زود به دستم رسید</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -285,11 +320,11 @@ class FoodListPage extends Component {
                     </div>
 
                     <div onScroll={
-                        ()=>{
-                            this.state.allowToShow=false
+                        () => {
+                            this.state.allowToShow = false
                         }
                     }
-                     className='foodListPageContainer'>
+                         className='foodListPageContainer'>
                         <div className='heightFitContent'>
                             {this.state.foodList}
                         </div>
