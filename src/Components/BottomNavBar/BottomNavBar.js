@@ -23,9 +23,6 @@ class BottomNavBar extends React.Component {
         iconSize: "27px",
     }
 
-    componentDidMount() {
-        console.log(window.location.pathname)
-    }
     render() {
         return (
             <div className='w-100 d-flex justify-content-center position-absolute bottomNavContainer '>
@@ -41,15 +38,22 @@ class BottomNavBar extends React.Component {
                                         style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${co})`}}/>
                         }
                     </NavLink>
-                    <NavLink className='navLinkBottomNav' to={"/openOrders"}>
-                        {window.location.pathname.includes("/openOrders") ?
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${chf})`}}/>
+
+                    {
+                        this.props.openOrdersList.length > 0 ?
+                            <NavLink className='navLinkBottomNav' to={"/openOrders"}>
+                                {window.location.pathname.includes("/openOrders") ?
+                                    <IconButton className='BottomNavigationIcons'
+                                                style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${chf})`}}/>
+                                    :
+                                    <IconButton className='BottomNavigationIcons'
+                                                style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${cho})`}}/>
+                                }
+                            </NavLink>
                             :
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{width:`${this.state.iconSize}`, height:`${this.state.iconSize}`,background:`url(${cho})`}}/>
-                        }
-                    </NavLink>
+                                null
+                    }
+
                     <NavLink className='navLinkBottomNav' to={"/main"}>
                         {window.location.pathname.includes("/main") ?
                             <IconButton className='BottomNavigationIcons'
@@ -88,6 +92,7 @@ const mapStateToProps = (store) => {
     return {
         token:store.rUserInfo.token,
         orderList: store.rTempData.orderList,
+        openOrdersList: store.rTempData.openOrdersList,
     }
 }
 
