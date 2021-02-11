@@ -38,7 +38,7 @@ class SignUpPage extends React.Component {
     }
     signUpBackFunction = (res)=>{
         if (res.hasOwnProperty('statusCode')&& res.statusCode === 200){
-            this.props.history.push('/main')
+            this.props.history.replace('/main')
         }
     }
 

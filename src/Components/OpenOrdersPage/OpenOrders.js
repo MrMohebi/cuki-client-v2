@@ -26,6 +26,12 @@ class OpenOrders extends Component {
     callbackOpenOrders = (res) =>{
         if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
             this.props.setOpenOrders(res.data)
+
+            // if there is just one open order go directly to details
+            if(res.data.length === 1){
+                this.props.setTempOpenOrderInfo(res.data[0]);
+                this.props.history.replace("/eachOpenOrderDetails")
+            }
         }
     }
 

@@ -60,9 +60,9 @@ class LoginVCode extends React.Component {
             this.props.setToken(data.data.token)
             if (data.data.isUserInfoSaved){
                 this.getOpenOrders(data.data.token)
-                this.props.history.push('/profile/club')
+                this.props.history.replace('/profile/club')
             }else{
-                this.props.history.push('/signup')
+                this.props.history.replace('/signup')
             }
         }
     }
