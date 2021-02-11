@@ -22,7 +22,7 @@ class LoginVCode extends React.Component {
 
     componentDidMount() {
         if(this.isUserLoggedIn()){
-            this.props.history.push("/profile/club")
+            this.props.history.replace("/profile/club")
         }
 
         this.setState({
@@ -83,7 +83,7 @@ class LoginVCode extends React.Component {
     }
 
     handleBack = () =>{
-        this.props.history.push("/main")
+        this.props.history.goBack()
     }
 
     render() {
