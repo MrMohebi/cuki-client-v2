@@ -18,47 +18,20 @@ class OpenOrders extends Component {
         clearInterval(this.timer)
     }
 
-    state = {
-        openOrdersList: [],
-        openOrdersListDiv: <div/>,
-    }
 
     getOpenOrders=()=>{
         requests.getOpenOrders(this.callbackOpenOrders);
     }
 
     callbackOpenOrders = (res) =>{
-        console.log(res);
         if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
-            this.setState({
-                openOrdersList : res.data,
-                openOrdersListDiv: this.createOpenOrderList(res.data)
-            })
+            this.props.setOpenOrders(res.data)
         }
     }
 
     handleSelectOrder = (orderInfo) =>{
         this.props.setTempOpenOrderInfo(orderInfo);
         this.props.history.push("/eachOpenOrderDetails")
-    }
-
-    createOpenOrderList = (openOrders) =>{
-        return openOrders.map(eOrder=>{
-            let orderList = JSON.parse(eOrder['order_list'])
-            let orderTime = moment.unix(parseInt(eOrder['ordered_date'])).format("HH:mm")
-            return(
-                <div key={eOrder["orders_id"]} onClick={()=>(this.handleSelectOrder(eOrder))} className='eachOpenOrderContainer position-relative w-100'>
-                    <div className='w-100 d-flex justify-content-between mt-1'>
-                        <span className='IranSans paidItemsText'>{eOrder["paid_amount"] ? (parseInt(eOrder["paid_amount"]) / 1000) : 0}T </span>
-                        <span className='IranSans openOrdersNames'>{orderList.map(eFood=>(eFood.name)).join(" / ")}</span>
-                    </div>
-                    <div className='w-100 d-flex justify-content-between mt-1'>
-                        <span className='IranSans'>{parseInt(eOrder["total_price"]) / 1000}T</span>
-                        <span className='IranSans'>{orderTime}</span>
-                    </div>
-                </div>
-            )
-        })
     }
 
     handleBack = () => {
@@ -77,7 +50,24 @@ class OpenOrders extends Component {
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
                 <div className='openOrdersContainer'>
-                    {this.state.openOrdersListDiv}
+                    {
+                        this.props.openOrdersList.map(eOrder=>{
+                            let orderList = JSON.parse(eOrder['order_list'])
+                            let orderTime = moment.unix(parseInt(eOrder['ordered_date'])).format("HH:mm")
+                            return(
+                                <div key={eOrder["orders_id"]} onClick={()=>(this.handleSelectOrder(eOrder))} className='eachOpenOrderContainer position-relative w-100'>
+                                    <div className='w-100 d-flex justify-content-between mt-1'>
+                                        <span className='IranSans paidItemsText'>{eOrder["paid_amount"] ? (parseInt(eOrder["paid_amount"]) / 1000) : 0}T </span>
+                                        <span className='IranSans openOrdersNames'>{orderList.map(eFood=>(eFood.name)).join(" / ")}</span>
+                                    </div>
+                                    <div className='w-100 d-flex justify-content-between mt-1'>
+                                        <span className='IranSans'>{parseInt(eOrder["total_price"]) / 1000}T</span>
+                                        <span className='IranSans'>{orderTime}</span>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </React.Fragment>
         );
@@ -85,12 +75,15 @@ class OpenOrders extends Component {
 }
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        openOrdersList: state.rTempData.openOrdersList
+    };
 }
 
 function mapDispatchToProps() {
     return {
-        setTempOpenOrderInfo: actions.setTempOpenOrderInfo
+        setTempOpenOrderInfo: actions.setTempOpenOrderInfo,
+        setOpenOrders: actions.setOpenOrdersListInfo,
     };
 }
 
