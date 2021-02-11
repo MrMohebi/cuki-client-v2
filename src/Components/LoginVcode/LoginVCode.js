@@ -1,8 +1,6 @@
 import React from "react";
 import './css/style.css'
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
-import KeyboardArrowLeftRoundedIcon from "@material-ui/icons/KeyboardArrowLeftRounded";
-import KeyboardArrowRightRoundedIcon from "@material-ui/icons/KeyboardArrowRightRounded";
 import {TextField} from "@material-ui/core";
 import 'animate.css/animate.css'
 import VerificationCodeInput from '../VerificationCodeInput/vCodeInput'
@@ -40,11 +38,7 @@ class LoginVCode extends React.Component {
 
     // later add cache check here
     isUserLoggedIn = () =>{
-        if(this.props.token.length > 20){
-            return true;
-        }else {
-            return false
-        }
+        return this.props.token.length > 20;
     }
 
     onInputChange(stateToChange, value) {
@@ -58,7 +52,7 @@ class LoginVCode extends React.Component {
     checkCallbackData = (data) => {
         if (data.statusCode === 200){
             this.props.setToken(data.data.token)
-            if (data.data.isUserInfoSaved){
+            if (data.data['isUserInfoSaved']){
                 this.getOpenOrders(data.data.token)
                 this.props.history.replace('/profile/club')
             }else{
