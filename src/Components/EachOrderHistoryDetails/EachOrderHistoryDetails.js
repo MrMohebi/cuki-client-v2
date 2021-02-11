@@ -81,12 +81,22 @@ class EachOrderHistoryDetails extends React.Component {
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span className=''>{this.props.tempHistoryOrderInfo['order_table'] > 0 ? this.props.tempHistoryOrderInfo['order_table'] : JSON.parse(this.props.tempHistoryOrderInfo['address'])['addressText']}</span>
-                        <span className='eachOrderDetailsTotalHolder'>شماره میز</span>
+                        <span className='eachOrderDetailsTotalHolder'>{this.props.tempHistoryOrderInfo['order_table'] > 0 ? "شماره میز" : "آدرس"} </span>
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span className=''>{this.props.tempHistoryOrderInfo['tracking_id']}</span>
                         <span className='eachOrderDetailsTotalHolder'>شماره سفارش</span>
                     </div>
+
+                    {
+                        this.props.tempHistoryOrderInfo['order_status'] === 'deleted' ?
+                            <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
+                                <span className=''>{this.props.tempHistoryOrderInfo['delete_reason']}</span>
+                                <span className='eachOrderDetailsTotalHolder'>دلیل حذف</span>
+                            </div>
+                        :
+                            null
+                    }
 
                 </div>
             </React.Fragment>
