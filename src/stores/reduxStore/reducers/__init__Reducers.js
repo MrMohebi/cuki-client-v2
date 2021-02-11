@@ -10,7 +10,7 @@ export const __init__RestaurantInfo = {
 }
 
 export const __init__UserInfo = {
-    token: "",
+    token: "", // 4b51b359faf390ba84def197eab87d8677e2e72560036586902d9070aa8c6b68
     phone: "",
     name: "",
     birthday: "",
@@ -41,8 +41,7 @@ export const __init__TempData = {
     tempHistoryOrderInfo:{},
     orderList: [],
     trackingId: 0,
-    openOrdersTrackingId : [],
-    openOrdersInfo:{},  // {"trackingId1": {"orderList": [], "orderTime": 0, ""}, "trackingId2":{} , ...}
+    openOrdersList:[],
 }
 
 

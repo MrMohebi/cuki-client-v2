@@ -49,50 +49,26 @@ export default function reducerTempData (state = __init__TempData, action) {
                 draftState.trackingId = action.payload.trackingId
             });
 
-        case actionTypes.SET_OPEN_ORDERS_TRACKING_ID:
+        case actionTypes.SET_OPEN_ORDERS_LIST_INFO:
             return produce(state, draftState=>{
-                draftState.openOrdersTrackingId = action.payload.openOrdersList.map(eOrder=>{
-                    return eOrder['tracking_id'];
-                });
+                draftState.openOrdersList = action.payload.openOrdersList;
             });
 
-        case actionTypes.SET_OPEN_ORDERS_LIST_INFO:
-            let ordersListInfoListObject = {};
-            action.payload.openOrdersList.map(eOrder=>{
-                ordersListInfoListObject[eOrder['tracking_id']] = {
-                    "orderList":JSON.parse(eOrder['order_list']),
-                    "deliveryPrice":eOrder['delivery_price'],
-                    "orderStatus":eOrder['order_status'],
-                    "address":eOrder['address'],
-                    "details":eOrder['details'],
-                    "paymentId":eOrder['payment_id'],
-                    "totalPrice":eOrder['total_price'],
-                    "orderedDate":eOrder['ordered_date'],
-                    "deliveryDate":eOrder['delivery_date'],
-                    "offcode":eOrder['offcode'],
-                    "paymentStatus":eOrder['payment_status'],
-                    "paidFoods":eOrder['paid_foods'],
-                    "howToServe":eOrder['how_to_serve'],
-                    "paidAmount":eOrder['paid_amount'],
-                    "orderTable":eOrder['order_table'],
-                }
-            })
-            return produce(state, draftState=>{
-                draftState.openOrdersInfo = ordersListInfoListObject;
-            });
         case actionTypes.DELETE_USER_ALL_DATA:
             return produce(state, draftState=>{
-                draftState.openOrdersInfo = {};
-                draftState.openOrdersTrackingId = [];
+                draftState.openOrdersList = [];
             });
+
         case actionTypes.SET_TEMP_OPEN_ORDER_INFO:
             return produce(state, draftState=>{
                 draftState.tempOpenOrderInfo = action.payload.orderInfo;
             });
+
         case actionTypes.SET_TEMP_HISTORY_ORDER_INFO:
             return produce(state, draftState=>{
                 draftState.tempHistoryOrderInfo = action.payload.orderInfo;
             });
+
         default:
             return state
     }

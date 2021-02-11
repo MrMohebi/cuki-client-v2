@@ -149,15 +149,6 @@ export const setOrderList = (orderList) =>{
 }
 
 
-export const setOpenOrdersTrackingId = (openOrdersList) =>{
-    store.dispatch({
-        type: actionTypes.SET_OPEN_ORDERS_TRACKING_ID,
-        payload:{
-            openOrdersList
-        }
-    })
-}
-
 export const setOpenOrdersListInfo = (openOrdersList) =>{
     store.dispatch({
         type: actionTypes.SET_OPEN_ORDERS_LIST_INFO,
