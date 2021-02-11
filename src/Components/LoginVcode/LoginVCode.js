@@ -59,7 +59,7 @@ class LoginVCode extends React.Component {
         if (data.statusCode === 200){
             this.props.setToken(data.data.token)
             if (data.data.isUserInfoSaved){
-                this.getOpenOrders()
+                this.getOpenOrders(data.data.token)
                 this.props.history.push('/profile/club')
             }else{
                 this.props.history.push('/signup')
@@ -67,8 +67,8 @@ class LoginVCode extends React.Component {
         }
     }
 
-    getOpenOrders=()=>{
-        requests.getOpenOrders(this.callbackOpenOrders);
+    getOpenOrders=(token)=>{
+        requests.getOpenOrders(this.callbackOpenOrders, token);
     }
 
     callbackOpenOrders = (res) =>{
