@@ -196,3 +196,11 @@ export const setTempOpenOrderInfo = (orderInfo) =>{
     })
 }
 
+export const setTempHistoryOrderInfo = (orderInfo) =>{
+    store.dispatch({
+        type: actionTypes.SET_TEMP_HISTORY_ORDER_INFO,
+        payload:{
+            orderInfo
+        }
+    })
+}

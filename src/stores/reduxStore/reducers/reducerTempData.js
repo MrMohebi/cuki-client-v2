@@ -89,6 +89,10 @@ export default function reducerTempData (state = __init__TempData, action) {
             return produce(state, draftState=>{
                 draftState.tempOpenOrderInfo = action.payload.orderInfo;
             });
+        case actionTypes.SET_TEMP_HISTORY_ORDER_INFO:
+            return produce(state, draftState=>{
+                draftState.tempHistoryOrderInfo = action.payload.orderInfo;
+            });
         default:
             return state
     }
