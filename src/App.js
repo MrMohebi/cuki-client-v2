@@ -16,6 +16,8 @@ import DongiPage from "./Components/DongiPage/DongiPage";
 import OpenOrders from "./Components/OpenOrdersPage/OpenOrders";
 import EachOpenOrderDetails from "./Components/EachOpenOrderDetails/EachOpenOrderDetails";
 import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOrderHistoryDetails";
+import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
+
 
 function App() {
   return (
@@ -35,6 +37,7 @@ function App() {
         <Route path='/dongi' component={DongiPage}/>
         <Route path='/openOrders' component={OpenOrders}/>
         <Route path='/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
+        <Route path='/likedFoods' component={LikedFoods}/>
       </BrowserRouter>
     </React.Fragment>
   );
