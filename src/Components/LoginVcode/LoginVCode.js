@@ -59,6 +59,7 @@ class LoginVCode extends React.Component {
         if (data.statusCode === 200){
             this.props.setToken(data.data.token)
             if (data.data.isUserInfoSaved){
+                this.getOpenOrders()
                 this.props.history.push('/profile/club')
             }else{
                 this.props.history.push('/signup')
@@ -66,10 +67,23 @@ class LoginVCode extends React.Component {
         }
     }
 
+    getOpenOrders=()=>{
+        requests.getOpenOrders(this.callbackOpenOrders);
+    }
+
+    callbackOpenOrders = (res) =>{
+        if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+            this.props.setOpenOrders(res.data)
+        }
+    }
 
     codeWasCorrect = (vCode) => {
         requests.checkCode(this.checkCallbackData, this.state.userPhoneNumber, vCode)
         this.props.setSentVCode(true);
+    }
+
+    handleBack = () =>{
+        this.props.history.push("/main")
     }
 
     render() {
@@ -77,11 +91,9 @@ class LoginVCode extends React.Component {
             <React.Fragment>
                 <div
                     className='categoryPageHeader  pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                    <ArrowBackRoundedIcon/>
+                    <ArrowBackRoundedIcon onClick={this.handleBack}/>
                     <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
-                        <KeyboardArrowLeftRoundedIcon/>
-                        <div className='categoryPageSelectorText IranSans'>رستوران</div>
-                        <KeyboardArrowRightRoundedIcon/>
+                        <div className='categoryPageSelectorText IranSans'>ورود</div>
                     </div>
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
@@ -185,6 +197,7 @@ const mapDispatchToProps = () => {
     return {
         setSentVCode:actions.setSentVCode,
         setToken:actions.userSetToken,
+        setOpenOrders: actions.setOpenOrdersListInfo,
     }
 }
 
