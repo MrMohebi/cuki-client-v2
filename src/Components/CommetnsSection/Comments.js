@@ -17,6 +17,7 @@ function Comments(props) {
     let [canLeaveComment, setCanLeaveComment] = useState(false)
     let [commentInputClass, setCommentInputClass] = useState(' d-none')
     let [executedUseEffectTimes, setExecutedUseEffectTimes] = useState(0)
+    let [commentBody, setCommentBody] = useState('')
 
     useEffect(()=>{
         if(executedUseEffectTimes < 1){
@@ -45,10 +46,11 @@ function Comments(props) {
 
 
 
-    let sendComment = (e) => {
-        // check if input text is more than 3 character
-        // let textBody = ""
-        // requests.sendComment(callbackSendComment, props.foodId, textBody)
+    let sendComment = () => {
+        if (commentBody.length > 3 ){
+            requests.sendComment(callbackSendComment, props.foodId, commentBody)
+        }
+
     }
 
     let callbackSendComment = (res) =>{
@@ -114,8 +116,12 @@ function Comments(props) {
             </div>
 
             <div className='mainCommentContainer'>
-                <textarea className={'newCommentInput ' + commentInputClass}/>
-                <span className={'sendCommentButton ' + commentInputClass} onClick={(e) => {sendComment(e.target)}}>ارسال</span>
+                <textarea onChange={(e)=>{
+                    setCommentBody(e.target.value)
+                }} className={'newCommentInput ' + commentInputClass}/>
+                <span className={'sendCommentButton ' + commentInputClass}  onClick={(e) => {
+                    sendComment()
+                }}>ارسال</span>
                 {
                     commentsDiv.concat(
                         newCommentsList.map(eComment=>{
