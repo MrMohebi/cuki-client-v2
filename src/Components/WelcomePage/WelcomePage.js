@@ -2,7 +2,7 @@ import React from "react";
 import './css/style.css';
 import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
-
+import tourImage from './img/tour.jpg'
 export const Swipeable = ({children, ...props}) => {
     const handlers = useSwipeable(props);
     return (<div {...handlers}>{children}</div>);
@@ -103,11 +103,8 @@ class WelcomePage extends React.Component {
                                 <br/>
                                 <br/>
                             </p>
-                            <p className="openIcons">
-                                tour
-                                <br/>
-                                <br/>
-                                <br/>
+                            <p className="openIcons overflow-hidden">
+                                <div style={{background:`url(${tourImage})`,backgroundSize:'cover',backgroundPosition:'center'}} className='h-100 w-100 tourHolder'/>
                             </p>
                         </div>
                     </div>

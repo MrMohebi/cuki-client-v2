@@ -40,9 +40,10 @@
 }
 
 .welcomePageFrames2 {
+    width: 85%;
     border-radius: 25px;
     background: #FFF7F7;
-    width: 100%;
+    margin: auto;
     height: calc(100% - 120px);
 }
 
@@ -101,6 +102,8 @@
     font-family: AppIranSansMedium;
     font-weight: bold;
     font-size: 0.5rem;
+    max-width: 100px;
+    max-height: 100px;
 }
 
 .donat {
@@ -156,6 +159,8 @@
 .welcomePageMainContainer {
     overflow: scroll;
     height: calc(100% - 50px);
+}
+.tourHolder{
 }
 
 
