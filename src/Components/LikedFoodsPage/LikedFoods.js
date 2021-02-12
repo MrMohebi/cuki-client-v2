@@ -8,6 +8,7 @@ import * as RandomColor from '../../functions/RandomColor'
 import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
 import moreOrderedFoods from "../../functions/moreOrderedFoods";
+import {Badge} from "@material-ui/core";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -31,7 +32,9 @@ class LikedFoods extends Component {
         foodsList:convertFoodIdToFoodInfo(moreOrderedFoods(this.props.orderHistoryRestaurant, this.props.foods), this.props.foods),
     }
 
-
+    giveMyNumber = (fId)=>{
+        return this.props.orderList.filter(food=> food.foods_id === fId)[0]? this.props.orderList.filter(food=> food.foods_id === fId)[0].number:0
+    }
     orderScripts = (foods_id, foodsList = this.props.foods) => {
         if (this.props.trackingId < 1000) {
             for (let i = 0; i < foodsList.length; i++) {
@@ -71,12 +74,15 @@ class LikedFoods extends Component {
                             <span className='eachFoodPrice'>
                                 {eachFood.price / 1000} T
                             </span>
+                            <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.foods_id)}>
+
                             <div className='eachFoodImage'
                                  style={{
                                      background: `url(${eachFood.thumbnail})`,
                                      backgroundSize: 'cover',
                                      backgroundPosition: 'center'
                                  }}/>
+                            </Badge>
                         </div>
 
                         <div className='w-100 justify-content-center d-flex'>

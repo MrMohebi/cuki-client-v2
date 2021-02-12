@@ -418,4 +418,8 @@
     align-items: center;
     padding: 0 5px 0 20px;
 }
+.priceAndImage span.MuiBadge-anchorOriginTopRightRectangle{
+    margin-right: 50px;
+    margin-top: 5px;
+}
 
