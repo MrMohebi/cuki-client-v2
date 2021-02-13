@@ -1,5 +1,5 @@
 
-export  function RandomColor(i){
+export  function RandomColor(i=-1){
     let result
     let colors = [
         {foreground:'#EF953C',background:'#fff7ef'},
