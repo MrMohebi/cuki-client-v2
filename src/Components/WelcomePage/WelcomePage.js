@@ -104,7 +104,7 @@ class WelcomePage extends React.Component {
                                 <br/>
                             </p>
                             <p className="openIcons overflow-hidden">
-                                <div style={{background:`url(${tourImage})`,backgroundSize:'cover',backgroundPosition:'center'}} className='h-100 w-100 tourHolder'/>
+                                <div onClick={()=>(this.props.history.push('/vrTour'))} style={{background:`url(${tourImage})`,backgroundSize:'cover',backgroundPosition:'center'}} className='h-100 w-100 tourHolder'/>
                             </p>
                         </div>
                     </div>

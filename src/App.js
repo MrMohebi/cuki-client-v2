@@ -17,7 +17,7 @@ import OpenOrders from "./Components/OpenOrdersPage/OpenOrders";
 import EachOpenOrderDetails from "./Components/EachOpenOrderDetails/EachOpenOrderDetails";
 import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOrderHistoryDetails";
 import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
-
+import Tour360 from "./Components/Tour360page/Tour360";
 
 function App() {
   return (
@@ -38,6 +38,7 @@ function App() {
         <Route path='/openOrders' component={OpenOrders}/>
         <Route path='/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
         <Route path='/likedFoods' component={LikedFoods}/>
+        <Route path='/vrTour' component={Tour360}/>
       </BrowserRouter>
     </React.Fragment>
   );
