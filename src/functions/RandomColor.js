@@ -1,5 +1,6 @@
 
-export  function RandomColor(){
+export  function RandomColor(i){
+    let result
     let colors = [
         {foreground:'#EF953C',background:'#fff7ef'},
         {foreground:'#8B8B8B',background:'#F9F9F9'},
@@ -14,6 +15,10 @@ export  function RandomColor(){
         {foreground:'#77978F',background:'#F8F8F8'},
         {foreground:'#844545',background:'#FEF5F1'},
     ]
-    let randomNumber = Math.floor(Math.random() * colors.length)
-    return colors[randomNumber]
+    if(i < 0)
+        result = colors[Math.floor(Math.random() * colors.length)]
+    else
+        result = colors[i % colors.length]
+
+    return result
 }
