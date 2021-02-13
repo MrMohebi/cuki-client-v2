@@ -108,11 +108,15 @@ class LoginVCode extends React.Component {
                                             this.setState({
                                                 buttonAnimationClasses: 'animate__fadeInUp'
                                             })
+                                            this.refs.submitButton.style.opacity = 1
+                                            this.refs.submitButton.style.pointerEvents = 'all'
                                             this.state.userPhoneNumber = '09' + e.target.value.toString()
                                         } else if (this.state.buttonAnimationClasses !== '') {
                                             this.setState({
                                                 buttonAnimationClasses: 'animate__fadeOutDown'
                                             })
+                                            this.refs.submitButton.style.opacity = 0
+                                            this.refs.submitButton.style.pointerEvents = 'none'
                                             setTimeout(() => {
                                                 if (this.state.buttonAnimationClasses === 'animate__fadeOutDown')
                                                     this.setState({
@@ -127,7 +131,7 @@ class LoginVCode extends React.Component {
                                                    ,
                                                }}
                                     />
-                                    <div onClick={() => {
+                                    <div ref={'submitButton'} onClick={() => {
                                         if (this.state.userPhoneNumber.length > 7){
                                             this.sendCode(this.state.userPhoneNumber);
                                             this.setState({

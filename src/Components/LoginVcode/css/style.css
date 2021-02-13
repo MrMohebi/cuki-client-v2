@@ -62,6 +62,7 @@
     height: 40px;
     line-height: 40px;
     opacity: 0;
+    pointer-events: none;
 }
 .LoginPhoneInput{
     margin-top: 40px !important;
