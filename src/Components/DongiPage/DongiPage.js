@@ -8,6 +8,7 @@ import * as requests from "../../ApiRequests/ApiRequests";
 import produce from "immer";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 
 const ReactSwal = withReactContent(Swal)
 
@@ -39,6 +40,8 @@ class DongiPage extends React.Component {
         paidList:[],
         selectedToPay:[],
         foodsList:<div/>,
+        dialogClassName:'d-none',
+        payLink:''
     }
 
 
@@ -258,13 +261,22 @@ class DongiPage extends React.Component {
                 if (resultSwalPay.isConfirmed) {
                     window.open(res.data.url, '_blank').focus()
                 } else if (resultSwalPay.isDenied) {
-                    navigator.clipboard.writeText(
-                        "لینک پرداخت دونگ کوکی" + "\n" +
-                        "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" + "\n" +
-                        " بزن روی لینک پایینی بری تو درگاه " + "\n"
-                        + res.data.url).then(() => {
-                        ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
-                    })
+                    if (navigator.clipboard!== undefined){
+                        navigator.clipboard.writeText(
+                            "لینک پرداخت دونگ کوکی" + "\n" +
+                            "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" + "\n" +
+                            " بزن روی لینک پایینی بری تو درگاه " + "\n"
+                            + res.data.url).then(() => {
+                            ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
+                        })
+                    }else {
+                        this.setState({
+                            dialogClassName:'animate__fadeIn animate__animated',
+                            payLink:res.data.url
+                        })
+                    }
+
+
 
                 }
             });
@@ -293,7 +305,32 @@ class DongiPage extends React.Component {
                     </div>
                     <ArrowBackRoundedIcon className='invisible'/>
                 </div>
-
+                <div className={'dongiDialog '+this.state.dialogClassName}>
+                    <div className='dialogContainer'>
+                        <span className='payLinkTextHolder'>
+                            اینم از لینک
+                        </span>
+                        <input className='linkInput' ref={'linkInput'} type="text" readOnly value={this.state.payLink}/>
+                        <Button onClick={()=>{
+                            this.refs.linkInput.select()
+                            document.execCommand('copy')
+                            this.refs.copied.innerHTML = 'کپی شد'
+                            setTimeout(()=>{
+                                this.setState({
+                                    dialogClassName:'animate__fadeOut animate__animated'
+                                })
+                            },500)
+                            setTimeout(()=>{
+                                this.setState({
+                                    dialogClassName:'d-none'
+                                })
+                            },1000)
+                        }} className='w-25 m-auto' variant={"contained"} color={"primary"}>
+                            کپی
+                        </Button>
+                        <span ref={'copied'} className='IranSans copiedHolder m-auto w-50'/>
+                    </div>
+                </div>
                 <div className='dongiPageContainer d-flex flex-column'>
                     <div className='w-100 d-flex flex-column '>
 

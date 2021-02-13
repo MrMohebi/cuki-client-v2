@@ -156,5 +156,38 @@
 .dongNumberHolder{
     margin-top: 15px !important;
 }
+.dongiDialog{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(45, 45, 45,0.5);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+}
+.dialogContainer{
+    width: 90%;
+    height: 200px;
+    background-color: #fff;
+    margin: auto;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
 
+}
+.payLinkTextHolder{
+    margin: auto;
+    margin-top: 20px;
+    font-family: AppIranSans;
+    margin-bottom: 25px;
+}
+.linkInput{
+    outline: none;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.copyLinkButton{
+
+}
 

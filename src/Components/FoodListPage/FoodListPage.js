@@ -60,7 +60,8 @@ class FoodListPage extends Component {
             }} onClick={(e) => {
                 if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain')) {
                     this.setState({
-                        foodDetails: <div/>
+                        foodDetails: <div/>,
+                        allowToShow:false
                     })
                 }
 
