@@ -29,31 +29,11 @@ class BottomNavBar extends React.Component {
                 <div className='bottomNavBarMain' onContextMenu={(e) => {
                     e.preventDefault()
                 }}>
-                    <Badge color='secondary' badgeContent={this.props.orderList.length}>
-                        <NavLink className='navLinkBottomNav' to={"/bill"}>
-                            {window.location.pathname.includes("/bill") || window.location.pathname.includes("/payway") ?
-                                <IconButton className='BottomNavigationIcons'
-                                            style={{
-                                                width: `${this.state.iconSize}`,
-                                                height: `${this.state.iconSize}`,
-                                                background: `url(${cf})`
-                                            }}/>
-                                :
-                                <IconButton className='BottomNavigationIcons'
-                                            style={{
-                                                width: `${this.state.iconSize}`,
-                                                height: `${this.state.iconSize}`,
-                                                background: `url(${co})`
-                                            }}/>
-                            }
-                        </NavLink>
-                    </Badge>
-
 
                     {
                         this.props.openOrdersList.length > 0 ?
                             <NavLink className='navLinkBottomNav' to={"/openOrders"}>
-                                {window.location.pathname.includes("/openOrders") ?
+                                {window.location.pathname.split("/").some(ePath=> ["eachOpenOrderDetails", 'openOrders'].indexOf(ePath) !== -1)  ?
                                     <IconButton className='BottomNavigationIcons'
                                                 style={{
                                                     width: `${this.state.iconSize}`,
@@ -73,8 +53,28 @@ class BottomNavBar extends React.Component {
                             null
                     }
 
+                    <Badge color='secondary' badgeContent={this.props.orderList.length}>
+                        <NavLink className='navLinkBottomNav' to={"/bill"}>
+                            {window.location.pathname.split("/").some(ePath=> ["bill", "payway", 'dongi'].indexOf(ePath) !== -1) ?
+                                <IconButton className='BottomNavigationIcons'
+                                            style={{
+                                                width: `${this.state.iconSize}`,
+                                                height: `${this.state.iconSize}`,
+                                                background: `url(${cf})`
+                                            }}/>
+                                :
+                                <IconButton className='BottomNavigationIcons'
+                                            style={{
+                                                width: `${this.state.iconSize}`,
+                                                height: `${this.state.iconSize}`,
+                                                background: `url(${co})`
+                                            }}/>
+                            }
+                        </NavLink>
+                    </Badge>
+
                     <NavLink className='navLinkBottomNav' to={"/main"}>
-                        {window.location.pathname.includes("/main") ?
+                        {window.location.pathname.split("/").some(ePath=> ["main", "category"].indexOf(ePath) !== -1) ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{
                                             width: `${this.state.iconSize}`,
@@ -91,7 +91,7 @@ class BottomNavBar extends React.Component {
                         }
                     </NavLink>
                     <NavLink className='navLinkBottomNav' to={"/likedFoods"}>
-                        {window.location.pathname.includes("/likedFoods") ?
+                        {window.location.pathname.split("/").some(ePath=> ['likedFoods'].indexOf(ePath) !== -1)  ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{
                                             width: `${this.state.iconSize}`,
@@ -108,7 +108,7 @@ class BottomNavBar extends React.Component {
                         }
                     </NavLink>
                     <NavLink className='navLinkBottomNav' to={"/login"}>
-                        {window.location.pathname.includes("/profile") ?
+                        {window.location.pathname.split("/").some(ePath=> ['profile', 'eachOrderHistoryDetails', 'login', 'signup'].indexOf(ePath) !== -1)  ?
                             <IconButton className='BottomNavigationIcons'
                                         style={{
                                             width: `${this.state.iconSize}`,
