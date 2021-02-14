@@ -6,6 +6,12 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 import { useSwipeable } from 'react-swipeable';
+import LoadingOverlay from 'react-loading-overlay';
+import {ClimbingBoxLoader} from "react-spinners";
+import foodsListAdaptor from "../../functions/foodsListAdaptor";
+import * as requests from "../../ApiRequests/ApiRequests";
+import * as actions from "../../stores/reduxStore/actions";
+
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -15,38 +21,19 @@ export const Swipeable = ({children, style, ...props}) => {
 class CategoryPage extends React.Component {
     componentDidMount() {
         if(!(this.props.foodListConverted.hasOwnProperty('parts') &&  this.props.foodListConverted.parts.length > 0)){
-            this.props.history.push("/");
-            return ;
+            this.getData()
         }
-        this.createCatList()
+
     }
 
-    state = {
-        categoryList: <div/>,
+    dataArrive = (response) => {
+        if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
+            this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+        }
     }
 
-    createCatList = () =>{
-        let listOfCategories = this.props.foodListConverted.partsCategories[this.props.match.params["part"]].map(eachCategory => {
-            let persianName = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].persianName
-            let logo = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].logo
-            let color = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].averageColor.toString()
-            return (
-                <NavLink key={persianName} to={'/category/'+this.props.match.params["part"]+'/'+eachCategory} className='categoryPageEachCategoryContainer'>
-                    <div  className="categoryPageEachCategory">
-                        <div className="categoryPageEachCategoryImage" style={{
-                            background: 'url(/img/categories/'+ `${logo}`+'.png)',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat'
-                        }}/>
-                        <span className="categoryPageEachCategoryName" style={{color:color}}>{persianName}</span>
-                    </div>
-                </NavLink>
-            )
-        })
-        this.setState({
-            categoryList:listOfCategories,
-        })
+    getData = () => {
+        requests.getRestaurantInfo(this.dataArrive);
     }
 
     nextPage = () =>{
@@ -55,8 +42,6 @@ class CategoryPage extends React.Component {
             this.props.history.push("/category/"+this.props.foodListConverted.parts[0]);
         else
             this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex+1]);
-
-        this.createCatList()
     }
 
     previousPage = () =>{
@@ -65,8 +50,6 @@ class CategoryPage extends React.Component {
             this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex-1]);
         else
             this.props.history.push("/category/"+this.props.foodListConverted.parts[this.props.foodListConverted.parts.length-1]);
-
-        this.createCatList()
     }
 
     swipeRight = () =>{
@@ -89,6 +72,11 @@ class CategoryPage extends React.Component {
 
     render() {
         return (
+            <LoadingOverlay
+                active={!this.props.foodListConverted.hasOwnProperty('parts')}
+                spinner={<ClimbingBoxLoader color={'white'}/>}
+                text='وایسا چک کنم ببینم چی چیا داریم'
+            >
             <Swipeable style={{height:"100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <React.Fragment>
                     <div
@@ -104,11 +92,31 @@ class CategoryPage extends React.Component {
 
                     <div className='categoryPageContainer'>
                         <div className='heightFitContent'>
-                            {this.state.categoryList}
+                            {
+                                this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted.partsCategories[this.props.match.params["part"]].map(eachCategory => {
+                                    let persianName = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].persianName
+                                    let logo = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].logo
+                                    let color = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].averageColor.toString()
+                                    return (
+                                        <NavLink key={persianName} to={'/category/'+this.props.match.params["part"]+'/'+eachCategory} className='categoryPageEachCategoryContainer'>
+                                            <div  className="categoryPageEachCategory">
+                                                <div className="categoryPageEachCategoryImage" style={{
+                                                    background: 'url(/img/categories/'+ `${logo}`+'.png)',
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center',
+                                                    backgroundRepeat: 'no-repeat'
+                                                }}/>
+                                                <span className="categoryPageEachCategoryName" style={{color:color}}>{persianName}</span>
+                                            </div>
+                                        </NavLink>
+                                    )
+                                }):null
+                            }
                         </div>
                     </div>
                 </React.Fragment>
             }/>
+            </LoadingOverlay>
         )
     }
 }
@@ -120,7 +128,9 @@ const mapStateToProps = (store) => {
 }
 
 const mapDispatchToProps = () => {
-    return {}
+    return {
+        setFoodListConverted: actions.setFoodListConverted
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryPage);

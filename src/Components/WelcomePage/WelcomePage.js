@@ -23,23 +23,6 @@ class WelcomePage extends React.Component {
     swipeRight = (eventData) => {
         console.log("swiped right", eventData)
     }
-    createRestaurantParts = ()=>{
-        this.props.foodListConverted.parts.map(eachPart => {
-            return(
-                <p className="openIcons">
-                    <div className="burger" style={{
-                        background: 'url("./img/WelcomPage/restaurant.png")',
-                        backgroundSize: '95%',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                    }}/>
-                    <span className="burgersAndDonatDescription" onClick={()=>{this.props.history.push("/category/restaurant")}}>رستوران</span>
-                    <br/>
-                    <br/>
-                </p>
-            )
-        })
-    }
 
     swipeLeft = (eventData) => {
         console.log("swiped left", eventData)
@@ -99,10 +82,9 @@ class WelcomePage extends React.Component {
                         <br/>
                         <div className="d-flex justify-content-around">
 
-                            {this.props.foodListConverted.parts.map(eachPart => {
-                                console.log(eachPart)
+                            {this.props.foodListConverted.parts ? this.props.foodListConverted.parts.map(eachPart => {
                                 return(
-                                    <p className="openIcons">
+                                    <p key={eachPart} className="openIcons">
                                         <div className="burger" style={{
                                             background: 'url("./img/resParts/'+eachPart+'.png")',
                                             backgroundSize: '95%',
@@ -114,7 +96,8 @@ class WelcomePage extends React.Component {
                                         <br/>
                                     </p>
                                 )
-                            })}
+                            }): null
+                            }
 
                             <p className="openIcons overflow-hidden">
                                 <div onClick={()=>(this.props.history.push('/vrTour'))} style={{background:`url(${tourImage})`,backgroundSize:'cover',backgroundPosition:'center'}} className='h-100 w-100 tourHolder'/>

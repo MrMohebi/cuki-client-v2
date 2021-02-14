@@ -9,6 +9,10 @@ import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
 import moreOrderedFoods from "../../functions/moreOrderedFoods";
 import {Badge} from "@material-ui/core";
+import LoadingOverlay from "react-loading-overlay";
+import {ClimbingBoxLoader} from "react-spinners";
+import foodsListAdaptor from "../../functions/foodsListAdaptor";
+import * as requests from "../../ApiRequests/ApiRequests";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -30,6 +34,12 @@ function convertFoodIdToFoodInfo (foodsIdList, foodsList){
 class LikedFoods extends Component {
     state = {
         foodsList:convertFoodIdToFoodInfo(moreOrderedFoods(this.props.orderHistoryRestaurant, this.props.foods), this.props.foods),
+    }
+
+    componentDidMount() {
+        if (!(this.props.foods[1])) {
+            this.props.history.push("/")
+        }
     }
 
     giveMyNumber = (fId)=>{
@@ -55,46 +65,6 @@ class LikedFoods extends Component {
                 }
             }
         }
-    }
-
-
-    createFoodList = () => {
-        return this.state.foodsList.map(eachFood => {
-            let colors = RandomColor.RandomColor()
-            return (
-                <div  key={eachFood['foods_id']}
-                     className='foodListEachFoodContainer animate__animated animate__fadeInDown'
-                     onClick={() => {
-                         if (eachFood.status === 'in stock') {
-                             this.orderScripts(eachFood.foods_id);
-                         }
-                     }}>
-                    <div className='foodListEachFood' style={{backgroundColor: colors.background}}>
-                        <div className='priceAndImage'>
-                            <span className='eachFoodPrice'>
-                                {eachFood.price / 1000} T
-                            </span>
-                            <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.foods_id)}>
-
-                            <div className='eachFoodImage'
-                                 style={{
-                                     background: `url(${eachFood.thumbnail})`,
-                                     backgroundSize: 'cover',
-                                     backgroundPosition: 'center'
-                                 }}/>
-                            </Badge>
-                        </div>
-
-                        <div className='w-100 justify-content-center d-flex'>
-                            <div className='foodName' style={{color: colors.foreground}}>{eachFood.name}</div>
-                        </div>
-                        <div className='w-100 d-flex justify-content-center'>
-                            <div className='foodDetails'>{eachFood.details.join(' ')}</div>
-                        </div>
-                    </div>
-                </div>
-            )
-        })
     }
 
 
@@ -129,10 +99,44 @@ class LikedFoods extends Component {
 
                     <div className='foodListPageContainer'>
                         <div className='heightFitContent'>
-                            {this.createFoodList()}
+                            {
+                                this.state.foodsList.map(eachFood => {
+                                    let colors = RandomColor.RandomColor()
+                                    return (
+                                        <div  key={eachFood['foods_id']}
+                                              className='foodListEachFoodContainer animate__animated animate__fadeInDown'
+                                              onClick={() => {
+                                                  if (eachFood.status === 'in stock') {
+                                                      this.orderScripts(eachFood.foods_id);
+                                                  }
+                                              }}>
+                                            <div className='foodListEachFood' style={{backgroundColor: colors.background}}>
+                                                <div className='priceAndImage'>
+                                                    <span className='eachFoodPrice'>
+                                                        {eachFood.price / 1000} T
+                                                    </span>
+                                                    <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.foods_id)}>
+                                                        <div className='eachFoodImage'
+                                                             style={{
+                                                                 background: `url(${eachFood.thumbnail})`,
+                                                                 backgroundSize: 'cover',
+                                                                 backgroundPosition: 'center'
+                                                             }}/>
+                                                    </Badge>
+                                                </div>
+                                                <div className='w-100 justify-content-center d-flex'>
+                                                    <div className='foodName' style={{color: colors.foreground}}>{eachFood.name}</div>
+                                                </div>
+                                                <div className='w-100 d-flex justify-content-center'>
+                                                    <div className='foodDetails'>{eachFood.details.join(' ')}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
-
                 </React.Fragment>
             }/>
         )
@@ -141,6 +145,7 @@ class LikedFoods extends Component {
 
 const mapStateToProps = (store) => {
     return {
+        foodListConverted: store.rRestaurantInfo.foodListConverted,
         foods: store.rRestaurantInfo.foods,
         orderList: store.rTempData.orderList,
         trackingId: store.rTempData.trackingId,
@@ -152,6 +157,7 @@ const mapDispatchToProps = () => {
     return {
         increaseFoodNumber: actions.increaseFoodNumber,
         addFoodToOrders: actions.addFoodToOrders,
+        setFoodListConverted: actions.setFoodListConverted
     }
 }
 

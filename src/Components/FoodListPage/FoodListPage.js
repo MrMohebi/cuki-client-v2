@@ -147,107 +147,103 @@ class FoodListPage extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <LoadingOverlay
-                    active={!this.props.foodListConverted.hasOwnProperty('parts')}
-                    spinner={<ClimbingBoxLoader color={'white'}/>}
-                    text='در حال دریافت غذا ها از آشپزخونه'
-                >
-                    <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
-                               children={
-                                   <React.Fragment>
-                                       {this.state.foodDetails}
+            <LoadingOverlay
+                active={!this.props.foodListConverted.hasOwnProperty('parts')}
+                spinner={<ClimbingBoxLoader color={'white'}/>}
+                text='وایسا چک کنم ببینم چی چیا داریم'
+            >
+                <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
+                           children={
+                               <React.Fragment>
+                                   {this.state.foodDetails}
+                                   <div
+                                       className='foodListPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                                       <ArrowBackRoundedIcon onClick={this.handleBack}/>
                                        <div
-                                           className='foodListPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                                           <ArrowBackRoundedIcon onClick={this.handleBack}/>
+                                           className='headerPageSelector text-center d-flex justify-content-around flex-row'>
+                                           <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
                                            <div
-                                               className='headerPageSelector text-center d-flex justify-content-around flex-row'>
-                                               <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
-                                               <div
-                                                   className='categoryPageSelectorText IranSans'>{this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].persianName : ''}</div>
-                                               <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
-                                           </div>
-                                           <ArrowBackRoundedIcon className='invisible'/>
+                                               className='categoryPageSelectorText IranSans'>{this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].persianName : ''}</div>
+                                           <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
                                        </div>
+                                       <ArrowBackRoundedIcon className='invisible'/>
+                                   </div>
 
-                                       <div onScroll={() => {
-                                           this.state.allowToShow = false
-                                       }}
-                                            className='foodListPageContainer'>
-                                           <div className='heightFitContent'>
-                                               {
-                                                   this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.map(eachFood => {
-                                                       let colors = RandomColor.RandomColor(eachFood.foods_id);
-                                                       let timeout;
-                                                       return (
-                                                           <div onContextMenu={(e) => {
-                                                               e.preventDefault()
-                                                           }}
-                                                                key={eachFood['foods_id']}
-                                                                className='foodListEachFoodContainer animate__animated animate__fadeInDown'
-                                                                onClick={() => {
-                                                                    clearTimeout(timeout)
-                                                                    if (eachFood.status === 'in stock') {
-                                                                        this.orderScripts(eachFood.foods_id);
-                                                                    }
-                                                                    this.state.allowToShow = false
-                                                                }}
-                                                                onTouchStart={() => {
-                                                                    if (this.state.allowToShow === false) {
-                                                                        this.state.allowToShow = true
-                                                                        timeout = setTimeout(() => {
-                                                                            if (this.state.allowToShow) {
-                                                                                this.foodDetails(eachFood);
-                                                                            }
-                                                                            this.state.allowToShow = false
-                                                                            clearTimeout(timeout)
-                                                                        }, 1500)
+                                   <div onScroll={() => {
+                                       this.state.allowToShow = false
+                                   }}
+                                        className='foodListPageContainer'>
+                                       <div className='heightFitContent'>
+                                           {
+                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.map(eachFood => {
+                                                   let colors = RandomColor.RandomColor(eachFood.foods_id);
+                                                   let timeout;
+                                                   return (
+                                                       <div onContextMenu={(e) => {
+                                                           e.preventDefault()
+                                                       }}
+                                                            key={eachFood['foods_id']}
+                                                            className='foodListEachFoodContainer animate__animated animate__fadeInDown'
+                                                            onClick={() => {
+                                                                clearTimeout(timeout)
+                                                                if (eachFood.status === 'in stock') {
+                                                                    this.orderScripts(eachFood.foods_id);
+                                                                }
+                                                                this.state.allowToShow = false
+                                                            }}
+                                                            onTouchStart={() => {
+                                                                if (this.state.allowToShow === false) {
+                                                                    this.state.allowToShow = true
+                                                                    timeout = setTimeout(() => {
+                                                                        if (this.state.allowToShow) {
+                                                                            this.foodDetails(eachFood);
+                                                                        }
+                                                                        this.state.allowToShow = false
+                                                                        clearTimeout(timeout)
+                                                                    }, 1500)
 
-                                                                    }
-                                                                }}
-                                                                onTouchEnd={() => {
-                                                                    this.state.allowToShow = false
-                                                                }}
-                                                           >
-                                                               <div className='foodListEachFood'
-                                                                    style={{backgroundColor: colors.background}}>
-                                                                   <div className='priceAndImage'>
-                                                       <span className='eachFoodPrice'>
-                                                           {eachFood.price / 1000} T
-                                                       </span>
-                                                                       <Badge color={"primary"}
-                                                                              badgeContent={(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}>
-                                                                           <div className='eachFoodImage'
-                                                                                style={{
-                                                                                    background: `url(${eachFood.thumbnail})`,
-                                                                                    backgroundSize: 'cover',
-                                                                                    backgroundPosition: 'center'
-                                                                                }}/>
-                                                                       </Badge>
-                                                                   </div>
+                                                                }
+                                                            }}
+                                                            onTouchEnd={() => {
+                                                                this.state.allowToShow = false
+                                                            }}
+                                                       >
+                                                           <div className='foodListEachFood'
+                                                                style={{backgroundColor: colors.background}}>
+                                                               <div className='priceAndImage'>
+                                                   <span className='eachFoodPrice'>
+                                                       {eachFood.price / 1000} T
+                                                   </span>
+                                                                   <Badge color={"primary"}
+                                                                          badgeContent={(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}>
+                                                                       <div className='eachFoodImage'
+                                                                            style={{
+                                                                                background: `url(${eachFood.thumbnail})`,
+                                                                                backgroundSize: 'cover',
+                                                                                backgroundPosition: 'center'
+                                                                            }}/>
+                                                                   </Badge>
+                                                               </div>
 
-                                                                   <div className='w-100 justify-content-center d-flex'>
-                                                                       <div className='foodName'
-                                                                            style={{color: colors.foreground}}>{eachFood.name}</div>
-                                                                   </div>
-                                                                   <div className='w-100 d-flex justify-content-center'>
-                                                                       <div
-                                                                           className='foodDetails'>{eachFood.details.join(' ')}</div>
-                                                                   </div>
+                                                               <div className='w-100 justify-content-center d-flex'>
+                                                                   <div className='foodName'
+                                                                        style={{color: colors.foreground}}>{eachFood.name}</div>
+                                                               </div>
+                                                               <div className='w-100 d-flex justify-content-center'>
+                                                                   <div
+                                                                       className='foodDetails'>{eachFood.details.join(' ')}</div>
                                                                </div>
                                                            </div>
-                                                       )
-                                                   }) : ''
-                                               }
-                                           </div>
+                                                       </div>
+                                                   )
+                                               }) : ''
+                                           }
                                        </div>
-                                   </React.Fragment>
-                               }
-                    />
-                </LoadingOverlay>
-
-            </React.Fragment>
-
+                                   </div>
+                               </React.Fragment>
+                           }
+                />
+            </LoadingOverlay>
         )
     }
 }
