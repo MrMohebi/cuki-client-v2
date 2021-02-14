@@ -23,6 +23,23 @@ class WelcomePage extends React.Component {
     swipeRight = (eventData) => {
         console.log("swiped right", eventData)
     }
+    createRestaurantParts = ()=>{
+        this.props.foodListConverted.parts.map(eachPart => {
+            return(
+                <p className="openIcons">
+                    <div className="burger" style={{
+                        background: 'url("./img/WelcomPage/restaurant.png")',
+                        backgroundSize: '95%',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                    }}/>
+                    <span className="burgersAndDonatDescription" onClick={()=>{this.props.history.push("/category/restaurant")}}>رستوران</span>
+                    <br/>
+                    <br/>
+                </p>
+            )
+        })
+    }
 
     swipeLeft = (eventData) => {
         console.log("swiped left", eventData)
@@ -81,28 +98,24 @@ class WelcomePage extends React.Component {
                     <div className="welcomePageFrames2">
                         <br/>
                         <div className="d-flex justify-content-around">
-                            <p className="openIcons">
-                                <div className="donat" style={{
-                                    background: 'url("./img/WelcomPage/donat.png")',
-                                    backgroundSize: '95%',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                }}/>
-                                <span className="burgersAndDonatDescription">کافی شاپ</span>
-                                <br/>
-                                <br/>
-                            </p>
-                            <p className="openIcons">
-                                <div className="burger" style={{
-                                    background: 'url("./img/WelcomPage/hamburger.png")',
-                                    backgroundSize: '95%',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                }}/>
-                                <span className="burgersAndDonatDescription" onClick={()=>{this.props.history.push("/category/restaurant")}}>رستوران</span>
-                                <br/>
-                                <br/>
-                            </p>
+
+                            {this.props.foodListConverted.parts.map(eachPart => {
+                                console.log(eachPart)
+                                return(
+                                    <p className="openIcons">
+                                        <div className="burger" style={{
+                                            background: 'url("./img/resParts/'+eachPart+'.png")',
+                                            backgroundSize: '95%',
+                                            backgroundPosition: 'center',
+                                            backgroundRepeat: 'no-repeat',
+                                        }}/>
+                                        <span className="burgersAndDonatDescription" onClick={()=>{this.props.history.push("/category/"+eachPart)}}>رستوران</span>
+                                        <br/>
+                                        <br/>
+                                    </p>
+                                )
+                            })}
+
                             <p className="openIcons overflow-hidden">
                                 <div onClick={()=>(this.props.history.push('/vrTour'))} style={{background:`url(${tourImage})`,backgroundSize:'cover',backgroundPosition:'center'}} className='h-100 w-100 tourHolder'/>
                             </p>
