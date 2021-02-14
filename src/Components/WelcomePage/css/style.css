@@ -127,6 +127,7 @@
 .burgersAndDonatDescription {
     font-family: AppIranSans;
     font-size: 15px;
+    line-height: 50px;
 }
 
 @media only screen and (max-height: 700px) {
