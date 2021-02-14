@@ -11,6 +11,12 @@ import {connect} from "react-redux";
 import * as actions from "../../stores/reduxStore/actions";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+import {useSwipeable} from 'react-swipeable';
+
+export const Swipeable = ({children, style, ...props}) => {
+    const handlers = useSwipeable(props);
+    return (<div style={style} {...handlers}>{children}</div>);
+}
 
 const ReactSwal = withReactContent(Swal)
 
@@ -91,36 +97,55 @@ class BillPage extends React.Component {
         )
     }
 
+    swipeRight = () => {
+        if(this.props.openOrdersList.length !== 0){
+            this.props.history.push("/openOrders")
+
+        } else{
+            this.props.history.push("/login")
+        }
+    }
+
+    swipeLeft = () => {
+        this.props.history.push("/main")
+    }
+
+    handleBack = () =>{
+        this.props.history.goBack()
+    }
+
 
     render() {
         return (
-            <React.Fragment>
-                <div
-                    className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                    <ArrowBackRoundedIcon className='invisible'/>
-                    <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
-                        <KeyboardArrowLeftRoundedIcon/>
-                        <div className='categoryPageSelectorText IranSans'>فاکتور</div>
-                        <KeyboardArrowRightRoundedIcon/>
+            <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
+                <React.Fragment>
+                    <div
+                        className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                        <ArrowBackRoundedIcon onClick={this.handleBack}/>
+                        <div className='categoryPageSelector text-center d-flex justify-content-around flex-row'>
+                            <KeyboardArrowLeftRoundedIcon/>
+                            <div className='categoryPageSelectorText IranSans'>فاکتور</div>
+                            <KeyboardArrowRightRoundedIcon/>
+                        </div>
+                        <ArrowBackRoundedIcon className='invisible'/>
                     </div>
-                    <ArrowBackRoundedIcon className='invisible'/>
-                </div>
-                <div className='BillPageContainer'>
-                    <div className='w-100 billItemsContainer '>
-                        <SwipeableList>
-                            {this.createOrderList()}
-                        </SwipeableList>
+                    <div className='BillPageContainer'>
+                        <div className='w-100 billItemsContainer '>
+                            <SwipeableList>
+                                {this.createOrderList()}
+                            </SwipeableList>
+                        </div>
+                        <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
+                            <span>{this.sumTotalOrderPrice()}T</span>
+                            <span>جمع نهایی فاکتور</span>
+                        </div>
+                        <div className='BillSubmitButton' onClick={this.handleSubmit}>
+                            <span>پرداخت</span>
+                        </div>
                     </div>
-                    <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
-                        <span>{this.sumTotalOrderPrice()}T</span>
-                        <span>جمع نهایی فاکتور</span>
-                    </div>
-                    <div className='BillSubmitButton' onClick={this.handleSubmit}>
-                        <span>پرداخت</span>
-                    </div>
-                </div>
 
-            </React.Fragment>
+                </React.Fragment>
+            }/>
         )
 
     }
@@ -128,6 +153,7 @@ class BillPage extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
+        openOrdersList: store.rTempData.openOrdersList,
         orderList: store.rTempData.orderList,
         trackingId: store.rTempData.trackingId,
         token: store.rUserInfo.token,

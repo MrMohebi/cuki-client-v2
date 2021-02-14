@@ -92,15 +92,29 @@ class ProfilePage extends React.Component {
     }
 
     swipeRight = () => {
-        this.userTabClickHandler()
+        if(this.state.activeProfile === 'club')
+            this.props.history.push("/likedFoods")
+        else
+            this.userTabClickHandler()
     }
 
     swipeLeft = () => {
-        this.historyTabClickHandler()
+        if(this.state.activeProfile === 'his'){
+            if (this.props.openOrdersList.length === 0){
+                this.props.history.push("/likedFoods")
+            } else{
+                this.props.history.push("/openOrders")
+            }
+        }
+        else{
+            this.historyTabClickHandler()
+        }
     }
+
     enableDatePicker = () => {
         document.getElementsByClassName('DatePicker')[0].style.pointerEvents = 'all'
     }
+
     disableDatePicker = () => {
         document.getElementsByClassName('DatePicker')[0].style.pointerEvents = 'none'
     }
@@ -108,6 +122,7 @@ class ProfilePage extends React.Component {
     handleBack = () => {
         this.props.history.goBack()
     }
+
     editAndApplyHandler = (e) => {
         if (this.state.inputsDisabled) {
             this.setState({
@@ -224,6 +239,7 @@ class ProfilePage extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
+        openOrdersList: store.rTempData.openOrdersList,
         token: store.rUserInfo.token,
         name: store.rUserInfo.name,
         birthday: store.rUserInfo.birthday,

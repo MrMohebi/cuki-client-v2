@@ -3,9 +3,10 @@ import './css/style.css';
 import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.jpg'
-export const Swipeable = ({children, ...props}) => {
+
+export const Swipeable = ({children,style, ...props}) => {
     const handlers = useSwipeable(props);
-    return (<div {...handlers}>{children}</div>);
+    return (<div style={style}  {...handlers}>{children}</div>);
 }
 
 class WelcomePage extends React.Component {
@@ -20,17 +21,17 @@ class WelcomePage extends React.Component {
         }
     }
 
-    swipeRight = (eventData) => {
-        console.log("swiped right", eventData)
+    swipeRight = () => {
+        this.props.history.push("/bill")
     }
 
-    swipeLeft = (eventData) => {
-        console.log("swiped left", eventData)
+    swipeLeft = () => {
+        this.props.history.push("/likedFoods")
     }
 
     render() {
         return (
-            <Swipeable onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
+            <Swipeable style={{height: "100%"}}  onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <div className="forLittlePhones">
                     <p className="welcomePageHeader">
                         <span className="textColor">Cuki </span>
@@ -41,12 +42,12 @@ class WelcomePage extends React.Component {
                             <span className="welcomePageDescriptionH"> دوست داری چی بخوری؟</span>
                             <div onClick={(d) => {
                                 if (this.state.allowToShake) {
-                                    d.target.classList.add("element")
+                                    d.target['classList'].add("element")
                                     this.setState({
                                         allowToShake: false
                                     })
                                     setTimeout(() => {
-                                        d.target.classList.remove("element")
+                                        d.target['classList'].remove("element")
                                         this.setState({
                                             allowToShake: true
                                         })

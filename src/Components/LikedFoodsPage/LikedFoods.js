@@ -9,10 +9,6 @@ import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
 import moreOrderedFoods from "../../functions/moreOrderedFoods";
 import {Badge} from "@material-ui/core";
-import LoadingOverlay from "react-loading-overlay";
-import {ClimbingBoxLoader} from "react-spinners";
-import foodsListAdaptor from "../../functions/foodsListAdaptor";
-import * as requests from "../../ApiRequests/ApiRequests";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -69,11 +65,11 @@ class LikedFoods extends Component {
 
 
     swipeRight = () => {
-
+        this.props.history.push("/main")
     }
 
     swipeLeft = () => {
-
+        this.props.history.push("/login")
     }
 
     handleBack = () => {
@@ -145,7 +141,6 @@ class LikedFoods extends Component {
 
 const mapStateToProps = (store) => {
     return {
-        foodListConverted: store.rRestaurantInfo.foodListConverted,
         foods: store.rRestaurantInfo.foods,
         orderList: store.rTempData.orderList,
         trackingId: store.rTempData.trackingId,
@@ -157,7 +152,6 @@ const mapDispatchToProps = () => {
     return {
         increaseFoodNumber: actions.increaseFoodNumber,
         addFoodToOrders: actions.addFoodToOrders,
-        setFoodListConverted: actions.setFoodListConverted
     }
 }
 
