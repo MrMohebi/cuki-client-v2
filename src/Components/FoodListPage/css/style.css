@@ -342,7 +342,7 @@
     width: 100%;
     backdrop-filter: blur(10px);
     background: #0000002e;
-    z-index: 99;
+    z-index: 80;
 }
 
 .newCommentContainer {
