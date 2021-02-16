@@ -30,8 +30,9 @@ class BillPage extends React.Component {
                 icon: 'info',
                 confirmButtonText: "راس میگی، حله",
                 timer: 2000,
+            }).then(()=>{
+                this.props.history.push('/main')
             })
-            setTimeout(()=>{this.props.history.goBack()}, 2500)
         }
     }
 
