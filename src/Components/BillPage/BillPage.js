@@ -137,7 +137,7 @@ class BillPage extends React.Component {
                             </SwipeableList>
                         </div>
                         <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
-                            <span>{this.sumTotalOrderPrice()}T</span>
+                            <span>{this.sumTotalOrderPrice()/1000}T</span>
                             <span>جمع نهایی فاکتور</span>
                         </div>
                         <div className='BillSubmitButton' onClick={this.handleSubmit}>
