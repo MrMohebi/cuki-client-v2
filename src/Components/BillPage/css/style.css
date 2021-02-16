@@ -49,6 +49,7 @@ height: calc(100% - 120px);
 }
 .eachFoodPriceBill{
     font-size: 0.8rem;
+    line-height: 1.5rem;
 }
 .billEachOrderName{
     overflow: hidden;
