@@ -72,7 +72,7 @@ class FoodListPage extends Component {
             foodDetails: <div onContextMenu={(e) => {
                 e.preventDefault()
             }} onClick={(e) => {
-                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain')) {
+                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer')) {
                     this.setState({
                         foodDetails: <div/>,
                         allowToShow: false
