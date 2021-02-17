@@ -23,13 +23,25 @@ import Tour360 from "./Components/Tour360page/Tour360";
 
 import {getCacheToken} from "./stores/cache/cacheData"
 import * as actions from "./stores/reduxStore/actions"
+import * as requests from "./ApiRequests/ApiRequests";
 
 
 function App() {
+  let getOpenOrders=(token)=>{
+    requests.getOpenOrders(callbackOpenOrders, token);
+  }
+  let callbackOpenOrders = (res) =>{
+    if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+      actions.setOpenOrdersListInfo(res.data)
+    }
+  }
+
   useSelector((state)=>{
     const cacheToken = getCacheToken()
-    if(state.rUserInfo.token !== cacheToken && cacheToken !== undefined && cacheToken.length > 10)
+    if(state.rUserInfo.token !== cacheToken && cacheToken !== undefined && cacheToken.length > 10){
       actions.userSetToken(cacheToken);
+      getOpenOrders(cacheToken)
+    }
   })
 
   return (
