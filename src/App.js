@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter,Route} from "react-router-dom";
+import {useSelector} from "react-redux"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import SplashScreen from "./Components/SplashScreen/SplashScreen";
@@ -19,7 +20,18 @@ import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOr
 import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
 import Tour360 from "./Components/Tour360page/Tour360";
 
+
+import {getCacheToken} from "./stores/cache/cacheData"
+import * as actions from "./stores/reduxStore/actions"
+
+
 function App() {
+  useSelector((state)=>{
+    const cacheToken = getCacheToken()
+    if(state.rUserInfo.token !== cacheToken && cacheToken !== undefined && cacheToken.length > 10)
+      actions.userSetToken(cacheToken);
+  })
+
   return (
     <React.Fragment>
       <BrowserRouter>

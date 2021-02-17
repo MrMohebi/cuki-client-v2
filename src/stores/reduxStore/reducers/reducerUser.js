@@ -1,9 +1,11 @@
 import {__init__UserInfo} from "./__init__Reducers";
 import * as actionTypes from '../actionTypes'
 import {produce} from "immer"
+import {setCacheToken} from "../../cache/cacheData"
 
 export default function reducerUser (state = __init__UserInfo, action) {
     if(action.type === actionTypes.SET_TOKEN){
+        setCacheToken(action.payload.token);
         return produce(state,  stateUser_Draft =>{
             stateUser_Draft.token = action.payload.token
         });

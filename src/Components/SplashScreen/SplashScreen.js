@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import './css/style.css';
 import * as requests from '../../ApiRequests/ApiRequests'
 import foodsListAdaptor from "../../functions/foodsListAdaptor";
