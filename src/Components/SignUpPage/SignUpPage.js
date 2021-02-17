@@ -75,7 +75,6 @@ class SignUpPage extends React.Component {
                         }}  id="standard-basic" value={this.state.birthdayInputValue} className='defaultInputUi' label="تاریخ تولد"/>
 
                         <DatePicker
-                            disabled
                             value={this.state.datePickerValue}
                             onChange={this.signUpDatePickerChange}
                             shouldHighlightWeekends

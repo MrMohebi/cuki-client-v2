@@ -9,7 +9,6 @@
     flex-flow: row wrap;
     padding: 0 15px 10px 15px;
     overflow: scroll;
-    min-height: 350px;
 }
 .centerItemsHolder{
     display: flex;

@@ -1,5 +1,5 @@
 .BillPageContainer {
-    background-color: #ffe1e3;
+    background-color: #fff6e7;
     margin: 20px auto auto auto;
     height: calc(100% - 100px);
     width: 90%;
@@ -38,7 +38,6 @@ height: calc(100% - 120px);
     align-items: center;
     font-family: AppIranSansMedium;
     color: white;
-
 }
 .umberInDe{
     width: 80px;
