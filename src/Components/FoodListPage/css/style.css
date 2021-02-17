@@ -332,9 +332,9 @@
     margin-top: 6px;
 }
 
-* {
-    animation-fill-mode: none !important;
-}
+/** {*/
+/*    animation-fill-mode: none !important;*/
+/*}*/
 
 .detailsMainActive {
     position: absolute;
