@@ -69,6 +69,10 @@ export default function reducerTempData (state = __init__TempData, action) {
                 draftState.tempHistoryOrderInfo = action.payload.orderInfo;
             });
 
+        case actionTypes.SET_TABLE_SCANNED:
+            return produce(state, draftState=>{
+                draftState.tableScanned = action.payload.table;
+            });
         default:
             return state
     }

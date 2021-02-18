@@ -195,3 +195,12 @@ export const setTempHistoryOrderInfo = (orderInfo) =>{
         }
     })
 }
+
+export const setTableScanned = (table) =>{
+    store.dispatch({
+        type: actionTypes.SET_TABLE_SCANNED,
+        payload:{
+            table
+        }
+    })
+}
