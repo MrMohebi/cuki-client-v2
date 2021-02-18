@@ -174,7 +174,7 @@ class DongiPage extends React.Component {
 
             return(
                 totalNumber !==0?
-                <div key={eFood.id} id={eFood.id} className='eachDongContainer position-relative w-100' >
+                <div key={eFood.id} id={eFood.id} className='eachDongContainer position-relative w-100 ' >
 
                     <div className='eachDongContainerHolders' onClick={()=>{
                         this.MakeItOpen(eFood.id)
@@ -205,7 +205,7 @@ class DongiPage extends React.Component {
 
                 </div>
                     :
-                    <div key={eFood.id} id={eFood.id} className='eachDongContainer position-relative w-100' >
+                    <div key={eFood.id} id={eFood.id} style={{height:'60px'}} className='eachDongContainer position-relative w-100' >
 
                         <div className='eachDongContainerHolders' >
                             <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
