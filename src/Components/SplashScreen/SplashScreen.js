@@ -7,8 +7,16 @@ import * as actions from '../../stores/reduxStore/actions';
 import {Snackbar} from "@material-ui/core"
 
 
+function url2paramsArray(search){
+    return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
+}
+
 
 class SplashScreen extends React.Component{
+
+    searchParam = this.props.history.location.search.replace("?", "").length > 2 ?  this.props.history.location.search.replace("?", "") : "null=null"
+    urlParams = url2paramsArray(this.searchParam) // 12827295
+
     componentDidMount() {
         this.getData();
     }
@@ -25,10 +33,10 @@ class SplashScreen extends React.Component{
     }
 
     goMainPage = (response) =>{
-
+        this.props.setTableScanned(this.urlParams["table"]?this.urlParams["table"]:0)
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
-            this.props.history.push("/main");
             this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+            this.props.history.push("/main");
         }else{
             this.setOpenSnackbar(true)
         }
@@ -62,7 +70,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = () => {
     return {
-        setFoodListConverted:actions.setFoodListConverted
+        setFoodListConverted:actions.setFoodListConverted,
+        setTableScanned:actions.setTableScanned,
     }
 }
 

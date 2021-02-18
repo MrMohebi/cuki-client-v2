@@ -53,7 +53,7 @@ function MarkerToolTip() {
     })
     return position === null ? null : (
         <Marker icon={markerIcon} position={position}>
-            <Popup>You clicked here</Popup>
+            <Popup>حله همین جا</Popup>
         </Marker>
     )
 }
@@ -73,7 +73,7 @@ class PayWay extends React.Component{
         onlineClass:'',
         offlineClass:'',
         tableClass:'tableContainerClass',
-        table:'',
+        table:this.props.tableScanned > 0 ? this.props.tableScanned:"",
         addressDetailsClass:'addressDetails',
         mapClass:'mapContainer',
         inOrOut: 'in',
@@ -302,7 +302,7 @@ class PayWay extends React.Component{
                             }}/>
                             <div className={this.state.tableClass}>
                                 <span className='tableTextHolder'>شماره میز</span>
-                                <input placeholder='000' type='number' className='tableInput' onChange={(e)=>(this.setState({table:e.target.value.toString()}))}/>
+                                <input value={this.state.table} placeholder='000' type='number' className='tableInput' onChange={(e)=>( e.target.value.length > 3 ? null : this.setState({table:e.target.value}))}/>
                             </div>
                         </div>
                         <div className='BillSubmitButton mt-2' onClick={this.handleSubmit}>
@@ -321,6 +321,7 @@ const mapStateToProps = (store) => {
         token:store.rUserInfo.token,
         orderList: store.rTempData.orderList,
         trackingId: store.rTempData.trackingId,
+        tableScanned:store.rTempData.tableScanned,
     }
 }
 
