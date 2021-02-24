@@ -17,7 +17,7 @@ export const Swipeable = ({children, style, ...props}) => {
 
 class LoginVCode extends React.Component {
     state = {
-        userPhoneNumber: 0,
+        userPhoneNumber: this.props.tempPhone,
         buttonDefaultClass: 'loginSubmitButton IranSansLight animate__animated ',
         buttonAnimationClasses: '',
         phoneNumberContainerClass: 'd-none',
@@ -44,7 +44,7 @@ class LoginVCode extends React.Component {
 
     // later add cache check here
     isUserLoggedIn = () =>{
-        return this.props.token.length > 20;
+        return this.props.token.length > 20 && this.props.phone.length === 11;
     }
 
     onInputChange(stateToChange, value) {
@@ -52,12 +52,14 @@ class LoginVCode extends React.Component {
     }
 
     sendCode = (phone) => {
+        this.props.setTempPhone(phone);
         requests.sendVCode(this.codeWasCorrect, phone)
     }
 
     checkCallbackData = (data) => {
         if (data.statusCode === 200){
             this.props.setToken(data.data.token)
+            this.props.setUserPhone(data.data.phone)
             if (data.data['isUserInfoSaved']){
                 this.getOpenOrders(data.data.token)
                 this.props.history.replace('/profile/club')
@@ -207,6 +209,8 @@ const mapStateToProps = (store) => {
     return {
         VCodeSent:store.rFrontStates.VCodeSent,
         token:store.rUserInfo.token,
+        phone:store.rUserInfo.phone,
+        tempPhone:store.rTempData.tempPhone,
     }
 }
 
@@ -215,6 +219,8 @@ const mapDispatchToProps = () => {
         setSentVCode:actions.setSentVCode,
         setToken:actions.userSetToken,
         setOpenOrders: actions.setOpenOrdersListInfo,
+        setTempPhone: actions.setTempPhone,
+        setUserPhone: actions.userSetPhone,
     }
 }
 

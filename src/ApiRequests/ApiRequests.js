@@ -139,3 +139,19 @@ export const sendComment = (callbackFunction, foodId, body)=>{
         callbackFunction(res);
     })
 }
+
+export const getTempToken = (callbackFunction,ip, userAgent, isp="",city="")=>{
+    let resEnglishName = getReduxStore('englishName')
+    $.post(BASE_API_URL+ "getTempToken.add.php" ,{resEnglishName, ip, userAgent, isp, city}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
+
+export const getIP = (callbackFunction)=>{
+    $.getJSON("http://www.geoplugin.net/json.gp").then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}

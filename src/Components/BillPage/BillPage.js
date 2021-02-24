@@ -9,6 +9,7 @@ import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable
 import '@sandstreamdev/react-swipeable-list/dist/styles.css';
 import {connect} from "react-redux";
 import * as actions from "../../stores/reduxStore/actions";
+import * as requests from "../../ApiRequests/ApiRequests";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import {useSwipeable} from 'react-swipeable';
@@ -54,13 +55,27 @@ class BillPage extends React.Component {
         }
     }
     handleSubmit = () => {
-        if (this.props.token.length > 20){
-            if(this.props.orderList.length > 0)
+        if(this.props.orderList.length > 0){
+            if (this.props.token.length > 20){
                 this.props.history.push('/payway');
-        } else {
-            this.props.history.push('/login')
+            } else {
+                requests.getIP(this.callbackGetIP);
+            }
+        }
+
+    }
+    callbackGetIP = (res) =>{
+        console.log(res);
+        if(res.hasOwnProperty("ip"))
+            requests.getTempToken(this.callbackGetTempToken, res['geoplugin_reques'], navigator.userAgent, "", res['geoplugin_countryName'])
+    }
+    callbackGetTempToken = (res) =>{
+        if(res.hasOwnProperty("statusCode")&& res.statusCode === 200){
+            this.props.setToken(res.data.token)
+            this.props.history.push('/payway');
         }
     }
+
 
     handleIncreaseFoodNumber =(foodId) =>{
         if(this.props.trackingId < 1000)
@@ -166,6 +181,7 @@ const mapDispatchToProps = () => {
         increaseFoodNumber: actions.increaseFoodNumber,
         decreaseFoodNumber: actions.decreaseFoodNumber,
         deleteFoodFromOrders: actions.deleteFoodFromOrders,
+        setToken: actions.userSetToken,
     }
 }
 
