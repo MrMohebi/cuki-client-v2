@@ -43,6 +43,7 @@ export const __init__TempData = {
     trackingId: 0,
     openOrdersList:[],
     tableScanned: 0,
+    tempPhone:"",
 }
 
 

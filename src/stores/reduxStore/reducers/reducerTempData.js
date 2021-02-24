@@ -73,6 +73,11 @@ export default function reducerTempData (state = __init__TempData, action) {
             return produce(state, draftState=>{
                 draftState.tableScanned = action.payload.table;
             });
+
+        case actionTypes.SET_TEMP_PHONE:
+            return produce(state, draftState=>{
+                draftState.tempPhone = action.payload.phone;
+            });
         default:
             return state
     }

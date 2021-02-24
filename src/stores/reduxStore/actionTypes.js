@@ -21,7 +21,7 @@ export const SET_OPEN_ORDERS_LIST_INFO = "setOpenOrdersListInfo"
 export const SET_TEMP_OPEN_ORDER_INFO = "setTempOpenOrderInfo"
 export const SET_TEMP_HISTORY_ORDER_INFO = "setTempHistoryOrderInfo"
 export const SET_TABLE_SCANNED = "setTableScanned"
-
+export const SET_TEMP_PHONE = "setTempPhone"
 
 
 

@@ -204,3 +204,17 @@ export const setTableScanned = (table) =>{
         }
     })
 }
+
+
+export const setTempPhone = (phone) =>{
+    store.dispatch({
+        type: actionTypes.SET_TEMP_PHONE,
+        payload:{
+            phone
+        }
+    })
+}
+
+
+
+
