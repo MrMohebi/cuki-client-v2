@@ -209,7 +209,7 @@ class FoodListPage extends Component {
                                                                         }
                                                                         this.state.allowToShow = false
                                                                         clearTimeout(timeout)
-                                                                    }, 1000)
+                                                                    }, 700)
 
                                                                 }
                                                             }}
