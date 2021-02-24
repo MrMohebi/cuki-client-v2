@@ -1,7 +1,7 @@
 import {__init__UserInfo} from "./__init__Reducers";
 import * as actionTypes from '../actionTypes'
 import {produce} from "immer"
-import {setCacheToken} from "../../cache/cacheData"
+import {setCacheToken, setCachePhone} from "../../cache/cacheData"
 
 export default function reducerUser (state = __init__UserInfo, action) {
     if(action.type === actionTypes.SET_TOKEN){
@@ -10,6 +10,7 @@ export default function reducerUser (state = __init__UserInfo, action) {
             stateUser_Draft.token = action.payload.token
         });
     }else if(action.type === actionTypes.SET_PHONE){
+        setCachePhone(action.payload.phone);
         return produce(state, stateUser_Draft =>{
             stateUser_Draft.phone = action.payload.phone
         });
