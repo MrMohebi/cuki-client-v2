@@ -39,7 +39,7 @@ class WelcomePage extends React.Component {
                             <span className="textColor">Cuki </span>
                             <span>  app</span>
                         </p>
-                        <p className="welcomePageFrames1">
+                        <div className="welcomePageFrames1">
                             <div className='HandAndHeaderText'>
                                 <span className="welcomePageDescriptionH"> دوست داری چی بخوری؟</span>
                                 <div onClick={(d) => {
@@ -79,7 +79,7 @@ class WelcomePage extends React.Component {
                                 backgroundRepeat: 'no-repeat'
                             }}/>
                             <br/>
-                        </p>
+                        </div>
                         <br/>
                         <div className="welcomePageFrames2">
                             <br/>
@@ -94,7 +94,7 @@ class WelcomePage extends React.Component {
                                                 backgroundPosition: 'center',
                                                 backgroundRepeat: 'no-repeat',
                                             }}/>
-                                            <span className="burgersAndDonatDescription" o>{this.state.partsPersianNames[eachPart]}</span>
+                                            <span className="burgersAndDonatDescription" >{this.state.partsPersianNames[eachPart]}</span>
                                             <br/>
                                             <br/>
                                         </div>
