@@ -122,6 +122,7 @@ function Comments(props) {
                 <span className={'sendCommentButton ' + commentInputClass}  onClick={(e) => {
                     sendComment()
                 }}>ارسال</span>
+                <div className='IranSans noComments mt-3'>هنوز نظری ثبت نشده </div>
                 {
                     commentsDiv.concat(
                         newCommentsList.map(eComment=>{

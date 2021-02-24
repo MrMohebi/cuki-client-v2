@@ -434,4 +434,12 @@
 ._loading_overlay_content {
     font-family: AppIranSans;
 }
-
+.foodDetailsCloseButton{
+    text-align: left;
+    padding-left: 10px;
+    font-size: 1.2rem;
+    position: absolute;
+}
+.noComments{
+    font-size: 0.7rem;
+}

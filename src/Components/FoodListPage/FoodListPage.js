@@ -14,6 +14,7 @@ import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import * as requests from "../../ApiRequests/ApiRequests";
 import LoadingOverlay from 'react-loading-overlay';
 import {ClimbingBoxLoader} from "react-spinners";
+import CloseIcon from '@material-ui/icons/Close';
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -68,11 +69,12 @@ class FoodListPage extends Component {
     }
 
     foodDetails = (foodInfo) => {
+        console.log(foodInfo)
         this.setState({
             foodDetails: <div onContextMenu={(e) => {
                 e.preventDefault()
             }} onClick={(e) => {
-                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer')) {
+                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')|| e.target.classList.contains('imageAndFoodNameContainer')|| e.target.classList.contains('imageAndFoodNameContainer')) {
                     this.setState({
                         foodDetails: <div/>,
                         allowToShow: false
@@ -80,9 +82,16 @@ class FoodListPage extends Component {
                 }
 
             }} className='detailsMainActive animate__animated animate__fadeIn'>
+
                 <div onClick={(e) => {
                     e.preventDefault()
                 }} className={' foodDetailsMain animate__animated animate__fadeIn'}>
+                    <div onClick={() => {
+                        this.setState({
+                            foodDetails: <div/>,
+                            allowToShow: false
+                        })
+                    }} className=' foodDetailsCloseButton'>x</div>
                     <div className='imageAndFoodNameContainer'>
                         <div style={{
                             background: `url(${tf})`,
@@ -100,8 +109,8 @@ class FoodListPage extends Component {
                         </div>
                         <div className='timesOrderedContainer'>
                             <span className='timesAndOrderTimeText mt-2'>زمان تقریبی آماده شدن</span>
-                            <span className='rtl mt-2'>{foodInfo.delivery_time > 0 ? (
-                                <span>{foodInfo.delivery_time}</span> + "دقیقه") : " والا به منم نگفتن :("}</span>
+                            <span className='rtl mt-2'>{foodInfo.delivery_time > 0 ?
+                                <div><span>{foodInfo.delivery_time}</span> <span>دقیقه</span></div>  : " والا به منم نگفتن :("}</span>
                         </div>
                     </div>
 
@@ -231,7 +240,7 @@ class FoodListPage extends Component {
                                                                </div>
                                                                <div className='w-100 d-flex justify-content-center'>
                                                                    <div
-                                                                       className='foodDetails'>{eachFood.details.join(' ')}</div>
+                                                                       className='foodDetails'>{eachFood.details?eachFood.details.join(' '):''}</div>
                                                                </div>
                                                            </div>
                                                        </div>
