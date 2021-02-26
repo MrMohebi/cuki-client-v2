@@ -20,6 +20,7 @@ import waiterBlack from './img/waiterBlack.png'
 import waiterWhite from './img/waiterWhite.png'
 import outResBlack from './img/outResBlack.png'
 import outResWhite from './img/outResWhite.png'
+import fixBodyClass from "../../functions/fixSwalBody";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -94,11 +95,11 @@ class PayWay extends React.Component{
             this.setState({
                 addressDetailsClass:'d-none',
                 mapClass:'d-none',
-                tableClass:'animate__animated animate__fadeInUp tableContainerClass'
+                tableClass:'animate__animated animate__fadeInRight tableContainerClass'
             })
         }else{
             this.setState({
-                addressDetailsClass:'d-animate__animated animate__fadeInUp addressDetails',
+                addressDetailsClass:'d-animate__animated animate__fadeInRight addressDetails',
                 mapClass:'d-animate__animated animate__fadeInUp mapContainer',
                 tableClass:'d-none tableContainerClass',
             })
@@ -177,6 +178,7 @@ class PayWay extends React.Component{
                 confirmButtonText: "اها اوکیه وایسا",
                 text: "!یه چیز رو کامل وارد نکردی"
             })
+            fixBodyClass()
             return ;
         }
 
@@ -207,7 +209,10 @@ class PayWay extends React.Component{
                     }
                 }
             }
+            this.props.setOrderList([])
         })
+        fixBodyClass()
+
     }
 
     getOpenOrders=()=>{
@@ -236,6 +241,7 @@ class PayWay extends React.Component{
                     this.props.history.push("/dongi?trackingId="+res.data.trackingId)
                 }
             })
+            fixBodyClass()
         }
     }
 
@@ -338,6 +344,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = () => {
     return {
         setTrackingId: actions.setTrackingId,
+        setOrderList:actions.setOrderList,
     }
 }
 
