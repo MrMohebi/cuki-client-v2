@@ -45,27 +45,29 @@ class FoodListPage extends Component {
     getData = () => {
         requests.getRestaurantInfo(this.dataArrive);
     }
+    checkForMove = () => {
+        this.state.allowToShow = false
+    }
 
     orderScripts = (foods_id, foodsList = this.props.foods) => {
-        if (this.props.trackingId < 1000) {
-            for (let i = 0; i < foodsList.length; i++) {
-                if (foodsList[i].foods_id === foods_id) {
-                    // check if food was already in order list, increase its number
-                    if (this.props.orderList.filter(food => food.foods_id === foods_id).length) {
-                        this.props.increaseFoodNumber(foods_id);
-                        return "increased number"
-                    } else {
-                        //  else add it to order list
-                        let food = {...foodsList[i]};
-                        food["number"] = 1;
-                        food.price = parseInt(food.price)
-                        food["totalPrice"] = food.price
-                        this.props.addFoodToOrders(food)
-                        return "food was added"
-                    }
+        for (let i = 0; i < foodsList.length; i++) {
+            if (foodsList[i].foods_id === foods_id) {
+                // check if food was already in order list, increase its number
+                if (this.props.orderList.filter(food => food.foods_id === foods_id).length) {
+                    this.props.increaseFoodNumber(foods_id);
+                    return "increased number"
+                } else {
+                    //  else add it to order list
+                    let food = {...foodsList[i]};
+                    food["number"] = 1;
+                    food.price = parseInt(food.price)
+                    food["totalPrice"] = food.price
+                    this.props.addFoodToOrders(food)
+                    return "food was added"
                 }
             }
         }
+
     }
 
     foodDetails = (foodInfo) => {
@@ -74,7 +76,7 @@ class FoodListPage extends Component {
             foodDetails: <div onContextMenu={(e) => {
                 e.preventDefault()
             }} onClick={(e) => {
-                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')|| e.target.classList.contains('imageAndFoodNameContainer')|| e.target.classList.contains('imageAndFoodNameContainer')) {
+                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')) {
                     this.setState({
                         foodDetails: <div/>,
                         allowToShow: false
@@ -91,7 +93,8 @@ class FoodListPage extends Component {
                             foodDetails: <div/>,
                             allowToShow: false
                         })
-                    }} className=' foodDetailsCloseButton'>x</div>
+                    }} className=' foodDetailsCloseButton'>x
+                    </div>
                     <div className='imageAndFoodNameContainer'>
                         <div style={{
                             background: `url(${tf})`,
@@ -110,7 +113,8 @@ class FoodListPage extends Component {
                         <div className='timesOrderedContainer'>
                             <span className='timesAndOrderTimeText mt-2'>زمان تقریبی آماده شدن</span>
                             <span className='rtl mt-2'>{foodInfo.delivery_time > 0 ?
-                                <div><span>{foodInfo.delivery_time}</span> <span>دقیقه</span></div>  : " والا به منم نگفتن :("}</span>
+                                <div><span>{foodInfo.delivery_time}</span> <span>دقیقه</span>
+                                </div> : " والا به منم نگفتن :("}</span>
                         </div>
                     </div>
 
@@ -213,6 +217,9 @@ class FoodListPage extends Component {
 
                                                                 }
                                                             }}
+                                                            onPointerMove={(e) => {
+                                                                this.checkForMove()
+                                                            }}
                                                             onTouchEnd={() => {
                                                                 this.state.allowToShow = false
                                                             }}
@@ -220,9 +227,17 @@ class FoodListPage extends Component {
                                                            <div className='foodListEachFood'
                                                                 style={{backgroundColor: colors.background}}>
                                                                <div className='priceAndImage'>
-                                                   <span className='eachFoodPrice'>
-                                                       {eachFood.price / 1000} T
-                                                   </span>
+                                                                   {
+                                                                       eachFood.status === 'in stock' ?
+                                                                           <span className='eachFoodPrice'>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                           :
+                                                                           <span className='outOfStockTextHolder'>
+                                                                                ناموجود
+                                                                           </span>
+                                                                   }
+
                                                                    <Badge color={"primary"}
                                                                           badgeContent={(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}>
                                                                        <div className='eachFoodImage'
@@ -240,7 +255,7 @@ class FoodListPage extends Component {
                                                                </div>
                                                                <div className='w-100 d-flex justify-content-center'>
                                                                    <div
-                                                                       className='foodDetails'>{eachFood.details?eachFood.details.join(' '):''}</div>
+                                                                       className='foodDetails'>{eachFood.details ? eachFood.details.join(' ') : ''}</div>
                                                                </div>
                                                            </div>
                                                        </div>
