@@ -210,6 +210,15 @@ class PayWay extends React.Component{
         })
     }
 
+    getOpenOrders=()=>{
+        requests.getOpenOrders(this.callbackOpenOrders, this.props.token);
+    }
+    callbackOpenOrders = (res) =>{
+        if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+            actions.setOpenOrdersListInfo(res.data)
+        }
+    }
+
     callbackSendOrder = (res) =>{
         if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
             this.props.setTrackingId(res.data.trackingId)
@@ -220,6 +229,7 @@ class PayWay extends React.Component{
                 text: "خب سفارشت رو ثبت کردیم، یکم دیگه آمادس :)" + "\n" +
                     " : شماره سفارش" + res.data.trackingId
             }).then(() => {
+                this.getOpenOrders()
                 if(this.state.onlineOrCash === "cash"){
                     this.props.history.push("/main")
                 }else {
