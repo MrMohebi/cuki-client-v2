@@ -191,7 +191,6 @@ class PayWay extends React.Component{
             text: 'قیمت کل  فاکتور: ' + this.calTotalPrice() / 1000 + "هزار تومن \n",
         }).then(result => {
             if (result.isConfirmed) {
-                if (this.props.trackingId < 1000) {
                     if(this.state.inOrOut === "in"){
                         requests.sendOrder(
                             this.callbackSendOrder,
@@ -207,7 +206,6 @@ class PayWay extends React.Component{
                             this.props.orderList.map(eachFood =>{return {id:eachFood.foods_id, number:eachFood.number}}),
                         )
                     }
-                }
             }
             this.props.setOrderList([])
         })
