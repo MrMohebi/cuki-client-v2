@@ -13,6 +13,7 @@ import * as requests from "../../ApiRequests/ApiRequests";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import {useSwipeable} from 'react-swipeable';
+import fixBodyClass from "../../functions/fixSwalBody";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -34,6 +35,7 @@ class BillPage extends React.Component {
             }).then(()=>{
                 this.props.history.push('/main')
             })
+            fixBodyClass()
         }
     }
 
