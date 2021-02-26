@@ -29,11 +29,9 @@ class EachOrderHistoryDetails extends React.Component {
                             </div>
                             <span className='eachOrderDetailsFoodNumber text-left pl-3'>x{eFood.number}</span>
                             <div className='w-100 justify-content-center d-flex'>
-                                <div className='EachOrderDetailsEachFoodName'>{eFood.name}</div>
+                                <div className='EachOrderDetailsEachFoodName mt-3'>{eFood.name}</div>
                             </div>
-                            <div className='w-100 d-flex justify-content-center'>
-                                <div className='EachOrderDetailsFoodDetails'>{eFood.name}</div>
-                            </div>
+
                         </div>
                     </div>
                 )
