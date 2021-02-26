@@ -1,4 +1,4 @@
-.dongiPageContainer{
+.dongiPageContainer {
     background-color: #E1EFF2;
     margin: 20px auto auto auto;
     height: calc(100% - 100px);
@@ -10,7 +10,8 @@
     overflow: scroll;
     min-height: 420px !important;
 }
-.DongiSubmitButton{
+
+.DongiSubmitButton {
     width: 85%;
     background-color: #988AA8;
     height: 40px;
@@ -29,7 +30,7 @@
     max-width: 500px;
 }
 
-.eachDongContainer{
+.eachDongContainer {
     transition: all 0.4s ease;
     background-color: #fff;
     height: 60px;
@@ -42,7 +43,7 @@
     overflow: hidden;
 }
 
-.eachDongContainerOpened{
+.eachDongContainerOpened {
     background-color: #fff;
     height: 140px;
     margin-top: 20px;
@@ -55,7 +56,7 @@
 }
 
 
-.eachDongContainerHolders{
+.eachDongContainerHolders {
     display: grid;
     grid-template-areas:
         "head head head head head"
@@ -64,7 +65,8 @@
 
     direction: rtl;
 }
-.SelectNumberDongHolder{
+
+.SelectNumberDongHolder {
     grid-area: nav;
     display: grid;
     grid-template-columns: 33.33% 33.33% 33.33%;
@@ -73,35 +75,52 @@
     align-items: center;
 }
 
-.eachDongFoodName{
+.eachDongFoodName {
     font-family: AppIranSans;
     color: #6D5092;
     font-size: 0.7rem;
     max-width: 120px;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 80px;
 }
+
 @media only screen and(min-width: 600px) {
-    .eachDongFoodName{
+    .eachDongFoodName {
         font-family: AppIranSans;
         color: #6D5092;
         font-size: 0.7rem;
         max-width: 120px;
         overflow: hidden;
-        text-overflow:ellipsis;
+        text-overflow: ellipsis;
         white-space: nowrap;
         max-width: 150px;
     }
 }
-.DongiPayText{
+
+@media only screen and(max-width: 360px) {
+    .eachDongFoodName {
+        font-family: AppIranSans;
+        color: #6D5092;
+        font-size: 0.7rem;
+        max-width: 50% !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+}
+
+.DongiPayText {
     color: black;
 }
-.paidItemsText{
+
+.paidItemsText {
     color: #00801b;
 }
-.howMuchContainer{
+
+.howMuchContainer {
     display: flex;
     flex-flow: column;
     line-height: 20px;
@@ -109,21 +128,25 @@
     font-size: 0.7rem;
     justify-content: center;
 }
-.howMuchNumber{
-    border-bottom:solid #8066A0 1px;
+
+.howMuchNumber {
+    border-bottom: solid #8066A0 1px;
     display: flex;
     justify-content: space-evenly;
 }
-.greenDongiText{
+
+.greenDongiText {
     color: #438D48;
 }
-.dongiFromText{
+
+.dongiFromText {
     margin-right: 15px;
     font-family: AppIranSans;
-    font-size:0.7rem ;
+    font-size: 0.7rem;
 
 }
-.dongNumberOfFood{
+
+.dongNumberOfFood {
     border-radius: 5px;
     border: solid #8066A0 1px;
     height: 1.5rem;
@@ -135,14 +158,16 @@
     white-space: nowrap;
 
 }
-.dongiArrowDown{
+
+.dongiArrowDown {
     transition: all 0.5s ease;
     color: #8066A0;
     bottom: 0;
     text-align: center;
     left: 0%;
 }
-.dongiArrowDownRotated{
+
+.dongiArrowDownRotated {
     transition: all 0.5s ease;
     color: #8066A0;
     bottom: 0;
@@ -150,22 +175,26 @@
     left: 0%;
     transform: rotate(180deg);
 }
-.rotate180deg{
+
+.rotate180deg {
     transform: rotate(180deg);
 }
-.dongNumberHolder{
+
+.dongNumberHolder {
     margin-top: 15px !important;
 }
-.dongiDialog{
+
+.dongiDialog {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(45, 45, 45,0.5);
+    background-color: rgba(45, 45, 45, 0.5);
     z-index: 99;
     display: flex;
     justify-content: center;
 }
-.dialogContainer{
+
+.dialogContainer {
     width: 90%;
     height: 200px;
     background-color: #fff;
@@ -176,18 +205,61 @@
     flex-flow: column;
 
 }
-.payLinkTextHolder{
+
+.payLinkTextHolder {
     margin: auto;
     margin-top: 20px;
     font-family: AppIranSans;
     margin-bottom: 25px;
 }
-.linkInput{
+
+.linkInput {
     outline: none;
     margin-right: 10px;
     margin-left: 10px;
 }
-.copyLinkButton{
+
+.copyLinkButton {
+
+}
+.DongiSubmitButtonNew {
+    width: 45%;
+    background-color: #988AA8;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: AppIranSansMedium;
+    color: white;
+    bottom: 60px;
+    max-width: 500px;
+    white-space: nowrap;
+}
+.DongiAllSubmitButtonNew{
+    width: 45%;
+    background-color: #988AA8;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: AppIranSansMedium;
+    color: white;
+    bottom: 60px;
+    max-width: 500px;
+    white-space: nowrap;
+}
+.dongiPayButtonsContainer{
+    position: absolute;
+    bottom: 60px;
+    width: 85%;
+    left: 50%;
+    transform: translate(-50%);
+    /*box-shadow: #e1eff2 1px 1px 7px 9px;*/
+    max-width: 700px;
 
 }
 
