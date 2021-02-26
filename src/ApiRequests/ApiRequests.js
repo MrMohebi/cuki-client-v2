@@ -150,7 +150,7 @@ export const getTempToken = (callbackFunction,ip, userAgent, isp="",city="")=>{
 
 
 export const getIP = (callbackFunction)=>{
-    $.getJSON("http://www.geoplugin.net/json.gp").then(res=>{
+    $.getJSON(BASE_API_URL+ "getIpInfo.php").then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })

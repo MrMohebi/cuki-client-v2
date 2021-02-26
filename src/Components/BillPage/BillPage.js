@@ -67,7 +67,7 @@ class BillPage extends React.Component {
     callbackGetIP = (res) =>{
         console.log(res);
         if(res.hasOwnProperty("ip"))
-            requests.getTempToken(this.callbackGetTempToken, res['geoplugin_reques'], navigator.userAgent, "", res['geoplugin_countryName'])
+            requests.getTempToken(this.callbackGetTempToken, res.ip, navigator.userAgent, "", res.city)
     }
     callbackGetTempToken = (res) =>{
         if(res.hasOwnProperty("statusCode")&& res.statusCode === 200){
