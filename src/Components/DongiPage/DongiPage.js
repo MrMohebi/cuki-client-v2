@@ -9,8 +9,8 @@ import produce from "immer";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import fixBodyClass from "../../functions/fixSwalBody";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
-import {ClimbingBoxLoader, HashLoader} from "react-spinners";
+import {Button} from "@material-ui/core";
+import {HashLoader} from "react-spinners";
 import LoadingOverlay from "react-loading-overlay";
 
 const ReactSwal = withReactContent(Swal)
@@ -28,20 +28,13 @@ class DongiPage extends React.Component {
     urlParams = url2paramsArray(this.searchParam) // 12827295
 
     componentDidMount() {
+
         this.getOrderList(this.state.trackingId)
         this.timer = setInterval(() => {
             this.getPaidItemsInfo(this.state.trackingId)
-            let paidPrice = this.paidItemsPrice();
-            let orderListPrice = this.sumFoodPriceOrderList();
-            if (paidPrice === orderListPrice){
-               this.setState({
-                   allPaid:true
-               })
-            }else{
-                this.setState({
-                    allPaid:false
-                })
-            }
+            this.setState({
+                allPaid: (this.sumFoodPriceOrderList() === this.paidItemsPrice())
+            })
         }, 3000)
 
 
@@ -408,23 +401,25 @@ class DongiPage extends React.Component {
                     </div>
 
                     {
-                        this.state.allPaid?
+                        !this.state.allPaid?
                             <div className={'dongiPayButtonsContainer d-flex justify-content-around '}>
-                            <div onClick={() => {
-                                this.handleSubmit(true)
-                            } } className='DongiSubmitButtonNew mt-5'>
-                                <span>پرداخت دونگ</span>
-                            </div>
+                                <div onClick={() => {
+                                    this.handleSubmit(true)
+                                } } className='DongiSubmitButtonNew mt-5'>
+                                    <span>پرداخت دونگ</span>
+                                </div>
 
-                            <div onClick={() => {
-                                this.handleSubmit(false)
-                            } } className='DongiAllSubmitButtonNew mt-5'>
-                                <span>پرداخت یکجا</span>
-                            </div>
+                                <div onClick={() => {
+                                    this.handleSubmit(false)
+                                } } className='DongiAllSubmitButtonNew mt-5'>
+                                    <span>پرداخت یکجا</span>
+                                </div>
 
-                        </div>
+                            </div>
                             :
-                            <div/>
+                            <div className={'dongiPayButtonsContainer d-flex justify-content-around '}>
+                                <div className='DongiPaidNoticeBt mt-5'><span>(: همش پرداخت شده</span></div>
+                            </div>
                     }
 
 

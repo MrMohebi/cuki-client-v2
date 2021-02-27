@@ -260,6 +260,20 @@
     transform: translate(-50%);
     /*box-shadow: #e1eff2 1px 1px 7px 9px;*/
     max-width: 700px;
-
 }
 
+.DongiPaidNoticeBt{
+    width: 90%;
+    background-color: #3bb035;
+    height: 40px;
+    min-height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: AppIranSansMedium;
+    color: white;
+    bottom: 60px;
+    max-width: 500px;
+    white-space: nowrap;
+}
