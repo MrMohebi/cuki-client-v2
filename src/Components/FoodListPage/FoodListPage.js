@@ -101,7 +101,14 @@ class FoodListPage extends Component {
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
                         }} className='foodDetailsImg'/>
-                        <div className='foodDetailsPrice'>{foodInfo.price / 1000} T</div>
+                        {
+                            foodInfo.status === 'in stock'?
+                                <div className='foodDetailsPrice'>{foodInfo.price / 1000} T</div>
+                                :
+                                <div className='foodDetailsPrice IranSans'>نا موجود</div>
+
+
+                        }
                     </div>
                     <div className='foodDetailsDetails'>{foodInfo.details.join(" / ")}</div>
                     <div className='foodDetailsTimesAndOrderTimeContainer'>
