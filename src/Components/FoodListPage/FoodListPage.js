@@ -14,7 +14,6 @@ import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import * as requests from "../../ApiRequests/ApiRequests";
 import LoadingOverlay from 'react-loading-overlay';
 import {ClimbingBoxLoader} from "react-spinners";
-import CloseIcon from '@material-ui/icons/Close';
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -76,7 +75,7 @@ class FoodListPage extends Component {
             foodDetails: <div onContextMenu={(e) => {
                 e.preventDefault()
             }} onClick={(e) => {
-                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')) {
+                if (e.target.classList.contains('detailsMainActive') ||e.target.classList.contains('foodDetailsPrice') ||e.target.classList.contains('timesOrderedContainer') ||e.target.classList.contains('timesAndOrderTimeText') ||e.target.classList.contains('foodDetailsTimesAndOrderTimeContainer') ||e.target.classList.contains('foodDetailsDetails') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')) {
                     this.setState({
                         foodDetails: <div/>,
                         allowToShow: false

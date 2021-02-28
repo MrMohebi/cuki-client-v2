@@ -19,42 +19,39 @@ function Comments(props) {
     let [executedUseEffectTimes, setExecutedUseEffectTimes] = useState(0)
     let [commentBody, setCommentBody] = useState('')
 
-    useEffect(()=>{
-        if(executedUseEffectTimes < 1){
+    useEffect(() => {
+        if (executedUseEffectTimes < 1) {
             getComments()
             setExecutedUseEffectTimes(executedUseEffectTimes += 1)
         }
     })
 
 
-    let getComments = () =>{
+    let getComments = () => {
         requests.getCommentsByFoodId(callbackGetComments, props.foodId, lastCommentDate, 10)
     }
 
-    let callbackGetComments = (res) =>{
+    let callbackGetComments = (res) => {
         console.log(res);
-        if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+        if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             setNewCommentsList(res.data.comments)
             setCanLeaveComment(res.data['isAllowedLeaveComment'])
-            setLastCommentDate(res.data.comments[res.data.comments.length -1]['commented_date'])
-        }else if(res.hasOwnProperty("statusCode")) {
+            setLastCommentDate(res.data.comments[res.data.comments.length - 1]['commented_date'])
+        } else if (res.hasOwnProperty("statusCode")) {
             setCanLeaveComment(res.data['isAllowedLeaveComment'])
         }
     }
 
 
-
-
-
     let sendComment = () => {
-        if (commentBody.length > 3 ){
+        if (commentBody.length > 3) {
             requests.sendComment(callbackSendComment, props.foodId, commentBody)
         }
 
     }
 
-    let callbackSendComment = (res) =>{
-        if(res.hasOwnProperty("statusCode") && res.statusCode ===200){
+    let callbackSendComment = (res) => {
+        if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             ReactSwal.fire({
                 text: 'خیلی ممنون که نظرتو بهمون گفتی :)',
                 icon: 'success',
@@ -88,7 +85,7 @@ function Comments(props) {
     }
 
 
-    let swipes = useSwipeable({onSwipedUp:commentsFullPage, onSwipedDown:commentsMiniPage})
+    let swipes = useSwipeable({onSwipedUp: commentsFullPage, onSwipedDown: commentsMiniPage})
 
     return (
         <div className='foodDetailsComments'>
@@ -111,25 +108,34 @@ function Comments(props) {
                 </div>
             }
 
-            <div {...swipes} onClick={() => {commentsFilled ? commentsMiniPage() : commentsFullPage()}} className='w-100 littlePinHolder'>
+            <div {...swipes} onClick={() => {
+                commentsFilled ? commentsMiniPage() : commentsFullPage()
+            }} className='w-100 littlePinHolder'>
                 <div className='littleCommentPin'/>
             </div>
 
             <div className='mainCommentContainer'>
-                <textarea onChange={(e)=>{
+                <textarea onChange={(e) => {
                     setCommentBody(e.target.value)
                 }} className={'newCommentInput ' + commentInputClass}/>
-                <span className={'sendCommentButton ' + commentInputClass}  onClick={(e) => {
+                <span className={'sendCommentButton ' + commentInputClass} onClick={(e) => {
                     sendComment()
                 }}>ارسال</span>
-                <div className='IranSans noComments mt-3'>هنوز نظری ثبت نشده </div>
+                {
+                    newCommentsList ?
+                        <div/>
+                        :
+                        <div className='IranSans noComments mt-3'>هنوز نظری ثبت نشده </div>
+
+                }
                 {
                     commentsDiv.concat(
-                        newCommentsList.map(eComment=>{
-                            return(
+                        newCommentsList.map(eComment => {
+                            return (
                                 <div key={eComment['commented_date']} className='eachComment'>
                                     <span className='eachCommentName'>{eComment.name}</span>
-                                    <span className='eachCommentTime'>{moment.utc(parseInt(eComment['commented_date'])).format("jM/jD")}</span>
+                                    <span
+                                        className='eachCommentTime'>{moment.utc(parseInt(eComment['commented_date'])).format("jM/jD")}</span>
                                     <span className='eachCommentContent'>{eComment.body}</span>
                                 </div>
                             )
