@@ -14,7 +14,7 @@ a{
   max-width: 800px;
 }
 .IranSans{
-  font-family: AppIranSans;
+  font-family: AppIranSans !important;
 }
 .IranSansLight{
   font-family: AppIranSansLight;
@@ -90,4 +90,7 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+.tooltip-inner{
+  font-family: AppIranSans;
 }
