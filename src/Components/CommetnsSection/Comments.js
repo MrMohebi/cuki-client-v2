@@ -6,6 +6,8 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import {useSwipeable} from 'react-swipeable';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+import $ from 'jquery'
+import 'bootstrap/dist/js/bootstrap'
 
 const ReactSwal = withReactContent(Swal)
 
@@ -24,6 +26,10 @@ function Comments(props) {
             getComments()
             setExecutedUseEffectTimes(executedUseEffectTimes += 1)
         }
+        $('#cannotLeaveComment').tooltip({
+            title:'باید توی سه روز گذشته غذا رو سفارش داده باشی'
+        })
+        console.log('aa;sdfklj')
     })
 
 
@@ -100,7 +106,7 @@ function Comments(props) {
                     </div>
                 </div>
                 :
-                <div className='cannotComment'>
+                <div id='cannotLeaveComment' className='cannotComment'>
                     <span className='newCommentTextContainer'>هنوز نمیتونی نظری بنویسی</span>
                     <div className='newCommentPenContainer'>
                         <HelpOutlineIcon fontSize={"small"}/>
