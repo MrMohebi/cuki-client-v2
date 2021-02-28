@@ -122,7 +122,7 @@ function Comments(props) {
                     sendComment()
                 }}>ارسال</span>
                 {
-                    newCommentsList ?
+                    newCommentsList.length ?
                         <div/>
                         :
                         <div className='IranSans noComments mt-3'>هنوز نظری ثبت نشده </div>
