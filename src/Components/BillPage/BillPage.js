@@ -28,10 +28,9 @@ class BillPage extends React.Component {
     componentDidMount() {
         if(this.props.orderList.length <= 0){
             ReactSwal.fire({
-                title: '): هیچی رو سفارش ندادی ها',
+                text: '): هیچی رو سفارش ندادی ها',
                 icon: 'info',
                 confirmButtonText: "راس میگی، حله",
-                timer: 2000,
             }).then(()=>{
                 this.props.history.push('/main')
             })
@@ -80,12 +79,10 @@ class BillPage extends React.Component {
 
 
     handleIncreaseFoodNumber =(foodId) =>{
-        if(this.props.trackingId < 1000)
-            this.props.increaseFoodNumber(foodId)
+        this.props.increaseFoodNumber(foodId)
     }
     handleDecreaseFoodNumber = (foodId) =>{
-        if(this.props.trackingId < 1000)
-            this.props.decreaseFoodNumber(foodId)
+        this.props.decreaseFoodNumber(foodId)
     }
 
 
