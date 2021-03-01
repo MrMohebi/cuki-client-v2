@@ -42,22 +42,20 @@ class LikedFoods extends Component {
         return this.props.orderList.filter(food=> food.foods_id === fId)[0]? this.props.orderList.filter(food=> food.foods_id === fId)[0].number:0
     }
     orderScripts = (foods_id, foodsList = this.props.foods) => {
-        if (this.props.trackingId < 1000) {
-            for (let i = 0; i < foodsList.length; i++) {
-                if (foodsList[i].foods_id === foods_id) {
-                    // check if food was already in order list, increase its number
-                    if (this.props.orderList.filter(food => food.foods_id === foods_id).length) {
-                        this.props.increaseFoodNumber(foods_id);
-                        return "increased number"
-                    } else {
-                        //  else add it to order list
-                        let food = {...foodsList[i]};
-                        food["number"] = 1;
-                        food.price = parseInt(food.price)
-                        food["totalPrice"] = food.price
-                        this.props.addFoodToOrders(food)
-                        return "food was added"
-                    }
+        for (let i = 0; i < foodsList.length; i++) {
+            if (foodsList[i].foods_id === foods_id) {
+                // check if food was already in order list, increase its number
+                if (this.props.orderList.filter(food => food.foods_id === foods_id).length) {
+                    this.props.increaseFoodNumber(foods_id);
+                    return "increased number"
+                } else {
+                    //  else add it to order list
+                    let food = {...foodsList[i]};
+                    food["number"] = 1;
+                    food.price = parseInt(food.price)
+                    food["totalPrice"] = food.price
+                    this.props.addFoodToOrders(food)
+                    return "food was added"
                 }
             }
         }
