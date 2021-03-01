@@ -51,6 +51,7 @@ class DongiPage extends React.Component {
         orderList: [],
         paidList: [],
         selectedToPay: [],
+        notPaidList:[],
         foodsList: <div/>,
         dialogClassName: 'd-none',
         payLink: '',
@@ -172,6 +173,7 @@ class DongiPage extends React.Component {
     }
 
     createFoodsList = (orderList, paidList, newFoodInfo = {id: -1}) => {
+        this.state.notPaidList = [];
         return orderList.map(eFood => {
             let paidFood = paidList.filter(ePFood => ePFood.id === eFood.id)[0]
             let selectedFood = this.state.selectedToPay.filter(eSFood => eSFood.id === eFood.id)[0]
@@ -186,7 +188,7 @@ class DongiPage extends React.Component {
                 selectedPrice = (selectedFood) ? (selectedFood.number * selectedFood['priceAfterDiscount']) / 1000 : 0
                 selectedNumber = (selectedFood) ? (selectedFood.number) : 0
             }
-
+            this.state.notPaidList.push(produce(eFood, dEFood=>{dEFood.number = totalNumber}))
             return (
 
                 totalNumber !== 0 ?
@@ -240,224 +242,230 @@ class DongiPage extends React.Component {
 
                     </div>
                     </SwipeableListItem>
-    :
-        <div key={eFood.id} id={eFood.id} style={{height: '60px'}}
-             className='eachDongContainer position-relative w-100'>
+                :
+                    <div key={eFood.id} id={eFood.id} style={{height: '60px'}}
+                         className='eachDongContainer position-relative w-100'>
 
-            <div className='eachDongContainerHolders'>
-                <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
-                <span className='IranSans DongiPayText  font-weight-bold'> </span>
-                <span className='IranSans paidItemsText  font-weight-bold'/>
-                <span className='IranSans paidItemsText  '>پرداخت شده </span>
-                <span className=' font-weight-bold'>{totalPrice}T</span>
-            </div>
+                        <div className='eachDongContainerHolders'>
+                            <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
+                            <span className='IranSans DongiPayText  font-weight-bold'> </span>
+                            <span className='IranSans paidItemsText  font-weight-bold'/>
+                            <span className='IranSans paidItemsText  '>پرداخت شده </span>
+                            <span className=' font-weight-bold'>{totalPrice}T</span>
+                        </div>
 
-        </div>
-    )
-    }
-)
-}
-
-sumFoodPrice = () => {
-    let total = 0;
-    this.state.selectedToPay.map(eSFood => {
-            total += (eSFood.number * eSFood['priceAfterDiscount'])
-        }
-    )
-    return total
-}
-paidItemsPrice = () => {
-    let total = 0;
-    this.state.paidList.map(eSFood => {
-        total += (eSFood.number * eSFood['tPrice'])
-    })
-    return total
-}
-
-sumFoodPriceOrderList = () => {
-    let total = 0;
-    this.state.orderList.map(eSFood => {
-        total += (eSFood.number * eSFood['priceAfterDiscount'])
-    })
-    return total
-}
-
-
-handleSubmit = (dongi) => {
-
-    if (dongi) {
-        let totalPrice = this.sumFoodPrice()
-        if (totalPrice < 1000) {
-            ReactSwal.fire({
-                title: 'حداقل یه چیز رو واسه پرداخت انتخاب کن',
-                icon: 'info',
-                confirmButtonText: "عه حواسم نبود، اوکیه",
-            })
-            fixBodyClass()
-            console.log(this.state.selectedToPay)
-            return false;
-        }
-        requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.selectedToPay, totalPrice, this.state.trackingId);
-        this.setState({
-            selectedToPay: []
-        })
-
-    } else {
-        let totalPrice = this.sumFoodPriceOrderList()
-        requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.orderList, totalPrice, this.state.trackingId);
-        this.setState({
-            selectedToPay: []
+                    </div>
+            )
         })
     }
-    this.setState({
-        loading: true,
-    })
 
-}
-
-
-callbackPaymentRequest = (res) => {
-    if (res.statusCode === 200) {
-        this.setState({
-            loading: false,
-        })
-        ReactSwal.fire({
-            title: 'تمومه',
-            icon: 'success',
-            confirmButtonText: 'بریم درگاه پرداخت',
-            showDenyButton: true,
-            denyButtonText: "میخوام لینک پرداخت رو ارسال کنم واسه دوستم",
-            denyButtonColor: "#47b8e5",
-            text: "مبلغ : " + res.data.amount / 1000 + " تومن \n",
-        }).then(resultSwalPay => {
-            if (resultSwalPay.isConfirmed) {
-                window.open(res.data.url, '_blank').focus()
-            } else if (resultSwalPay.isDenied) {
-                if (navigator.clipboard !== undefined) {
-                    navigator.clipboard.writeText(
-                        "لینک پرداخت دونگ کوکی" + "\n" +
-                        "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" + "\n" +
-                        " بزن روی لینک پایینی بری تو درگاه " + "\n"
-                        + res.data.url).then(() => {
-                        ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
-                    })
-                } else {
-                    this.setState({
-                        dialogClassName: 'animate__fadeIn animate__animated',
-                        payLink: res.data.url
-                    })
-                }
-
-
+    sumFoodPrice = () => {
+        let total = 0;
+        this.state.selectedToPay.map(eSFood => {
+                total += (eSFood.number * eSFood['priceAfterDiscount'])
             }
-        });
-        fixBodyClass()
-    } else {
-        ReactSwal.fire({
-            title: '!!! آخ',
-            icon: 'error',
-            confirmButtonText: 'اوکیه',
-            text: "یه چیزی درست کار نکرد، میشه از اول امتحان کنی؟",
-        });
-        fixBodyClass()
+        )
+        return total
     }
-}
+    paidItemsPrice = () => {
+        let total = 0;
+        this.state.paidList.map(eSFood => {
+            total += (eSFood.number * eSFood['tPrice'])
+        })
+        return total
+    }
 
-handleBack = () => {
-    this.props.history.goBack()
-}
+    sumFoodPriceOrderList = () => {
+        let total = 0;
+        this.state.orderList.map(eSFood => {
+            total += (eSFood.number * eSFood['priceAfterDiscount'])
+        })
+        return total
+    }
 
-render()
-{
-    return (
-        <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
-                   children={
-                       <LoadingOverlay
-                           active={this.state.loading}
-                           spinner={<HashLoader
-                               css={{
-                                   transform: 'translate(-50%,-250%) !important',
-                                   position: 'absolute',
-                                   left: '50%'
-                               }}
-                               color={'white'}/>}
-                           text='... انجام کارای بانکی'
-                       >
-                           <React.Fragment>
-                               <div
-                                   className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                                   <ArrowBackRoundedIcon onClick={this.handleBack}/>
-                                   <div className='text-center d-flex justify-content-around flex-row'>
-                                       <div className='IranSans'>نحوه پرداخت</div>
+    sumFoodPriceNotPaidList = () => {
+        let total = 0;
+        this.state.notPaidList.map(eSFood => {
+            total += (eSFood.number * eSFood['priceAfterDiscount'])
+        })
+        return total
+    }
+
+    handleSubmit = (dongi) => {
+
+        if (dongi) {
+            let totalPrice = this.sumFoodPrice()
+            if (totalPrice < 1000) {
+                ReactSwal.fire({
+                    title: 'حداقل یه چیز رو واسه پرداخت انتخاب کن',
+                    icon: 'info',
+                    confirmButtonText: "عه حواسم نبود، اوکیه",
+                })
+                fixBodyClass()
+                console.log(this.state.selectedToPay)
+                return false;
+            }
+            requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.selectedToPay, totalPrice, this.state.trackingId);
+            this.setState({
+                selectedToPay: []
+            })
+
+        } else {
+
+            requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.notPaidList, this.sumFoodPriceNotPaidList(), this.state.trackingId);
+            this.setState({
+                selectedToPay: []
+            })
+        }
+        this.setState({
+            loading: true,
+        })
+
+    }
+
+
+    callbackPaymentRequest = (res) => {
+        if (res.statusCode === 200) {
+            this.setState({
+                loading: false,
+            })
+            ReactSwal.fire({
+                title: 'تمومه',
+                icon: 'success',
+                confirmButtonText: 'بریم درگاه پرداخت',
+                showDenyButton: true,
+                denyButtonText: "میخوام لینک پرداخت رو ارسال کنم واسه دوستم",
+                denyButtonColor: "#47b8e5",
+                text: "مبلغ : " + res.data.amount / 1000 + " تومن \n",
+            }).then(resultSwalPay => {
+                if (resultSwalPay.isConfirmed) {
+                    window.open(res.data.url, '_blank').focus()
+                } else if (resultSwalPay.isDenied) {
+                    if (navigator.clipboard !== undefined) {
+                        navigator.clipboard.writeText(
+                            "لینک پرداخت دونگ کوکی" + "\n" +
+                            "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" + "\n" +
+                            " بزن روی لینک پایینی بری تو درگاه " + "\n"
+                            + res.data.url).then(() => {
+                            ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
+                        })
+                    } else {
+                        this.setState({
+                            dialogClassName: 'animate__fadeIn animate__animated',
+                            payLink: res.data.url
+                        })
+                    }
+
+
+                }
+            });
+            fixBodyClass()
+        } else {
+            ReactSwal.fire({
+                title: '!!! آخ',
+                icon: 'error',
+                confirmButtonText: 'اوکیه',
+                text: "یه چیزی درست کار نکرد، میشه از اول امتحان کنی؟",
+            });
+            fixBodyClass()
+        }
+    }
+
+    handleBack = () => {
+        this.props.history.goBack()
+    }
+
+    render()
+    {
+        return (
+            <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
+                       children={
+                           <LoadingOverlay
+                               active={this.state.loading}
+                               spinner={<HashLoader
+                                   css={{
+                                       transform: 'translate(-50%,-250%) !important',
+                                       position: 'absolute',
+                                       left: '50%'
+                                   }}
+                                   color={'white'}/>}
+                               text='... انجام کارای بانکی'
+                           >
+                               <React.Fragment>
+                                   <div
+                                       className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                                       <ArrowBackRoundedIcon onClick={this.handleBack}/>
+                                       <div className='text-center d-flex justify-content-around flex-row'>
+                                           <div className='IranSans'>نحوه پرداخت</div>
+                                       </div>
+                                       <ArrowBackRoundedIcon className='invisible'/>
                                    </div>
-                                   <ArrowBackRoundedIcon className='invisible'/>
-                               </div>
-                               <div className={'dongiDialog ' + this.state.dialogClassName}>
-                                   <div className='dialogContainer'>
-                        <span className='payLinkTextHolder'>
-                            اینم از لینک
-                        </span>
-                                       <input className='linkInput' ref={'linkInput'} type="text" readOnly
-                                              value={this.state.payLink}/>
-                                       <Button onClick={() => {
-                                           this.refs.linkInput.select()
-                                           document.execCommand('copy')
-                                           this.refs.copied.innerHTML = 'کپی شد'
-                                           setTimeout(() => {
-                                               this.setState({
-                                                   dialogClassName: 'animate__fadeOut animate__animated'
-                                               })
-                                           }, 500)
-                                           setTimeout(() => {
-                                               this.setState({
-                                                   dialogClassName: 'd-none'
-                                               })
-                                           }, 1000)
-                                       }} className='w-25 m-auto' variant={"contained"} color={"primary"}>
-                                           کپی
-                                       </Button>
-                                       <span ref={'copied'} className='IranSans copiedHolder m-auto w-50'/>
+                                   <div className={'dongiDialog ' + this.state.dialogClassName}>
+                                       <div className='dialogContainer'>
+                            <span className='payLinkTextHolder'>
+                                اینم از لینک
+                            </span>
+                                           <input className='linkInput' ref={'linkInput'} type="text" readOnly
+                                                  value={this.state.payLink}/>
+                                           <Button onClick={() => {
+                                               this.refs.linkInput.select()
+                                               document.execCommand('copy')
+                                               this.refs.copied.innerHTML = 'کپی شد'
+                                               setTimeout(() => {
+                                                   this.setState({
+                                                       dialogClassName: 'animate__fadeOut animate__animated'
+                                                   })
+                                               }, 500)
+                                               setTimeout(() => {
+                                                   this.setState({
+                                                       dialogClassName: 'd-none'
+                                                   })
+                                               }, 1000)
+                                           }} className='w-25 m-auto' variant={"contained"} color={"primary"}>
+                                               کپی
+                                           </Button>
+                                           <span ref={'copied'} className='IranSans copiedHolder m-auto w-50'/>
+                                       </div>
                                    </div>
-                               </div>
-                               <div className='dongiPageContainer d-flex flex-column'>
-                                   <div className='w-100 d-flex flex-column '>
+                                   <div className='dongiPageContainer d-flex flex-column'>
+                                       <div className='w-100 d-flex flex-column '>
 
-                                       {this.state.foodsList}
+                                           {this.state.foodsList}
 
-                                   </div>
+                                       </div>
 
-                                   {
-                                       !this.state.allPaid ?
-                                           <div
-                                               className={'dongiPayButtonsContainer d-flex justify-content-around '}>
-                                               <div onClick={() => {
-                                                   this.handleSubmit(true)
-                                               }} className='DongiSubmitButtonNew mt-5'>
-                                                   <span>پرداخت دونگ</span>
+                                       {
+                                           !this.state.allPaid ?
+                                               <div
+                                                   className={'dongiPayButtonsContainer d-flex justify-content-around '}>
+                                                   <div onClick={() => {
+                                                       this.handleSubmit(true)
+                                                   }} className='DongiSubmitButtonNew mt-5'>
+                                                       <span>پرداخت دونگ</span>
+                                                   </div>
+
+                                                   <div onClick={() => {
+                                                       this.handleSubmit(false)
+                                                   }} className='DongiAllSubmitButtonNew mt-5'>
+                                                       <span>پرداخت یکجا</span>
+                                                   </div>
+
                                                </div>
-
-                                               <div onClick={() => {
-                                                   this.handleSubmit(false)
-                                               }} className='DongiAllSubmitButtonNew mt-5'>
-                                                   <span>پرداخت یکجا</span>
+                                               :
+                                               <div
+                                                   className={'dongiPayButtonsContainer d-flex justify-content-around '}>
+                                                   <div className='DongiPaidNoticeBt mt-5'>
+                                                       <span>(: همش پرداخت شده</span></div>
                                                </div>
-
-                                           </div>
-                                           :
-                                           <div
-                                               className={'dongiPayButtonsContainer d-flex justify-content-around '}>
-                                               <div className='DongiPaidNoticeBt mt-5'>
-                                                   <span>(: همش پرداخت شده</span></div>
-                                           </div>
-                                   }
+                                       }
 
 
-                               </div>
-                           </React.Fragment>
-                       </LoadingOverlay>
-                   }/>
-    )
-}
+                                   </div>
+                               </React.Fragment>
+                           </LoadingOverlay>
+                       }/>
+        )
+    }
 }
 
 export default DongiPage;
