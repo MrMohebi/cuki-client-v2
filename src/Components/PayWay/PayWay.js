@@ -171,16 +171,28 @@ class PayWay extends React.Component{
 
 
     handleSubmit = () =>{
-        if(!((this.state.inOrOut === "in" && this.state.table.toString().length > 2) || this.state.inOrOut === "out")){
+        if(this.state.inOrOut === "in" && this.state.table < 1){
             ReactSwal.fire({
                 title: 'نه صبر کن',
                 icon: 'info',
                 confirmButtonText: "اها اوکیه وایسا",
-                text: "!یه چیز رو کامل وارد نکردی"
+                text: "!شماره میزت رو نگفتی"
+            })
+            fixBodyClass()
+            return ;
+        }else if(this.state.inOrOut === "out" && coordinates[0] === 30.287486 && coordinates[1] === 57.052301){
+            ReactSwal.fire({
+                title: 'نه صبر کن',
+                icon: 'info',
+                confirmButtonText: "اها اوکیه وایسا",
+                text: "!آدرس رو نگفتی که"
             })
             fixBodyClass()
             return ;
         }
+
+
+
 
         ReactSwal.fire({
             title: 'خب در مجموع',
@@ -191,23 +203,22 @@ class PayWay extends React.Component{
             text: 'قیمت کل  فاکتور: ' + this.calTotalPrice() / 1000 + "هزار تومن \n",
         }).then(result => {
             if (result.isConfirmed) {
-                    if(this.state.inOrOut === "in"){
-                        requests.sendOrder(
-                            this.callbackSendOrder,
-                            this.state.table,
-                            {},
-                            this.props.orderList.map(eachFood =>{return {id:eachFood.foods_id, number:eachFood.number}})
-                        )
-                    }else {
-                        requests.sendOrder(
-                            this.callbackSendOrder,
-                            "",
-                            {coordinates:coordinates, addressDetails: this.state.addressDetails},
-                            this.props.orderList.map(eachFood =>{return {id:eachFood.foods_id, number:eachFood.number}}),
-                        )
-                    }
+                if(this.state.inOrOut === "in"){
+                    requests.sendOrder(
+                        this.callbackSendOrder,
+                        this.state.table,
+                        {},
+                        this.props.orderList.map(eachFood =>{return {id:eachFood.foods_id, number:eachFood.number}})
+                    )
+                }else {
+                    requests.sendOrder(
+                        this.callbackSendOrder,
+                        "",
+                        {coordinates:coordinates, addressDetails: this.state.addressDetails},
+                        this.props.orderList.map(eachFood =>{return {id:eachFood.foods_id, number:eachFood.number}}),
+                    )
+                }
             }
-            this.props.setOrderList([])
         })
         fixBodyClass()
 
@@ -224,13 +235,15 @@ class PayWay extends React.Component{
 
     callbackSendOrder = (res) =>{
         if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+            this.props.setOrderList([])
             this.props.setTrackingId(res.data.trackingId)
             ReactSwal.fire({
                 title: 'تمومه',
                 icon: 'success',
                 confirmButtonText: 'اوکیه',
-                text: "خب سفارشت رو ثبت کردیم، یکم دیگه آمادس :)" + "\n" +
-                    " : شماره سفارش" + res.data.trackingId
+                html: "خب سفارشت رو ثبت کردیم؛" +  '<br/>' +
+                    " (: یکم دیگه آمادس " +  '<br/>' +
+                    " شماره سفارش: " + `<span style='font-weight: bold'>${res.data.trackingId}</span>`
             }).then(() => {
                 this.getOpenOrders()
                 if(this.state.onlineOrCash === "cash"){
