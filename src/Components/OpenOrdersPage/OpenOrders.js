@@ -73,7 +73,7 @@ class OpenOrders extends Component {
                         <ArrowBackRoundedIcon className='invisible'/>
                     </div>
                     <div className='openOrdersContainer'>
-                        {
+                        {this.props.openOrdersList.length > 0 ?
                             this.props.openOrdersList.map(eOrder=>{
                                 let orderList = JSON.parse(eOrder['order_list'])
                                 let orderTime = moment.unix(parseInt(eOrder['ordered_date'])).format("HH:mm")
@@ -90,6 +90,8 @@ class OpenOrders extends Component {
                                     </div>
                                 )
                             })
+                            :
+                            this.props.history.replace("/main")
                         }
                     </div>
                 </React.Fragment>
