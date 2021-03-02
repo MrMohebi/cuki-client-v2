@@ -21,6 +21,8 @@ import waiterWhite from './img/waiterWhite.png'
 import outResBlack from './img/outResBlack.png'
 import outResWhite from './img/outResWhite.png'
 import fixBodyClass from "../../functions/fixSwalBody";
+import {HashLoader} from "react-spinners";
+import LoadingOverlay from "react-loading-overlay";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -85,7 +87,8 @@ class PayWay extends React.Component{
         onlineIcon:onlineWhite,
         cashIcon:cashBlack,
         inResIcon:waiterBlack,
-        outResIcon:outResBlack
+        outResIcon:outResBlack,
+        loading: false,
     }
     componentDidMount() {
         this.state.inOrOut === 'in' ? this.enableInRes() : this.enableOutRes()
@@ -192,8 +195,6 @@ class PayWay extends React.Component{
         }
 
 
-
-
         ReactSwal.fire({
             title: 'خب در مجموع',
             icon: 'info',
@@ -203,6 +204,7 @@ class PayWay extends React.Component{
             text: 'قیمت کل  فاکتور: ' + this.calTotalPrice() / 1000 + "هزار تومن \n",
         }).then(result => {
             if (result.isConfirmed) {
+                this.setState({loading:true})
                 if(this.state.inOrOut === "in"){
                     requests.sendOrder(
                         this.callbackSendOrder,
@@ -234,6 +236,7 @@ class PayWay extends React.Component{
     }
 
     callbackSendOrder = (res) =>{
+        this.setState({loading:false})
         if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
             this.props.setOrderList([])
             this.props.setTrackingId(res.data.trackingId)
@@ -276,67 +279,79 @@ class PayWay extends React.Component{
     render(){
         return(
             <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
-                <React.Fragment>
-                    <div
-                        className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                        <ArrowBackRoundedIcon onClick={this.handleBack}/>
-                        <div className='text-center d-flex justify-content-around flex-row'>
-                            <div className='IranSans'>نحوه پرداخت</div>
+                <LoadingOverlay
+                    active={this.state.loading}
+                    spinner={<HashLoader
+                        css={{
+                            transform: 'translate(-50%,-250%) !important',
+                            position: 'absolute',
+                            left: '50%'
+                        }}
+                        color={'white'}/>}
+                    text='... سفارش ثبت شه'
+                >
+                    <React.Fragment>
+                        <div
+                            className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                            <ArrowBackRoundedIcon onClick={this.handleBack}/>
+                            <div className='text-center d-flex justify-content-around flex-row'>
+                                <div className='IranSans'>نحوه پرداخت</div>
+                            </div>
+                            <ArrowBackRoundedIcon className='invisible'/>
                         </div>
-                        <ArrowBackRoundedIcon className='invisible'/>
-                    </div>
-                    <div  className='payWayContainer'>
-                        <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
-                            <span className='IranSans payWayText ' >نحوه پرداخت چجوری باشه؟</span>
-                            <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
-                                <div className={this.state.onlineClass} onClick={this.enableOnline}
-                                >آنلاین
-                                    <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.onlineIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
-                                </div>
+                        <div  className='payWayContainer'>
+                            <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
+                                <span className='IranSans payWayText ' >نحوه پرداخت چجوری باشه؟</span>
+                                <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
+                                    <div className={this.state.onlineClass} onClick={this.enableOnline}
+                                    >آنلاین
+                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.onlineIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                    </div>
 
-                                <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی
-                                    <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.cashIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                    <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی
+                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.cashIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
-                            <span className='IranSans payWayText ' >تحویل سفارش چطور؟</span>
-                            <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
-                                <div className={this.state.inResClass +' inResTextSmaller'} onClick={this.enableInRes}>
-                                    درون رستوران
-                                    <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
-                                </div>
-                                <div className={this.state.outResClass} onClick={this.enableOutRes}>بیرون بر
-                                    <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.inResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
-                                </div>
+                            <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
+                                <span className='IranSans payWayText ' >تحویل سفارش چطور؟</span>
+                                <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
+                                    <div className={this.state.inResClass +' inResTextSmaller'} onClick={this.enableInRes}>
+                                        درون رستوران
+                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                    </div>
+                                    <div className={this.state.outResClass} onClick={this.enableOutRes}>بیرون بر
+                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.inResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                    </div>
 
+                                </div>
+                            </div>
+                            <div  ref={this.mapDetailsTableContainer} className='mapDetailsTableContainer'>
+                                <div className={this.state.mapClass}>
+                                    <MapContainer zoomControl={false} style={{height: "300px"}} center={coordinates} zoom={15} >
+                                        <TileLayer
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                        <MarkerToolTip/>
+                                    </MapContainer>
+                                </div>
+                                <div className={this.state.textHolderDetailsClass}> : توضیحات آدرس</div>
+                                <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
+                                    this.setState({
+                                        addressDetails:e.target.value.toString(),
+                                    })
+                                }}/>
+                                <div className={this.state.tableClass}>
+                                    <span className='tableTextHolder'>شماره میز</span>
+                                    <input value={this.state.table} placeholder='000' type='number' className='tableInput' onChange={(e)=>( e.target.value.length > 3 ? null : this.setState({table:e.target.value}))}/>
+                                </div>
+                            </div>
+                            <div className='BillSubmitButton mt-2' onClick={this.handleSubmit}>
+                                <span>پرداخت</span>
                             </div>
                         </div>
-                        <div  ref={this.mapDetailsTableContainer} className='mapDetailsTableContainer'>
-                            <div className={this.state.mapClass}>
-                                <MapContainer zoomControl={false} style={{height: "300px"}} center={coordinates} zoom={15} >
-                                    <TileLayer
-                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                    />
-                                    <MarkerToolTip/>
-                                </MapContainer>
-                            </div>
-                            <div className={this.state.textHolderDetailsClass}> : توضیحات آدرس</div>
-                            <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
-                                this.setState({
-                                    addressDetails:e.target.value.toString(),
-                                })
-                            }}/>
-                            <div className={this.state.tableClass}>
-                                <span className='tableTextHolder'>شماره میز</span>
-                                <input value={this.state.table} placeholder='000' type='number' className='tableInput' onChange={(e)=>( e.target.value.length > 3 ? null : this.setState({table:e.target.value}))}/>
-                            </div>
-                        </div>
-                        <div className='BillSubmitButton mt-2' onClick={this.handleSubmit}>
-                            <span>پرداخت</span>
-                        </div>
-                    </div>
-                </React.Fragment>
+                    </React.Fragment>
+                </LoadingOverlay>
             }/>
         )
     }
