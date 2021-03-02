@@ -30,12 +30,11 @@ class DongiPage extends React.Component {
     urlParams = url2paramsArray(this.searchParam) // 12827295
 
     componentDidMount() {
-
         this.getOrderList(this.state.trackingId)
         this.timer = setInterval(() => {
             this.getPaidItemsInfo(this.state.trackingId)
             this.setState({
-                allPaid: (this.sumFoodPriceOrderList() === this.paidItemsPrice())
+                allPaid: (this.sumFoodPriceNotPaidList() === 0)
             })
         }, 3000)
 
@@ -267,21 +266,6 @@ class DongiPage extends React.Component {
         )
         return total
     }
-    paidItemsPrice = () => {
-        let total = 0;
-        this.state.paidList.map(eSFood => {
-            total += (eSFood.number * eSFood['tPrice'])
-        })
-        return total
-    }
-
-    sumFoodPriceOrderList = () => {
-        let total = 0;
-        this.state.orderList.map(eSFood => {
-            total += (eSFood.number * eSFood['priceAfterDiscount'])
-        })
-        return total
-    }
 
     sumFoodPriceNotPaidList = () => {
         let total = 0;
@@ -292,7 +276,6 @@ class DongiPage extends React.Component {
     }
 
     handleSubmit = (dongi) => {
-
         if (dongi) {
             let totalPrice = this.sumFoodPrice()
             if (totalPrice < 1000) {
@@ -302,20 +285,21 @@ class DongiPage extends React.Component {
                     confirmButtonText: "عه حواسم نبود، اوکیه",
                 })
                 fixBodyClass()
-                console.log(this.state.selectedToPay)
                 return false;
             }
             requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.selectedToPay, totalPrice, this.state.trackingId);
-            this.setState({
-                selectedToPay: []
-            })
-
         } else {
-
-            requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.notPaidList, this.sumFoodPriceNotPaidList(), this.state.trackingId);
-            this.setState({
-                selectedToPay: []
-            })
+            let totalRemainPrice = this.sumFoodPriceNotPaidList()
+            if (totalRemainPrice < 1000) {
+                ReactSwal.fire({
+                    title: 'هیچی واسه پرداخت کردن پیدا نکردم',
+                    icon: 'info',
+                    confirmButtonText: "اوکیه",
+                })
+                fixBodyClass()
+                return false;
+            }
+            requests.sendPaymentRequestFood(this.callbackPaymentRequest, this.state.notPaidList, totalRemainPrice, this.state.trackingId);
         }
         this.setState({
             loading: true,
@@ -328,6 +312,8 @@ class DongiPage extends React.Component {
         if (res.statusCode === 200) {
             this.setState({
                 loading: false,
+                selectedToPay: [],
+                notPaidList:[]
             })
             ReactSwal.fire({
                 title: 'تمومه',
@@ -455,7 +441,7 @@ class DongiPage extends React.Component {
                                                <div
                                                    className={'dongiPayButtonsContainer d-flex justify-content-around '}>
                                                    <div className='DongiPaidNoticeBt mt-5'>
-                                                       <span>(: همش پرداخت شده</span></div>
+                                                       <span>(: پرداخت شده</span></div>
                                                </div>
                                        }
 
