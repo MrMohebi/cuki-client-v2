@@ -92,7 +92,7 @@ function Comments(props) {
     let swipes = useSwipeable({onSwipedUp: commentsFullPage, onSwipedDown: commentsMiniPage})
 
     return (
-        <div className='foodDetailsComments'>
+        <div key={Math.floor(Math.random() *10000)} className='foodDetailsComments'>
             {canLeaveComment ?
                 <div onClick={() => {
                     commentsFullPage()
