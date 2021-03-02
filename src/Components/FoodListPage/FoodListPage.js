@@ -70,7 +70,6 @@ class FoodListPage extends Component {
     }
 
     foodDetails = (foodInfo) => {
-        console.log(foodInfo)
         this.setState({
             foodDetails: <div onContextMenu={(e) => {
                 e.preventDefault()

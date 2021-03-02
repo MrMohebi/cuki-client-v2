@@ -29,7 +29,6 @@ function Comments(props) {
         $('#cannotLeaveComment').tooltip({
             title:'باید توی سه روز گذشته غذا رو سفارش داده باشی'
         })
-        console.log('aa;sdfklj')
     })
 
 
@@ -38,7 +37,6 @@ function Comments(props) {
     }
 
     let callbackGetComments = (res) => {
-        console.log(res);
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             setNewCommentsList(res.data.comments)
             setCanLeaveComment(res.data['isAllowedLeaveComment'])
