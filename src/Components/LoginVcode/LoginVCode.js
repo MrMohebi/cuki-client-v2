@@ -16,6 +16,10 @@ export const Swipeable = ({children, style, ...props}) => {
 
 
 class LoginVCode extends React.Component {
+    constructor(props) {
+        super(props);
+        this.SubmitButton = React.createRef();
+    }
     state = {
         userPhoneNumber: this.props.tempPhone,
         buttonDefaultClass: 'loginSubmitButton IranSansLight animate__animated ',
@@ -128,15 +132,15 @@ class LoginVCode extends React.Component {
                                                 this.setState({
                                                     buttonAnimationClasses: 'animate__fadeInUp'
                                                 })
-                                                this.refs.submitButton.style.opacity = 1
-                                                this.refs.submitButton.style.pointerEvents = 'all'
+                                                this.SubmitButton.current.style.opacity = 1
+                                                this.SubmitButton.current.style.pointerEvents = 'all'
                                                 this.state.userPhoneNumber = '09' + e.target.value.toString()
                                             } else if (this.state.buttonAnimationClasses !== '') {
                                                 this.setState({
                                                     buttonAnimationClasses: 'animate__fadeOutDown'
                                                 })
-                                                this.refs.submitButton.style.opacity = 0
-                                                this.refs.submitButton.style.pointerEvents = 'none'
+                                                this.SubmitButton.current.style.opacity = 0
+                                                this.SubmitButton.current.style.pointerEvents = 'none'
                                                 setTimeout(() => {
                                                     if (this.state.buttonAnimationClasses === 'animate__fadeOutDown')
                                                         this.setState({
@@ -151,7 +155,7 @@ class LoginVCode extends React.Component {
                                                        ,
                                                    }}
                                         />
-                                        <div ref={'submitButton'} onClick={() => {
+                                        <div ref={this.SubmitButton} onClick={() => {
                                             if (this.state.userPhoneNumber.length > 7){
                                                 this.sendCode(this.state.userPhoneNumber);
                                                 this.setState({

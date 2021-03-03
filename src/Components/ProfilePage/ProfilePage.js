@@ -19,8 +19,8 @@ export const Swipeable = ({children, style, ...props}) => {
 
 class ProfilePage extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.birthdayRef = React.createRef()
     }
     state = {
@@ -196,10 +196,10 @@ class ProfilePage extends React.Component {
                             <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
                                 <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.name} onChange={e=>this.state.name = e.target.value}
                                            className='rtl mt-2 profileInputs'
-                                           id="standard-basic" label="اسم و فامیل"/>
+                                           id="standard-basic1" label="اسم و فامیل"/>
                                 <TextField  ref={this.birthdayRef} disabled={this.state.inputsDisabled} value={this.state.birthdayInputValue}
                                            className='rtl mt-2 profileInputs'
-                                           id="standard-basic" label="تاریخ تولد"/>
+                                           id="standard-basic2" label="تاریخ تولد"/>
                                 <DatePicker
                                     disabled
                                     value={this.state.datePickerValue}
@@ -210,7 +210,7 @@ class ProfilePage extends React.Component {
 
                                 <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.job} onChange={e=>this.state.job = e.target.value}
                                            className='rtl mt-2 profileInputs'
-                                           id="standard-basic" label="شغل"/>
+                                           id="standard-basic3" label="شغل"/>
                                 <div className='w-100 d-flex justify-content-center'>
                                     <div className='profileSubmitButton mt-4 IranSans'
                                          onClick={this.editAndApplyHandler}> ویرایش
