@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import './css/style.css'
+import './css/style.css';
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
-import * as RandomColor from '../../functions/RandomColor'
+import * as RandomColor from '../../functions/RandomColor';
 import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
 import tf from "./img/testFood.png";
@@ -26,8 +26,11 @@ class FoodListPage extends Component {
         foodList: <div/>,
         foodDetails: <div/>,
         allowToShow: false,
+        firstPointerPosition:{
+            x:0,
+            y:0
+        }
     }
-
 
     componentDidMount() {
         if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
@@ -44,8 +47,11 @@ class FoodListPage extends Component {
     getData = () => {
         requests.getRestaurantInfo(this.dataArrive);
     }
-    checkForMove = () => {
-        this.state.allowToShow = false
+    checkForMove = (e) => {
+        let threshold = 7;
+        if (e.pageX > this.state.firstPointerPosition.x + threshold ||e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold|| e.pageY < this.state.firstPointerPosition.y - threshold){
+            this.state.allowToShow = false;
+        }
     }
 
     orderScripts = (foods_id, foodsList = this.props.foods) => {
@@ -193,7 +199,7 @@ class FoodListPage extends Component {
                                         className='foodListPageContainer'>
                                        <div className='heightFitContent'>
                                            {
-                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.map(eachFood => {
+                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted").map(eachFood => {
                                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
                                                    let timeout;
                                                    return (
@@ -209,8 +215,10 @@ class FoodListPage extends Component {
                                                                 }
                                                                 this.state.allowToShow = false
                                                             }}
-                                                            onTouchStart={() => {
-                                                                if (this.state.allowToShow === false) {
+                                                            onTouchStart={(e) => {
+
+                                                                this.state.firstPointerPosition.x = e.targetTouches[0].pageX
+                                                                this.state.firstPointerPosition.y = e.targetTouches[0].pageY
                                                                     this.state.allowToShow = true
                                                                     timeout = setTimeout(() => {
                                                                         if (this.state.allowToShow) {
@@ -220,10 +228,9 @@ class FoodListPage extends Component {
                                                                         clearTimeout(timeout)
                                                                     }, 700)
 
-                                                                }
                                                             }}
                                                             onPointerMove={(e) => {
-                                                                this.checkForMove()
+                                                                this.checkForMove(e)
                                                             }}
                                                             onTouchEnd={() => {
                                                                 this.state.allowToShow = false
