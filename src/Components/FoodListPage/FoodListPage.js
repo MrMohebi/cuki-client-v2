@@ -199,7 +199,7 @@ class FoodListPage extends Component {
                                         className='foodListPageContainer'>
                                        <div className='heightFitContent'>
                                            {
-                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted").map(eachFood => {
+                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted" ).map(eachFood => {
                                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
                                                    let timeout;
                                                    return (
