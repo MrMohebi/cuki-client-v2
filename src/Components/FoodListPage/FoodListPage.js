@@ -47,8 +47,9 @@ class FoodListPage extends Component {
     getData = () => {
         requests.getRestaurantInfo(this.dataArrive);
     }
+
     checkForMove = (e) => {
-        let threshold = 7;
+        let threshold = 10;
         if (e.pageX > this.state.firstPointerPosition.x + threshold ||e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold|| e.pageY < this.state.firstPointerPosition.y - threshold){
             this.state.allowToShow = false;
         }
@@ -155,13 +156,21 @@ class FoodListPage extends Component {
     }
 
     swipeRight = () => {
-        this.previousPage()
-        this.state.allowToShow = false
+        if(!this.state.foodDetails.props.hasOwnProperty("children"))
+            this.previousPage()
+        this.setState({
+            foodDetails: <div/>,
+            allowToShow: false
+        })
     }
 
     swipeLeft = () => {
-        this.nextPage()
-        this.state.allowToShow = false
+        if(!this.state.foodDetails.props.hasOwnProperty("children"))
+            this.nextPage()
+        this.setState({
+            foodDetails: <div/>,
+            allowToShow: false
+        })
     }
 
     handleBack = () => {
@@ -176,7 +185,7 @@ class FoodListPage extends Component {
                 spinner={<ClimbingBoxLoader color={'white'}/>}
                 text='وایسا چک کنم ببینم چی چیا داریم'
             >
-                <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
+                <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} delta={60}
                            children={
                                <React.Fragment>
                                    {this.state.foodDetails}
@@ -226,7 +235,7 @@ class FoodListPage extends Component {
                                                                         }
                                                                         this.state.allowToShow = false
                                                                         clearTimeout(timeout)
-                                                                    }, 700)
+                                                                    }, 400)
 
                                                             }}
                                                             onPointerMove={(e) => {
