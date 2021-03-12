@@ -194,6 +194,16 @@ class PayWay extends React.Component{
             return ;
         }
 
+        if(this.calTotalPrice() < 900){
+            ReactSwal.fire({
+                title: 'نه صبر کن',
+                icon: 'info',
+                confirmButtonText: "حله",
+                text: "سفارشت رو فکر کنم قبلا ثبت کردیم. توی سفارشت باز اون پایین باید باشه."
+            })
+            fixBodyClass()
+            return ;
+        }
 
         ReactSwal.fire({
             title: 'خب در مجموع',
