@@ -49,7 +49,7 @@ class FoodListPage extends Component {
     }
 
     checkForMove = (e) => {
-        let threshold = 10;
+        let threshold = 8;
         if (e.pageX > this.state.firstPointerPosition.x + threshold ||e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold|| e.pageY < this.state.firstPointerPosition.y - threshold){
             this.state.allowToShow = false;
         }
@@ -88,7 +88,7 @@ class FoodListPage extends Component {
                     })
                 }
 
-            }} className='detailsMainActive animate__animated animate__fadeIn'>
+            }} className='detailsMainActive animate__animated animate__fadeIn animateFast'>
 
                 <div onClick={(e) => {
                     e.preventDefault()
