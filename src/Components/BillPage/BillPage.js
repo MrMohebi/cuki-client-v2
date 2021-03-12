@@ -112,16 +112,16 @@ class BillPage extends React.Component {
     }
 
     swipeRight = () => {
-        if(this.props.openOrdersList.length !== 0){
-            this.props.history.push("/openOrders")
-
-        } else{
-            this.props.history.push("/login")
-        }
+        // if(this.props.openOrdersList.length !== 0){
+        //     this.props.history.push("/openOrders")
+        //
+        // } else{
+        //     this.props.history.push("/login")
+        // }
     }
 
     swipeLeft = () => {
-        this.props.history.push("/main")
+        // this.props.history.push("/main")
     }
 
     handleBack = () =>{
