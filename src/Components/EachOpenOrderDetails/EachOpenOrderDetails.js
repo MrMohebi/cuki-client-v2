@@ -6,33 +6,33 @@ import * as randomColors from '../../functions/RandomColor'
 import moment from "jalali-moment"
 
 
-
 class EachOpenOrderDetails extends React.Component {
     state = {
-        foods:<div/>,
+        foods: <div/>,
     }
 
     componentDidMount() {
         this.setState({
-            foods:this.createFoods()
+            foods: this.createFoods()
         })
     }
 
-    handlePay = (trackingId) =>{
-        this.props.history.push("/dongi?trackingId="+trackingId)
+    handlePay = (trackingId) => {
+        this.props.history.push("/dongi?trackingId=" + trackingId)
     }
 
     handleBack = () => {
         this.props.history.goBack()
     }
 
-    createFoods = ()=>{
+    createFoods = () => {
         let orderList = JSON.parse(this.props.tempOpenOrderInfo["order_list"])
-        return orderList.map(eFood =>{
+        return orderList.map(eFood => {
                 let color = randomColors.RandomColor()
-                return(
+                return (
                     <div key={eFood["id"]} className='eachOrderDetailsEachFoodContainer'>
-                        <div className='eachOrderDetailsEachFood' style={{color:color.foreground,backgroundColor:color.background}}>
+                        <div className='eachOrderDetailsEachFood'
+                             style={{color: color.foreground, backgroundColor: color.background}}>
                             <div className='priceAndImage'>
                                     <span className='EachOrderDetailsEachFoodPrice'>
                                         {eFood['priceAfterDiscount'] / 1000} T
@@ -54,6 +54,7 @@ class EachOpenOrderDetails extends React.Component {
             }
         )
     }
+
     render() {
         return (
             <React.Fragment>
@@ -69,8 +70,10 @@ class EachOpenOrderDetails extends React.Component {
                 <div className='eachOrderDetailsPageContainer'>
                     <div className='eachOrderDetailsFoodsContainer'>
                         <div className='d-flex flex-row w-100 justify-content-around profileHistoryTextHeader'>
-                            <span className='IranSans '>{moment.unix(parseInt(this.props.tempOpenOrderInfo['ordered_date'])).format("jM/jD")}</span>
-                            <span className='IranSans '>{moment.unix(parseInt(this.props.tempOpenOrderInfo['ordered_date'])).format("HH:mm")}</span>
+                            <span
+                                className='IranSans '>{moment.unix(parseInt(this.props.tempOpenOrderInfo['ordered_date'])).format("jM/jD")}</span>
+                            <span
+                                className='IranSans '>{moment.unix(parseInt(this.props.tempOpenOrderInfo['ordered_date'])).format("HH:mm")}</span>
                         </div>
                         <div className='d-flex flex-wrap justify-content-between'>
                             {this.state.foods}
@@ -83,20 +86,43 @@ class EachOpenOrderDetails extends React.Component {
                     </div>
 
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
-                        <span className=''>{this.props.tempOpenOrderInfo['paid_amount'] > 0 ? this.props.tempOpenOrderInfo['paid_amount'] : 0} T</span>
+                        <span
+                            className=''>{this.props.tempOpenOrderInfo['paid_amount'] > 0 ? this.props.tempOpenOrderInfo['paid_amount'] : 0} T</span>
                         <span className='eachOrderDetailsTotalHolder'>پرداختی شما</span>
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
-                        <span className=''>{this.props.tempOpenOrderInfo['order_table'] > 0 ? this.props.tempOpenOrderInfo['order_table'] : JSON.parse(this.props.tempOpenOrderInfo['address'])['addressText']}</span>
+                        <span
+                            className=''>{this.props.tempOpenOrderInfo['order_table'] > 0 ? this.props.tempOpenOrderInfo['order_table'] : JSON.parse(this.props.tempOpenOrderInfo['address'])['addressText']}</span>
                         <span className='eachOrderDetailsTotalHolder'>شماره میز</span>
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span className=''>{this.props.tempOpenOrderInfo['tracking_id']}</span>
                         <span className='eachOrderDetailsTotalHolder'>شماره سفارش</span>
                     </div>
-                    <div className='openOrderHistorySubmit mt-2' onClick={()=>(this.handlePay(this.props.tempOpenOrderInfo['tracking_id']))}>
-                        <span>پرداخت</span>
-                    </div>
+                    {console.log(this.props.tempOpenOrderInfo['total_price'])}
+                    {
+
+                        this.props.tempOpenOrderInfo['paid_amount'] !== null ?
+                            parseInt(this.props.tempOpenOrderInfo['total_price']) === parseInt(this.props.tempOpenOrderInfo['paid_amount']) ?
+                                <div className='openOrderHistorySubmit mt-2'
+                                     onClick={() => (this.handlePay(this.props.tempOpenOrderInfo['tracking_id']))}>
+                                    <span>پرداخت</span>
+                                </div>
+                                :
+                                <div className='openOrderHistorySubmit colorPaid mt-2'
+                                     onClick={() => (this.handlePay(this.props.tempOpenOrderInfo['tracking_id']))}>
+                                    <span>(: پرداخت شده</span>
+                                </div>
+                            :
+                            <div className='openOrderHistorySubmit mt-2'
+                                 onClick={() => (this.handlePay(this.props.tempOpenOrderInfo['tracking_id']))}>
+                                <span>پرداخت</span>
+                            </div>
+
+
+                    }
+
+
                 </div>
             </React.Fragment>
 
