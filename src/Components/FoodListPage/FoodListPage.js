@@ -14,6 +14,7 @@ import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import * as requests from "../../ApiRequests/ApiRequests";
 import LoadingOverlay from 'react-loading-overlay';
 import {ClimbingBoxLoader} from "react-spinners";
+import {divIcon} from "leaflet/dist/leaflet-src.esm";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -22,6 +23,12 @@ export const Swipeable = ({children, style, ...props}) => {
 
 
 class FoodListPage extends Component {
+
+    constructor(props) {
+        super(props);
+        this.foodDetailsBlur = React.createRef();
+        this.foodDetailsMain = React.createRef();
+    }
     state = {
         foodList: <div/>,
         foodDetails: <div/>,
@@ -29,7 +36,8 @@ class FoodListPage extends Component {
         firstPointerPosition:{
             x:0,
             y:0
-        }
+        },
+        foodDetailsAnimateClass:'animate__fadeIn',
     }
 
     componentDidMount() {
@@ -75,27 +83,46 @@ class FoodListPage extends Component {
         }
 
     }
+    hideFoodDetails = ()=> {
+        if (this.foodDetailsMain.current.classList.contains('animate__fadeIn')){
+            this.foodDetailsMain.current.classList.remove('animate__fadeIn')
+            this.foodDetailsMain.current.classList.add('animate__fadeOut')
+        }
 
+        if (this.foodDetailsBlur.current.classList.contains('animate__fadeIn')){
+            this.foodDetailsBlur.current.classList.remove('animate__fadeIn')
+            this.foodDetailsBlur.current.classList.add('animate__fadeOut')
+        }
+        setTimeout(
+            ()=>{
+                this.setState({
+                    foodDetails:<div/>
+                })
+            }
+            ,200)
+    }
     foodDetails = (foodInfo) => {
         this.setState({
             foodDetails: <div onContextMenu={(e) => {
                 e.preventDefault()
             }} onClick={(e) => {
                 if (e.target.classList.contains('detailsMainActive') ||e.target.classList.contains('foodDetailsPrice') ||e.target.classList.contains('timesOrderedContainer') ||e.target.classList.contains('timesAndOrderTimeText') ||e.target.classList.contains('foodDetailsTimesAndOrderTimeContainer') ||e.target.classList.contains('foodDetailsDetails') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')) {
+                    this.hideFoodDetails()
                     this.setState({
-                        foodDetails: <div/>,
+                        // foodDetails: <div/>,
                         allowToShow: false
                     })
                 }
 
-            }} className='detailsMainActive animate__animated animate__fadeIn animateFast'>
+            }} ref={this.foodDetailsBlur} className={'detailsMainActive animate__animated animateFast '+this.state.foodDetailsAnimateClass}>
 
                 <div onClick={(e) => {
                     e.preventDefault()
-                }} className={' foodDetailsMain animate__animated animate__fadeIn'}>
+                }} ref={this.foodDetailsMain} className={' foodDetailsMain animate__animated  animateFast ' + this.state.foodDetailsAnimateClass}>
                     <div onClick={() => {
+                        this.hideFoodDetails()
                         this.setState({
-                            foodDetails: <div/>,
+                            // foodDetails: <div/>,
                             allowToShow: false
                         })
                     }} className=' foodDetailsCloseButton'>x
@@ -116,7 +143,7 @@ class FoodListPage extends Component {
 
                         }
                     </div>
-                    <div className='foodDetailsDetails'>{foodInfo.details.join(" / ")}</div>
+                    <div className='foodDetailsDetails'>{foodInfo.details?foodInfo.details.join(" / "):''}</div>
                     <div className='foodDetailsTimesAndOrderTimeContainer'>
                         <div className='timesOrderedContainer'>
                             <span className='timesAndOrderTimeText'> تعداد دفعات سفارش غذا</span>
