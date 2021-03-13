@@ -89,10 +89,10 @@
 }
 .tableInput{
     border: none;
-    border-radius: 15px;
+    border-radius: 8px;
     margin-top: 10px;
     outline: none;
-    padding: 0 10px 0 10px;
+    padding: 3px 10px 0 10px;
     height: 30px;
     width: 60px;
     margin-right: 0px;
@@ -100,6 +100,10 @@
     text-align: center;
     font-family: AppIranSans;
     line-height: 35px;
+}
+.tableInput::placeholder{
+    font-size: 1rem;
+    opacity: 0.5;
 }
 .tableTextHolder{
     font-family:AppIranSans;
