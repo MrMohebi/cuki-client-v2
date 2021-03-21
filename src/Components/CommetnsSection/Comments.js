@@ -104,7 +104,17 @@ function Comments(props) {
                     </div>
                 </div>
                 :
-                <div id='cannotLeaveComment' className='cannotComment'>
+                <div id='cannotLeaveComment' className='cannotComment'
+                onClick={(e)=>{
+                    $('#cannotLeaveComment').tooltip('show')
+
+                    setTimeout(()=>{
+                        $('#cannotLeaveComment').tooltip('hide')
+
+                    },3000)
+
+                }}
+                >
                     <span className='newCommentTextContainer'>هنوز نمیتونی نظری بنویسی</span>
                     <div className='newCommentPenContainer'>
                         <HelpOutlineIcon fontSize={"small"}/>
