@@ -3,7 +3,7 @@ import getReduxStore from "../stores/reduxStore/getRedux";
 import * as actions from "../stores/reduxStore/actions"
 
 const BASE_API_URL = "https://api.cuki.ir/v201/"
-const BASE_PAY_URL = "https://pay.cuki.ir/";
+const BASE_PAY_V2_URL = "https://pay.cuki.ir/v2/";
 
 
 export const getRestaurantInfo = (callbackFunction)=>{
@@ -12,6 +12,10 @@ export const getRestaurantInfo = (callbackFunction)=>{
         res = (res !== undefined && res !== null) ? res : {}
         if(res.statusCode === 200){
             actions.restaurantSetData(res.data)
+            document.title = res.data.restaurantInfo.english_name;
+            document.getElementById('app-name').name = res.data.restaurantInfo.english_name
+            document.getElementById('favicon').href = res.data.restaurantInfo['favicon_link']
+            document.getElementById('favicon-apple').href = res.data.restaurantInfo['favicon_link']
         }
         callbackFunction(res);
     })
@@ -105,7 +109,7 @@ export const sendPaymentRequestFood = (callbackFunction, items, amount, tracking
     let token = getReduxStore('token')
     let englishName = getReduxStore('englishName')
     let newItems = items.filter(eFood=>eFood.number > 0);
-    $.post(BASE_PAY_URL+ "createpayment.php" ,{englishName, token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
+    $.post(BASE_PAY_V2_URL+ "createPayment.php" ,{englishName, token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
