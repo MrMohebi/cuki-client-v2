@@ -36,7 +36,7 @@ class WelcomePage extends React.Component {
                 <div className='welcomePageMainContainerCover w-100 h-100'>
                     <div className="forLittlePhones">
                         <p className="welcomePageHeader">
-                            <span className="textColor">Cuki </span>
+                            <span className="textColor">{this.props.resEnglishName} </span>
                             <span>  app</span>
                         </p>
                         <div className="welcomePageFrames1">
@@ -103,15 +103,8 @@ class WelcomePage extends React.Component {
                                 }
 
                                 <div className="openIcons overflow-hidden">
-                                    <img src={tourImage} onClick={()=>(this.props.history.push('/vrTour'))} className='h-100 w-100 tourHolder'/>
+                                    <img alt="vrTour" src={tourImage} onClick={()=>(this.props.history.push('/vrTour'))} className='h-100 w-100 tourHolder'/>
                                 </div>
-
-                                {/*<p className="openIcons overflow-hidden">*/}
-                                {/*    <div onClick={()=>(this.props.history.push('/vrTour'))} style={{background:`url(${tourImage})`,backgroundSize:'cover',backgroundPosition:'center'}} className='h-100 w-100 tourHolder'/>*/}
-                                {/*</p>*/}
-
-
-
 
                             </div>
                         </div>
@@ -125,7 +118,8 @@ class WelcomePage extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
-        foodListConverted: store.rRestaurantInfo.foodListConverted
+        foodListConverted: store.rRestaurantInfo.foodListConverted,
+        resEnglishName: store.rRestaurantInfo.englishName
     }
 }
 

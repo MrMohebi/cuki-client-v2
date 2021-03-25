@@ -12,6 +12,10 @@ export const getRestaurantInfo = (callbackFunction)=>{
         res = (res !== undefined && res !== null) ? res : {}
         if(res.statusCode === 200){
             actions.restaurantSetData(res.data)
+            document.title = res.data.restaurantInfo.english_name;
+            document.getElementById('app-name').name = res.data.restaurantInfo.english_name
+            document.getElementById('favicon').href = res.data.restaurantInfo['favicon_link']
+            document.getElementById('favicon-apple').href = res.data.restaurantInfo['favicon_link']
         }
         callbackFunction(res);
     })
