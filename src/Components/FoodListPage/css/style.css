@@ -9,7 +9,8 @@
     padding: 0 15px 10px 15px;
     overflow: scroll;
 }
-.animateFast{
+
+.animateFast {
     animation-duration: 0.2s !important;
 }
 
@@ -37,7 +38,8 @@
     box-shadow: 1px 2px 0px 0px #E0DEDE;
     transform: scale(0.8);
 }
-@media only screen and (max-width:300px) {
+
+@media only screen and (max-width: 300px) {
     .foodListEachFood {
         transition: all 0.2s ease;
         margin-top: 50px;
@@ -51,6 +53,7 @@
         transform: scale(0.8) !important;
     }
 }
+
 @media only screen and (max-width: 360px) {
     .foodListEachFood {
         transition: all 0.2s ease;
@@ -142,13 +145,25 @@
     justify-content: center;
 }
 
-
 .priceAndImage {
     transition: all 0.2s ease;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.discountPercentage {
+    background-color: red;
+    border-radius: 900px;
+    position: absolute;
+    width: 38px;
+    height: 20px;
+    font-size: 0.8rem;
+    margin-top: -18px;
+    line-height: 20px;
+    color: white;
+    box-shadow: #8c8c8c 1px 2px 4px 0px;
 }
 
 .eachFoodPrice {
@@ -161,6 +176,17 @@
     font-size: 1.1rem;
     white-space: nowrap;
     padding-left: 10px;
+}
+
+.eachFoodPriceDiscount {
+    transition: all 0.2s ease;
+    font-family: KingArthurSpecialNormal;
+    font-weight: normal;
+    text-align: center;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    padding-left: 10px;
+    color: #00801b;
 }
 
 .foodName {
@@ -402,13 +428,14 @@
     line-height: 40px;
     margin-left: 20px;
     margin-right: 20px;
-    border:none;
+    border: none;
     text-align: right;
     color: orange;
     padding-right: 10px;
     font-family: AppIranSansMedium;
 }
-.cannotComment{
+
+.cannotComment {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -421,32 +448,40 @@
     align-items: center;
     padding: 0 5px 0 20px;
 }
-.priceAndImage span.MuiBadge-anchorOriginTopRightRectangle{
+
+.priceAndImage span.MuiBadge-anchorOriginTopRightRectangle {
     margin-right: 50px;
     margin-top: 5px;
 }
-.css-79elbk{
+
+.css-79elbk {
     height: 100%;
 }
-.css-1w1pvur{
+
+.css-1w1pvur {
     position: inherit !important;
 }
-.css-19shb47{
+
+.css-19shb47 {
     margin-top: -10rem !important;
 }
+
 ._loading_overlay_content {
     font-family: AppIranSans;
 }
-.foodDetailsCloseButton{
+
+.foodDetailsCloseButton {
     text-align: left;
     padding-left: 10px;
     font-size: 1.2rem;
     position: absolute;
 }
-.noComments{
+
+.noComments {
     font-size: 0.7rem;
 }
-.outOfStockTextHolder{
+
+.outOfStockTextHolder {
     color: #ff3c00;
     font-family: AppIranSans, serif;
     padding-left: 10px;

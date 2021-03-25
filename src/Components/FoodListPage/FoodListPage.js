@@ -29,21 +29,28 @@ class FoodListPage extends Component {
         this.foodDetailsBlur = React.createRef();
         this.foodDetailsMain = React.createRef();
     }
+
     state = {
         foodList: <div/>,
         foodDetails: <div/>,
         allowToShow: false,
-        firstPointerPosition:{
-            x:0,
-            y:0
+        firstPointerPosition: {
+            x: 0,
+            y: 0
         },
-        foodDetailsAnimateClass:'animate__fadeIn',
+        foodDetailsAnimateClass: 'animate__fadeIn',
     }
 
     componentDidMount() {
         if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
             this.getData()
         }
+        var sum = 100;
+        sum = sum * (1 - 0.6);
+        console.log(sum)
+        let adad = 100;
+        let adadvapanjdarsad = adad * (1 + 0.06)
+        console.log(adadvapanjdarsad)
     }
 
     dataArrive = (response) => {
@@ -58,7 +65,7 @@ class FoodListPage extends Component {
 
     checkForMove = (e) => {
         let threshold = 8;
-        if (e.pageX > this.state.firstPointerPosition.x + threshold ||e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold|| e.pageY < this.state.firstPointerPosition.y - threshold){
+        if (e.pageX > this.state.firstPointerPosition.x + threshold || e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold || e.pageY < this.state.firstPointerPosition.y - threshold) {
             this.state.allowToShow = false;
         }
     }
@@ -83,30 +90,30 @@ class FoodListPage extends Component {
         }
 
     }
-    hideFoodDetails = ()=> {
-        if (this.foodDetailsMain.current.classList.contains('animate__fadeIn')){
+    hideFoodDetails = () => {
+        if (this.foodDetailsMain.current.classList.contains('animate__fadeIn')) {
             this.foodDetailsMain.current.classList.remove('animate__fadeIn')
             this.foodDetailsMain.current.classList.add('animate__fadeOut')
         }
 
-        if (this.foodDetailsBlur.current.classList.contains('animate__fadeIn')){
+        if (this.foodDetailsBlur.current.classList.contains('animate__fadeIn')) {
             this.foodDetailsBlur.current.classList.remove('animate__fadeIn')
             this.foodDetailsBlur.current.classList.add('animate__fadeOut')
         }
         setTimeout(
-            ()=>{
+            () => {
                 this.setState({
-                    foodDetails:<div/>
+                    foodDetails: <div/>
                 })
             }
-            ,200)
+            , 200)
     }
     foodDetails = (foodInfo) => {
         this.setState({
             foodDetails: <div onContextMenu={(e) => {
                 e.preventDefault()
             }} onClick={(e) => {
-                if (e.target.classList.contains('detailsMainActive') ||e.target.classList.contains('foodDetailsPrice') ||e.target.classList.contains('timesOrderedContainer') ||e.target.classList.contains('timesAndOrderTimeText') ||e.target.classList.contains('foodDetailsTimesAndOrderTimeContainer') ||e.target.classList.contains('foodDetailsDetails') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')) {
+                if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsPrice') || e.target.classList.contains('timesOrderedContainer') || e.target.classList.contains('timesAndOrderTimeText') || e.target.classList.contains('foodDetailsTimesAndOrderTimeContainer') || e.target.classList.contains('foodDetailsDetails') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')) {
                     this.hideFoodDetails()
                     this.setState({
                         // foodDetails: <div/>,
@@ -114,11 +121,13 @@ class FoodListPage extends Component {
                     })
                 }
 
-            }} ref={this.foodDetailsBlur} className={'detailsMainActive animate__animated animateFast '+this.state.foodDetailsAnimateClass}>
+            }} ref={this.foodDetailsBlur}
+                              className={'detailsMainActive animate__animated animateFast ' + this.state.foodDetailsAnimateClass}>
 
                 <div onClick={(e) => {
                     e.preventDefault()
-                }} ref={this.foodDetailsMain} className={' foodDetailsMain animate__animated  animateFast ' + this.state.foodDetailsAnimateClass}>
+                }} ref={this.foodDetailsMain}
+                     className={' foodDetailsMain animate__animated  animateFast ' + this.state.foodDetailsAnimateClass}>
                     <div onClick={() => {
                         this.hideFoodDetails()
                         this.setState({
@@ -135,7 +144,7 @@ class FoodListPage extends Component {
                             backgroundRepeat: 'no-repeat'
                         }} className='foodDetailsImg'/>
                         {
-                            foodInfo.status === 'in stock'?
+                            foodInfo.status === 'in stock' ?
                                 <div className='foodDetailsPrice'>{foodInfo.price / 1000} T</div>
                                 :
                                 <div className='foodDetailsPrice IranSans'>نا موجود</div>
@@ -143,7 +152,7 @@ class FoodListPage extends Component {
 
                         }
                     </div>
-                    <div className='foodDetailsDetails'>{foodInfo.details?foodInfo.details.join(" / "):''}</div>
+                    <div className='foodDetailsDetails'>{foodInfo.details ? foodInfo.details.join(" / ") : ''}</div>
                     <div className='foodDetailsTimesAndOrderTimeContainer'>
                         <div className='timesOrderedContainer'>
                             <span className='timesAndOrderTimeText'> تعداد دفعات سفارش غذا</span>
@@ -183,7 +192,7 @@ class FoodListPage extends Component {
     }
 
     swipeRight = () => {
-        if(!this.state.foodDetails.props.hasOwnProperty("children"))
+        if (!this.state.foodDetails.props.hasOwnProperty("children"))
             this.previousPage()
         this.setState({
             foodDetails: <div/>,
@@ -192,7 +201,7 @@ class FoodListPage extends Component {
     }
 
     swipeLeft = () => {
-        if(!this.state.foodDetails.props.hasOwnProperty("children"))
+        if (!this.state.foodDetails.props.hasOwnProperty("children"))
             this.nextPage()
         this.setState({
             foodDetails: <div/>,
@@ -212,7 +221,8 @@ class FoodListPage extends Component {
                 spinner={<ClimbingBoxLoader color={'white'}/>}
                 text='وایسا چک کنم ببینم چی چیا داریم'
             >
-                <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} delta={60}
+                <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
+                           delta={60}
                            children={
                                <React.Fragment>
                                    {this.state.foodDetails}
@@ -235,9 +245,10 @@ class FoodListPage extends Component {
                                         className='foodListPageContainer'>
                                        <div className='heightFitContent'>
                                            {
-                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted" ).map(eachFood => {
+                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted").map(eachFood => {
                                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
                                                    let timeout;
+                                                   console.log(eachFood)
                                                    return (
                                                        <div onContextMenu={(e) => {
                                                            e.preventDefault()
@@ -255,14 +266,14 @@ class FoodListPage extends Component {
 
                                                                 this.state.firstPointerPosition.x = e.targetTouches[0].pageX
                                                                 this.state.firstPointerPosition.y = e.targetTouches[0].pageY
-                                                                    this.state.allowToShow = true
-                                                                    timeout = setTimeout(() => {
-                                                                        if (this.state.allowToShow) {
-                                                                            this.foodDetails(eachFood);
-                                                                        }
-                                                                        this.state.allowToShow = false
-                                                                        clearTimeout(timeout)
-                                                                    }, 400)
+                                                                this.state.allowToShow = true
+                                                                timeout = setTimeout(() => {
+                                                                    if (this.state.allowToShow) {
+                                                                        this.foodDetails(eachFood);
+                                                                    }
+                                                                    this.state.allowToShow = false
+                                                                    clearTimeout(timeout)
+                                                                }, 400)
 
                                                             }}
                                                             onPointerMove={(e) => {
@@ -273,13 +284,37 @@ class FoodListPage extends Component {
                                                             }}
                                                        >
                                                            <div className='foodListEachFood'
+
                                                                 style={{backgroundColor: colors.background}}>
+                                                               {
+                                                                   // parseInt(eachFood.discount)>0?
+                                                                   // <span  className={'discountPercentage'}>60%</span>
+                                                                   // :
+                                                                   // <div/>
+                                                               }
                                                                <div className='priceAndImage'>
                                                                    {
                                                                        eachFood.status === 'in stock' ?
-                                                                           <span className='eachFoodPrice'>
+                                                                           eachFood.discount === 0 ?
+                                                                               <span className='eachFoodPrice'>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
+                                                                               :
+                                                                               <div
+                                                                                   className={'d-flex flex-column justify-content-center'}>
+                                                                                   <span style={{
+                                                                                       textDecoration: 'line-through',
+                                                                                       fontSize: '0.8rem',
+                                                                                       lineHeight: '1.5rem'
+                                                                                   }} className='eachFoodPrice'>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                                   <span style={{fontWeight: 'bolder'}}
+                                                                                         className='eachFoodPriceDiscount'>
+                                                                                {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
+                                                                            </span>
+                                                                               </div>
+
                                                                            :
                                                                            <span className='outOfStockTextHolder'>
                                                                                 ناموجود
