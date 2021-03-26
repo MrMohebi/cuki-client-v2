@@ -1,0 +1,13 @@
+.bannerContainer {
+  padding-left: 20px;
+  padding-right: 10px;
+  height: 50px;
+  transition: all 200ms ease;
+}
+
+.bannerText {
+  color: white;
+  font-family: AppIranSans;
+}
+
+/*# sourceMappingURL=Banner.css.map */

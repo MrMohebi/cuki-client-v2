@@ -3,6 +3,7 @@ import './css/style.css';
 import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.gif'
+import Banner from "../Banner/Banner";
 
 export const Swipeable = ({children,style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -34,6 +35,9 @@ class WelcomePage extends React.Component {
         return (
             <Swipeable style={{height: "100%"}}  onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <div className='welcomePageMainContainerCover w-100 h-100'>
+
+                    <Banner color={'#d62828'} onClickPath={'/login'} history={this.props.history} closable={true} text={'رستوران تعطیل است'}/>
+
                     <div className="forLittlePhones">
                         <p className="welcomePageHeader">
                             <span className="textColor">{this.props.resEnglishName} </span>
