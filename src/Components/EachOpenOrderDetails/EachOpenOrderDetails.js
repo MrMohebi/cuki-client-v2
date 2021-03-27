@@ -93,7 +93,7 @@ class EachOpenOrderDetails extends React.Component {
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span
                             className=''>{this.props.tempOpenOrderInfo['order_table'] > 0 ? this.props.tempOpenOrderInfo['order_table'] : JSON.parse(this.props.tempOpenOrderInfo['address'])['addressText']}</span>
-                        <span className='eachOrderDetailsTotalHolder'>شماره میز</span>
+                        <span className='eachOrderDetailsTotalHolder'>{this.props.tempOpenOrderInfo['order_table'] > 0 ? "شماره میز"  : "آدرس"}</span>
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span className=''>{this.props.tempOpenOrderInfo['tracking_id']}</span>
