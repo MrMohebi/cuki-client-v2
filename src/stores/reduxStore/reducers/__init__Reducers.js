@@ -44,6 +44,8 @@ export const __init__TempData = {
     openOrdersList:[],
     tableScanned: 0,
     tempPhone:"",
+    isResOpen:true,
+    closedBanners: []
 }
 
 

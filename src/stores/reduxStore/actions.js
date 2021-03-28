@@ -215,6 +215,30 @@ export const setTempPhone = (phone) =>{
     })
 }
 
+export const setIsResOpen = (isResOpen) =>{
+    store.dispatch({
+        type: actionTypes.SET_IS_RES_OPEN,
+        payload:{
+            isResOpen
+        }
+    })
+}
 
+export const addClosedBanner = (bannerName) =>{
+    store.dispatch({
+        type: actionTypes.ADD_CLOSED_BANNER,
+        payload:{
+            bannerName
+        }
+    })
+}
 
+export const removeClosedBanner = (bannerName) =>{
+    store.dispatch({
+        type: actionTypes.REMOVE_CLOSED_BANNER,
+        payload:{
+            bannerName
+        }
+    })
+}
 

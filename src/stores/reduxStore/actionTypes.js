@@ -22,6 +22,9 @@ export const SET_TEMP_OPEN_ORDER_INFO = "setTempOpenOrderInfo"
 export const SET_TEMP_HISTORY_ORDER_INFO = "setTempHistoryOrderInfo"
 export const SET_TABLE_SCANNED = "setTableScanned"
 export const SET_TEMP_PHONE = "setTempPhone"
+export const SET_IS_RES_OPEN = "setIsResOpen"
+export const ADD_CLOSED_BANNER = "addClosedBanner"
+export const REMOVE_CLOSED_BANNER = "RemoveClosedBanner"
 
 
 
