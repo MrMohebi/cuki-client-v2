@@ -24,9 +24,14 @@ import Tour360 from "./Components/Tour360page/Tour360";
 import {getCacheToken, getCachePhone} from "./stores/cache/cacheData"
 import * as actions from "./stores/reduxStore/actions"
 import * as requests from "./ApiRequests/ApiRequests";
+import Banner from "./Components/Banner/Banner";
+import isResOpen from "./functions/isResOpen";
+
+
 
 
 function App() {
+  // *****action for cached data*******
   let getOpenOrders=(token)=>{
     requests.getOpenOrders(callbackOpenOrders, token);
   }
@@ -48,8 +53,24 @@ function App() {
     }
   })
 
+  // ********** check res is open or close **********
+  useSelector(state=>{
+    if(typeof state.rRestaurantInfo.restaurantInfo['open_time'] !== "undefined" && state.rRestaurantInfo.restaurantInfo['open_time'].length > 3){
+      let resStatus = isResOpen(JSON.parse(state.rRestaurantInfo.restaurantInfo['open_time']))
+      if(resStatus !== state.rTempData.isResOpen){
+        actions.setIsResOpen(resStatus)
+      }
+    }
+  })
+
   return (
     <React.Fragment>
+      {useSelector(state=>state.rTempData.isResOpen) ?
+          null
+          :
+          <Banner color={'#d62828'} closable={false} text={'رستوران تعطیل است'}/>
+      }
+
       <BrowserRouter>
         <Route exact path='/' component={SplashScreen}/>
         <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway", '/vrTour']} component={BottomNavBar}/>

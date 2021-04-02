@@ -47,10 +47,8 @@ class FoodListPage extends Component {
         }
         var sum = 100;
         sum = sum * (1 - 0.6);
-        console.log(sum)
         let adad = 100;
         let adadvapanjdarsad = adad * (1 + 0.06)
-        console.log(adadvapanjdarsad)
     }
 
     dataArrive = (response) => {
@@ -71,24 +69,25 @@ class FoodListPage extends Component {
     }
 
     orderScripts = (foods_id, foodsList = this.props.foods) => {
-        for (let i = 0; i < foodsList.length; i++) {
-            if (foodsList[i].foods_id === foods_id) {
-                // check if food was already in order list, increase its number
-                if (this.props.orderList.filter(food => food.foods_id === foods_id).length) {
-                    this.props.increaseFoodNumber(foods_id);
-                    return "increased number"
-                } else {
-                    //  else add it to order list
-                    let food = {...foodsList[i]};
-                    food["number"] = 1;
-                    food.price = parseInt(food.price)
-                    food["totalPrice"] = food.price
-                    this.props.addFoodToOrders(food)
-                    return "food was added"
+        if(this.props.isResOpen) {
+            for (let i = 0; i < foodsList.length; i++) {
+                if (foodsList[i].foods_id === foods_id) {
+                    // check if food was already in order list, increase its number
+                    if (this.props.orderList.filter(food => food.foods_id === foods_id).length) {
+                        this.props.increaseFoodNumber(foods_id);
+                        return "increased number"
+                    } else {
+                        //  else add it to order list
+                        let food = {...foodsList[i]};
+                        food["number"] = 1;
+                        food.price = parseInt(food.price)
+                        food["totalPrice"] = food.price
+                        this.props.addFoodToOrders(food)
+                        return "food was added"
+                    }
                 }
             }
         }
-
     }
     hideFoodDetails = () => {
         if (this.foodDetailsMain.current.classList.contains('animate__fadeIn')) {
@@ -248,7 +247,6 @@ class FoodListPage extends Component {
                                                this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted").map(eachFood => {
                                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
                                                    let timeout;
-                                                   console.log(eachFood)
                                                    return (
                                                        <div onContextMenu={(e) => {
                                                            e.preventDefault()
@@ -361,6 +359,7 @@ const mapStateToProps = (store) => {
         foodListConverted: store.rRestaurantInfo.foodListConverted,
         orderList: store.rTempData.orderList,
         trackingId: store.rTempData.trackingId,
+        isResOpen: store.rTempData.isResOpen,
     }
 }
 

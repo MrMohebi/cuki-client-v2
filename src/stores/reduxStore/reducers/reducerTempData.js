@@ -78,6 +78,21 @@ export default function reducerTempData (state = __init__TempData, action) {
             return produce(state, draftState=>{
                 draftState.tempPhone = action.payload.phone;
             });
+        case actionTypes.SET_IS_RES_OPEN:
+            return produce(state, draftState=>{
+                draftState.isResOpen = action.payload.isResOpen;
+            });
+        case actionTypes.ADD_CLOSED_BANNER:
+            return produce(state, draftState=>{
+                draftState.closedBanners = draftState.closedBanners.push(action.payload.bannerName);
+            });
+        case actionTypes.REMOVE_CLOSED_BANNER:
+            return produce(state, draftState=>{
+                let index = draftState.closedBanners.indexOf(action.payload.bannerName);
+                if (index !== -1)
+                    action.payload.bannerName.splice(index, 1);
+            });
+
         default:
             return state
     }

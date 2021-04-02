@@ -35,9 +35,6 @@ class WelcomePage extends React.Component {
         return (
             <Swipeable style={{height: "100%"}}  onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <div className='welcomePageMainContainerCover w-100 h-100'>
-
-                    <Banner color={'#d62828'} onClickPath={'/login'} history={this.props.history} closable={true} text={'رستوران تعطیل است'}/>
-
                     <div className="forLittlePhones">
                         <p className="welcomePageHeader">
                             <span className="textColor">{this.props.resEnglishName} </span>
