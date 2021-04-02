@@ -89,6 +89,7 @@ class PayWay extends React.Component{
         inResIcon:waiterBlack,
         outResIcon:outResBlack,
         loading: false,
+        orderDetails:'',
     }
     componentDidMount() {
         this.state.inOrOut === 'in' ? this.enableInRes() : this.enableOutRes()
@@ -351,11 +352,18 @@ class PayWay extends React.Component{
                                         addressDetails:e.target.value.toString(),
                                     })
                                 }}/>
+
                                 <div className={this.state.tableClass}>
                                     <span className='tableTextHolder'>شماره میز</span>
                                     <input value={this.state.table} placeholder='000' type='number' className='tableInput' onChange={(e)=>( e.target.value.length > 3 ? null : this.setState({table:e.target.value}))}/>
                                 </div>
                             </div>
+                            <div className={'w-100 IranSans text-right mt-3'}> : توضیحات سفارش</div>
+                            <textarea name="Text1" cols="40" rows="5" className={"addressDetails mb-2"} onChange={(e)=>{
+                                this.setState({
+                                    orderDetails:e.target.value.toString(),
+                                })
+                            }}/>
                             <div className='BillSubmitButton mt-2' onClick={this.handleSubmit}>
                                 <span>پرداخت</span>
                             </div>
