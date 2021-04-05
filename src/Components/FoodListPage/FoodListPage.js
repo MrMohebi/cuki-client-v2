@@ -58,7 +58,7 @@ class FoodListPage extends Component {
             element.style.transform='scale(0.9)';
             setTimeout(()=>{
                 element.style.transform='scale(1)';
-            },100)
+            },300)
         }
 
     }
@@ -302,8 +302,6 @@ class FoodListPage extends Component {
                                                        >
                                                            <div className='foodListEachFood'
                                                                 id={'food' + eachFood['foods_id']}
-
-
                                                                 style={{backgroundColor: colors.background}}>
                                                                {
                                                                    // parseInt(eachFood.discount)>0?
@@ -364,9 +362,9 @@ class FoodListPage extends Component {
                                                                </div>
                                                                {isInOrderList?
                                                                    <div
-                                                                       className={'foodNumberIncreaseDecreaseContainer d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn'}
+                                                                       className={'foodNumberIncreaseDecreaseContainer highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__fastee'}
                                                                        >
-                                                                       <div
+                                                                       <div style={{backgroundColor: colors.foreground + '50'}}
                                                                            onClick={() => {
                                                                                this.handleDecreaseFoodNumber(eachFood['foods_id'])
                                                                            }}
@@ -383,10 +381,11 @@ class FoodListPage extends Component {
                                                                            </div>
                                                                        </div>
                                                                        <div
+                                                                           style={{backgroundColor: colors.foreground + '50'}}
                                                                            className={'FoodNumberHolderContainer d-flex justify-content-center align-items-center'}>
                                                                            <span className={'IranSans'}>{(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}</span>
                                                                        </div>
-                                                                       <div
+                                                                       <div style={{backgroundColor: colors.foreground + '50'}}
                                                                            onClick={() => {
                                                                                this.handleIncreaseFoodNumber(eachFood['foods_id'])
                                                                                this.clickAnimation(eachFood['foods_id'])
@@ -405,13 +404,12 @@ class FoodListPage extends Component {
                                                                        </div>
                                                                    </div>
                                                                    :
-                                                                   <div className='w-100 d-flex justify-content-center animate__animated animate__fadeIn'>
+                                                                   <div className='w-100 d-flex justify-content-center'>
                                                                        <div
-                                                                           className='foodDetails'>{eachFood.details ? eachFood.details.join(' ') : ''}</div>
+                                                                           className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}<
+                                                                           /div>
                                                                    </div>
                                                                }
-
-
 
                                                            </div>
                                                        </div>
