@@ -14,7 +14,6 @@ import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import * as requests from "../../ApiRequests/ApiRequests";
 import LoadingOverlay from 'react-loading-overlay';
 import {ClimbingBoxLoader} from "react-spinners";
-import {divIcon} from "leaflet/dist/leaflet-src.esm";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -45,16 +44,23 @@ class FoodListPage extends Component {
         if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
             this.getData()
         }
-        var sum = 100;
-        sum = sum * (1 - 0.6);
-        let adad = 100;
-        let adadvapanjdarsad = adad * (1 + 0.06)
     }
 
     dataArrive = (response) => {
         if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
             this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
         }
+    }
+    clickAnimation = (id)=>{
+        let element = document.getElementById(id);
+        console.log(element)
+        if (element){
+            element.style.transform='scale(0.9)';
+            setTimeout(()=>{
+                element.style.transform='scale(1)';
+            },100)
+        }
+
     }
 
     getData = () => {
@@ -69,7 +75,7 @@ class FoodListPage extends Component {
     }
 
     orderScripts = (foods_id, foodsList = this.props.foods) => {
-        if(this.props.isResOpen) {
+        if (this.props.isResOpen) {
             for (let i = 0; i < foodsList.length; i++) {
                 if (foodsList[i].foods_id === foods_id) {
                     // check if food was already in order list, increase its number
@@ -198,6 +204,12 @@ class FoodListPage extends Component {
             allowToShow: false
         })
     }
+    handleDecreaseFoodNumber = (foodId) =>{
+        this.props.decreaseFoodNumber(foodId)
+    }
+    handleIncreaseFoodNumber =(foodId) =>{
+        this.props.increaseFoodNumber(foodId)
+    }
 
     swipeLeft = () => {
         if (!this.state.foodDetails.props.hasOwnProperty("children"))
@@ -247,6 +259,10 @@ class FoodListPage extends Component {
                                                this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted").map(eachFood => {
                                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
                                                    let timeout;
+                                                   let isInOrderList = false;
+                                                   if ((this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)){
+                                                       isInOrderList = true;
+                                                   }
                                                    return (
                                                        <div onContextMenu={(e) => {
                                                            e.preventDefault()
@@ -256,7 +272,10 @@ class FoodListPage extends Component {
                                                             onClick={() => {
                                                                 clearTimeout(timeout)
                                                                 if (eachFood.status === 'in stock') {
-                                                                    this.orderScripts(eachFood.foods_id);
+                                                                    if (!isInOrderList){
+                                                                        this.orderScripts(eachFood.foods_id);
+                                                                        this.clickAnimation('food'+eachFood['foods_id'])
+                                                                    }
                                                                 }
                                                                 this.state.allowToShow = false
                                                             }}
@@ -282,6 +301,8 @@ class FoodListPage extends Component {
                                                             }}
                                                        >
                                                            <div className='foodListEachFood'
+                                                                id={'food' + eachFood['foods_id']}
+
 
                                                                 style={{backgroundColor: colors.background}}>
                                                                {
@@ -319,25 +340,79 @@ class FoodListPage extends Component {
                                                                            </span>
                                                                    }
 
-                                                                   <Badge color={"primary"}
-                                                                          badgeContent={(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}>
+                                                                   {/*<Badge color={"primary"}*/}
+                                                                   {/*       badgeContent={(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}>*/}
+                                                                   {/*    <div className='eachFoodImage'*/}
+                                                                   {/*         style={{*/}
+                                                                   {/*             background: `url(${eachFood.thumbnail})`,*/}
+                                                                   {/*             backgroundSize: 'cover',*/}
+                                                                   {/*             backgroundPosition: 'center'*/}
+                                                                   {/*         }}/>*/}
+                                                                   {/*</Badge>*/}
+
                                                                        <div className='eachFoodImage'
                                                                             style={{
                                                                                 background: `url(${eachFood.thumbnail})`,
                                                                                 backgroundSize: 'cover',
                                                                                 backgroundPosition: 'center'
                                                                             }}/>
-                                                                   </Badge>
                                                                </div>
 
                                                                <div className='w-100 justify-content-center d-flex'>
                                                                    <div className='foodName'
                                                                         style={{color: colors.foreground}}>{eachFood.name}</div>
                                                                </div>
-                                                               <div className='w-100 d-flex justify-content-center'>
+                                                               {isInOrderList?
                                                                    <div
-                                                                       className='foodDetails'>{eachFood.details ? eachFood.details.join(' ') : ''}</div>
-                                                               </div>
+                                                                       className={'foodNumberIncreaseDecreaseContainer d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn'}
+                                                                       >
+                                                                       <div
+                                                                           onClick={() => {
+                                                                               this.handleDecreaseFoodNumber(eachFood['foods_id'])
+                                                                           }}
+                                                                           className={'decreaseFoodNumberButtonContainer d-flex justify-content-center align-items-center'}>
+                                                                           <div className="foodNumberIncreaseButton d-flex justify-content-center align-items-center">
+                                                                               <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    fill="black"
+                                                                                    className="bi bi-dash"
+                                                                                    viewBox="0 0 16 16">
+                                                                                   <path
+                                                                                       d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                               </svg>
+                                                                           </div>
+                                                                       </div>
+                                                                       <div
+                                                                           className={'FoodNumberHolderContainer d-flex justify-content-center align-items-center'}>
+                                                                           <span className={'IranSans'}>{(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}</span>
+                                                                       </div>
+                                                                       <div
+                                                                           onClick={() => {
+                                                                               this.handleIncreaseFoodNumber(eachFood['foods_id'])
+                                                                               this.clickAnimation(eachFood['foods_id'])
+                                                                           }}
+                                                                           className={'increaseFoodNumberButtonContainer d-flex justify-content-center align-items-center'}>
+                                                                           <div className="foodNumberIncreaseButton d-flex justify-content-center align-items-center">
+                                                                               <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="20" height="20"
+                                                                                    fill="black"
+                                                                                    className="bi bi-plus"
+                                                                                    viewBox="0 0 16 16">
+                                                                                   <path
+                                                                                       d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                               </svg>
+                                                                           </div>
+                                                                       </div>
+                                                                   </div>
+                                                                   :
+                                                                   <div className='w-100 d-flex justify-content-center animate__animated animate__fadeIn'>
+                                                                       <div
+                                                                           className='foodDetails'>{eachFood.details ? eachFood.details.join(' ') : ''}</div>
+                                                                   </div>
+                                                               }
+
+
+
                                                            </div>
                                                        </div>
                                                    )
@@ -366,6 +441,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = () => {
     return {
         increaseFoodNumber: actions.increaseFoodNumber,
+        decreaseFoodNumber: actions.decreaseFoodNumber,
         addFoodToOrders: actions.addFoodToOrders,
         setFoodListConverted: actions.setFoodListConverted
 
