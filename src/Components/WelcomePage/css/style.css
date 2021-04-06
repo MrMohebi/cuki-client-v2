@@ -44,7 +44,6 @@
     border-radius: 25px;
     background: #FFF7F7;
     margin: auto;
-    height: calc(100% - 120px);
 }
 
 .shakeHands {
@@ -132,7 +131,8 @@
 
 @media only screen and (max-height: 700px) {
     .forLittlePhones {
-        height: 300px;
+        height: calc(100% - 90px);
+        overflow: scroll;
     }
 
     .burgersAndDonatDescription {
