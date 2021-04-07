@@ -304,25 +304,27 @@ class FoodListPage extends Component {
                                                                 id={'food' + eachFood['foods_id']}
                                                                 style={{backgroundColor: colors.background}}>
                                                                {
-                                                                   // parseInt(eachFood.discount)>0?
-                                                                   // <span  className={'discountPercentage'}>60%</span>
-                                                                   // :
-                                                                   // <div/>
+                                                                   parseInt(eachFood.discount)>0?
+                                                                   <span  className={'discountPercentage'}>60%</span>
+                                                                   :
+                                                                   <div/>
                                                                }
                                                                <div className='priceAndImage'>
                                                                    {
                                                                        eachFood.status === 'in stock' ?
                                                                            eachFood.discount === 0 ?
-                                                                               <span className='eachFoodPrice'>
+                                                                               <span className='eachFoodPrice '>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
                                                                                :
                                                                                <div
+
                                                                                    className={'d-flex flex-column justify-content-center'}>
                                                                                    <span style={{
                                                                                        textDecoration: 'line-through',
-                                                                                       fontSize: '0.8rem',
-                                                                                       lineHeight: '1.5rem'
+                                                                                       fontSize: '0.6rem',
+                                                                                       lineHeight: '1.5rem',
+                                                                                       color:'#787878'
                                                                                    }} className='eachFoodPrice'>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
@@ -406,8 +408,8 @@ class FoodListPage extends Component {
                                                                    :
                                                                    <div className='w-100 d-flex justify-content-center'>
                                                                        <div
-                                                                           className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}<
-                                                                           /div>
+                                                                           className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}
+                                                                       </div>
                                                                    </div>
                                                                }
 

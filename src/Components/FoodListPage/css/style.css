@@ -76,7 +76,6 @@
         text-align: center;
         line-height: 50px;
         padding-left: 15px;
-        font-size: smaller !important;
     }
 
     .foodName {
@@ -167,15 +166,17 @@
 }
 
 .discountPercentage {
-    background-color: red;
+    background-color: #F2EAEA;
     border-radius: 900px;
+    border:solid red 1px;
     position: absolute;
-    width: 38px;
-    height: 20px;
-    font-size: 0.8rem;
-    margin-top: -18px;
+    width: 25px;
+    height: 25px;
+    font-size: 0.6rem;
+    margin-top: -10px;
+    margin-left: -5px;
     line-height: 20px;
-    color: white;
+    color: red;
     box-shadow: #8c8c8c 1px 2px 4px 0px;
 }
 
@@ -186,7 +187,7 @@
     height: 100%;
     text-align: center;
     line-height: 60px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     white-space: nowrap;
     padding-left: 10px;
 }
@@ -196,10 +197,9 @@
     font-family: KingArthurSpecialNormal;
     font-weight: normal;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     white-space: nowrap;
     padding-left: 10px;
-    color: #00801b;
 }
 
 .foodName {
