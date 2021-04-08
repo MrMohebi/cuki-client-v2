@@ -76,6 +76,36 @@ class LikedFoods extends Component {
         this.props.history.goBack();
     }
 
+    clickAnimation = (id) => {
+        let element = document.getElementById(id);
+        console.log(element)
+        if (element) {
+            element.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 300)
+        }
+
+    }
+    pressAnimation = (id) => {
+        let element = document.getElementById(id);
+        if (element) {
+            element.style.transform = 'scale(0.9)';
+        }
+    }
+    releaseAnimation = (id) => {
+        let element = document.getElementById(id);
+        if (element) {
+            setTimeout(()=>{
+                element.style.transform = 'scale(1)';
+
+            },200)
+        }
+    }
+    handleDecreaseFoodNumber = (foodId) => {
+        this.props.decreaseFoodNumber(foodId)
+    }
+
 
     render() {
         return (
@@ -95,37 +125,215 @@ class LikedFoods extends Component {
 
                     <div className='foodListPageContainer'>
                         <div className='heightFitContent'>
+
+                            {/*{*/}
+                            {/*    this.state.foodsList.map(eachFood => {*/}
+                            {/*        let colors = RandomColor.RandomColor()*/}
+                            {/*        return (*/}
+                            {/*            <div  key={eachFood['foods_id']}*/}
+                            {/*                  className='foodListEachFoodContainer animate__animated animate__fadeInDown'*/}
+                            {/*                  onClick={() => {*/}
+                            {/*                      if (eachFood.status === 'in stock') {*/}
+                            {/*                          this.orderScripts(eachFood.foods_id);*/}
+                            {/*                      }*/}
+                            {/*                  }}>*/}
+                            {/*                <div className='foodListEachFood' style={{backgroundColor: colors.background}}>*/}
+                            {/*                    <div className='priceAndImage'>*/}
+                            {/*                        <span className='eachFoodPrice'>*/}
+                            {/*                            {eachFood.price / 1000} T*/}
+                            {/*                        </span>*/}
+                            {/*                        <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.foods_id)}>*/}
+                            {/*                            <div className='eachFoodImage'*/}
+                            {/*                                 style={{*/}
+                            {/*                                     background: `url(${eachFood.thumbnail})`,*/}
+                            {/*                                     backgroundSize: 'cover',*/}
+                            {/*                                     backgroundPosition: 'center'*/}
+                            {/*                                 }}/>*/}
+                            {/*                        </Badge>*/}
+                            {/*                    </div>*/}
+                            {/*                    <div className='w-100 justify-content-center d-flex'>*/}
+                            {/*                        <div className='foodName' style={{color: colors.foreground}}>{eachFood.name}</div>*/}
+                            {/*                    </div>*/}
+                            {/*                    <div className='w-100 d-flex justify-content-center'>*/}
+                            {/*                        <div className='foodDetails'>{eachFood.details.join(' ')}</div>*/}
+                            {/*                    </div>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        )*/}
+                            {/*    })*/}
+                            {/*}*/}
+
+
+
+
+
+
+
+
+
+
+
                             {
                                 this.state.foodsList.map(eachFood => {
-                                    let colors = RandomColor.RandomColor()
+                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
+                                    let timeout;
+                                    let isInOrderList = false;
+                                    if ((this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)) {
+                                        isInOrderList = true;
+                                    }
                                     return (
-                                        <div  key={eachFood['foods_id']}
-                                              className='foodListEachFoodContainer animate__animated animate__fadeInDown'
-                                              onClick={() => {
-                                                  if (eachFood.status === 'in stock') {
-                                                      this.orderScripts(eachFood.foods_id);
-                                                  }
-                                              }}>
-                                            <div className='foodListEachFood' style={{backgroundColor: colors.background}}>
+                                        <div onContextMenu={(e) => {
+                                            e.preventDefault()
+                                        }}
+                                             key={eachFood['foods_id']}
+                                             className='foodListEachFoodContainer animate__animated animate__fadeInDown'
+                                             onClick={(e) => {
+                                                 console.log(e.target.classList.contains('decrease'))
+                                                 clearTimeout(timeout)
+                                                 if (eachFood.status === 'in stock') {
+                                                     // if (!isInOrderList) {
+                                                     //     this.orderScripts(eachFood.foods_id);
+                                                     // }
+                                                 }
+                                                 this.state.allowToShow = false
+                                                 if (!e.target.classList.contains('decrease')){
+                                                     this.orderScripts(eachFood.foods_id);
+                                                 }
+
+
+                                             }}
+
+                                             onTouchStart={(e) => {
+                                                 if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                     this.pressAnimation('food' + eachFood['foods_id'])
+                                                 }
+
+
+                                             }}
+
+
+                                             onTouchEnd={() => {
+                                                 this.state.allowToShow = false
+                                                 this.releaseAnimation('food'+eachFood['foods_id'])
+                                             }}
+                                        >
+                                            <div className='foodListEachFood'
+                                                 id={'food' + eachFood['foods_id']}
+                                                 style={{backgroundColor: colors.background}}>
+                                                {
+                                                    parseInt(eachFood.discount) > 0 ?
+                                                        <span className={'discountPercentage'}>60%</span>
+                                                        :
+                                                        <div/>
+                                                }
                                                 <div className='priceAndImage'>
-                                                    <span className='eachFoodPrice'>
-                                                        {eachFood.price / 1000} T
-                                                    </span>
-                                                    <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.foods_id)}>
-                                                        <div className='eachFoodImage'
-                                                             style={{
-                                                                 background: `url(${eachFood.thumbnail})`,
-                                                                 backgroundSize: 'cover',
-                                                                 backgroundPosition: 'center'
-                                                             }}/>
-                                                    </Badge>
+                                                    {
+                                                        eachFood.status === 'in stock' ?
+                                                            eachFood.discount === 0 ?
+                                                                <span className='eachFoodPrice '>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                :
+                                                                <div
+
+                                                                    className={'d-flex flex-column justify-content-center'}>
+                                                                                   <span style={{
+                                                                                       textDecoration: 'line-through',
+                                                                                       fontSize: '0.6rem',
+                                                                                       lineHeight: '1.5rem',
+                                                                                       color: '#787878'
+                                                                                   }} className='eachFoodPrice'>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                    <span style={{fontWeight: 'bolder'}}
+                                                                          className='eachFoodPriceDiscount'>
+                                                                                {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
+                                                                            </span>
+                                                                </div>
+
+                                                            :
+                                                            <span className='outOfStockTextHolder'>
+                                                                                ناموجود
+                                                                           </span>
+                                                    }
+
+                                                    {/*<Badge color={"primary"}*/}
+                                                    {/*       badgeContent={(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}>*/}
+                                                    {/*    <div className='eachFoodImage'*/}
+                                                    {/*         style={{*/}
+                                                    {/*             background: `url(${eachFood.thumbnail})`,*/}
+                                                    {/*             backgroundSize: 'cover',*/}
+                                                    {/*             backgroundPosition: 'center'*/}
+                                                    {/*         }}/>*/}
+                                                    {/*</Badge>*/}
+
+                                                    <div className='eachFoodImage'
+                                                         style={{
+                                                             background: `url(${eachFood.thumbnail})`,
+                                                             backgroundSize: 'cover',
+                                                             backgroundPosition: 'center'
+                                                         }}/>
                                                 </div>
+
                                                 <div className='w-100 justify-content-center d-flex'>
-                                                    <div className='foodName' style={{color: colors.foreground}}>{eachFood.name}</div>
+                                                    <div className='foodName'
+                                                         style={{color: colors.foreground}}>{eachFood.name}</div>
                                                 </div>
-                                                <div className='w-100 d-flex justify-content-center'>
-                                                    <div className='foodDetails'>{eachFood.details.join(' ')}</div>
-                                                </div>
+                                                {isInOrderList ?
+                                                    <div
+                                                        className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__fastee'}
+                                                    >
+                                                        <div
+                                                            style={{backgroundColor: colors.foreground + '50'}}
+                                                            onClick={() => {
+                                                                this.handleDecreaseFoodNumber(eachFood['foods_id'])
+                                                            }}
+                                                            className={'decreaseFoodNumberButtonContainer decrease d-flex justify-content-center align-items-center'}>
+                                                            <div
+                                                                className="foodNumberIncreaseButton decrease d-flex justify-content-center align-items-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                     width="20" height="20"
+                                                                     fill="black"
+                                                                     className="bi bi-dash decrease"
+                                                                     viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            style={{backgroundColor: colors.foreground + '50'}}
+                                                            className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
+                                                                           <span
+                                                                               className={'IranSans'}>{(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}</span>
+                                                        </div>
+                                                        <div
+                                                            style={{backgroundColor: colors.foreground + '50'}}
+                                                            onClick={() => {
+                                                                this.clickAnimation(eachFood['foods_id'])
+                                                            }}
+                                                            className={'increaseFoodNumberButtonContainer increase d-flex justify-content-center align-items-center'}>
+                                                            <div
+                                                                className="foodNumberIncreaseButton increase d-flex justify-content-center align-items-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                     width="20" height="20"
+                                                                     fill="black"
+                                                                     className="bi bi-plus increase "
+                                                                     viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    :
+                                                    <div className='w-100 d-flex justify-content-center'>
+                                                        <div
+                                                            className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}
+                                                        </div>
+                                                    </div>
+                                                }
+
                                             </div>
                                         </div>
                                     )
@@ -152,6 +360,7 @@ const mapStateToProps = (store) => {
 const mapDispatchToProps = () => {
     return {
         increaseFoodNumber: actions.increaseFoodNumber,
+        decreaseFoodNumber: actions.decreaseFoodNumber,
         addFoodToOrders: actions.addFoodToOrders,
     }
 }
