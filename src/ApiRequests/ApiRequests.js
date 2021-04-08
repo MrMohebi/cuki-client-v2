@@ -74,10 +74,10 @@ export const getCustomerInfo = (callbackFunction)=>{
 }
 
 
-export const sendOrder = (callbackFunction,table,address, foodsList)=>{
+export const sendOrder = (callbackFunction,table,address, foodsList, generalDetails = "")=>{
     let token = getReduxStore('token')
     let englishName = getReduxStore('englishName')
-    let details =  {general: '', eachFood: []}
+    let details =  {general: generalDetails, eachFood: []}
     $.post(BASE_API_URL+ "sendOrder.add.php" ,{englishName, token, orders:JSON.stringify(foodsList),details:JSON.stringify(details),deliveryPrice:'0',orderTable:table,address:JSON.stringify(address)}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
