@@ -72,7 +72,6 @@
     .eachFoodPrice {
         font-family: KingArthurSpecialNormal;
         font-weight: normal;
-        height: 100%;
         text-align: center;
         line-height: 50px;
         padding-left: 15px;
@@ -184,7 +183,6 @@
     transition: all 0.2s ease;
     font-family: KingArthurSpecialNormal;
     font-weight: normal;
-    height: 100%;
     text-align: center;
     line-height: 60px;
     font-size: 1rem;
@@ -268,7 +266,6 @@
 }
 
 .foodDetailsPrice {
-    margin-left: 3rem;
     line-height: 5rem;
     font-family: KingArthurSpecialNormal;
 }

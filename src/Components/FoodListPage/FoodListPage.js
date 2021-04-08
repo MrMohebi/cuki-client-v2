@@ -9,7 +9,6 @@ import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
 import tf from "./img/testFood.png";
 import Comments from "../CommetnsSection/Comments";
-import {Badge} from "@material-ui/core";
 import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import * as requests from "../../ApiRequests/ApiRequests";
 import LoadingOverlay from 'react-loading-overlay';
@@ -23,12 +22,6 @@ export const Swipeable = ({children, style, ...props}) => {
 
 class FoodListPage extends Component {
 
-    constructor(props) {
-        super(props);
-        this.foodDetailsBlur = React.createRef();
-        this.foodDetailsMain = React.createRef();
-    }
-
     state = {
         foodList: <div/>,
         foodDetails: <div/>,
@@ -38,6 +31,12 @@ class FoodListPage extends Component {
             y: 0
         },
         foodDetailsAnimateClass: 'animate__fadeIn',
+    }
+
+    constructor(props) {
+        super(props);
+        this.foodDetailsBlur = React.createRef();
+        this.foodDetailsMain = React.createRef();
     }
 
     componentDidMount() {
@@ -51,17 +50,33 @@ class FoodListPage extends Component {
             this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
         }
     }
-    clickAnimation = (id)=>{
+    clickAnimation = (id) => {
         let element = document.getElementById(id);
         console.log(element)
-        if (element){
-            element.style.transform='scale(0.9)';
-            setTimeout(()=>{
-                element.style.transform='scale(1)';
-            },300)
+        if (element) {
+            element.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 300)
         }
 
     }
+    pressAnimation = (id) => {
+        let element = document.getElementById(id);
+        if (element) {
+            element.style.transform = 'scale(0.9)';
+        }
+    }
+    releaseAnimation = (id) => {
+        let element = document.getElementById(id);
+        if (element) {
+            setTimeout(()=>{
+                element.style.transform = 'scale(1)';
+
+            },200)
+        }
+    }
+
 
     getData = () => {
         requests.getRestaurantInfo(this.dataArrive);
@@ -148,14 +163,44 @@ class FoodListPage extends Component {
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
                         }} className='foodDetailsImg'/>
+                        {/*{*/}
+                        {/*    foodInfo.status === 'in stock' ?*/}
+                        {/*        <div className='foodDetailsPrice'>{foodInfo.price / 1000} T</div>*/}
+                        {/*        :*/}
+                        {/*        <div className='foodDetailsPrice IranSans'>نا موجود</div>*/}
+
+
+                        {/*}*/}
                         {
                             foodInfo.status === 'in stock' ?
-                                <div className='foodDetailsPrice'>{foodInfo.price / 1000} T</div>
+                                foodInfo.discount === 0 ?
+                                    <span className='foodDetailsPrice pl-4'>
+                                        {foodInfo.price / 1000} T
+                                    </span>
+                                    :
+                                    <div
+
+                                        className={'d-flex flex-column justify-content-center pl-4'}>
+                                        <span style={{
+                                            textDecoration: 'line-through',
+                                            fontSize: '0.6rem',
+                                            lineHeight: '1.5rem',
+                                            color: '#787878'
+                                        }} className='foodDetailsPrice'>
+                                            {foodInfo.price / 1000} T
+                                        </span>
+                                        <span style={{fontWeight: 'bolder'}}
+                                              className='eachFoodPriceDiscount'>
+                                            {foodInfo.price * (1 - foodInfo.discount / 100) / 1000} T
+                                        </span>
+                                    </div>
+
                                 :
-                                <div className='foodDetailsPrice IranSans'>نا موجود</div>
-
-
+                                <span className='foodDetailsPrice IranSans'>
+                                    ناموجود
+                                </span>
                         }
+
                     </div>
                     <div className='foodDetailsDetails'>{foodInfo.details ? foodInfo.details.join(" / ") : ''}</div>
                     <div className='foodDetailsTimesAndOrderTimeContainer'>
@@ -204,10 +249,10 @@ class FoodListPage extends Component {
             allowToShow: false
         })
     }
-    handleDecreaseFoodNumber = (foodId) =>{
+    handleDecreaseFoodNumber = (foodId) => {
         this.props.decreaseFoodNumber(foodId)
     }
-    handleIncreaseFoodNumber =(foodId) =>{
+    handleIncreaseFoodNumber = (foodId) => {
         this.props.increaseFoodNumber(foodId)
     }
 
@@ -260,7 +305,7 @@ class FoodListPage extends Component {
                                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
                                                    let timeout;
                                                    let isInOrderList = false;
-                                                   if ((this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)){
+                                                   if ((this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)) {
                                                        isInOrderList = true;
                                                    }
                                                    return (
@@ -269,18 +314,26 @@ class FoodListPage extends Component {
                                                        }}
                                                             key={eachFood['foods_id']}
                                                             className='foodListEachFoodContainer animate__animated animate__fadeInDown'
-                                                            onClick={() => {
+                                                            onClick={(e) => {
+                                                                console.log(e.target.classList.contains('decrease'))
                                                                 clearTimeout(timeout)
                                                                 if (eachFood.status === 'in stock') {
-                                                                    if (!isInOrderList){
-                                                                        this.orderScripts(eachFood.foods_id);
-                                                                        this.clickAnimation('food'+eachFood['foods_id'])
-                                                                    }
+                                                                    // if (!isInOrderList) {
+                                                                    //     this.orderScripts(eachFood.foods_id);
+                                                                    // }
                                                                 }
                                                                 this.state.allowToShow = false
-                                                            }}
-                                                            onTouchStart={(e) => {
+                                                                if (!e.target.classList.contains('decrease')){
+                                                                    this.orderScripts(eachFood.foods_id);
+                                                                }
 
+
+                                                            }}
+
+                                                            onTouchStart={(e) => {
+                                                                if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                                    this.pressAnimation('food' + eachFood['foods_id'])
+                                                                }
                                                                 this.state.firstPointerPosition.x = e.targetTouches[0].pageX
                                                                 this.state.firstPointerPosition.y = e.targetTouches[0].pageY
                                                                 this.state.allowToShow = true
@@ -293,21 +346,23 @@ class FoodListPage extends Component {
                                                                 }, 400)
 
                                                             }}
+
                                                             onPointerMove={(e) => {
                                                                 this.checkForMove(e)
                                                             }}
                                                             onTouchEnd={() => {
                                                                 this.state.allowToShow = false
+                                                                this.releaseAnimation('food'+eachFood['foods_id'])
                                                             }}
                                                        >
                                                            <div className='foodListEachFood'
                                                                 id={'food' + eachFood['foods_id']}
                                                                 style={{backgroundColor: colors.background}}>
                                                                {
-                                                                   parseInt(eachFood.discount)>0?
-                                                                   <span  className={'discountPercentage'}>60%</span>
-                                                                   :
-                                                                   <div/>
+                                                                   parseInt(eachFood.discount) > 0 ?
+                                                                       <span className={'discountPercentage'}>60%</span>
+                                                                       :
+                                                                       <div/>
                                                                }
                                                                <div className='priceAndImage'>
                                                                    {
@@ -324,7 +379,7 @@ class FoodListPage extends Component {
                                                                                        textDecoration: 'line-through',
                                                                                        fontSize: '0.6rem',
                                                                                        lineHeight: '1.5rem',
-                                                                                       color:'#787878'
+                                                                                       color: '#787878'
                                                                                    }} className='eachFoodPrice'>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
@@ -350,32 +405,34 @@ class FoodListPage extends Component {
                                                                    {/*         }}/>*/}
                                                                    {/*</Badge>*/}
 
-                                                                       <div className='eachFoodImage'
-                                                                            style={{
-                                                                                background: `url(${eachFood.thumbnail})`,
-                                                                                backgroundSize: 'cover',
-                                                                                backgroundPosition: 'center'
-                                                                            }}/>
+                                                                   <div className='eachFoodImage'
+                                                                        style={{
+                                                                            background: `url(${eachFood.thumbnail})`,
+                                                                            backgroundSize: 'cover',
+                                                                            backgroundPosition: 'center'
+                                                                        }}/>
                                                                </div>
 
                                                                <div className='w-100 justify-content-center d-flex'>
                                                                    <div className='foodName'
                                                                         style={{color: colors.foreground}}>{eachFood.name}</div>
                                                                </div>
-                                                               {isInOrderList?
+                                                               {isInOrderList ?
                                                                    <div
-                                                                       className={'foodNumberIncreaseDecreaseContainer highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__fastee'}
-                                                                       >
-                                                                       <div style={{backgroundColor: colors.foreground + '50'}}
+                                                                       className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__fastee'}
+                                                                   >
+                                                                       <div
+                                                                           style={{backgroundColor: colors.foreground + '50'}}
                                                                            onClick={() => {
                                                                                this.handleDecreaseFoodNumber(eachFood['foods_id'])
                                                                            }}
-                                                                           className={'decreaseFoodNumberButtonContainer d-flex justify-content-center align-items-center'}>
-                                                                           <div className="foodNumberIncreaseButton d-flex justify-content-center align-items-center">
+                                                                           className={'decreaseFoodNumberButtonContainer decrease d-flex justify-content-center align-items-center'}>
+                                                                           <div
+                                                                               className="foodNumberIncreaseButton decrease d-flex justify-content-center align-items-center">
                                                                                <svg xmlns="http://www.w3.org/2000/svg"
                                                                                     width="20" height="20"
                                                                                     fill="black"
-                                                                                    className="bi bi-dash"
+                                                                                    className="bi bi-dash decrease"
                                                                                     viewBox="0 0 16 16">
                                                                                    <path
                                                                                        d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
@@ -384,20 +441,22 @@ class FoodListPage extends Component {
                                                                        </div>
                                                                        <div
                                                                            style={{backgroundColor: colors.foreground + '50'}}
-                                                                           className={'FoodNumberHolderContainer d-flex justify-content-center align-items-center'}>
-                                                                           <span className={'IranSans'}>{(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}</span>
+                                                                           className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
+                                                                           <span
+                                                                               className={'IranSans'}>{(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}</span>
                                                                        </div>
-                                                                       <div style={{backgroundColor: colors.foreground + '50'}}
+                                                                       <div
+                                                                           style={{backgroundColor: colors.foreground + '50'}}
                                                                            onClick={() => {
-                                                                               this.handleIncreaseFoodNumber(eachFood['foods_id'])
                                                                                this.clickAnimation(eachFood['foods_id'])
                                                                            }}
-                                                                           className={'increaseFoodNumberButtonContainer d-flex justify-content-center align-items-center'}>
-                                                                           <div className="foodNumberIncreaseButton d-flex justify-content-center align-items-center">
+                                                                           className={'increaseFoodNumberButtonContainer increase d-flex justify-content-center align-items-center'}>
+                                                                           <div
+                                                                               className="foodNumberIncreaseButton increase d-flex justify-content-center align-items-center">
                                                                                <svg xmlns="http://www.w3.org/2000/svg"
                                                                                     width="20" height="20"
                                                                                     fill="black"
-                                                                                    className="bi bi-plus"
+                                                                                    className="bi bi-plus increase "
                                                                                     viewBox="0 0 16 16">
                                                                                    <path
                                                                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
