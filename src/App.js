@@ -65,7 +65,7 @@ function App() {
 
   return (
     <React.Fragment>
-      {useSelector(state=>state.rTempData.isResOpen) ?
+      {useSelector(state=>(state.rTempData.isResOpen && (state.rRestaurantInfo.restaurantInfo.status === "active")))  ?
           null
           :
           <Banner color={'#d62828'} closable={false} text={'رستوران تعطیل است'}/>
