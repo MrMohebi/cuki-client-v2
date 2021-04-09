@@ -78,7 +78,6 @@ class LikedFoods extends Component {
 
     clickAnimation = (id) => {
         let element = document.getElementById(id);
-        console.log(element)
         if (element) {
             element.style.transform = 'scale(0.9)';
             setTimeout(() => {
@@ -188,7 +187,6 @@ class LikedFoods extends Component {
                                              key={eachFood['foods_id']}
                                              className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                              onClick={(e) => {
-                                                 console.log(e.target.classList.contains('decrease'))
                                                  clearTimeout(timeout)
                                                  if (eachFood.status === 'in stock') {
                                                      // if (!isInOrderList) {
@@ -198,6 +196,9 @@ class LikedFoods extends Component {
                                                  this.state.allowToShow = false
                                                  if (!e.target.classList.contains('decrease')){
                                                      this.orderScripts(eachFood.foods_id);
+                                                     if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                         this.clickAnimation('food' + eachFood['foods_id'])
+                                                     }
                                                  }
 
 
@@ -296,7 +297,7 @@ class LikedFoods extends Component {
                                                                      fill="black"
                                                                      className="bi bi-dash decrease"
                                                                      viewBox="0 0 16 16">
-                                                                    <path
+                                                                    <path className={'decrease'}
                                                                         d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                                                 </svg>
                                                             </div>

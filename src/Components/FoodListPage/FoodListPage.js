@@ -52,7 +52,6 @@ class FoodListPage extends Component {
     }
     clickAnimation = (id) => {
         let element = document.getElementById(id);
-        console.log(element)
         if (element) {
             element.style.transform = 'scale(0.9)';
             setTimeout(() => {
@@ -196,7 +195,7 @@ class FoodListPage extends Component {
                                     </div>
 
                                 :
-                                <span className='foodDetailsPrice IranSans'>
+                                <span className='foodDetailsPrice IranSans pl-4'>
                                     ناموجود
                                 </span>
                         }
@@ -315,7 +314,6 @@ class FoodListPage extends Component {
                                                             key={eachFood['foods_id']}
                                                             className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                                             onClick={(e) => {
-                                                                console.log(e.target.classList.contains('decrease'))
                                                                 clearTimeout(timeout)
                                                                 if (eachFood.status === 'in stock') {
                                                                     // if (!isInOrderList) {
@@ -323,8 +321,11 @@ class FoodListPage extends Component {
                                                                     // }
                                                                 }
                                                                 this.state.allowToShow = false
-                                                                if (!e.target.classList.contains('decrease')){
+                                                                if (!e.target.classList.contains('decrease')&& eachFood.status === 'in stock'){
                                                                     this.orderScripts(eachFood.foods_id);
+                                                                    if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                                        this.clickAnimation('food' + eachFood['foods_id'])
+                                                                    }
                                                                 }
 
 
@@ -434,7 +435,7 @@ class FoodListPage extends Component {
                                                                                     fill="black"
                                                                                     className="bi bi-dash decrease"
                                                                                     viewBox="0 0 16 16">
-                                                                                   <path
+                                                                                   <path className={'decrease'}
                                                                                        d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                                                                </svg>
                                                                            </div>
@@ -458,7 +459,7 @@ class FoodListPage extends Component {
                                                                                     fill="black"
                                                                                     className="bi bi-plus increase "
                                                                                     viewBox="0 0 16 16">
-                                                                                   <path
+                                                                                   <path className={'increase'}
                                                                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                                                                </svg>
                                                                            </div>
