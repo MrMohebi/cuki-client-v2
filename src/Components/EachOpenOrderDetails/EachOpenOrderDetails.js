@@ -81,7 +81,7 @@ class EachOpenOrderDetails extends React.Component {
 
                     </div>
                     <div className='mt-3 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
-                        <span className=''>{this.props.tempOpenOrderInfo['total_price']} T</span>
+                        <span className=''>{this.props.tempOpenOrderInfo['total_price']/1000} T</span>
                         <span className='eachOrderDetailsTotalHolder'>جمع نهایی</span>
                     </div>
 
