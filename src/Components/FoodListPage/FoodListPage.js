@@ -69,10 +69,10 @@ class FoodListPage extends Component {
     releaseAnimation = (id) => {
         let element = document.getElementById(id);
         if (element) {
-            setTimeout(()=>{
+            setTimeout(() => {
                 element.style.transform = 'scale(1)';
 
-            },200)
+            }, 200)
         }
     }
 
@@ -321,7 +321,7 @@ class FoodListPage extends Component {
                                                                     // }
                                                                 }
                                                                 this.state.allowToShow = false
-                                                                if (!e.target.classList.contains('decrease')&& eachFood.status === 'in stock'){
+                                                                if (!e.target.classList.contains('decrease') && eachFood.status === 'in stock') {
                                                                     this.orderScripts(eachFood.foods_id);
                                                                     if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
                                                                         this.clickAnimation('food' + eachFood['foods_id'])
@@ -353,7 +353,7 @@ class FoodListPage extends Component {
                                                             }}
                                                             onTouchEnd={() => {
                                                                 this.state.allowToShow = false
-                                                                this.releaseAnimation('food'+eachFood['foods_id'])
+                                                                this.releaseAnimation('food' + eachFood['foods_id'])
                                                             }}
                                                        >
                                                            <div className='foodListEachFood'
@@ -361,7 +361,8 @@ class FoodListPage extends Component {
                                                                 style={{backgroundColor: colors.background}}>
                                                                {
                                                                    parseInt(eachFood.discount) > 0 ?
-                                                                       <span className={'discountPercentage'}>60%</span>
+                                                                       <span
+                                                                           className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
                                                                        :
                                                                        <div/>
                                                                }
@@ -436,7 +437,7 @@ class FoodListPage extends Component {
                                                                                     className="bi bi-dash decrease"
                                                                                     viewBox="0 0 16 16">
                                                                                    <path className={'decrease'}
-                                                                                       d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                         d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                                                                </svg>
                                                                            </div>
                                                                        </div>
@@ -460,7 +461,7 @@ class FoodListPage extends Component {
                                                                                     className="bi bi-plus increase "
                                                                                     viewBox="0 0 16 16">
                                                                                    <path className={'increase'}
-                                                                                       d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                                                                </svg>
                                                                            </div>
                                                                        </div>

@@ -5,7 +5,7 @@ import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRight
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
-import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
+import {SwipeableList, SwipeableListItem} from '@sandstreamdev/react-swipeable-list';
 import '@sandstreamdev/react-swipeable-list/dist/styles.css';
 import {connect} from "react-redux";
 import * as actions from "../../stores/reduxStore/actions";
@@ -26,12 +26,12 @@ const ReactSwal = withReactContent(Swal)
 class BillPage extends React.Component {
 
     componentDidMount() {
-        if(this.props.orderList.length <= 0){
+        if (this.props.orderList.length <= 0) {
             ReactSwal.fire({
                 text: '): هیچی رو سفارش ندادی ها',
                 icon: 'info',
                 confirmButtonText: "راس میگی، حله",
-            }).then(()=>{
+            }).then(() => {
                 this.props.history.push('/main')
             })
             fixBodyClass()
@@ -42,7 +42,7 @@ class BillPage extends React.Component {
     sumTotalOrderPrice = () => {
         let sum = 0;
         this.props.orderList.map(eachFood => {
-            sum += eachFood.totalPrice
+            sum += eachFood.totalPrice * (1 - eachFood.discount / 100)
         })
         return sum;
     }
@@ -56,8 +56,8 @@ class BillPage extends React.Component {
         }
     }
     handleSubmit = () => {
-        if(this.props.orderList.length > 0){
-            if (this.props.token.length > 20){
+        if (this.props.orderList.length > 0) {
+            if (this.props.token.length > 20) {
                 this.props.history.push('/payway');
             } else {
                 requests.getIP(this.callbackGetIP);
@@ -65,27 +65,28 @@ class BillPage extends React.Component {
         }
 
     }
-    callbackGetIP = (res) =>{
-        if(res.hasOwnProperty("ip"))
+    callbackGetIP = (res) => {
+        if (res.hasOwnProperty("ip"))
             requests.getTempToken(this.callbackGetTempToken, res.ip, navigator.userAgent, "", res.city)
     }
-    callbackGetTempToken = (res) =>{
-        if(res.hasOwnProperty("statusCode")&& res.statusCode === 200){
+    callbackGetTempToken = (res) => {
+        if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             this.props.setToken(res.data.token)
             this.props.history.push('/payway');
         }
     }
 
 
-    handleIncreaseFoodNumber =(foodId) =>{
+    handleIncreaseFoodNumber = (foodId) => {
         this.props.increaseFoodNumber(foodId)
     }
-    handleDecreaseFoodNumber = (foodId) =>{
+    handleDecreaseFoodNumber = (foodId) => {
         this.props.decreaseFoodNumber(foodId)
     }
 
 
-    createOrderList = () =>{
+    createOrderList = () => {
+        console.log(this.props.orderList)
         return this.props.orderList.map(eachFood => (
                 <SwipeableListItem key={eachFood["foods_id"]}
                                    swipeLeft={{
@@ -99,11 +100,13 @@ class BillPage extends React.Component {
                     <div
                         className='mt-5 w-100 BillRow rtl IranSans'>
                         <span className='billEachOrderName'>{eachFood.name}</span>
-                        <span className='eachFoodPriceBill'>{(eachFood.price * eachFood.number)/1000} T</span>
+                        <span
+                            className='eachFoodPriceBill'>{((eachFood.price * (1 - eachFood.discount / 100)) * eachFood.number) / 1000} T</span>
                         <div className='d-flex justify-content-between umberInDe'>
-                            <AddRoundedIcon onClick={()=>(this.handleIncreaseFoodNumber(eachFood["foods_id"]))}/>
-                            <span className='NumberOfFoodsBill'>{this.checkFoodNumber(eachFood["foods_id"], eachFood.number)}</span>
-                            <RemoveRoundedIcon onClick={()=>(this.handleDecreaseFoodNumber(eachFood["foods_id"]))}/>
+                            <AddRoundedIcon onClick={() => (this.handleIncreaseFoodNumber(eachFood["foods_id"]))}/>
+                            <span
+                                className='NumberOfFoodsBill'>{this.checkFoodNumber(eachFood["foods_id"], eachFood.number)}</span>
+                            <RemoveRoundedIcon onClick={() => (this.handleDecreaseFoodNumber(eachFood["foods_id"]))}/>
                         </div>
                     </div>
                 </SwipeableListItem>
@@ -124,7 +127,7 @@ class BillPage extends React.Component {
         // this.props.history.push("/main")
     }
 
-    handleBack = () =>{
+    handleBack = () => {
         this.props.history.goBack()
     }
 
@@ -150,7 +153,7 @@ class BillPage extends React.Component {
                             </SwipeableList>
                         </div>
                         <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
-                            <span>{this.sumTotalOrderPrice()/1000}T</span>
+                            <span>{this.sumTotalOrderPrice() / 1000}T</span>
                             <span>جمع نهایی فاکتور</span>
                         </div>
                         <div className='BillSubmitButton' onClick={this.handleSubmit}>
