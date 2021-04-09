@@ -167,7 +167,7 @@ class PayWay extends React.Component{
         let totalPrice = 0;
         for (let i = 0; i <= this.props.orderList.length; i++) {
             if (this.props.orderList[i]) {
-                totalPrice = totalPrice + this.props.orderList[i].price * this.props.orderList[i].number
+                totalPrice += this.props.orderList[i].totalPrice
             }
         }
         return totalPrice
@@ -209,7 +209,7 @@ class PayWay extends React.Component{
         ReactSwal.fire({
             title: 'خب در مجموع',
             icon: 'info',
-            confirmButtonText: 'سفارشمو ثبت کن',
+            confirmButtonText: 'سفارشم رو ثبت کن',
             showDenyButton: true,
             denyButtonText: "نه وایسا یه چیزو عوض کنم",
             text: 'قیمت کل  فاکتور: ' + this.calTotalPrice() / 1000 + "هزار تومن \n",

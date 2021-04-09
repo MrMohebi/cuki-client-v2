@@ -23,7 +23,7 @@ export default function reducerTempData (state = __init__TempData, action) {
                 draftState.orderList = draftState.orderList.map(food=> {
                     if(food.foods_id === action.payload.foods_id){
                         food.number += 1;
-                        food.totalPrice +=  food.price
+                        food.totalPrice +=  (food.price * (1 - food.discount  / 100))
                         return food;
                     }else {
                         return food;
@@ -36,7 +36,7 @@ export default function reducerTempData (state = __init__TempData, action) {
                 draftState.orderList = draftState.orderList.map(food=> {
                     if(food.foods_id === action.payload.foods_id){
                         food.number -= 1;
-                        food.totalPrice -= food.price
+                        food.totalPrice -= (food.price * (1 - food.discount  / 100))
                         return food;
                     }else {
                         return food;

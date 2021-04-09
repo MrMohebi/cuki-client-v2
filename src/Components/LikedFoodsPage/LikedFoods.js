@@ -54,7 +54,7 @@ class LikedFoods extends Component {
                         let food = {...foodsList[i]};
                         food["number"] = 1;
                         food.price = parseInt(food.price)
-                        food["totalPrice"] = food.price
+                        food["totalPrice"] = food.price * (1 - food.discount  / 100)
                         this.props.addFoodToOrders(food)
                         return "food was added"
                     }
