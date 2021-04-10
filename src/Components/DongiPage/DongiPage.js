@@ -191,7 +191,7 @@ class DongiPage extends React.Component {
             return (
 
                 totalNumber !== 0 ?
-                    <SwipeableListItem key={eFood.id}
+                    <SwipeableListItem threshold={0.25} key={eFood.id}
                                        swipeLeft={{
                                            content: <div/>,
                                            action: () => this.decreaseSelectedFood(eFood.id, selectedNumber + 1)
@@ -199,7 +199,6 @@ class DongiPage extends React.Component {
                                        swipeRight={{
                                            content: <div/>,
                                            action: () => this.increaseSelectedFood(eFood.id, selectedNumber + 1, totalNumber)
-
                                        }}>
 
                     <div key={eFood.id} id={eFood.id}
