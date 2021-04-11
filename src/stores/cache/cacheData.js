@@ -1,8 +1,11 @@
 import Cookies from "js-cookie";
+import getComName from "../../functions/getComName";
 
-const cookieNameOrderList = "cukiOrderList_001210218"
-const cookieNameToken = "cukiToken_001210218"
-const cookieNamePhone = "cukiPhone_001210218"
+let ComName = getComName()
+
+const cookieNameOrderList = ComName+"OrderList_001210218"
+const cookieNameToken = ComName+"Token_001210218"
+const cookieNamePhone = ComName+"Phone_001210218"
 
 
 
