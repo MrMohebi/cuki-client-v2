@@ -1,14 +1,15 @@
 import $ from 'jquery';
 import getReduxStore from "../stores/reduxStore/getRedux";
 import * as actions from "../stores/reduxStore/actions"
+import getComName from "../functions/getComName";
 
 const BASE_API_URL = "https://api.cuki.ir/v201/"
 const BASE_PAY_V2_URL = "https://pay.cuki.ir/v2/";
 
+const resEnglishName = getComName()
 
 export const getRestaurantInfo = (callbackFunction)=>{
-    let englishName = getReduxStore('englishName')
-    $.post(BASE_API_URL+ "getAllRestaurantData.fetch.php" ,{englishName}).then(res=>{
+    $.post(BASE_API_URL+ "getAllRestaurantData.fetch.php" ,{englishName:resEnglishName}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         if(res.statusCode === 200){
             actions.restaurantSetData(res.data)
@@ -66,8 +67,7 @@ export const getUserInfo = (callbackFunction)=>{
 
 export const getCustomerInfo = (callbackFunction)=>{
     let token = getReduxStore('token')
-    let englishName = getReduxStore('englishName')
-    $.post(BASE_API_URL+ "getCustomerInfo.fetch.php" ,{token, englishName}).then(res=>{
+    $.post(BASE_API_URL+ "getCustomerInfo.fetch.php" ,{token, englishName:resEnglishName}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -76,9 +76,8 @@ export const getCustomerInfo = (callbackFunction)=>{
 
 export const sendOrder = (callbackFunction,table,address, foodsList, generalDetails = "")=>{
     let token = getReduxStore('token')
-    let englishName = getReduxStore('englishName')
     let details =  {general: generalDetails, eachFood: []}
-    $.post(BASE_API_URL+ "sendOrder.add.php" ,{englishName, token, orders:JSON.stringify(foodsList),details:JSON.stringify(details),deliveryPrice:'0',orderTable:table,address:JSON.stringify(address)}).then(res=>{
+    $.post(BASE_API_URL+ "sendOrder.add.php" ,{englishName:resEnglishName, token, orders:JSON.stringify(foodsList),details:JSON.stringify(details),deliveryPrice:'0',orderTable:table,address:JSON.stringify(address)}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -96,8 +95,7 @@ export const getPaymentInfoByTrackingId = (callbackFunction, trackingId)=>{
 
 export const getOrderByTrackingId = (callbackFunction, trackingId)=>{
     let token = getReduxStore('token')
-    let englishName = getReduxStore('englishName')
-    $.post(BASE_API_URL+ "getOrderByTrackingId.fetch.php" ,{token, trackingId, englishName}).then(res=>{
+    $.post(BASE_API_URL+ "getOrderByTrackingId.fetch.php" ,{token, trackingId, englishName:resEnglishName}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -107,9 +105,8 @@ export const getOrderByTrackingId = (callbackFunction, trackingId)=>{
 
 export const sendPaymentRequestFood = (callbackFunction, items, amount, trackingId)=>{
     let token = getReduxStore('token')
-    let englishName = getReduxStore('englishName')
     let newItems = items.filter(eFood=>eFood.number > 0);
-    $.post(BASE_PAY_V2_URL+ "createPayment.php" ,{englishName, token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
+    $.post(BASE_PAY_V2_URL+ "createPayment.php" ,{englishName:resEnglishName, token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -118,8 +115,7 @@ export const sendPaymentRequestFood = (callbackFunction, items, amount, tracking
 
 export const getOpenOrders = (callbackFunction, dToken = null)=>{
     let token = dToken ? dToken : getReduxStore('token')
-    let englishName = getReduxStore('englishName')
-    $.post(BASE_API_URL+ "getOpenOrders.fetch.php" ,{englishName, token}).then(res=>{
+    $.post(BASE_API_URL+ "getOpenOrders.fetch.php" ,{englishName:resEnglishName, token}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -128,8 +124,7 @@ export const getOpenOrders = (callbackFunction, dToken = null)=>{
 
 export const getCommentsByFoodId = (callbackFunction, foodId, lastOneDate, number)=>{
     let token = getReduxStore('token')
-    let englishName = getReduxStore('englishName')
-    $.post(BASE_API_URL+ "getCommentsByFoodId.fetch.php" ,{englishName, token, foodId, lastDate:lastOneDate, number}).then(res=>{
+    $.post(BASE_API_URL+ "getCommentsByFoodId.fetch.php" ,{englishName:resEnglishName, token, foodId, lastDate:lastOneDate, number}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -137,15 +132,13 @@ export const getCommentsByFoodId = (callbackFunction, foodId, lastOneDate, numbe
 
 export const sendComment = (callbackFunction, foodId, body)=>{
     let token = getReduxStore('token')
-    let englishName = getReduxStore('englishName')
-    $.post(BASE_API_URL+ "sendComment.add.php" ,{englishName, token, foodId, body}).then(res=>{
+    $.post(BASE_API_URL+ "sendComment.add.php" ,{englishName:resEnglishName, token, foodId, body}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
 }
 
 export const getTempToken = (callbackFunction,ip, userAgent, isp="",city="")=>{
-    let resEnglishName = getReduxStore('englishName')
     $.post(BASE_API_URL+ "getTempToken.add.php" ,{resEnglishName, ip, userAgent, isp, city}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
