@@ -26,8 +26,7 @@ import * as actions from "./stores/reduxStore/actions"
 import * as requests from "./ApiRequests/ApiRequests";
 import Banner from "./Components/Banner/Banner";
 import isResOpen from "./functions/isResOpen";
-
-
+import {getFullName} from "./functions/getComName";
 
 
 function App() {
@@ -71,23 +70,23 @@ function App() {
           <Banner color={'#d62828'} closable={false} text={'رستوران تعطیل است'}/>
       }
 
-      <BrowserRouter>
+      <BrowserRouter basename={getFullName()}>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path={['/:resName/main', '/:resName/category', '/:resName/bill', '/:resName/profile', '/:resName/eachOrderHistoryDetails', '/:resName/login', '/:resName/dongi', '/:resName/openOrders', '/:resName/eachOpenOrderDetails','/:resName/likedFoods', "/:resName/payway", '/:resName/vrTour']} component={BottomNavBar}/>
-        <Route path='/:resName/main' component={WelcomePage}/>
-        <Route exact path='/:resName/category/:part' component={CategoryPage}/>
-        <Route exact path='/:resName/category/:part/:category' component={FoodListPage}/>
-        <Route path='/:resName/bill' component={BillPage}/>
-        <Route path='/:resName/profile/:part' component={ProfilePage}/>
-        <Route path='/:resName/eachOrderHistoryDetails' component={EachOrderHistoryDetails}/>
-        <Route path='/:resName/login' component={LoginVCode}/>
-        <Route path='/:resName/signup' component={SignUpPage}/>
-        <Route path='/:resName/payway' component={PayWay}/>
-        <Route path='/:resName/dongi' component={DongiPage}/>
-        <Route path='/:resName/openOrders' component={OpenOrders}/>
-        <Route path='/:resName/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
-        <Route path='/:resName/likedFoods' component={LikedFoods}/>
-        <Route path='/:resName/vrTour' component={Tour360}/>
+        <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway", '/vrTour']} component={BottomNavBar}/>
+        <Route path='/main' component={WelcomePage}/>
+        <Route exact path='/category/:part' component={CategoryPage}/>
+        <Route exact path='/category/:part/:category' component={FoodListPage}/>
+        <Route path='/bill' component={BillPage}/>
+        <Route path='/profile/:part' component={ProfilePage}/>
+        <Route path='/eachOrderHistoryDetails' component={EachOrderHistoryDetails}/>
+        <Route path='/login' component={LoginVCode}/>
+        <Route path='/signup' component={SignUpPage}/>
+        <Route path='/payway' component={PayWay}/>
+        <Route path='/dongi' component={DongiPage}/>
+        <Route path='/openOrders' component={OpenOrders}/>
+        <Route path='/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
+        <Route path='/likedFoods' component={LikedFoods}/>
+        <Route path='/vrTour' component={Tour360}/>
       </BrowserRouter>
     </React.Fragment>
   );
