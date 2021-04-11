@@ -157,7 +157,7 @@ class FoodListPage extends Component {
                     </div>
                     <div className='imageAndFoodNameContainer'>
                         <div style={{
-                            background: `url(${tf})`,
+                            background: `url(`+foodInfo.thumbnail+`)`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
