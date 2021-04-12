@@ -58,7 +58,7 @@ class WelcomePage extends React.Component {
                                     }
 
                                 }} className={this.state.handClass} style={{
-                                    background: 'url("./img/WelcomePage/shakeHands.png")',
+                                    background: 'url("/img/WelcomePage/shakeHands.png")',
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat'
@@ -74,7 +74,7 @@ class WelcomePage extends React.Component {
                             </div>
 
                             <div className="chefImage" style={{
-                                background: 'url("./img/WelcomePage/chefIcon.png")',
+                                background: 'url("/img/WelcomePage/chefIcon.png")',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat'
@@ -90,7 +90,7 @@ class WelcomePage extends React.Component {
                                     return(
                                         <div onClick={()=>{this.props.history.push("/category/"+eachPart)}} key={eachPart} className="openIcons">
                                             <div className="burger" style={{
-                                                background: 'url("./img/resParts/'+eachPart+'.png")',
+                                                background: 'url("/img/resParts/'+eachPart+'.png")',
                                                 backgroundSize: '95%',
                                                 backgroundPosition: 'center',
                                                 backgroundRepeat: 'no-repeat',
