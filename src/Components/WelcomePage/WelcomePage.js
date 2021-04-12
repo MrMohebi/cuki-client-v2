@@ -3,7 +3,7 @@ import './css/style.css';
 import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.gif'
-import Banner from "../Banner/Banner";
+import getComName from "../../functions/getComName";
 
 export const Swipeable = ({children,style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -37,7 +37,7 @@ class WelcomePage extends React.Component {
                 <div className='welcomePageMainContainerCover w-100 h-100'>
                     <div className="forLittlePhones">
                         <p className="welcomePageHeader">
-                            <span className="textColor">{this.props.resEnglishName} </span>
+                            <span className="textColor">{getComName()} </span>
                             <span>  app</span>
                         </p>
                         <div className="welcomePageFrames1">
@@ -58,7 +58,7 @@ class WelcomePage extends React.Component {
                                     }
 
                                 }} className={this.state.handClass} style={{
-                                    background: 'url("./img/WelcomPage/shakehands.png")',
+                                    background: 'url("./img/WelcomePage/shakeHands.png")',
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat'
@@ -74,7 +74,7 @@ class WelcomePage extends React.Component {
                             </div>
 
                             <div className="chefImage" style={{
-                                background: 'url("./img/WelcomPage/cheficon.png")',
+                                background: 'url("./img/WelcomePage/chefIcon.png")',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat'
@@ -120,7 +120,6 @@ class WelcomePage extends React.Component {
 const mapStateToProps = (store) => {
     return {
         foodListConverted: store.rRestaurantInfo.foodListConverted,
-        resEnglishName: store.rRestaurantInfo.englishName
     }
 }
 
