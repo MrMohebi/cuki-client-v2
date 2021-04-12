@@ -13,6 +13,10 @@ export default function reducerRestaurant (state= __init__RestaurantInfo, action
             return produce(state, draftState =>{
                 draftState.foodListConverted = action.payload.foodListConverted;
             });
+        case actionTypes.SET_RES_ENGLISH_NAME:
+            return produce(state, draftState =>{
+                draftState.englishName = action.payload.resEnglishName;
+            });
         default:
             return state;
     }

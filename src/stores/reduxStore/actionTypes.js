@@ -6,6 +6,8 @@ export const DELETE_USER_ALL_DATA = "deleteAllUserData";
 
 export const SET_RESTAURANT_DATA = "setRestaurantData"
 export const SET_FOOD_LIST_CONVERTED = "setFoodListConverted"
+export const SET_RES_ENGLISH_NAME = "setResEnglishName"
+
 
 export const MISSING_USER_INFO = "missingUserInfo"
 export const SET_V_CODE = "setVCode"
