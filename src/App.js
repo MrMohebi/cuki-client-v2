@@ -21,7 +21,7 @@ import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
 import Tour360 from "./Components/Tour360page/Tour360";
 
 
-import {getCacheToken, getCachePhone} from "./stores/cache/cacheData"
+import {getLSPhone, getLSToken} from "./stores/localStorage/localStorage";
 import * as actions from "./stores/reduxStore/actions"
 import * as requests from "./ApiRequests/ApiRequests";
 import Banner from "./Components/Banner/Banner";
@@ -41,8 +41,8 @@ function App() {
   }
 
   useSelector((state)=>{
-    const cacheToken = getCacheToken()
-    const cachePhone = getCachePhone()
+    const cacheToken = getLSToken()
+    const cachePhone = getLSPhone()
     if(state.rUserInfo.token !== cacheToken && cacheToken !== undefined && cacheToken.length > 10){
       actions.userSetToken(cacheToken);
       getOpenOrders(cacheToken)
