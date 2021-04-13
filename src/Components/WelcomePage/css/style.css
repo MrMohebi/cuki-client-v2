@@ -90,7 +90,9 @@
         transform: rotate(0deg);
     }
 }
-
+.pagerTimer{
+    font-size: 0.8rem;
+}
 .openIcons {
     border-radius: 17px;
     background-color: #FFFFFF;
