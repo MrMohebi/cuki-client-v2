@@ -1,5 +1,4 @@
 import getComName from "../../functions/getComName";
-import Cookies from "js-cookie";
 
 let ComName = getComName()
 
