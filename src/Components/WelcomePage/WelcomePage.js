@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.gif'
 import getComName, {getFullName} from "../../functions/getComName";
+import {getLSPager, setLSPager} from "../../stores/localStorage/localStorage";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -31,8 +32,8 @@ class WelcomePage extends React.Component {
         if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
             this.props.history.push("/");
         }
-        if (localStorage.getLSPager()) {
-            this.state.lastPagerTime = parseInt(localStorage.getLSPager())
+        if (getLSPager()) {
+            this.state.lastPagerTime = parseInt(getLSPager())
         } else {
             this.state.lastPagerTime = 0;
         }
@@ -71,7 +72,7 @@ class WelcomePage extends React.Component {
     }
     callPager = () => {
         let now = Date.now()
-        localStorage.setLSPager(now)
+        setLSPager(now)
         this.state.lastPagerTime = now
         this.setState({
             timerAnimationClass: 'animate__fadeIn'
@@ -165,7 +166,7 @@ class WelcomePage extends React.Component {
                                 }
 
                                 <div className="openIcons overflow-hidden">
-                                    <img alt="vrTour" src={tourImage} onClick={()=>(this.props.history.push('/vrTour'))} className='h-100 w-100 tourHolder'/>
+                                    <img alt="vrTour" src={tourImage} onClick={event =>  window.location.href='https://vr.cuki.ir/'+getFullName()} className='h-100 w-100 tourHolder'/>
                                 </div>
 
                             </div>
