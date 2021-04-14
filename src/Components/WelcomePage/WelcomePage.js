@@ -5,6 +5,9 @@ import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.gif'
 import getComName, {getFullName} from "../../functions/getComName";
 import {getLSPager, setLSPager} from "../../stores/localStorage/localStorage";
+import $ from 'jquery'
+import ding from './assets/ding.mp3'
+import * as requests from '../../ApiRequests/ApiRequests'
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -18,9 +21,16 @@ class WelcomePage extends React.Component {
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         lastPagerTime: 0,
         canCallPager: false,
-        timerAnimationClass: 'animate__fadeIn',
-        timerText: ''
-
+        timerAnimationClass: 'd-none',
+        timerText: '',
+        chefTooltipCoolDown: false,
+        chefSentences: [
+            'دارم میام خدمتتون',
+            'دندون رو جیگر بذار الان میام',
+            'سه سوته اونجام',
+            'درخواستت توی الویته',
+            'چشم، الان میام'
+        ]
     }
 
     constructor(props) {
@@ -38,33 +48,58 @@ class WelcomePage extends React.Component {
             this.state.lastPagerTime = 0;
         }
         setInterval(this.updateTimer, 1000)
+        setTimeout(() => {
+            if (this.state.canCallPager) {
+                if (this.props.tableScanned)
+                    this.chefTooltip('با لمس گارسونمون میتونی صداش بزنی!', 0, 3000)
+            }
+        }, 1500)
 
+
+    }
+
+    chefTooltip = (text, delay, duration) => {
+        if (this.state.chefTooltipCoolDown === false) {
+            this.state.chefTooltipCoolDown = true
+            let chef = $('#chef')
+            chef ? chef.tooltip('dispose')
+                :
+                console.log('cannotFindChef')
+
+            chef ? chef.tooltip({
+                title: text,
+                placement: 'bottom',
+                trigger: 'focus'
+            }) : console.log('cannotFindChef')
+
+            setTimeout(() => {
+                chef.tooltip('show')
+            }, delay)
+            setTimeout(() => {
+                chef.tooltip('hide')
+                this.state.chefTooltipCoolDown = false
+            }, duration + delay)
+        }
     }
 
 
     updateTimer = () => {
 
         let seconds = this.state.lastPagerTime / 1000 - Date.now() / 1000 + 300
+        this.setState({
+            timerText: new Date(seconds * 1000).toISOString().substr(14, 5)
+        })
         if (seconds < 1) {
             this.state.canCallPager = true
             this.setState({
                 timerAnimationClass: 'animate__fadeOut'
-
-            })
-        } else {
-
-        }
-        if (seconds < 3600 * 5) {
-            this.setState({
-                timerText: new Date(seconds * 1000).toISOString().substr(14, 5)
             })
         } else {
             this.state.canCallPager = false
             this.setState({
-                timerAnimationClass: 'animate__fadeOut'
+                timerAnimationClass: 'animate__fadeIn'
             })
         }
-
 
     }
     swipeRight = () => {
@@ -74,15 +109,31 @@ class WelcomePage extends React.Component {
         let now = Date.now()
         setLSPager(now)
         this.state.lastPagerTime = now
-        this.setState({
-            timerAnimationClass: 'animate__fadeIn'
-
-        })
+        requests.callPager(this.props.tableScanned, this.callPagerCallabck)
     }
-    togglePagerCall = () => {
-        if (this.state.canCallPager) {
-            this.callPager()
+    callPagerCallback = (res) => {
+        console.log(res)
+    }
+
+    togglePagerCall = (e) => {
+        if (this.props.tableScanned > 0) {
+            if (this.state.canCallPager) {
+                let audio = new Audio(ding)
+                audio.volume = 0.4
+                audio.play()
+                e.target.style.transform = 'scale(0.9)'
+                setTimeout(() => {
+                    e.target.style.transform = 'scale(1)'
+                }, 200)
+                this.callPager()
+            } else {
+
+                let rand = Math.floor(Math.random() * this.state.chefSentences.length)
+                this.chefTooltip(this.state.chefSentences[rand], 0, 3000)
+            }
         }
+
+
     }
 
     swipeLeft = () => {
@@ -126,12 +177,12 @@ class WelcomePage extends React.Component {
                             <div className="text-right">
                                 <span className="welcomePageDescription">اینجا میتونی غذاهای مورد علاقتو</span>
                                 <br/>
-                                <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
+                                <span
+                                    className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
                                 <br/>
                                 <span className="welcomePageDescription">حتی میتونی دونگی پرداخت کنی</span>
                             </div>
-
-                            <div className="chefImage" style={{
+                            <div id={'chef'} className="chefImage " style={{
                                 background: 'url("/img/WelcomePage/chefIcon.png")',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
@@ -140,7 +191,7 @@ class WelcomePage extends React.Component {
                                  onClick={this.togglePagerCall}
                             />
                             <div id={'pagerTimer'} ref={this.Timer}
-                                 className={'text-left IranSans w-100 pagerTimer animate__animated ' + this.state.timerAnimationClass}>{this.state.timerText?this.state.timerText:'00:00'}</div>
+                                 className={'text-left IranSans w-100 pagerTimer animate__animated ' + this.state.timerAnimationClass}>{this.state.timerText ? this.state.timerText : '00:00'}</div>
                             <br/>
                         </div>
                         <br/>
@@ -149,24 +200,29 @@ class WelcomePage extends React.Component {
                             <div className="d-flex justify-content-around">
 
                                 {this.props.foodListConverted.parts ? this.props.foodListConverted.parts.map(eachPart => {
-                                    return(
-                                        <div onClick={()=>{this.props.history.push("/category/"+eachPart)}} key={eachPart} className="openIcons">
+                                    return (
+                                        <div onClick={() => {
+                                            this.props.history.push("/category/" + eachPart)
+                                        }} key={eachPart} className="openIcons">
                                             <div className="burger" style={{
-                                                background: 'url("/img/resParts/'+eachPart+'.png")',
+                                                background: 'url("/img/resParts/' + eachPart + '.png")',
                                                 backgroundSize: '95%',
                                                 backgroundPosition: 'center',
                                                 backgroundRepeat: 'no-repeat',
                                             }}/>
-                                            <span className="burgersAndDonatDescription" >{this.state.partsPersianNames[eachPart]}</span>
+                                            <span
+                                                className="burgersAndDonatDescription">{this.state.partsPersianNames[eachPart]}</span>
                                             <br/>
                                             <br/>
                                         </div>
                                     )
-                                }): null
+                                }) : null
                                 }
 
                                 <div className="openIcons overflow-hidden">
-                                    <img alt="vrTour" src={tourImage} onClick={event =>  window.location.href='https://vr.cuki.ir/'+getFullName()} className='h-100 w-100 tourHolder'/>
+                                    <img alt="vrTour" src={tourImage}
+                                         onClick={event => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
+                                         className='h-100 w-100 tourHolder'/>
                                 </div>
 
                             </div>
@@ -182,6 +238,8 @@ class WelcomePage extends React.Component {
 const mapStateToProps = (store) => {
     return {
         foodListConverted: store.rRestaurantInfo.foodListConverted,
+        tableScanned: store.rTempData.tableScanned,
+
     }
 }
 

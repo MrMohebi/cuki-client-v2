@@ -48,6 +48,18 @@ export const signUp = (callbackFunction, name, birthday, job)=>{
         callbackFunction(res);
     })
 }
+export const callPager = (table,callbackFunction)=>{
+
+
+    let token = getReduxStore('token')
+    $.post(BASE_API_URL+ "callPager.add.php" ,{resEnglishName:resEnglishName,table}).then(res=>{
+        console.log(res)
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    },(e)=>{
+        console.log(e)
+    })
+}
 
 export const changeUserInfo = (callbackFunction, token, name, birthday, job)=>{
     $.post(BASE_API_URL+ "changeUserInfo.modify.php" ,{token:token,name:name,birthday:birthday,job:job}).then(res=>{
