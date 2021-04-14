@@ -3,7 +3,7 @@ import './css/style.css';
 import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.gif'
-import getComName from "../../functions/getComName";
+import getComName, {getFullName} from "../../functions/getComName";
 
 export const Swipeable = ({children,style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -104,7 +104,7 @@ class WelcomePage extends React.Component {
                                 }
 
                                 <div className="openIcons overflow-hidden">
-                                    <img alt="vrTour" src={tourImage} onClick={()=>(this.props.history.push('/vrTour'))} className='h-100 w-100 tourHolder'/>
+                                    <img alt="vrTour" src={tourImage} onClick={event =>  window.location.href='https://vr.cuki.ir/'+getFullName()} className='h-100 w-100 tourHolder'/>
                                 </div>
 
                             </div>
