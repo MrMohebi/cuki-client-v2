@@ -1,16 +1,16 @@
 import {__init__UserInfo} from "./__init__Reducers";
 import * as actionTypes from '../actionTypes'
 import {produce} from "immer"
-import {setCacheToken, setCachePhone} from "../../cache/cacheData"
+import {setLSToken, getLSPhone} from "../../localStorage/localStorage";
 
 export default function reducerUser (state = __init__UserInfo, action) {
     if(action.type === actionTypes.SET_TOKEN){
-        setCacheToken(action.payload.token);
+        setLSToken(action.payload.token);
         return produce(state,  stateUser_Draft =>{
             stateUser_Draft.token = action.payload.token
         });
     }else if(action.type === actionTypes.SET_PHONE){
-        setCachePhone(action.payload.phone);
+        getLSPhone(action.payload.phone);
         return produce(state, stateUser_Draft =>{
             stateUser_Draft.phone = action.payload.phone
         });

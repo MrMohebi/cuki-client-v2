@@ -99,16 +99,6 @@ export const userSetCustomerInfo = (customerInfo) =>{
     })
 }
 
-//
-// export const userConvertTrackingIdToOrderObject = (orderObjects) =>{
-//     store.dispatch({
-//         type: actionTypes.CONVERT_TRACKING_ID_TO_ORDER_OBJECT,
-//         payload:{
-//             orderObjects
-//         }
-//     })
-// }
-//
 
 export const setTrackingId = (trackingId) =>{
     store.dispatch({
@@ -242,3 +232,12 @@ export const removeClosedBanner = (bannerName) =>{
     })
 }
 
+
+export const setResEnglishName = (resEnglishName) =>{
+    store.dispatch({
+        type: actionTypes.SET_RES_ENGLISH_NAME,
+        payload:{
+            resEnglishName
+        }
+    })
+}

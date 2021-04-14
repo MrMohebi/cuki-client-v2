@@ -18,16 +18,14 @@ import OpenOrders from "./Components/OpenOrdersPage/OpenOrders";
 import EachOpenOrderDetails from "./Components/EachOpenOrderDetails/EachOpenOrderDetails";
 import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOrderHistoryDetails";
 import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
-import Tour360 from "./Components/Tour360page/Tour360";
 
 
-import {getCacheToken, getCachePhone} from "./stores/cache/cacheData"
+import {getLSPhone, getLSToken} from "./stores/localStorage/localStorage";
 import * as actions from "./stores/reduxStore/actions"
 import * as requests from "./ApiRequests/ApiRequests";
 import Banner from "./Components/Banner/Banner";
 import isResOpen from "./functions/isResOpen";
-
-
+import {getFullName} from "./functions/getComName";
 
 
 function App() {
@@ -42,8 +40,8 @@ function App() {
   }
 
   useSelector((state)=>{
-    const cacheToken = getCacheToken()
-    const cachePhone = getCachePhone()
+    const cacheToken = getLSToken()
+    const cachePhone = getLSPhone()
     if(state.rUserInfo.token !== cacheToken && cacheToken !== undefined && cacheToken.length > 10){
       actions.userSetToken(cacheToken);
       getOpenOrders(cacheToken)
@@ -71,9 +69,9 @@ function App() {
           <Banner color={'#d62828'} closable={false} text={'رستوران تعطیل است'}/>
       }
 
-      <BrowserRouter>
+      <BrowserRouter basename={getFullName()}>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway", '/vrTour']} component={BottomNavBar}/>
+        <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway"]} component={BottomNavBar}/>
         <Route path='/main' component={WelcomePage}/>
         <Route exact path='/category/:part' component={CategoryPage}/>
         <Route exact path='/category/:part/:category' component={FoodListPage}/>
@@ -87,7 +85,6 @@ function App() {
         <Route path='/openOrders' component={OpenOrders}/>
         <Route path='/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
         <Route path='/likedFoods' component={LikedFoods}/>
-        <Route path='/vrTour' component={Tour360}/>
       </BrowserRouter>
     </React.Fragment>
   );

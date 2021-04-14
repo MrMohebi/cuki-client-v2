@@ -5,7 +5,7 @@ import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import {connect} from 'react-redux';
 import * as actions from '../../stores/reduxStore/actions';
 import {Snackbar} from "@material-ui/core"
-
+import getComName from "../../functions/getComName";
 
 function url2paramsArray(search){
     return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
@@ -36,6 +36,7 @@ class SplashScreen extends React.Component{
         this.props.setTableScanned(this.urlParams["table"]?this.urlParams["table"]:0)
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
             this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+            this.props.setResEnglishName(getComName())
             this.props.history.push("/main");
         }else{
             this.setOpenSnackbar(true)
@@ -72,6 +73,7 @@ const mapDispatchToProps = () => {
     return {
         setFoodListConverted:actions.setFoodListConverted,
         setTableScanned:actions.setTableScanned,
+        setResEnglishName:actions.setResEnglishName,
     }
 }
 
