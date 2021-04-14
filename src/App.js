@@ -18,7 +18,6 @@ import OpenOrders from "./Components/OpenOrdersPage/OpenOrders";
 import EachOpenOrderDetails from "./Components/EachOpenOrderDetails/EachOpenOrderDetails";
 import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOrderHistoryDetails";
 import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
-import Tour360 from "./Components/Tour360page/Tour360";
 
 
 import {getLSPhone, getLSToken} from "./stores/localStorage/localStorage";
@@ -72,7 +71,7 @@ function App() {
 
       <BrowserRouter basename={getFullName()}>
         <Route exact path='/' component={SplashScreen}/>
-        <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway", '/vrTour']} component={BottomNavBar}/>
+        <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway"]} component={BottomNavBar}/>
         <Route path='/main' component={WelcomePage}/>
         <Route exact path='/category/:part' component={CategoryPage}/>
         <Route exact path='/category/:part/:category' component={FoodListPage}/>
@@ -86,7 +85,6 @@ function App() {
         <Route path='/openOrders' component={OpenOrders}/>
         <Route path='/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
         <Route path='/likedFoods' component={LikedFoods}/>
-        <Route path='/vrTour' component={Tour360}/>
       </BrowserRouter>
     </React.Fragment>
   );
