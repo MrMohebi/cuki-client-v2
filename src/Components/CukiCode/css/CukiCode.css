@@ -1,0 +1,11 @@
+.codeCukiIcon{
+    width: 180px;
+    height: 180px;
+}
+.codeButton{
+    color: red;
+    background-color: #bc845e !important;
+}
+.codeButton span {
+    color: white;
+}

@@ -18,6 +18,7 @@ import OpenOrders from "./Components/OpenOrdersPage/OpenOrders";
 import EachOpenOrderDetails from "./Components/EachOpenOrderDetails/EachOpenOrderDetails";
 import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOrderHistoryDetails";
 import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
+import CukiCode from "./Components/CukiCode/CukiCode";
 
 
 import {getLSPhone, getLSToken} from "./stores/localStorage/localStorage";
@@ -66,7 +67,9 @@ function App() {
       {useSelector(state=>(state.rTempData.isResOpen && (state.rRestaurantInfo.restaurantInfo.status === "active")))  ?
           null
           :
-          <Banner color={'#d62828'} closable={false} text={'رستوران تعطیل است'}/>
+
+          <div></div>
+          // <Banner color={'#d43737'} closable={false} text={'رستوران تعطیل است'}/>
       }
 
       <BrowserRouter basename={getFullName()}>
@@ -85,6 +88,7 @@ function App() {
         <Route path='/openOrders' component={OpenOrders}/>
         <Route path='/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
         <Route path='/likedFoods' component={LikedFoods}/>
+        <Route path='/code' component={CukiCode}/>
       </BrowserRouter>
     </React.Fragment>
   );
