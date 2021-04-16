@@ -42,6 +42,7 @@ class WelcomePage extends React.Component {
         if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
             this.props.history.push("/");
         }
+        console.log(getLSPager())
         if (getLSPager()) {
             this.state.lastPagerTime = parseInt(getLSPager())
         } else {
@@ -54,7 +55,6 @@ class WelcomePage extends React.Component {
                     this.chefTooltip('با لمس گارسونمون میتونی صداش بزنی!', 0, 3000)
             }
         }, 1500)
-
 
     }
 
@@ -92,7 +92,7 @@ class WelcomePage extends React.Component {
         if (seconds < 1) {
             this.state.canCallPager = true
             this.setState({
-                timerAnimationClass: 'animate__fadeOut'
+                timerAnimationClass: 'd-none'
             })
         } else {
             this.state.canCallPager = false
@@ -100,7 +100,6 @@ class WelcomePage extends React.Component {
                 timerAnimationClass: 'animate__fadeIn'
             })
         }
-
     }
     swipeRight = () => {
         this.props.history.push("/bill")
@@ -116,7 +115,7 @@ class WelcomePage extends React.Component {
     }
 
     togglePagerCall = (e) => {
-        if (this.props.tableScanned > 0) {
+        if (this.props.tableScanned > 0||getLSPager()/1000> (Date.now()/1000)-300) {
             if (this.state.canCallPager) {
                 let audio = new Audio(ding)
                 audio.volume = 0.4
