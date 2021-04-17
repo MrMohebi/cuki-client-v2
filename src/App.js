@@ -68,8 +68,7 @@ function App() {
           null
           :
 
-          <div></div>
-          // <Banner color={'#d43737'} closable={false} text={'رستوران تعطیل است'}/>
+          <Banner color={'#d43737'} closable={false} text={'رستوران تعطیل است'}/>
       }
 
       <BrowserRouter basename={getFullName()}>
