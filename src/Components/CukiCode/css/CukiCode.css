@@ -3,9 +3,19 @@
     height: 180px;
 }
 .codeButton{
+    transition: all 0.2s ease !important;
     color: red;
+    width: 140px;
     background-color: #bc845e !important;
 }
 .codeButton span {
     color: white;
+}
+.cukiCodeSnackbar div{
+    background-color: #c21313;
+    text-align: center;
+    justify-content: center;
+}.cukiCodeSnackbar div div{
+    font-family: AppIranSans;
+    text-align: center;
 }

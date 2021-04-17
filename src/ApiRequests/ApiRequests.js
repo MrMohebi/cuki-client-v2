@@ -32,7 +32,11 @@ export const sendVCode = (callbackFunction,phone)=>{
         callbackFunction(res);
     })
 }
-
+export const getResByCode = (resCode,callbackFunction)=>{
+    $.post(BASE_API_URL + "getResNameByCode.fetch.php",{resCode}).then(res=>{
+        callbackFunction(res)
+    })
+}
 
 export const checkCode = (callbackFunction, phone, vCode)=>{
     $.post(BASE_API_URL+ "login.modify.php" ,{phone:phone,vCode:vCode}).then(res=>{
