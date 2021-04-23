@@ -41,9 +41,7 @@ class BillPage extends React.Component {
 
     sumTotalOrderPrice = () => {
         let sum = 0;
-        this.props.orderList.map(eachFood => {
-            sum += eachFood.totalPrice
-        })
+        this.props.orderList.map(eachFood => void (sum += eachFood['totalPrice']))
         return sum;
     }
 

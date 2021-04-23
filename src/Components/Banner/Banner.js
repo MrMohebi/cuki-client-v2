@@ -11,12 +11,12 @@ props:
 
 function Banner(props) {
     const Banner = useRef(null)
-    const [closedClass,setClosedClass] = useState('')
+    const [closedClass] = useState('')
     return(
         <div ref={Banner} className={'w-100 d-flex justify-content-between bannerContainer align-items-center' + closedClass} style={{backgroundColor:props.color}} >
             {props.closable?
                 <svg  onClick={()=>{
-                    Banner.current.style.height = '0px'
+                    Banner.current['style'].height = '0px'
                 }} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-x "
                       viewBox="0 0 16 16">
                     <path
@@ -31,9 +31,9 @@ function Banner(props) {
             }
 
             <span className={'bannerText'} onClick={
-                props.onClickPath?
+                props['onClickPath']?
                     ()=>{
-                        props.history.push(props.onClickPath)
+                        props.history.push(props['onClickPath'])
                     }
                     :
                     ()=>{}

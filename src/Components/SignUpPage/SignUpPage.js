@@ -65,11 +65,7 @@ class SignUpPage extends React.Component {
                             <div className='signUpCukiLogo'
                                  style={{marginLeft: '10px', background: `url(${logo})`, backgroundSize: 'cover'}}/>
                         </div>
-                        <TextField onChange={(e) => {
-                            this.state.name = e.target.value
-                        }} id="standard-basic" className='defaultInputUi' label="اسم و فامیل"/>
-
-
+                        <TextField onChange={e => {this.setState({name:e.target.value})}} id="standard-basic" className='defaultInputUi' label="اسم و فامیل"/>
                         <TextField onFocus={()=>{
                             document.getElementsByClassName('DatePicker__input')[0].focus()
                         }}  id="standard-basic" value={this.state.birthdayInputValue} className='defaultInputUi' label="تاریخ تولد"/>
@@ -80,9 +76,7 @@ class SignUpPage extends React.Component {
                             shouldHighlightWeekends
                             locale="fa"
                         />
-                        <TextField onChange={(e) => {
-                            this.state.job = e.target.value
-                        }} id="standard-basic" className='defaultInputUi' label="شغل"/>
+                        <TextField onChange={e => {this.setState({job:e.target.value})}} id="standard-basic" className='defaultInputUi' label="شغل"/>
 
                         <div onClick={this.signUpRequest} className={'signupSubmitButton IranSansLight'}>تایید
                         </div>

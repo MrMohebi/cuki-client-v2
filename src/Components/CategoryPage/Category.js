@@ -101,7 +101,7 @@ class CategoryPage extends React.Component {
                                         <NavLink key={persianName} to={'/category/'+this.props.match.params["part"]+'/'+eachCategory} className='categoryPageEachCategoryContainer'>
                                             <div  className="categoryPageEachCategory">
                                                 <div className="categoryPageEachCategoryImage" style={{
-                                                    background: 'url(/img/categories/'+ `${logo}`+'.png)',
+                                                    background: 'url(/img/categories/'+ logo +'.png)',
                                                     backgroundSize: 'cover',
                                                     backgroundPosition: 'center',
                                                     backgroundRepeat: 'no-repeat'

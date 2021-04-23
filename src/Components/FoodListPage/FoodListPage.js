@@ -7,7 +7,6 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import * as RandomColor from '../../functions/RandomColor';
 import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
-import tf from "./img/testFood.png";
 import Comments from "../CommetnsSection/Comments";
 import foodsListAdaptor from "../../functions/foodsListAdaptor";
 import * as requests from "../../ApiRequests/ApiRequests";
@@ -71,7 +70,6 @@ class FoodListPage extends Component {
         if (element) {
             setTimeout(() => {
                 element.style.transform = 'scale(1)';
-
             }, 200)
         }
     }
@@ -84,7 +82,7 @@ class FoodListPage extends Component {
     checkForMove = (e) => {
         let threshold = 8;
         if (e.pageX > this.state.firstPointerPosition.x + threshold || e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold || e.pageY < this.state.firstPointerPosition.y - threshold) {
-            this.state.allowToShow = false;
+            this.setState({allowToShow:false})
         }
     }
 
@@ -295,7 +293,7 @@ class FoodListPage extends Component {
                                    </div>
 
                                    <div onScroll={() => {
-                                       this.state.allowToShow = false
+                                       this.setState({allowToShow:false})
                                    }}
                                         className='foodListPageContainer'>
                                        <div className='heightFitContent'>
@@ -320,7 +318,7 @@ class FoodListPage extends Component {
                                                                     //     this.orderScripts(eachFood.foods_id);
                                                                     // }
                                                                 }
-                                                                this.state.allowToShow = false
+                                                                this.setState({allowToShow:false})
                                                                 if (!e.target.classList.contains('decrease') && eachFood.status === 'in stock') {
                                                                     this.orderScripts(eachFood.foods_id);
                                                                     if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
@@ -335,14 +333,18 @@ class FoodListPage extends Component {
                                                                 if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
                                                                     this.pressAnimation('food' + eachFood['foods_id'])
                                                                 }
-                                                                this.state.firstPointerPosition.x = e.targetTouches[0].pageX
-                                                                this.state.firstPointerPosition.y = e.targetTouches[0].pageY
-                                                                this.state.allowToShow = true
+                                                                this.setState({
+                                                                    firstPointerPosition:{
+                                                                        x: e.targetTouches[0].pageX,
+                                                                        y: e.targetTouches[0].pageY
+                                                                    }
+                                                                })
+                                                                this.setState({allowToShow:true})
                                                                 timeout = setTimeout(() => {
                                                                     if (this.state.allowToShow) {
                                                                         this.foodDetails(eachFood);
                                                                     }
-                                                                    this.state.allowToShow = false
+                                                                    this.setState({allowToShow:false})
                                                                     clearTimeout(timeout)
                                                                 }, 400)
 
@@ -352,7 +354,7 @@ class FoodListPage extends Component {
                                                                 this.checkForMove(e)
                                                             }}
                                                             onTouchEnd={() => {
-                                                                this.state.allowToShow = false
+                                                                this.setState({allowToShow:false})
                                                                 this.releaseAnimation('food' + eachFood['foods_id'])
                                                             }}
                                                        >

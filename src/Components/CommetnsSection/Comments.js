@@ -13,18 +13,17 @@ const ReactSwal = withReactContent(Swal)
 
 function Comments(props) {
     let [lastCommentDate, setLastCommentDate] = useState(Math.floor(Date.now() / 1000))
-    let [commentsDiv, setCommentsDiv] = useState([<div/>])
+    let [commentsDiv] = useState([<div key={1}/>])
     let [newCommentsList, setNewCommentsList] = useState([])
     let [commentsFilled, setCommentsFilled] = useState(false)
     let [canLeaveComment, setCanLeaveComment] = useState(false)
-    let [commentInputClass, setCommentInputClass] = useState(' d-none')
+    let [commentInputClass] = useState(' d-none')
     let [executedUseEffectTimes, setExecutedUseEffectTimes] = useState(0)
     let [commentBody, setCommentBody] = useState('')
 
     useEffect(() => {
         if (executedUseEffectTimes < 1) {
             getComments()
-            setExecutedUseEffectTimes(executedUseEffectTimes += 1)
         }
         $('#cannotLeaveComment').tooltip({
             title:'باید توی سه روز گذشته غذا رو سفارش داده باشی'
@@ -33,6 +32,7 @@ function Comments(props) {
 
 
     let getComments = () => {
+        setExecutedUseEffectTimes(executedUseEffectTimes += 1)
         requests.getCommentsByFoodId(callbackGetComments, props.foodId, lastCommentDate, 10)
     }
 
@@ -92,7 +92,7 @@ function Comments(props) {
     let swipes = useSwipeable({onSwipedUp: commentsFullPage, onSwipedDown: commentsMiniPage})
 
     return (
-        <div key={Math.floor(Math.random() *10000)} className='foodDetailsComments'>
+        <div className='foodDetailsComments'>
             {canLeaveComment ?
                 <div onClick={() => {
                     commentsFullPage()
@@ -105,7 +105,7 @@ function Comments(props) {
                 </div>
                 :
                 <div id='cannotLeaveComment' className='cannotComment'
-                onClick={(e)=>{
+                onClick={()=>{
                     $('#cannotLeaveComment').tooltip('show')
 
                     setTimeout(()=>{
@@ -132,7 +132,7 @@ function Comments(props) {
                 <textarea onChange={(e) => {
                     setCommentBody(e.target.value)
                 }} className={'newCommentInput ' + commentInputClass}/>
-                <span className={'sendCommentButton ' + commentInputClass} onClick={(e) => {
+                <span className={'sendCommentButton ' + commentInputClass} onClick={() => {
                     sendComment()
                 }}>ارسال</span>
                 {
@@ -144,8 +144,7 @@ function Comments(props) {
                 }
                 {
                     commentsDiv.concat(
-                        newCommentsList.map(eComment => {
-                            return (
+                        newCommentsList.map(eComment => (
                                 <div key={eComment['commented_date']} className='eachComment'>
                                     <span className='eachCommentName'>{eComment.name}</span>
                                     <span
@@ -153,10 +152,9 @@ function Comments(props) {
                                     <span className='eachCommentContent'>{eComment.body}</span>
                                 </div>
                             )
-                        })
+                        )
                     )
                 }
-
             </div>
         </div>
     );

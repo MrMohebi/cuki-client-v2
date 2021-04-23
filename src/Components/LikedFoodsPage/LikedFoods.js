@@ -8,7 +8,6 @@ import * as RandomColor from '../../functions/RandomColor'
 import {useSwipeable} from 'react-swipeable';
 import * as actions from "../../stores/reduxStore/actions";
 import moreOrderedFoods from "../../functions/moreOrderedFoods";
-import {Badge} from "@material-ui/core";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -21,7 +20,9 @@ function convertFoodIdToFoodInfo (foodsIdList, foodsList){
         foodsIdList.map(eFoodId=>{
             if(eFoodId === eFood.foods_id)
                 result.push(eFood)
+            return null
         })
+        return null
     })
     return result
 }
@@ -163,15 +164,6 @@ class LikedFoods extends Component {
                             {/*}*/}
 
 
-
-
-
-
-
-
-
-
-
                             {
                                 this.state.foodsList.map(eachFood => {
                                     let colors = RandomColor.RandomColor(eachFood.foods_id);
@@ -193,7 +185,7 @@ class LikedFoods extends Component {
                                                      //     this.orderScripts(eachFood.foods_id);
                                                      // }
                                                  }
-                                                 this.state.allowToShow = false
+                                                 this.setState({allowToShow:false})
                                                  if (!e.target.classList.contains('decrease')){
                                                      this.orderScripts(eachFood.foods_id);
                                                      if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
@@ -201,20 +193,16 @@ class LikedFoods extends Component {
                                                      }
                                                  }
 
-
                                              }}
 
                                              onTouchStart={(e) => {
                                                  if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
                                                      this.pressAnimation('food' + eachFood['foods_id'])
                                                  }
-
-
                                              }}
 
-
                                              onTouchEnd={() => {
-                                                 this.state.allowToShow = false
+                                                 this.setState({allowToShow:false})
                                                  this.releaseAnimation('food'+eachFood['foods_id'])
                                              }}
                                         >

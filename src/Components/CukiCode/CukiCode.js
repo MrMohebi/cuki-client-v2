@@ -4,7 +4,7 @@ import * as requests from '../../ApiRequests/ApiRequests'
 import './css/CukiCode.css';
 import * as PropTypes from "prop-types";
 
-function Alert(props) {
+function Alert() {
     return null;
 }
 
@@ -86,7 +86,7 @@ class CukiCode extends React.Component {
                                           if (isNaN(parseInt(e.target.value[e.target.value.length - 1]))) {
                                               e.target.value = e.target.value.slice(0, -1)
                                           } else {
-                                              this.state.code = e.target.value
+                                              this.setState({code:e.target.value})
                                           }
                                       }}
                                       variant="outlined"

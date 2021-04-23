@@ -47,7 +47,7 @@ let markerIcon = L.icon({
 
 function MarkerToolTip() {
     let [position, setPosition] = useState(coordinates)
-    const map = useMapEvents({
+    useMapEvents({
         click: (e) => {
             coordinates = [e.latlng['lat'], e.latlng['lng']]
             setPosition(e.latlng)
@@ -257,9 +257,9 @@ class PayWay extends React.Component{
                 title: 'تمومه',
                 icon: 'success',
                 confirmButtonText: 'اوکیه',
-                html: "خب سفارشت رو ثبت کردیم؛" +  '<br/>' +
-                    " (: یکم دیگه آمادس " +  '<br/>' +
-                    " شماره سفارش: " + `<span style='font-weight: bold'>${res.data.trackingId}</span>`
+                html: "خب سفارشت رو ثبت کردیم؛<br/>" +
+                    "(: یکم دیگه آمادس<br/>" +
+                     `<span style='font-weight: bold'>${res.data.trackingId}</span> :شماره سفارش`
             }).then(() => {
                 this.getOpenOrders()
                 if(this.state.onlineOrCash === "cash"){

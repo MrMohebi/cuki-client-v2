@@ -100,6 +100,7 @@ class DongiPage extends React.Component {
                                     number: newFoodNumber
                                 }
                             }
+                            return null
                         })
                         if (!flagUpdate) {
                             newSavedPaidItems.push({
@@ -108,12 +109,14 @@ class DongiPage extends React.Component {
                                 number: ePaidFood.number
                             })
                         }
+                        return null
                     })
                 }
                 this.setState({
                     paidList: newSavedPaidItems,
                     foodsList: this.createFoodsList(this.state.orderList, newSavedPaidItems),
                 })
+                return null
             })
         } else {
             console.log("Some thing went wrong during fetching Paid Items")
@@ -136,6 +139,7 @@ class DongiPage extends React.Component {
                         isUpdatedFlag = true
                         newFoodInfo = {...draft[index]};
                     }
+                    return null
                 })
                 if (!isUpdatedFlag) {
                     let newSelectedFood = produce(this.state.orderList.filter(eOFood => eOFood.id === foodId)[0], draft => {
@@ -165,6 +169,7 @@ class DongiPage extends React.Component {
                             draft.splice(index, 1)
                         }
                     }
+                    return null
                 })
             })),
             foodsList: this.createFoodsList(this.state.orderList, this.state.paidList, newFoodInfo),
@@ -172,7 +177,7 @@ class DongiPage extends React.Component {
     }
 
     createFoodsList = (orderList, paidList, newFoodInfo = {id: -1}) => {
-        this.state.notPaidList = [];
+        this.setState({notPaidList:[]})
         return orderList.map(eFood => {
             let paidFood = paidList.filter(ePFood => ePFood.id === eFood.id)[0]
             let selectedFood = this.state.selectedToPay.filter(eSFood => eSFood.id === eFood.id)[0]
@@ -243,7 +248,6 @@ class DongiPage extends React.Component {
                 :
                     <div key={eFood.id} id={eFood.id} style={{height: '60px'}}
                          className='eachDongContainer position-relative w-100'>
-
                         <div className='eachDongContainerHolders'>
                             <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
                             <span className='IranSans DongiPayText  font-weight-bold'> </span>
@@ -251,7 +255,6 @@ class DongiPage extends React.Component {
                             <span className='IranSans paidItemsText  '>پرداخت شده </span>
                             <span className=' font-weight-bold'>{totalPrice}T</span>
                         </div>
-
                     </div>
             )
         })
@@ -259,18 +262,13 @@ class DongiPage extends React.Component {
 
     sumFoodPrice = () => {
         let total = 0;
-        this.state.selectedToPay.map(eSFood => {
-                total += (eSFood.number * eSFood['priceAfterDiscount'])
-            }
-        )
+        this.state.selectedToPay.map(eSFood => void (total += (eSFood.number * eSFood['priceAfterDiscount'])))
         return total
     }
 
     sumFoodPriceNotPaidList = () => {
         let total = 0;
-        this.state.notPaidList.map(eSFood => {
-            total += (eSFood.number * eSFood['priceAfterDiscount'])
-        })
+        this.state.notPaidList.map(eSFood => void (total += (eSFood.number * eSFood['priceAfterDiscount'])))
         return total
     }
 
@@ -328,10 +326,9 @@ class DongiPage extends React.Component {
                 } else if (resultSwalPay.isDenied) {
                     if (navigator.clipboard !== undefined) {
                         navigator.clipboard.writeText(
-                            "لینک پرداخت دونگ کوکی" + "\n" +
-                            "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" + "\n" +
-                            " بزن روی لینک پایینی بری تو درگاه " + "\n"
-                            + res.data.url).then(() => {
+                            "لینک پرداخت دونگ کوکی\n\n"  +
+                            "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" +
+                            "بزن روی لینک پایین تا هدایت شی درگاه پرداخت\n" + res.data.url ).then(() => {
                             ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
                         })
                     } else {

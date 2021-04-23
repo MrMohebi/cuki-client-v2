@@ -5,12 +5,13 @@ export default function moreOrderedFoods(userHistoryOrders, allFoodsArray) {
     let draftUserHistoryOrders = [...userHistoryOrders]
     let draftAllFoodsArray = [...allFoodsArray]
     draftUserHistoryOrders.map(eachOrder=>{
-        JSON.parse(eachOrder['order_list']).map(eachFood=>{
+        return JSON.parse(eachOrder['order_list']).map(eachFood=>{
             if(allOrderedFoodTimes[eachFood.id]){
                 allOrderedFoodTimes[eachFood.id] += eachFood.number
             }else {
                 allOrderedFoodTimes[eachFood.id] = eachFood.number
             }
+            return null
         })
     })
 

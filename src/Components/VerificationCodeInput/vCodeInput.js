@@ -39,8 +39,7 @@ class VerificationCodeInput extends React.Component {
         if (e.keyCode === 8) {
             if (e.target.value === '') {
                 let backid = parseInt(e.target.id) - 1;
-                $("#" + backid).val('')
-                $("#" + backid).focus()
+                $("#" + backid).val('').focus()
             }
         }
     }
@@ -52,18 +51,14 @@ class VerificationCodeInput extends React.Component {
                 <input ref={input === 1? (input) => { this.nameInput = input; }:''}  autoFocus={input === 1} maxLength="1" autoComplete="off" key={input} id={input} type="number" onKeyDown={this.onKeyDown} onInput={this.goNext} onClick={this.emptyclick} style={eachInputStyle}/>
             )
         })
-
         return (
-
-            <div>
+            <>
                 {listofinputs}
                 {/*<form onSubmit={this.oncomplete}>*/}
                 {/*    <br/>*/}
                 {/*    <button id="buttons"  className="btn" onClick={this.oncomplete} style={buttonStyle}> انجام</button>*/}
                 {/*</form>*/}
-
-            </div>
-
+            </>
         )
     }
 }
@@ -83,15 +78,4 @@ const eachInputStyle = {
     margin:"0 5px 0 5px",
     maxlength:"1",
     appearance:"none"
-}
-const buttonStyle = {
-    backgroundColor: "#FAA21B",
-    borderRadius: "25px",
-    width: "90px",
-    height: "34px",
-    marginTop: "10px",
-    fontFamily: "IRANSansMobile_Light",
-    paddingTop: "6px",
-    color:'white',
-    fontWeight:'bold'
 }

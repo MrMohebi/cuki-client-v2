@@ -1,5 +1,6 @@
 // this function will convert foods array response from api to below format :
 
+/*
 const apiFoodsArraySample = [
     {
         delivery_time: "2",
@@ -69,6 +70,7 @@ const convertedInfoSample = {
             foodList:[{name:"", price:""}, ]},
     }
 }
+*/
 
 // ************************************************************
 // ************************************************************
@@ -106,7 +108,7 @@ export default function foodsListAdaptor (apiFoodsList){
             }
         }
         // add food
-        final[eFood.group.type][eFood.group.englishName].foodList.push(eFood)
+        return final[eFood.group.type][eFood.group.englishName].foodList.push(eFood)
     })
     return final;
 }

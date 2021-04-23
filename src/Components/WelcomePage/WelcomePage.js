@@ -42,10 +42,11 @@ class WelcomePage extends React.Component {
         if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
             this.props.history.push("/");
         }
-        if (getLSPager()) {
-            this.state.lastPagerTime = parseInt(getLSPager())
+        let lSPager = getLSPager()
+        if (lSPager) {
+            this.setState({lastPagerTime:parseInt(lSPager)})
         } else {
-            this.state.lastPagerTime = 0;
+            this.setState({lastPagerTime:parseInt(lSPager)})
         }
         setInterval(this.updateTimer, 1000)
         setTimeout(() => {
@@ -59,7 +60,7 @@ class WelcomePage extends React.Component {
 
     chefTooltip = (text, delay, duration) => {
         if (this.state.chefTooltipCoolDown === false) {
-            this.state.chefTooltipCoolDown = true
+            this.setState({chefTooltipCoolDown:true})
             let chef = $('#chef')
             chef ? chef.tooltip('dispose')
                 :
@@ -76,7 +77,7 @@ class WelcomePage extends React.Component {
             }, delay)
             setTimeout(() => {
                 chef.tooltip('hide')
-                this.state.chefTooltipCoolDown = false
+                this.setState({chefTooltipCoolDown:false})
             }, duration + delay)
         }
     }
@@ -89,13 +90,13 @@ class WelcomePage extends React.Component {
             timerText: new Date(seconds * 1000).toISOString().substr(14, 5)
         })
         if (seconds < 1) {
-            this.state.canCallPager = true
             this.setState({
+                canCallPager:true,
                 timerAnimationClass: 'd-none'
             })
         } else {
-            this.state.canCallPager = false
             this.setState({
+                canCallPager:false,
                 timerAnimationClass: 'animate__fadeIn'
             })
         }
@@ -106,10 +107,12 @@ class WelcomePage extends React.Component {
     callPager = () => {
         let now = Date.now()
         setLSPager(now)
-        this.state.lastPagerTime = now
+        this.setState({lastPagerTime:now})
         requests.callPager(this.props.tableScanned, this.callPagerCallback)
     }
+
     callPagerCallback = (res) => {
+        console.log(res);
     }
 
     togglePagerCall = (e) => {
@@ -218,7 +221,7 @@ class WelcomePage extends React.Component {
 
                                 <div className="openIcons overflow-hidden">
                                     <img alt="vrTour" src={tourImage}
-                                         onClick={event => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
+                                         onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
                                          className='h-100 w-100 tourHolder'/>
                                 </div>
 

@@ -51,9 +51,6 @@ class LoginVCode extends React.Component {
         return this.props.token.length > 20 && this.props.phone.length === 11;
     }
 
-    onInputChange(stateToChange, value) {
-        this.state[stateToChange] = value
-    }
 
     sendCode = (phone) => {
         this.props.setTempPhone(phone);
@@ -124,7 +121,7 @@ class LoginVCode extends React.Component {
                                         <span className='IranSansLight LoginPhoneDetailHolder'>تا با ارسال کد ورود صفحه شخصیت امنیت داشته باشه</span>
                                         <TextField type='number' className='LoginPhoneInput' onChange={(e) => {
                                             if (parseInt(e.target.value).toString() !== "NaN" && e.target.value.length < 10) {
-                                                this.state.userPhoneNumber = '09' + e.target.value.toString()
+                                                this.setState({userPhoneNumber:'09' + e.target.value.toString()})
                                             } else {
                                                 e.target.value = e.target.value.slice(0, -1)
                                             }
@@ -134,7 +131,7 @@ class LoginVCode extends React.Component {
                                                 })
                                                 this.SubmitButton.current.style.opacity = 1
                                                 this.SubmitButton.current.style.pointerEvents = 'all'
-                                                this.state.userPhoneNumber = '09' + e.target.value.toString()
+                                                this.setState({userPhoneNumber:'09' + e.target.value.toString()})
                                             } else if (this.state.buttonAnimationClasses !== '') {
                                                 this.setState({
                                                     buttonAnimationClasses: 'animate__fadeOutDown'

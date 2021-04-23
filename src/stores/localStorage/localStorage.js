@@ -2,7 +2,6 @@ import getComName from "../../functions/getComName";
 
 let ComName = getComName()
 
-const lSNameOrderList = ComName+"OrderList_010312"
 const lSNameToken = ComName+"Token_010312"
 const lSNamePhone = ComName+"Phone_010312"
 const lSNamePager = ComName+"Pager_010312"
