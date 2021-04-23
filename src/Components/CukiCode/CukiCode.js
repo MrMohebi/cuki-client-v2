@@ -24,9 +24,9 @@ class CukiCode extends React.Component {
 
     }
     getCodeCallback = (res) => {
-        console.log(res.statusCode)
         if (res.statusCode === 200){
-            window.location.replace("https://cuki.ir/c-"+res.data.resEnglishName)
+            window.location.href = "/c-"+res.data.resEnglishName
+            // this.props.history.replace("/c-"+res.data.resEnglishName)
         }else{
             this.setState({
                 submitButtonInside: 'مشاهده مجموعه',

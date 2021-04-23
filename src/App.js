@@ -26,7 +26,7 @@ import * as actions from "./stores/reduxStore/actions"
 import * as requests from "./ApiRequests/ApiRequests";
 import Banner from "./Components/Banner/Banner";
 import isResOpen from "./functions/isResOpen";
-import {getFullName} from "./functions/getComName";
+import getComName, {getFullName} from "./functions/getComName";
 
 
 function App() {
@@ -64,16 +64,22 @@ function App() {
 
   return (
     <React.Fragment>
-      {useSelector(state=>(state.rTempData.isResOpen && (state.rRestaurantInfo.restaurantInfo.status === "active")))  ?
-          null
-          :
-
-          <Banner color={'#d43737'} closable={false} text={'رستوران تعطیل است'}/>
-      }
 
       <BrowserRouter basename={getFullName()}>
-        <Route exact path='/' component={SplashScreen}/>
+        <Route exact path='/'  component={ getComName() === "notSet" ?  CukiCode : SplashScreen}/>
         <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway"]} component={BottomNavBar}/>
+
+        {/* is res open banner*/}
+        {useSelector(state=>(
+            state.rTempData.isResOpen && (state.rRestaurantInfo.restaurantInfo.status === "active") ?
+                null
+                :
+                window.location.pathname === "/" ?
+                    null
+                    :
+                    <Banner color={'#d43737'} closable={false} text={'رستوران تعطیل است'}/>
+          ))}
+
         <Route path='/main' component={WelcomePage}/>
         <Route exact path='/category/:part' component={CategoryPage}/>
         <Route exact path='/category/:part/:category' component={FoodListPage}/>
@@ -87,7 +93,6 @@ function App() {
         <Route path='/openOrders' component={OpenOrders}/>
         <Route path='/eachOpenOrderDetails' component={EachOpenOrderDetails}/>
         <Route path='/likedFoods' component={LikedFoods}/>
-        <Route path='/code' component={CukiCode}/>
       </BrowserRouter>
     </React.Fragment>
   );

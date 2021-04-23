@@ -42,7 +42,6 @@ class WelcomePage extends React.Component {
         if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
             this.props.history.push("/");
         }
-        console.log(getLSPager())
         if (getLSPager()) {
             this.state.lastPagerTime = parseInt(getLSPager())
         } else {
@@ -108,10 +107,9 @@ class WelcomePage extends React.Component {
         let now = Date.now()
         setLSPager(now)
         this.state.lastPagerTime = now
-        requests.callPager(this.props.tableScanned, this.callPagerCallabck)
+        requests.callPager(this.props.tableScanned, this.callPagerCallback)
     }
     callPagerCallback = (res) => {
-        console.log(res)
     }
 
     togglePagerCall = (e) => {

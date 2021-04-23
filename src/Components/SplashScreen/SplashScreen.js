@@ -34,7 +34,6 @@ class SplashScreen extends React.Component{
 
     goMainPage = (response) =>{
         this.props.setTableScanned(this.urlParams["table"]?this.urlParams["table"]:0)
-        console.log(this.urlParams["table"]?this.urlParams["table"]:0)
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
             this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
             this.props.setResEnglishName(getComName())
