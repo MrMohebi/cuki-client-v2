@@ -43,6 +43,7 @@ class WelcomePage extends React.Component {
             this.props.history.push("/");
         }
         let lSPager = getLSPager()
+        lSPager = lSPager > 0 ? lSPager : 0
         if (lSPager) {
             this.setState({lastPagerTime:parseInt(lSPager)})
         } else {
@@ -84,8 +85,7 @@ class WelcomePage extends React.Component {
 
 
     updateTimer = () => {
-
-        let seconds = this.state.lastPagerTime / 1000 - Date.now() / 1000 + 300
+        let seconds = (this.state.lastPagerTime / 1000 - Date.now() / 1000 + 300)
         this.setState({
             timerText: new Date(seconds * 1000).toISOString().substr(14, 5)
         })
