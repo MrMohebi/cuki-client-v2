@@ -17,7 +17,7 @@ Alert.propTypes = {
 class CukiCode extends React.Component {
 
     state = {
-        code: 0,
+        code: "",
         submitButtonInside: 'مشاهده مجموعه',
         buttonAndTextFieldDisabled: false,
         errorSnackbar:false
@@ -41,8 +41,18 @@ class CukiCode extends React.Component {
         }
 
     }
-    handleSubmitClick = (code) => {
-        requests.getResByCode(code, this.getCodeCallback)
+    handleSubmitClick = (event) => {
+        event.preventDefault()
+        this.setState({
+            submitButtonInside: <CircularProgress size={28} color={"inherit"}/>,
+            buttonAndTextFieldDisabled:true
+        })
+        requests.getResByCode(this.state.code, this.getCodeCallback)
+    }
+
+    handleChangeCodeInput = (event) =>{
+        if(event.target.value < 10000)
+            this.setState({code: event.target.value})
     }
 
     render() {
@@ -78,36 +88,22 @@ class CukiCode extends React.Component {
                              backgroundSize: 'cover'
                          }}
                     />
-                    <div className={'mb-3 mt-3'}>
-                        <CssTextField className={'IranSans'}
-                                      id="outlined-multiline-flexible"
-                                      label="کد مجموعه"
-                                      onChange={(e) => {
-                                          if (isNaN(parseInt(e.target.value[e.target.value.length - 1]))) {
-                                              e.target.value = e.target.value.slice(0, -1)
-                                          } else {
-                                              this.setState({code:e.target.value})
-                                          }
-                                      }}
-                                      variant="outlined"
-                        />
+                    <form autoComplete="off" onSubmit={this.handleSubmitClick}>
+                        <div className={'mb-3 mt-3'}>
+                            <CssTextField className={'IranSans'}
+                                          autoFocus
+                                          id="outlined-multiline-flexible"
+                                          label="کد مجموعه"
+                                          variant="outlined"
+                                          onChange={this.handleChangeCodeInput}
+                                          value={this.state.code}
+                            />
+                        </div>
 
-
-                    </div>
-
-                    <Button className={'IranSans codeButton'} variant="contained" onClick={
-                        () => {
-                            this.setState({
-                                submitButtonInside: <CircularProgress size={28} color={"inherit"}/>,
-                                buttonAndTextFieldDisabled:true
-                            })
-                            this.handleSubmitClick(this.state.code)
-                        }
-                    }
-                            disabled={this.state.buttonAndTextFieldDisabled}
-                    >
-                        {this.state.submitButtonInside}
-                    </Button>
+                        <Button className={'IranSans codeButton'} variant="contained" type="submit" disabled={this.state.buttonAndTextFieldDisabled}>
+                            {this.state.submitButtonInside}
+                        </Button>
+                    </form>
                     <Snackbar
                         anchorOrigin={{
                             vertical: 'bottom',
@@ -117,7 +113,6 @@ class CukiCode extends React.Component {
                         open={this.state.errorSnackbar}
                         message={'انگاری کد اشتباهه'}
                     />
-
                 </div>
             </div>
         )
