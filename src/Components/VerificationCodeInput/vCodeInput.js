@@ -52,13 +52,9 @@ class VerificationCodeInput extends React.Component {
             )
         })
         return (
-            <>
+            <div className={'d-flex flex-row-reverse justify-content-center'}>
                 {listofinputs}
-                {/*<form onSubmit={this.oncomplete}>*/}
-                {/*    <br/>*/}
-                {/*    <button id="buttons"  className="btn" onClick={this.oncomplete} style={buttonStyle}> انجام</button>*/}
-                {/*</form>*/}
-            </>
+            </div>
         )
     }
 }
@@ -77,5 +73,5 @@ const eachInputStyle = {
     fontSize:"20px",
     margin:"0 5px 0 5px",
     maxlength:"1",
-    appearance:"none"
+    appearance:"textfield"
 }
