@@ -52,7 +52,7 @@ class VerificationCodeInput extends React.Component {
             )
         })
         return (
-            <div className={'d-flex flex-row-reverse justify-content-center'}>
+            <div className={'d-flex flex-row justify-content-center'}>
                 {listofinputs}
             </div>
         )
