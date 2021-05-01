@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="831" height="226" viewBox="0 0 831 226">
+  <g id="Group_6" transform="translate(-122 -465)">
+    <path id="Subtraction_1" d="M1345.466-1748H1188a38.756,38.756,0,0,1-15.18-3.065,38.871,38.871,0,0,1-12.4-8.358,38.868,38.868,0,0,1-8.358-12.4A38.758,38.758,0,0,1,1149-1787v-148a38.756,38.756,0,0,1,3.065-15.18,38.866,38.866,0,0,1,8.358-12.4,38.866,38.866,0,0,1,12.4-8.358A38.753,38.753,0,0,1,1188-1974h156.881c5.654,10.018,15.231,16,25.619,16s19.965-5.981,25.619-16H1941a38.754,38.754,0,0,1,15.18,3.065,38.863,38.863,0,0,1,12.4,8.358,38.867,38.867,0,0,1,8.358,12.4A38.757,38.757,0,0,1,1980-1935v148a38.759,38.759,0,0,1-3.065,15.181,38.869,38.869,0,0,1-8.358,12.4,38.867,38.867,0,0,1-12.4,8.358A38.756,38.756,0,0,1,1941-1748H1395.534c-5.71-9.393-15.068-15-25.033-15s-19.324,5.608-25.034,15Z" transform="translate(-1027 2439)" fill="#fff"/>
+
+    <line id="Line_24" y2="19" transform="translate(343.5 653.911)" fill="none" stroke="#6e6e6e" stroke-width="3"/>
+    <line id="Line_25" y2="19" transform="translate(343.5 619.864)" fill="none" stroke="#6e6e6e" stroke-width="3"/>
+    <line id="Line_26" y2="19" transform="translate(343.5 585.689)" fill="none" stroke="#6e6e6e" stroke-width="3"/>
+    <line id="Line_27" y2="19" transform="translate(343.5 551.514)" fill="none" stroke="#6e6e6e" stroke-width="3"/>
+    <line id="Line_28" y2="19" transform="translate(343.5 517.741)" fill="none" stroke="#6e6e6e" stroke-width="3"/>
+    <line id="Line_29" y2="18" transform="translate(343.5 484.65)" fill="none" stroke="#6e6e6e" stroke-width="3"/>
+  </g>
+</svg>

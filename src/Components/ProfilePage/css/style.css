@@ -1,4 +1,4 @@
-.profilePageContainer{
+.profilePageContainer {
     background-color: #ffe1e3;
     margin: 20px auto auto auto;
     height: calc(100% - 100px);
@@ -10,22 +10,24 @@
     overflow: scroll;
 
 }
-.DatePicker{
+
+.DatePicker {
     margin-top: -28px;
 }
-.DatePicker input{
+
+.DatePicker input {
     width: 100%;
     opacity: 0;
 }
 
-.-top{
+.-top {
     position: absolute !important;
     top: calc(100% + 20px) !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
 }
 
-.profileNavigate{
+.profileNavigate {
     transition: all 0.2s ease;
     font-size: 14px;
     height: 25px;
@@ -34,7 +36,7 @@
 }
 
 
-.profileNavigateActive{
+.profileNavigateActive {
     transition: all 0.1s ease;
     font-size: 14px;
     height: 25px;
@@ -42,7 +44,8 @@
     border-bottom: #ababab solid 0px;
     border-bottom-width: 1px;
 }
-.profileUserProfileContainer{
+
+.profileUserProfileContainer {
     transition: all 0.2s ease;
     background-color: #fff;
     border-radius: 14px;
@@ -54,16 +57,18 @@
 }
 
 @media only screen and (max-width: 360px) {
-    .profileNavigate{
+    .profileNavigate {
         font-size: 13px !important;
     }
 }
+
 @media only screen and (min-width: 600px) {
-    .profileNavigate{
+    .profileNavigate {
         font-size: 18px !important;
     }
 }
-.profileHistoryContainer{
+
+.profileHistoryContainer {
     transition: all 0.2s ease;
     background-color: #fff;
     width: 90%;
@@ -72,14 +77,16 @@
     opacity: 1;
     overflow: scroll;
 }
-.historyOrderDate{
+
+.historyOrderDate {
     width: 25%;
     font-family: AppIranSansMedium;
     font-size: 14px;
 }
-.historyOrderName{
+
+.historyOrderName {
     width: 85%;
-    overflow:hidden;
+    overflow: hidden;
     white-space: nowrap;
     font-size: 12px;
     direction: rtl;
@@ -98,6 +105,7 @@
 
     }
 }
+
 @media only screen and (max-width: 360px) {
     .profileUserProfileContainer {
         border-radius: 14px;
@@ -106,20 +114,24 @@
         padding: 0 20px 0 20px;
     }
 }
-.rtl{
+
+.rtl {
     direction: rtl !important;
 }
-.MuiInputLabel-formControl{
+
+.MuiInputLabel-formControl {
     font-family: AppIranSansLight !important;
     font-weight: bold;
     color: #565656;
     white-space: nowrap;
     font-size: 0.8rem !important;
 }
-.MuiInput-underline:after{
+
+.MuiInput-underline:after {
     border-bottom: 2px solid #ffe1e3 !important;
 }
-.profileSubmitButton{
+
+.profileSubmitButton {
     background-color: #F7899B;
     border-radius: 14px;
     height: 40px;
@@ -127,20 +139,78 @@
     line-height: 40px;
     color: white;
 }
-.totalBut{
+
+.totalBut {
     font-size: 1rem;
 }
-totalBuyAndPrice{
-flex: 50% 50%;
+
+totalBuyAndPrice {
+    flex: 50% 50%;
 }
-.MuiInput-underline:before{
+
+.MuiInput-underline:before {
     border-bottom: 1px solid rgb(115, 115, 115);
 }
-.profileInputs label{
+
+.profileInputs label {
     left: auto;
     right: 0;
 }
-.profileUserProfileContainer .DatePicker input{
+
+.profileUserProfileContainer .DatePicker input {
     width: 110% !important;
 }
 
+.profileOffCodesContainer {
+    transition: all 0.2s ease;
+    background-color: transparent;
+    width: 90%;
+    height: calc(100% - 70px);
+    border-radius: 14px;
+    opacity: 1;
+    overflow: scroll;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.eachOffCodeContainer {
+    background: url("../img/offCodeBack.svg") center;
+    width: 250px;
+    background-size: 98%;
+    background-repeat: repeat;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 70px;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    margin-top: 0.8rem;
+}
+
+.giftOffCode {
+    background: url("../img/gift.png");
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.offCodeDetail{
+    font-size: 0.7rem;
+    font-family: AppIranSansMedium;
+}
+.offCodePercent{
+    font-size: 0.7rem;
+    color: #438D48;
+
+}
+.offCodeCode{
+    width: 60px;
+    height: 20px;
+    background-color: #DCF1DE;
+    color: #438D48;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    line-height: 23px;
+}

@@ -19,10 +19,6 @@ export const Swipeable = ({children, style, ...props}) => {
 
 class ProfilePage extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.birthdayRef = React.createRef()
-    }
     state = {
         activeProfile: 'history',
         History: true,
@@ -32,30 +28,40 @@ class ProfilePage extends React.Component {
         HistoryTabClass: 'profileNavigate IranSans text-nowrap',
         clubElementClass: 'w-100',
         historyElementClass: 'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeOut d-none',
+        offCodeTabClass: 'profileNavigate profileNavigate IranSans  text-nowrap ',
+        offCodeElementClass: 'w-100 profileOffCodesContainer mt-3 animate__animated animate__fadeOut d-none',
         datePickerValue: {day: 9, month: 3, year: 1381},
         inputsDisabled: true,
-        birthday:1022716800,
-        name:'',
-        job:'pilot',
-        birthdayInputValue:''
+        birthday: 1022716800,
+        name: '',
+        job: 'pilot',
+        birthdayInputValue: ''
+    }
+
+    constructor(props) {
+        super(props);
+        this.birthdayRef = React.createRef()
     }
 
     componentDidMount() {
-        this.props.match.params['part'] === 'club' ?this.userTabClickHandler():this.historyTabClickHandler()
+        this.props.match.params['part'] === 'club' ? this.userTabClickHandler() : this.historyTabClickHandler()
         this.getUserInfo()
         if (this.state.inputsDisabled) {
             this.disableDatePicker()
         }
         this.setState({
-            birthdayInputValue:moment.unix(this.props.birthday).format('jYYYY/jM/jD')
+            birthdayInputValue: moment.unix(this.props.birthday).format('jYYYY/jM/jD')
         })
     }
+
     userTabClickHandler = () => {
         this.setState({
             HistoryTabClass: this.state.navNormalClass,
             UserTabClass: this.state.navActiveClass,
+            offCodeTabClass: this.state.navNormalClass,
             activeProfile: 'club',
             clubElementClass: 'w-100 animate__animated animate__fadeIn',
+            offCodeElementClass: 'animate__animated animate__fadeOut d-none',
             historyElementClass: 'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeOut d-none',
         });
     }
@@ -64,9 +70,22 @@ class ProfilePage extends React.Component {
         this.setState({
             HistoryTabClass: this.state.navActiveClass,
             UserTabClass: this.state.navNormalClass,
+            offCodeTabClass: this.state.navNormalClass,
             activeProfile: 'his',
             clubElementClass: 'animate__animated animate__fadeOut d-none',
+            offCodeElementClass: 'animate__animated animate__fadeOut d-none',
             historyElementClass: 'w-100 profileHistoryContainer mt-3 animate__animated animate__fadeIn',
+        })
+    }
+    offCodesTabClickHandler = () => {
+        this.setState({
+            HistoryTabClass: this.state.navNormalClass,
+            UserTabClass: this.state.navNormalClass,
+            offCodeTabClass: this.state.navActiveClass,
+            activeProfile: 'offCode',
+            clubElementClass: 'animate__animated animate__fadeOut d-none',
+            offCodeElementClass: 'w-100 profileOffCodesContainer mt-3 animate__animated animate__fadeIn',
+            historyElementClass: 'animate__animated animate__fadeOut d-none',
         })
     }
 
@@ -80,7 +99,7 @@ class ProfilePage extends React.Component {
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
 
             let fixedData = res.data
-            fixedData.birthday= parseInt(fixedData.birthday)
+            fixedData.birthday = parseInt(fixedData.birthday)
             this.props.setUserData(fixedData);
         }
     }
@@ -92,21 +111,20 @@ class ProfilePage extends React.Component {
     }
 
     swipeRight = () => {
-        if(this.state.activeProfile === 'club')
+        if (this.state.activeProfile === 'club')
             this.props.history.push("/likedFoods")
         else
             this.userTabClickHandler()
     }
 
     swipeLeft = () => {
-        if(this.state.activeProfile === 'his'){
-            if (this.props.openOrdersList.length === 0){
+        if (this.state.activeProfile === 'his') {
+            if (this.props.openOrdersList.length === 0) {
                 this.props.history.push("/likedFoods")
-            } else{
+            } else {
                 this.props.history.push("/openOrders")
             }
-        }
-        else{
+        } else {
             this.historyTabClickHandler()
         }
     }
@@ -139,19 +157,20 @@ class ProfilePage extends React.Component {
             this.editUserData()
         }
     }
-    editUserData = ()=> {
-        requests.changeUserInfo(()=>{},this.props.token,this.state.name,this.state.birthday,this.state.job)
+    editUserData = () => {
+        requests.changeUserInfo(() => {
+        }, this.props.token, this.state.name, this.state.birthday, this.state.job)
     }
 
-    datePickerChange=(date)=>{
+    datePickerChange = (date) => {
         this.setState({
-            datePickerValue:date,
-            birthday:moment(date.year+'/'+date.month+'/'+date.day,'jYYYY/jM/jD').unix(),
-            birthdayInputValue:date.year+'/'+date.month+'/'+date.day,
+            datePickerValue: date,
+            birthday: moment(date.year + '/' + date.month + '/' + date.day, 'jYYYY/jM/jD').unix(),
+            birthdayInputValue: date.year + '/' + date.month + '/' + date.day,
         })
     }
 
-    handleSelectEachOrderHistory = (orderInfo) =>{
+    handleSelectEachOrderHistory = (orderInfo) => {
         this.props.setTempHistoryOrderInfo(orderInfo)
         this.props.history.push("/eachOrderHistoryDetails")
     }
@@ -172,32 +191,54 @@ class ProfilePage extends React.Component {
                         <div className='w-100 d-flex justify-content-around pt-3'>
                             <span className={this.state.UserTabClass}
                                   onClick={this.userTabClickHandler}>کوکی کلاب</span>
-                            <span className='profileNavigate profileNavigateActive IranSans  text-nowrap invisible'> سفارش های من</span>
+                            <span className={this.state.offCodeTabClass}
+                                  onClick={this.offCodesTabClickHandler}>تخفیف ها</span>
                             <span className={this.state.HistoryTabClass} onClick={this.historyTabClickHandler}> سفارش های من</span>
                         </div>
 
                         {/*{this.state.activeProfile === 'club' ? this.clubElement : this.historyElement}*/}
                         <div className={this.state.historyElementClass}>
                             {
-                                this.props.orderHistoryRestaurant.map(eOrder=>{
+                                this.props.orderHistoryRestaurant.map(eOrder => {
                                     let orderList = JSON.parse(eOrder['order_list']);
-                                    return(
-                                        <div key={eOrder['orders_id']} onClick={()=>(this.handleSelectEachOrderHistory(eOrder))} className='w-100 d-flex justify-content-between align-items-center pt-4'>
+                                    return (
+                                        <div key={eOrder['orders_id']}
+                                             onClick={() => (this.handleSelectEachOrderHistory(eOrder))}
+                                             className='w-100 d-flex justify-content-between align-items-center pt-4'>
                                             <span className='historyOrderDate'>{eOrder['total_price'] / 1000}T</span>
-                                            <span className='historyOrderName'>{orderList.map(eFood=>(eFood.name)).join("، ")}</span>
-                                            <span className='historyOrderDate'>{moment.utc(parseInt(eOrder['ordered_date'])).format("jM/jD")}</span>
+                                            <span
+                                                className='historyOrderName'>{orderList.map(eFood => (eFood.name)).join("، ")}</span>
+                                            <span
+                                                className='historyOrderDate'>{moment.utc(parseInt(eOrder['ordered_date'])).format("jM/jD")}</span>
                                         </div>
                                     )
                                 })
                             }
                         </div>
 
+                        <div className={this.state.offCodeElementClass}>
+                            <div className={'eachOffCodeContainer'}>
+                                <div className={'w-25 giftOffCode'} ></div>
+                                <div className={'w-75 d-flex flex-column justify-content-around '}>
+                                    <div className={'w-100 d-flex flex-row-reverse IranSans justify-content-center pt-1 overflow-auto'}>
+                                        <span className={'offCodePercent ml-2'}>20%</span>
+                                        <span className={'offCodeDetail'}>تخفیف ورود به اپلیکیشن کیپو</span>
+                                    </div><div className={'w-100 d-flex flex-row-reverse IranSans justify-content-center pt-1 overflow-auto'}>
+                                        <div className={'offCodeCode ml-2'}>kpo90</div>
+                                        <span className={'offCodeDetail'}>اعتبار: 10 روز</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className={this.state.clubElementClass}>
                             <div className='w-100 profileUserProfileContainer mt-3 d-flex flex-column '>
-                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.name} onChange={e=>this.setState({name:e.target.value})}
+                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.name}
+                                           onChange={e => this.setState({name: e.target.value})}
                                            className='rtl mt-2 profileInputs'
                                            id="standard-basic1" label="اسم و فامیل"/>
-                                <TextField  ref={this.birthdayRef} disabled={this.state.inputsDisabled} value={this.state.birthdayInputValue}
+                                <TextField ref={this.birthdayRef} disabled={this.state.inputsDisabled}
+                                           value={this.state.birthdayInputValue}
                                            className='rtl mt-2 profileInputs'
                                            id="standard-basic2" label="تاریخ تولد"/>
                                 <DatePicker
@@ -208,7 +249,8 @@ class ProfilePage extends React.Component {
                                     locale="fa"
                                 />
 
-                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.job} onChange={e=>this.setState({job:e.target.value})}
+                                <TextField disabled={this.state.inputsDisabled} defaultValue={this.props.job}
+                                           onChange={e => this.setState({job: e.target.value})}
                                            className='rtl mt-2 profileInputs'
                                            id="standard-basic3" label="شغل"/>
                                 <div className='w-100 d-flex justify-content-center'>
