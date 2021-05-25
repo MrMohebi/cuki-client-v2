@@ -14,6 +14,17 @@
     display: grid;
     grid-template-columns: 40% 30% 30%;
 }
+.bill-texts-table{
+}
+.bill-texts{
+    font-family: AppIranSansMedium,sans-serif;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+.bill-td{
+    width: 33.33333%;
+}
+
 
 .billItemsContainer{
 height: calc(100% - 120px);
@@ -24,7 +35,7 @@ height: calc(100% - 120px);
 
 .totalPriceAndTextHolder{
     height: 30px;
-    font-family: AppIranSansMedium;
+    font-family: AppIranSansMedium,sans-serif;
     align-items: center;
 }
 .BillSubmitButton{
@@ -36,8 +47,21 @@ height: calc(100% - 120px);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: AppIranSansMedium;
+    font-family: AppIranSansMedium,sans-serif;
     color: white;
+    padding: 0 10px;
+}
+.discount-code-dialog{
+    position: absolute;
+    width: 90%;
+    height: 30vh;
+    background-color: #fff;
+    z-index: 1;
+    border-radius: 10px;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%,0);
+    box-shadow:1px 0 10px 1px #adadad;
 }
 .umberInDe{
     width: 80px;
@@ -57,4 +81,17 @@ height: calc(100% - 120px);
     text-align: right;
     direction: rtl;
     padding-right: 10px;
+}
+.gift-button{
+    background-color: #fff;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    right: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 11px 1px #b3b3b3;
+}
+.gift-inner{
+
 }

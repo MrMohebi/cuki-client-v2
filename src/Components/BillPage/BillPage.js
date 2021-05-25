@@ -1,5 +1,6 @@
 import React from "react";
 import './css/style.css'
+import gsap from "gsap";
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
@@ -24,6 +25,10 @@ const ReactSwal = withReactContent(Swal)
 
 
 class BillPage extends React.Component {
+
+    state = {
+        isOffCodeOpen:false,
+    }
 
     componentDidMount() {
         if (this.props.orderList.length <= 0) {
@@ -124,6 +129,18 @@ class BillPage extends React.Component {
     swipeLeft = () => {
         // this.props.history.push("/main")
     }
+    openGiftCode=()=>{
+        if (!this.state.isOffCodeOpen){
+            gsap.to('.gift-button',{
+                height:"80px",
+                width:'92%',
+                y:'-25%',
+                right:'4%',
+                borderRadius:'10px',
+                duration:0.2,
+            })
+        }
+    }
 
     handleBack = () => {
         this.props.history.goBack()
@@ -134,6 +151,7 @@ class BillPage extends React.Component {
         return (
             <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <React.Fragment>
+
                     <div
                         className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
                         <ArrowBackRoundedIcon onClick={this.handleBack}/>
@@ -150,12 +168,92 @@ class BillPage extends React.Component {
                                 {this.createOrderList()}
                             </SwipeableList>
                         </div>
-                        <div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>
-                            <span>{this.sumTotalOrderPrice() / 1000}T</span>
-                            <span>جمع نهایی فاکتور</span>
-                        </div>
-                        <div className='BillSubmitButton' onClick={this.handleSubmit}>
-                            <span>پرداخت</span>
+
+                        <table style={{direction: 'rtl'}} align={'center'} className={'w-100 bill-texts-table'}>
+                            <tr>
+                                <td className={'bill-td'}><span className={'bill-texts'}>جمع نهایی</span></td>
+                                <td className={'bill-td'}><span className={'bill-texts'}>جمع تخفیف</span></td>
+                                <td className={'bill-td'}><span className={'bill-texts'}>جمع نهایی فاکتور</span></td>
+
+                            </tr>
+                            <tr>
+                                <td className={'bill-td'}><span className={'bill-texts'}> 250T2</span></td>
+                                <td className={'bill-td'}><span className={'bill-texts'}> 2522</span></td>
+                                <td className={'bill-td'}><span
+                                    className={'bill-texts'}> {this.sumTotalOrderPrice() / 1000}T</span></td>
+
+                            </tr>
+                        </table>
+
+                        {/*<div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>*/}
+                        {/*    <span>{this.sumTotalOrderPrice() / 1000}T</span>*/}
+                        {/*    <span>جمع نهایی فاکتور</span>*/}
+                        {/*</div>*/}
+                        <div className='BillSubmitButton'
+                             // onClick={this.handleSubmit}
+
+                        >
+                            <div className={'gift-button d-flex justify-content-center align-items-center'} onClick={()=>{
+                                this.openGiftCode()
+                            }}>
+                                <svg version="1.1" id="Capa_1" width={'20'} height={'20'}
+                                     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                     viewBox="0 0 490 490">
+                                    <g>
+                                        <path d="M469.2,117.44h-97.5c32.2-37.2,18.1-79.2-4.4-97.8c-13.5-11.1-74.6-45.7-123.4,16.8c-30.3-49.4-97.1-41-122.2-15.8
+                                                c-27.6,27.6-33.4,63.8-5.4,96.8H20.8c-11.4,0-20.8,9.4-20.8,20.8v97.8c0,11.4,9.4,20.8,20.8,20.8h13.5v212.3
+                                                c0,11.4,9.4,20.8,20.8,20.8h378.7c11.4,0,19.8-9.4,20.8-20.8v-212.2h14.6c11.4,0,20.8-9.4,20.8-20.8v-97.8
+                                                C490,126.84,480.6,117.44,469.2,117.44z M286.1,50.84c39.6-29.9,63.5,7.2,63.5,20.8c0,40.6-84.3,57.7-84.3,23.9
+                                                C265.3,81.04,273.8,60.14,286.1,50.84z M148.8,50.84c41.5-39.5,92.5,24.1,71.8,55.2c-2.5,3.7-9.4,4.1-16.6,4.2
+                                                C172.2,110.34,114.8,83.14,148.8,50.84z M223.7,449.44H75.9v-192.5h147.7v192.5H223.7z M413,449.44H265.3v-192.5H413V449.44z
+                                                 M448.4,216.34H40.6v-57.2h407.8V216.34z"/>
+                                    </g>
+                                </svg>
+
+                                <div className={'gift-inner w-100 h-100 d-flex justify-content-between align-items-center'}>
+                                    <div className="input-group mb-3">
+                                        <input type="text" className="form-control" placeholder="Recipient's username"
+                                               aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                                            <div className="input-group-append">
+
+                                            </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <span style={{position:'absolute'}}>پرداخت</span>
+                            <div className={'h-100 w-75 d-flex flex-row-reverse align-content-start'}>
+                            {/*  here is the pay button Collision  */}
+                            </div>
+                            <div className={' h-100 w-25 d-flex flex-row-reverse'} >
+                                {/*  here is the gift button Collision  */}
+
+                            </div>
+
+
+                            {/*<div style={{width:"40px",height:'40px'}}/>*/}
+                            {/*<span>پرداخت</span>*/}
+                            {/*<div className={'gift-button d-flex justify-content-center align-items-center'}*/}
+                            {/* onClick={()=>{*/}
+                            {/*     console.log('Gift Clicked')*/}
+                            {/* }}*/}
+
+                            {/*>*/}
+                            {/*    <svg version="1.1" id="Capa_1" width={'20'} height={'20'}*/}
+                            {/*         xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"*/}
+                            {/*         viewBox="0 0 490 490">*/}
+                            {/*        <g>*/}
+                            {/*            <path d="M469.2,117.44h-97.5c32.2-37.2,18.1-79.2-4.4-97.8c-13.5-11.1-74.6-45.7-123.4,16.8c-30.3-49.4-97.1-41-122.2-15.8*/}
+                            {/*                c-27.6,27.6-33.4,63.8-5.4,96.8H20.8c-11.4,0-20.8,9.4-20.8,20.8v97.8c0,11.4,9.4,20.8,20.8,20.8h13.5v212.3*/}
+                            {/*                c0,11.4,9.4,20.8,20.8,20.8h378.7c11.4,0,19.8-9.4,20.8-20.8v-212.2h14.6c11.4,0,20.8-9.4,20.8-20.8v-97.8*/}
+                            {/*                C490,126.84,480.6,117.44,469.2,117.44z M286.1,50.84c39.6-29.9,63.5,7.2,63.5,20.8c0,40.6-84.3,57.7-84.3,23.9*/}
+                            {/*                C265.3,81.04,273.8,60.14,286.1,50.84z M148.8,50.84c41.5-39.5,92.5,24.1,71.8,55.2c-2.5,3.7-9.4,4.1-16.6,4.2*/}
+                            {/*                C172.2,110.34,114.8,83.14,148.8,50.84z M223.7,449.44H75.9v-192.5h147.7v192.5H223.7z M413,449.44H265.3v-192.5H413V449.44z*/}
+                            {/*                 M448.4,216.34H40.6v-57.2h407.8V216.34z"/>*/}
+                            {/*        </g>*/}
+                            {/*    </svg>*/}
+
+                            {/*</div>*/}
                         </div>
                     </div>
 
