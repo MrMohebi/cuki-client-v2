@@ -144,6 +144,13 @@ class WelcomePage extends React.Component {
         return (
             <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <div className='welcomePageMainContainerCover w-100 h-100'>
+                    <div className={'more-options'}
+                    onClick={
+                        ()=>{
+                            this.props.history.push('/resDetails')}
+
+                    }
+                    >...</div>
                     <div className="forLittlePhones">
                         <p className="welcomePageHeader">
                             <span className="textColor">{getComName()} </span>

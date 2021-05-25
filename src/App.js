@@ -19,6 +19,7 @@ import EachOpenOrderDetails from "./Components/EachOpenOrderDetails/EachOpenOrde
 import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOrderHistoryDetails";
 import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
 import CukiCode from "./Components/CukiCode/CukiCode";
+import ResDetails from "./ResDetails/ResDetails";
 
 
 import {getLSPhone, getLSToken} from "./stores/localStorage/localStorage";
@@ -67,7 +68,7 @@ function App() {
 
       <BrowserRouter basename={getFullName()}>
         <Route exact path='/'  component={ getComName() === "notSet" ?  CukiCode : SplashScreen}/>
-        <Route path={['/main', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway"]} component={BottomNavBar}/>
+        <Route path={['/main','/resDetails', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway"]} component={BottomNavBar}/>
 
         {/* is res open banner*/}
         {useSelector(state=>(
@@ -85,6 +86,7 @@ function App() {
         <Route exact path='/category/:part/:category' component={FoodListPage}/>
         <Route path='/bill' component={BillPage}/>
         <Route path='/profile/:part' component={ProfilePage}/>
+        <Route path='/resDetails' component={ResDetails}/>
         <Route path='/eachOrderHistoryDetails' component={EachOrderHistoryDetails}/>
         <Route path='/login' component={LoginVCode}/>
         <Route path='/signup' component={SignUpPage}/>

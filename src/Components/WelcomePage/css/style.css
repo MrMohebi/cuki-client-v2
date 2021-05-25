@@ -19,6 +19,15 @@
     height: 370px;
 }
 
+.more-options {
+    position: absolute;
+    font-size: 2.5rem;
+    transform: rotate(90deg);
+    transform-origin: center;
+    top: -5px;
+    left: 20px;
+}
+
 .welcomePageDescriptionH {
     font-family: AppIranSans;
     margin-bottom: 10px;
@@ -91,9 +100,11 @@
         transform: rotate(0deg);
     }
 }
-.pagerTimer{
+
+.pagerTimer {
     font-size: 0.8rem;
 }
+
 .openIcons {
     border-radius: 17px;
     background-color: #FFFFFF;
@@ -164,9 +175,11 @@
     overflow: scroll;
     height: calc(100% - 50px);
 }
-.tourHolder{
+
+.tourHolder {
 }
-.welcomePageMainContainerCover{
+
+.welcomePageMainContainerCover {
     overflow: scroll;
 }
 
