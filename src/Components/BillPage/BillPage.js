@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import {useSwipeable} from 'react-swipeable';
 import fixBodyClass from "../../functions/fixSwalBody";
+import * as svg from './svg'
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -27,7 +28,8 @@ const ReactSwal = withReactContent(Swal)
 class BillPage extends React.Component {
 
     state = {
-        isOffCodeOpen:false,
+        isOffCodeOpen: false,
+        giftSVGHolder:svg.gift,
     }
 
     componentDidMount() {
@@ -66,7 +68,6 @@ class BillPage extends React.Component {
                 requests.getIP(this.callbackGetIP);
             }
         }
-
     }
     callbackGetIP = (res) => {
         if (res.hasOwnProperty("ip"))
@@ -129,18 +130,74 @@ class BillPage extends React.Component {
     swipeLeft = () => {
         // this.props.history.push("/main")
     }
-    openGiftCode=()=>{
-        if (!this.state.isOffCodeOpen){
-            gsap.to('.gift-button',{
-                height:"80px",
-                width:'92%',
-                y:'-25%',
-                right:'4%',
-                borderRadius:'10px',
-                duration:0.2,
-            })
+
+    giftCodeSuccess = ()=>{
+        this.setState({
+            giftSVGHolder:svg.gift
+        })
+       gsap.to('.gift-button', {
+            backgroundColor:'green'
+        })
+    }
+
+    openGiftCode = () => {
+        let timeline = gsap.timeline();
+        if (!this.state.isOffCodeOpen) {
+            this.state.isOffCodeOpen = true;
+                this.setState({
+                    giftSVGHolder:svg.check,
+                    giftDialogOpened:true
+                },()=>{
+                    timeline.to('.gift-button', {
+                        height: "40px",
+                        width: '92%',
+                        y: '-280%',
+                        right: '4%',
+                        borderRadius: '10px',
+                        duration: 0.2,
+
+                    }).to('.BillSubmitButton', {
+                        y: '120px',
+                    }, 0).to('.gift-code-input',{
+                        display:'flex',
+                    },0)
+
+                })
+
+        } else {
+
+            this.state.isOffCodeOpen = false;
+
+                timeline.to('.gift-code-input', {
+                    display:'none',
+                    duration:'0'
+                },0).to('.BillSubmitButton', {
+                    y: '0px',
+                    duration: 0.2,
+                    onComplete:()=>{
+                        this.setState({
+                            giftSVGHolder:svg.gift
+                        })
+                    }
+                }).to('.gift-button', {
+                    position:'absolute',
+                    height: "35px",
+                    width: '35px',
+                    y: '0',
+                    boxShadow:' none',
+                    right: '20px',
+                    borderRadius: '50%',
+                    overflow:'hidden',
+                    duration: 0.2,
+
+                })
+
+
+
         }
     }
+
+
 
     handleBack = () => {
         this.props.history.goBack()
@@ -151,7 +208,6 @@ class BillPage extends React.Component {
         return (
             <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <React.Fragment>
-
                     <div
                         className='categoryPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
                         <ArrowBackRoundedIcon onClick={this.handleBack}/>
@@ -190,42 +246,33 @@ class BillPage extends React.Component {
                         {/*    <span>جمع نهایی فاکتور</span>*/}
                         {/*</div>*/}
                         <div className='BillSubmitButton'
-                             // onClick={this.handleSubmit}
+                            // onClick={this.handleSubmit}
 
                         >
-                            <div className={'gift-button d-flex justify-content-center align-items-center'} onClick={()=>{
-                                this.openGiftCode()
-                            }}>
-                                <svg version="1.1" id="Capa_1" width={'20'} height={'20'}
-                                     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                     viewBox="0 0 490 490">
-                                    <g>
-                                        <path d="M469.2,117.44h-97.5c32.2-37.2,18.1-79.2-4.4-97.8c-13.5-11.1-74.6-45.7-123.4,16.8c-30.3-49.4-97.1-41-122.2-15.8
-                                                c-27.6,27.6-33.4,63.8-5.4,96.8H20.8c-11.4,0-20.8,9.4-20.8,20.8v97.8c0,11.4,9.4,20.8,20.8,20.8h13.5v212.3
-                                                c0,11.4,9.4,20.8,20.8,20.8h378.7c11.4,0,19.8-9.4,20.8-20.8v-212.2h14.6c11.4,0,20.8-9.4,20.8-20.8v-97.8
-                                                C490,126.84,480.6,117.44,469.2,117.44z M286.1,50.84c39.6-29.9,63.5,7.2,63.5,20.8c0,40.6-84.3,57.7-84.3,23.9
-                                                C265.3,81.04,273.8,60.14,286.1,50.84z M148.8,50.84c41.5-39.5,92.5,24.1,71.8,55.2c-2.5,3.7-9.4,4.1-16.6,4.2
-                                                C172.2,110.34,114.8,83.14,148.8,50.84z M223.7,449.44H75.9v-192.5h147.7v192.5H223.7z M413,449.44H265.3v-192.5H413V449.44z
-                                                 M448.4,216.34H40.6v-57.2h407.8V216.34z"/>
-                                    </g>
-                                </svg>
+                            <div className={'gift-button d-flex justify-content-center align-items-center'}
+                                 >
+                                <div
+                                    className={'gift-inner w-100 h-100 d-flex justify-content-center align-items-center'}>
+                                    <div>
+                                        <input type="text" className={'gift-code-input'} placeholder="c-1498"/>
+                                    </div>
+                                    <div className={'gift-button-svg d-flex justify-content-center align-items-center'} onClick={() => {
+                                        this.openGiftCode()
+                                    }}>
+                                        {this.state.giftSVGHolder}
 
-                                <div className={'gift-inner w-100 h-100 d-flex justify-content-between align-items-center'}>
-                                    <div className="input-group mb-3">
-                                        <input type="text" className="form-control" placeholder="Recipient's username"
-                                               aria-label="Recipient's username" aria-describedby="basic-addon2"/>
-                                            <div className="input-group-append">
-
-                                            </div>
                                     </div>
 
                                 </div>
+
+
+
                             </div>
-                            <span style={{position:'absolute'}}>پرداخت</span>
+                            <span style={{position: 'absolute'}}>پرداخت</span>
                             <div className={'h-100 w-75 d-flex flex-row-reverse align-content-start'}>
-                            {/*  here is the pay button Collision  */}
+                                {/*  here is the pay button Collision  */}
                             </div>
-                            <div className={' h-100 w-25 d-flex flex-row-reverse'} >
+                            <div className={' h-100 w-25 d-flex flex-row-reverse'}>
                                 {/*  here is the gift button Collision  */}
 
                             </div>

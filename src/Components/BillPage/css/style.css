@@ -7,7 +7,7 @@
     display: flex;
     flex-flow: row wrap;
     padding: 0 15px 10px 15px;
-    overflow: scroll;
+    overflow: hidden;
     position: relative;
 }
 .BillRow {
@@ -15,6 +15,12 @@
     grid-template-columns: 40% 30% 30%;
 }
 .bill-texts-table{
+}
+.gift-code-overlay{
+    position: absolute;
+    background-color: black;
+    z-index: 999;
+    backdrop-filter: blur(100px);
 }
 .bill-texts{
     font-family: AppIranSansMedium,sans-serif;
@@ -82,6 +88,10 @@ height: calc(100% - 120px);
     direction: rtl;
     padding-right: 10px;
 }
+.gift-button-svg{
+    height: 40px;
+    width: 40px;
+}
 .gift-button{
     background-color: #fff;
     border-radius: 50%;
@@ -91,6 +101,14 @@ height: calc(100% - 120px);
     right: 20px;
     overflow: hidden;
     box-shadow: 0 0 11px 1px #b3b3b3;
+}
+.gift-code-input{
+    outline: none;
+    border-bottom: none;
+    border-right: none;
+    border-top: none;
+    border-left: none;
+    display: none;
 }
 .gift-inner{
 
