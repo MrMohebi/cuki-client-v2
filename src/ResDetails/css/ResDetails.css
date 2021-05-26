@@ -5,14 +5,11 @@
     height: calc(100% - 100px);
     width: 90%;
     border-radius: 20px;
-    display: flex;
-    flex-flow: row wrap;
     padding: 0 15px 10px 15px;
     overflow: scroll;
 }
 .res-details-icons{
     height: 30px;
     width: 30px;
-    background: url("../img/instagram.png");
-    background-size: cover;
+
 }
