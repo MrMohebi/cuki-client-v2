@@ -221,7 +221,7 @@ class PayWay extends React.Component{
                         this.callbackSendOrder,
                         this.state.table,
                         {},
-                        this.props.orderList.map(eachFood =>{return {id:eachFood.foods_id, number:eachFood.number}}),
+                        this.props.orderList.map(eachFood =>{return {id:eachFood.id, number:eachFood.number}}),
                         this.state.orderDetails
                     )
                 }else {
@@ -229,7 +229,7 @@ class PayWay extends React.Component{
                         this.callbackSendOrder,
                         "",
                         {coordinates:coordinates, addressDetails: this.state.addressDetails},
-                        this.props.orderList.map(eachFood =>{return {id:eachFood.foods_id, number:eachFood.number}}),
+                        this.props.orderList.map(eachFood =>{return {id:eachFood.id, number:eachFood.number}}),
                         this.state.orderDetails
                     )
                 }

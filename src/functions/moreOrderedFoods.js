@@ -17,9 +17,9 @@ export default function moreOrderedFoods(userHistoryOrders, allFoodsArray) {
 
     let sevenMoreOrdered = Object.keys(allOrderedFoodTimes).sort(function (a, b) {return allOrderedFoodTimes[a] - allOrderedFoodTimes[b]}).reverse()
         .map(eachFoodId=>{
-            let foodInFoodsList = draftAllFoodsArray.filter(eachAllFoodId=> parseInt(eachFoodId) === parseInt(eachAllFoodId.foods_id))[0]
+            let foodInFoodsList = draftAllFoodsArray.filter(eachAllFoodId=> parseInt(eachFoodId) === parseInt(eachAllFoodId.id))[0]
             if(foodInFoodsList)
-                return foodInFoodsList['foods_id']
+                return foodInFoodsList['id']
             else
                 return undefined
 
@@ -35,5 +35,5 @@ export default function moreOrderedFoods(userHistoryOrders, allFoodsArray) {
 
 
 function moreOrderedFoodRestaurant(allFoodsArray) {
-    return allFoodsArray.sort((a,b) => {return b.order_times - a.order_times}).filter(eachFood=> eachFood.group.englishName !== "drink" ).slice(0,10).map((eachFood=>{return eachFood.foods_id}))
+    return allFoodsArray.sort((a,b) => {return b.order_times - a.order_times}).filter(eachFood=> eachFood.group.englishName !== "drink" ).slice(0,10).map((eachFood=>{return eachFood.id}))
 }

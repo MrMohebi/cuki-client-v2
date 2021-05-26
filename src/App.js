@@ -72,7 +72,7 @@ function App() {
 
         {/* is res open banner*/}
         {useSelector(state=>(
-            state.rTempData.isResOpen && (state.rRestaurantInfo.restaurantInfo.status === "active") ?
+            state.rTempData.isResOpen && ((state.rRestaurantInfo.restaurantInfo.status === "active") || (state.rRestaurantInfo.restaurantInfo.status === "open"))  ?
                 null
                 :
                 window.location.pathname === "/" ?

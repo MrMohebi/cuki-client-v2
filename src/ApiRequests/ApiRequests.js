@@ -2,14 +2,20 @@ import $ from 'jquery';
 import getReduxStore from "../stores/reduxStore/getRedux";
 import * as actions from "../stores/reduxStore/actions"
 import getComName from "../functions/getComName";
+import * as adaptors from "./Adaptors";
 
-const BASE_API_URL = "https://api.cuki.ir/v201/"
+const BASE_API_URL = "https://api.cuki.ir/v201/";
 const BASE_PAY_V2_URL = "https://pay.cuki.ir/v2/";
 
 
+const BASE_API_URL_CUKIM_V1 = "https://api.cukim.ir/api/v1/cuki/"
+
+
+
 export const getRestaurantInfo = (callbackFunction)=>{
-    $.post(BASE_API_URL+ "getAllRestaurantData.fetch.php" ,{englishName:getComName()}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "getResData" ,{resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
+        res.data = adaptors.getAllRestaurantDataTOGetResData(res.data)
         if(res.statusCode === 200){
             actions.restaurantSetData(res.data)
             document.title = res.data.restaurantInfo.english_name;

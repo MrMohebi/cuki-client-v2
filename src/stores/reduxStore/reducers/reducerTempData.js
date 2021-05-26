@@ -15,13 +15,13 @@ export default function reducerTempData (state = __init__TempData, action) {
 
         case actionTypes.DELETE_FOOD_FROM_ORDERS:
             return produce(state, draftState=>{
-                draftState.orderList = draftState.orderList.filter(food=> food.foods_id !== action.payload.foods_id)
+                draftState.orderList = draftState.orderList.filter(food=> food.id !== action.payload.id)
             });
 
         case actionTypes.INCREASE_FOOD_NUMBER:
             return produce(state, draftState=>{
                 draftState.orderList = draftState.orderList.map(food=> {
-                    if(food.foods_id === action.payload.foods_id){
+                    if(food.id === action.payload.id){
                         food.number += 1;
                         food.totalPrice +=  (food.price * (1 - food.discount  / 100))
                         return food;
@@ -34,7 +34,7 @@ export default function reducerTempData (state = __init__TempData, action) {
         case actionTypes.DECREASE_FOOD_NUMBER:
             return produce(state, draftState=>{
                 draftState.orderList = draftState.orderList.map(food=> {
-                    if(food.foods_id === action.payload.foods_id){
+                    if(food.id === action.payload.id){
                         food.number -= 1;
                         food.totalPrice -= (food.price * (1 - food.discount  / 100))
                         return food;

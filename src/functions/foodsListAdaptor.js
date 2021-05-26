@@ -6,7 +6,7 @@ const apiFoodsArraySample = [
         delivery_time: "2",
         details: "['گوجه خیارشور']",
         discount: "0",
-        foods_id: "51",
+        id: "51",
         group: "burger",
         model3d: null,
         modified_date: "1605626743",

@@ -7,12 +7,16 @@
 
 
 
-function getAllRestaurantDataTOGetResData(data){
+export function getAllRestaurantDataTOGetResData(data){
     let newFoods = camelToUnderArrayOrObj(data["foods"])
     let newResInfo = camelToUnderArrayOrObj(data["restaurantInfo"])
 
-    newFoods["foods_id"] = newFoods["id"]
+    for (let i =0; i< newFoods.length ;i++){
+        newFoods[i]["name"] = newFoods[i]["persian_name"]
+        newFoods[i]["details"] = JSON.parse(newFoods[i]["details"])
+    }
     newResInfo["info_id"] = newResInfo["id"]
+
     return {foods :newFoods, restaurantInfo:newResInfo}
 }
 
