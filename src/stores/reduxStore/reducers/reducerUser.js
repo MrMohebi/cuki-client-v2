@@ -20,7 +20,7 @@ export default function reducerUser (state = __init__UserInfo, action) {
             stateUser_Draft.phone = action.payload.userData.phone;
             stateUser_Draft.birthday = action.payload.userData.birthday;
             stateUser_Draft.job = action.payload.userData.job
-            stateUser_Draft.totalBoughtAll = action.payload.userData['allTotalBought']
+            stateUser_Draft.totalBoughtAll = action.payload.userData['amount']
             stateUser_Draft.favoritePlaces = action.payload.userData.favoritePlaces
         });
     }else if(action.type === actionTypes.SET_CUSTOMER_DATA){

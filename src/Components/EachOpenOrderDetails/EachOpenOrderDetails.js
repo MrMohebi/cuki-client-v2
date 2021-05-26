@@ -46,7 +46,7 @@ class EachOpenOrderDetails extends React.Component {
                             </div>
                             <span className='eachOrderDetailsFoodNumber text-left pl-3'>x{eFood.number}</span>
                             <div className='w-100 justify-content-center d-flex'>
-                                <div className='EachOrderDetailsEachFoodName mt-3'>{eFood.name}</div>
+                                <div className='EachOrderDetailsEachFoodName mt-3'>{eFood.persianName}</div>
                             </div>
                         </div>
                     </div>

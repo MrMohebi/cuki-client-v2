@@ -81,7 +81,7 @@ class OpenOrders extends Component {
                                     <div key={eOrder["orders_id"]} onClick={()=>(this.handleSelectOrder(eOrder))} className='eachOpenOrderContainer position-relative w-100'>
                                         <div className='w-100 d-flex justify-content-between mt-1'>
                                             <span className='IranSans paidItemsText'>{eOrder["paid_amount"] ? (parseInt(eOrder["paid_amount"]) / 1000) : 0}T </span>
-                                            <span className='IranSans openOrdersNames'>{orderList.map(eFood=>(eFood.name)).join(" / ")}</span>
+                                            <span className='IranSans openOrdersNames'>{orderList.map(eFood=>(eFood.persianName)).join(" / ")}</span>
                                         </div>
                                         <div className='w-100 d-flex justify-content-between mt-1'>
                                             <span className='IranSans'>{parseInt(eOrder["total_price"]) / 1000}T</span>

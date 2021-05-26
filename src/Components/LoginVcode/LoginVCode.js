@@ -61,7 +61,7 @@ class LoginVCode extends React.Component {
         if (data.statusCode === 200){
             this.props.setToken(data.data.token)
             this.props.setUserPhone(data.data.phone)
-            if (data.data['isUserInfoSaved']){
+            if (data.data['isInfoComplete']){
                 this.getOpenOrders(data.data.token)
                 this.props.history.replace('/profile/club')
             }else{

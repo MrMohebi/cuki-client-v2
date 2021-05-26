@@ -207,9 +207,9 @@ class ProfilePage extends React.Component {
                                              className='w-100 d-flex justify-content-between align-items-center pt-4'>
                                             <span className='historyOrderDate'>{eOrder['total_price'] / 1000}T</span>
                                             <span
-                                                className='historyOrderName'>{orderList.map(eFood => (eFood.name)).join("، ")}</span>
+                                                className='historyOrderName'>{orderList.map(eFood => (eFood.persianName)).join("، ")}</span>
                                             <span
-                                                className='historyOrderDate'>{moment.utc(parseInt(eOrder['ordered_date'])).format("jM/jD")}</span>
+                                                className='historyOrderDate'>{moment.utc(parseInt(eOrder['created_at'])).format("jM/jD")}</span>
                                         </div>
                                     )
                                 })
