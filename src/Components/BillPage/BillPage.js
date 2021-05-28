@@ -246,7 +246,7 @@ class BillPage extends React.Component {
                         {/*    <span>جمع نهایی فاکتور</span>*/}
                         {/*</div>*/}
                         <div className='BillSubmitButton'
-                            // onClick={this.handleSubmit}
+                            onClick={this.handleSubmit}
 
                         >
                             <div className={'gift-button d-flex justify-content-center align-items-center'}

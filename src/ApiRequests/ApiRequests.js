@@ -139,7 +139,7 @@ export const getOpenOrders = (callbackFunction, dToken = null)=>{
 
 export const getCommentsByFoodId = (callbackFunction, foodId, lastOneDate, number)=>{
     let token = getReduxStore('token')
-    $.post(BASE_API_URL+ "getCommentsByFoodId.fetch.php" ,{englishName:getComName(), token, foodId, lastDate:lastOneDate, number}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "getCommentsByFoodId" ,{resEnglishName:getComName(), token, foodId, lastDate:lastOneDate, number}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -147,14 +147,14 @@ export const getCommentsByFoodId = (callbackFunction, foodId, lastOneDate, numbe
 
 export const sendComment = (callbackFunction, foodId, body)=>{
     let token = getReduxStore('token')
-    $.post(BASE_API_URL+ "sendComment.add.php" ,{englishName:getComName(), token, foodId, body}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "sendComment" ,{resEnglishName:getComName(), token, foodId, body}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
 }
 
 export const getTempToken = (callbackFunction,ip, userAgent, isp="",city="")=>{
-    $.post(BASE_API_URL+ "getTempToken.add.php" ,{resEnglishName:getComName(), ip, userAgent, isp, city}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "getTempToken" ,{resEnglishName:getComName(), ip, userAgent, isp, city}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })

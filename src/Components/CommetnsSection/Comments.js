@@ -145,10 +145,10 @@ function Comments(props) {
                 {
                     commentsDiv.concat(
                         newCommentsList.map(eComment => (
-                                <div key={eComment['commented_date']} className='eachComment'>
+                                <div key={eComment['created_at']} className='eachComment'>
                                     <span className='eachCommentName'>{eComment.name}</span>
                                     <span
-                                        className='eachCommentTime'>{moment.utc(parseInt(eComment['commented_date'])).format("jM/jD")}</span>
+                                        className='eachCommentTime'>{moment.utc(eComment['created_at']).format("jM/jD")}</span>
                                     <span className='eachCommentContent'>{eComment.body}</span>
                                 </div>
                             )
