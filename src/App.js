@@ -19,7 +19,7 @@ import EachOpenOrderDetails from "./Components/EachOpenOrderDetails/EachOpenOrde
 import EachOrderHistoryDetails from "./Components/EachOrderHistoryDetails/EachOrderHistoryDetails";
 import LikedFoods from "./Components/LikedFoodsPage/LikedFoods";
 import CukiCode from "./Components/CukiCode/CukiCode";
-import ResDetails from "./ResDetails/ResDetails";
+import ResDetails from "./Components/ResDetails/ResDetails";
 
 
 import {getLSPhone, getLSToken} from "./stores/localStorage/localStorage";

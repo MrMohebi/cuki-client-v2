@@ -4,10 +4,9 @@ import './css/ResDetails.css'
 import phoneImage from './img/phone.png';
 import instagramImage from './img/instagram.png';
 import locationImage from './img/location.png';
-import {TextField} from "@material-ui/core";
-import VerificationCodeInput from "../Components/VerificationCodeInput/vCodeInput";
 
-import * as requests from '../ApiRequests/ApiRequests'
+
+import * as requests from '../../ApiRequests/ApiRequests'
 
 
 class ResDetails extends React.Component{
