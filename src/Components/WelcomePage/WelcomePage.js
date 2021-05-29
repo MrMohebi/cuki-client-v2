@@ -142,7 +142,7 @@ class WelcomePage extends React.Component {
 
     render() {
         return (
-            <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
+            <Swipeable style={{height: "100%",position:'relative'}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <div className='welcomePageMainContainerCover w-100 h-100'>
                     <div className={'more-options'}
                     onClick={

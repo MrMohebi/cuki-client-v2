@@ -28,6 +28,9 @@ class ResDetails extends React.Component{
             console.log(res)
         })
     }
+    handleBack = ()=>{
+        this.props.history.goBack();
+    }
 
 
 
