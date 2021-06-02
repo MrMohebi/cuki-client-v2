@@ -5,7 +5,7 @@ import getComName from "../functions/getComName";
 import * as adaptors from "./Adaptors";
 
 const BASE_API_URL = "https://api.cuki.ir/v201/";
-const BASE_PAY_V2_URL = "https://pay.cuki.ir/v2/";
+const BASE_PAY_URL = "https://api.cukim.ir/api/v1/pay/";
 
 
 const BASE_API_URL_CUKIM_V1 = "https://api.cukim.ir/api/v1/cuki/"
@@ -79,7 +79,7 @@ export const getUserInfo = (callbackFunction)=>{
 
 export const getCustomerInfo = (callbackFunction)=>{
     let token = getReduxStore('token')
-    $.post(BASE_API_URL_CUKIM_V1+ "getCustomerInfo" ,{token, resEnglishName:getComName()}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1 + "getCustomerInfo" ,{token, resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         res.data = adaptors.getCustomerInfoTOGetCustomerInfo(res.data)
         callbackFunction(res);
@@ -90,7 +90,7 @@ export const getCustomerInfo = (callbackFunction)=>{
 export const sendOrder = (callbackFunction,table,address, foodsList, generalDetails = "")=>{
     let token = getReduxStore('token')
     let details =  {general: generalDetails, eachFood: []}
-    $.post(BASE_API_URL_CUKIM_V1+ "sendOrder" ,{resEnglishName:getComName(), token, items:JSON.stringify(foodsList),details:JSON.stringify(details),deliveryPrice:'0',table:table,address:JSON.stringify(address)}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1 + "sendOrder" ,{resEnglishName:getComName(), token, items:JSON.stringify(foodsList),details:JSON.stringify(details),deliveryPrice:'0',table:table,address:JSON.stringify(address)}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -99,7 +99,7 @@ export const sendOrder = (callbackFunction,table,address, foodsList, generalDeta
 
 export const getPaymentInfoByTrackingId = (callbackFunction, trackingId)=>{
     let token = getReduxStore('token')
-    $.post(BASE_API_URL+ "getPaymentInfoByTrackingId.fetch.php" ,{token, trackingId}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1 + "getPaymentByTrackingId" ,{token, trackingId}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
@@ -108,7 +108,7 @@ export const getPaymentInfoByTrackingId = (callbackFunction, trackingId)=>{
 
 export const getOrderByTrackingId = (callbackFunction, trackingId)=>{
     let token = getReduxStore('token')
-    $.post(BASE_API_URL_CUKIM_V1+ "getOrderByTrackingId" ,{token, trackingId, resEnglishName:getComName()}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1 + "getOrderByTrackingId" ,{token, trackingId, resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         res.data = adaptors.getOrderByTrackingIdTOGetOrderByTrackingId(res.data);
         callbackFunction(res);
@@ -120,7 +120,7 @@ export const getOrderByTrackingId = (callbackFunction, trackingId)=>{
 export const sendPaymentRequestFood = (callbackFunction, items, amount, trackingId)=>{
     let token = getReduxStore('token')
     let newItems = items.filter(eFood=>eFood.number > 0);
-    $.post(BASE_PAY_V2_URL+ "createPayment.php" ,{englishName:getComName(), token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
+    $.post(BASE_PAY_URL + "createLink" ,{resEnglishName:getComName(), token, itemType:"food", items:JSON.stringify(newItems), amount, trackingId}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })

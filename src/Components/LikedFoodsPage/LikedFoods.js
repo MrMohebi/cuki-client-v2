@@ -163,7 +163,6 @@ class LikedFoods extends Component {
                             {/*    })*/}
                             {/*}*/}
 
-
                             {
                                 this.state.foodsList.map(eachFood => {
                                     let colors = RandomColor.RandomColor(eachFood.id);

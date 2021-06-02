@@ -202,7 +202,7 @@ class ProfilePage extends React.Component {
                                 this.props.orderHistoryRestaurant.map(eOrder => {
                                     let orderList = JSON.parse(eOrder['order_list']);
                                     return (
-                                        <div key={eOrder['orders_id']}
+                                        <div key={eOrder['id']}
                                              onClick={() => (this.handleSelectEachOrderHistory(eOrder))}
                                              className='w-100 d-flex justify-content-between align-items-center pt-4'>
                                             <span className='historyOrderDate'>{eOrder['total_price'] / 1000}T</span>
@@ -218,7 +218,7 @@ class ProfilePage extends React.Component {
 
                         <div className={this.state.offCodeElementClass}>
                             <div className={'eachOffCodeContainer'}>
-                                <div className={'w-25 giftOffCode'} ></div>
+                                <div className={'w-25 giftOffCode'} />
                                 <div className={'w-75 d-flex flex-column justify-content-around '}>
                                     <div className={'w-100 d-flex flex-row-reverse IranSans justify-content-center pt-1 overflow-auto'}>
                                         <span className={'offCodePercent ml-2'}>20%</span>

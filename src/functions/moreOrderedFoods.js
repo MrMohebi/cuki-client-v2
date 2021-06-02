@@ -25,11 +25,10 @@ export default function moreOrderedFoods(userHistoryOrders, allFoodsArray) {
 
     }).filter(eachFoodId=> eachFoodId > 0).slice(0,foodsNumberLimit);
 
-
     if(sevenMoreOrdered.length >= foodsNumberLimit){
         return sevenMoreOrdered;
     }else {
-        return sevenMoreOrdered.concat(moreOrderedFoodRestaurant(draftAllFoodsArray)).slice(0,foodsNumberLimit)
+        return [...new Set(sevenMoreOrdered.concat(moreOrderedFoodRestaurant(draftAllFoodsArray)).slice(0,foodsNumberLimit))]
     }
 }
 
