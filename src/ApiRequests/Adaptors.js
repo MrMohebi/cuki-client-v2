@@ -7,13 +7,40 @@
 
 
 
-function getAllRestaurantDataTOGetResData(data){
+export function getAllRestaurantDataTOGetResData(data){
     let newFoods = camelToUnderArrayOrObj(data["foods"])
     let newResInfo = camelToUnderArrayOrObj(data["restaurantInfo"])
 
-    newFoods["foods_id"] = newFoods["id"]
+    for (let i =0; i< newFoods.length ;i++){
+        newFoods[i]["name"] = newFoods[i]["persian_name"]
+        newFoods[i]["details"] = JSON.parse(newFoods[i]["details"])
+    }
     newResInfo["info_id"] = newResInfo["id"]
+
     return {foods :newFoods, restaurantInfo:newResInfo}
+}
+
+export function getCustomerInfoTOGetCustomerInfo(data){
+    let newOrderList = camelToUnderArrayOrObj(data["orderList"])
+    for (let i =0; i< newOrderList.length ;i++){
+        newOrderList[i]["order_list"] = newOrderList[i]["items"]
+        newOrderList[i]["order_table"] = newOrderList[i]["table"]
+        newOrderList[i]["ordered_date"] = newOrderList[i]["created_at"]
+    }
+    data["orderList"] =  newOrderList;
+    return data
+}
+
+export function getOrderByTrackingIdTOGetOrderByTrackingId(data){
+    let newData = camelToUnderArrayOrObj(data)
+    for (let i =0; i< newData.length ;i++){
+        newData[i]["order_list"] = newData[i]["items"]
+        newData[i]["customer_phone"] = newData[i]["user_phone"]
+        newData[i]["order_table"] = newData[i]["table"]
+        newData[i]["ordered_date"] = newData[i]["created_at"]
+    }
+    return newData
+
 }
 
 

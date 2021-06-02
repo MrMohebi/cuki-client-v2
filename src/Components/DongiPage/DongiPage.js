@@ -34,7 +34,7 @@ class DongiPage extends React.Component {
         this.timer = setInterval(() => {
             this.getPaidItemsInfo(this.state.trackingId)
             this.setState({
-                allPaid: (this.sumFoodPriceNotPaidList() === 0)
+                allPaid: (this.sumFoodPriceNotPaidList() === 0) && (this.state.notPaidList.length > 0)
             })
         }, 3000)
 
@@ -76,7 +76,7 @@ class DongiPage extends React.Component {
     setOrderToState = (res) => {
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             this.setState({
-                orderList: JSON.parse(res.data["order_list"])
+                orderList: JSON.parse(res.data["items"])
             })
             this.getPaidItemsInfo(this.state.trackingId)
         }
@@ -212,7 +212,7 @@ class DongiPage extends React.Component {
                         <div className='eachDongContainerHolders' onClick={() => {
                             this.MakeItOpen(eFood.id)
                         }}>
-                            <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
+                            <span className='eachDongFoodName font-weight-bold'>{eFood.persianName}</span>
                             <span
                                 className='IranSans DongiPayText eachDongFoodName font-weight-bold'>پرداخت </span>
                             <div className='howMuchContainer'>
@@ -249,11 +249,11 @@ class DongiPage extends React.Component {
                     <div key={eFood.id} id={eFood.id} style={{height: '60px'}}
                          className='eachDongContainer position-relative w-100'>
                         <div className='eachDongContainerHolders'>
-                            <span className='eachDongFoodName font-weight-bold'>{eFood.name}</span>
+                            <span className='eachDongFoodName font-weight-bold'>{eFood.persianName}</span>
                             <span className='IranSans DongiPayText  font-weight-bold'> </span>
                             <span className='IranSans paidItemsText  font-weight-bold'/>
                             <span className='IranSans paidItemsText  '>پرداخت شده </span>
-                            <span className=' font-weight-bold'>{totalPrice}T</span>
+                            {/*<span className=' font-weight-bold'>{totalPrice}T</span>*/}
                         </div>
                     </div>
             )

@@ -60,31 +60,31 @@ export const addFoodToOrders = food => (
 
 
 
-export const deleteFoodFromOrders = foods_id => (
+export const deleteFoodFromOrders = id => (
     store.dispatch({
         type: actionTypes.DELETE_FOOD_FROM_ORDERS,
         payload:{
-            foods_id
+            id
         }
     })
 )
 
 
-export const increaseFoodNumber = foods_id => (
+export const increaseFoodNumber = id => (
     store.dispatch({
         type: actionTypes.INCREASE_FOOD_NUMBER,
         payload:{
-            foods_id
+            id
         }
     })
 )
 
 
-export const decreaseFoodNumber = foods_id => (
+export const decreaseFoodNumber = id => (
     store.dispatch({
         type: actionTypes.DECREASE_FOOD_NUMBER,
         payload:{
-            foods_id
+            id
         }
     })
 )

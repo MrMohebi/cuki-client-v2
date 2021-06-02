@@ -18,7 +18,7 @@ function convertFoodIdToFoodInfo (foodsIdList, foodsList){
     let result = [];
     foodsList.map(eFood=>{
         foodsIdList.map(eFoodId=>{
-            if(eFoodId === eFood.foods_id)
+            if(eFoodId === eFood.id)
                 result.push(eFood)
             return null
         })
@@ -40,15 +40,15 @@ class LikedFoods extends Component {
     }
 
     giveMyNumber = (fId)=>{
-        return this.props.orderList.filter(food=> food.foods_id === fId)[0]? this.props.orderList.filter(food=> food.foods_id === fId)[0].number:0
+        return this.props.orderList.filter(food=> food.id === fId)[0]? this.props.orderList.filter(food=> food.id === fId)[0].number:0
     }
-    orderScripts = (foods_id, foodsList = this.props.foods) => {
+    orderScripts = (id, foodsList = this.props.foods) => {
         if(this.props.isResOpen) {
             for (let i = 0; i < foodsList.length; i++) {
-                if (foodsList[i].foods_id === foods_id) {
+                if (foodsList[i].id === id) {
                     // check if food was already in order list, increase its number
-                    if (this.props.orderList.filter(food => food.foods_id === foods_id).length) {
-                        this.props.increaseFoodNumber(foods_id);
+                    if (this.props.orderList.filter(food => food.id === id).length) {
+                        this.props.increaseFoodNumber(id);
                         return "increased number"
                     } else {
                         //  else add it to order list
@@ -130,11 +130,11 @@ class LikedFoods extends Component {
                             {/*    this.state.foodsList.map(eachFood => {*/}
                             {/*        let colors = RandomColor.RandomColor()*/}
                             {/*        return (*/}
-                            {/*            <div  key={eachFood['foods_id']}*/}
+                            {/*            <div  key={eachFood['id']}*/}
                             {/*                  className='foodListEachFoodContainer animate__animated animate__fadeInDown'*/}
                             {/*                  onClick={() => {*/}
                             {/*                      if (eachFood.status === 'in stock') {*/}
-                            {/*                          this.orderScripts(eachFood.foods_id);*/}
+                            {/*                          this.orderScripts(eachFood.id);*/}
                             {/*                      }*/}
                             {/*                  }}>*/}
                             {/*                <div className='foodListEachFood' style={{backgroundColor: colors.background}}>*/}
@@ -142,7 +142,7 @@ class LikedFoods extends Component {
                             {/*                        <span className='eachFoodPrice'>*/}
                             {/*                            {eachFood.price / 1000} T*/}
                             {/*                        </span>*/}
-                            {/*                        <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.foods_id)}>*/}
+                            {/*                        <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.id)}>*/}
                             {/*                            <div className='eachFoodImage'*/}
                             {/*                                 style={{*/}
                             {/*                                     background: `url(${eachFood.thumbnail})`,*/}
@@ -163,51 +163,50 @@ class LikedFoods extends Component {
                             {/*    })*/}
                             {/*}*/}
 
-
                             {
                                 this.state.foodsList.map(eachFood => {
-                                    let colors = RandomColor.RandomColor(eachFood.foods_id);
+                                    let colors = RandomColor.RandomColor(eachFood.id);
                                     let timeout;
                                     let isInOrderList = false;
-                                    if ((this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)) {
+                                    if ((this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)) {
                                         isInOrderList = true;
                                     }
                                     return (
                                         <div onContextMenu={(e) => {
                                             e.preventDefault()
                                         }}
-                                             key={eachFood['foods_id']}
+                                             key={eachFood['id']}
                                              className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                              onClick={(e) => {
                                                  clearTimeout(timeout)
-                                                 if (eachFood.status === 'in stock') {
+                                                 if ((eachFood.status === 'in stock' || eachFood.status === 'inStock')) {
                                                      // if (!isInOrderList) {
-                                                     //     this.orderScripts(eachFood.foods_id);
+                                                     //     this.orderScripts(eachFood.id);
                                                      // }
                                                  }
                                                  this.setState({allowToShow:false})
                                                  if (!e.target.classList.contains('decrease')){
-                                                     this.orderScripts(eachFood.foods_id);
-                                                     if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
-                                                         this.clickAnimation('food' + eachFood['foods_id'])
+                                                     this.orderScripts(eachFood.id);
+                                                     if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                         this.clickAnimation('food' + eachFood['id'])
                                                      }
                                                  }
 
                                              }}
 
                                              onTouchStart={(e) => {
-                                                 if (eachFood.status === 'in stock' && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
-                                                     this.pressAnimation('food' + eachFood['foods_id'])
+                                                 if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                     this.pressAnimation('food' + eachFood['id'])
                                                  }
                                              }}
 
                                              onTouchEnd={() => {
                                                  this.setState({allowToShow:false})
-                                                 this.releaseAnimation('food'+eachFood['foods_id'])
+                                                 this.releaseAnimation('food'+eachFood['id'])
                                              }}
                                         >
                                             <div className='foodListEachFood'
-                                                 id={'food' + eachFood['foods_id']}
+                                                 id={'food' + eachFood['id']}
                                                  style={{backgroundColor: colors.background}}>
                                                 {
                                                     parseInt(eachFood.discount) > 0 ?
@@ -217,7 +216,7 @@ class LikedFoods extends Component {
                                                 }
                                                 <div className='priceAndImage'>
                                                     {
-                                                        eachFood.status === 'in stock' ?
+                                                        (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
                                                             eachFood.discount === 0 ?
                                                                 <span className='eachFoodPrice '>
                                                                                 {eachFood.price / 1000} T
@@ -247,7 +246,7 @@ class LikedFoods extends Component {
                                                     }
 
                                                     {/*<Badge color={"primary"}*/}
-                                                    {/*       badgeContent={(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}>*/}
+                                                    {/*       badgeContent={(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}>*/}
                                                     {/*    <div className='eachFoodImage'*/}
                                                     {/*         style={{*/}
                                                     {/*             background: `url(${eachFood.thumbnail})`,*/}
@@ -275,7 +274,7 @@ class LikedFoods extends Component {
                                                         <div
                                                             style={{backgroundColor: colors.foreground + '50'}}
                                                             onClick={() => {
-                                                                this.handleDecreaseFoodNumber(eachFood['foods_id'])
+                                                                this.handleDecreaseFoodNumber(eachFood['id'])
                                                             }}
                                                             className={'decreaseFoodNumberButtonContainer decrease d-flex justify-content-center align-items-center'}>
                                                             <div
@@ -294,12 +293,12 @@ class LikedFoods extends Component {
                                                             style={{backgroundColor: colors.foreground + '50'}}
                                                             className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
                                                                            <span
-                                                                               className={'IranSans'}>{(this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0] ? this.props.orderList.filter(food => food.foods_id === eachFood.foods_id)[0].number : 0)}</span>
+                                                                               className={'IranSans'}>{(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}</span>
                                                         </div>
                                                         <div
                                                             style={{backgroundColor: colors.foreground + '50'}}
                                                             onClick={() => {
-                                                                this.clickAnimation(eachFood['foods_id'])
+                                                                this.clickAnimation(eachFood['id'])
                                                             }}
                                                             className={'increaseFoodNumberButtonContainer increase d-flex justify-content-center align-items-center'}>
                                                             <div

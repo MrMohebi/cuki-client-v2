@@ -92,14 +92,14 @@ class BillPage extends React.Component {
     createOrderList = () => {
         console.log(this.props.orderList)
         return this.props.orderList.map(eachFood => (
-                <SwipeableListItem key={eachFood["foods_id"]}
+                <SwipeableListItem key={eachFood["id"]}
                                    swipeLeft={{
                                        content: <div/>,
-                                       action: () => this.handleDecreaseFoodNumber(eachFood["foods_id"]),
+                                       action: () => this.handleDecreaseFoodNumber(eachFood["id"]),
                                    }}
                                    swipeRight={{
                                        content: <div/>,
-                                       action: () => this.handleIncreaseFoodNumber(eachFood["foods_id"]),
+                                       action: () => this.handleIncreaseFoodNumber(eachFood["id"]),
                                    }}>
                     <div
                         className='mt-5 w-100 BillRow rtl IranSans'>
@@ -107,10 +107,10 @@ class BillPage extends React.Component {
                         <span
                             className='eachFoodPriceBill'>{((eachFood.price * (1 - eachFood.discount / 100)) * eachFood.number) / 1000} T</span>
                         <div className='d-flex justify-content-between umberInDe'>
-                            <AddRoundedIcon onClick={() => (this.handleIncreaseFoodNumber(eachFood["foods_id"]))}/>
+                            <AddRoundedIcon onClick={() => (this.handleIncreaseFoodNumber(eachFood["id"]))}/>
                             <span
-                                className='NumberOfFoodsBill'>{this.checkFoodNumber(eachFood["foods_id"], eachFood.number)}</span>
-                            <RemoveRoundedIcon onClick={() => (this.handleDecreaseFoodNumber(eachFood["foods_id"]))}/>
+                                className='NumberOfFoodsBill'>{this.checkFoodNumber(eachFood["id"], eachFood.number)}</span>
+                            <RemoveRoundedIcon onClick={() => (this.handleDecreaseFoodNumber(eachFood["id"]))}/>
                         </div>
                     </div>
                 </SwipeableListItem>
@@ -244,7 +244,7 @@ class BillPage extends React.Component {
                         {/*    <span>جمع نهایی فاکتور</span>*/}
                         {/*</div>*/}
                         <div className='BillSubmitButton'
-                            // onClick={this.handleSubmit}
+                            onClick={this.handleSubmit}
 
                         >
                             <div className={'gift-button d-flex justify-content-center align-items-center'}

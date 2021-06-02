@@ -46,7 +46,7 @@ class EachOpenOrderDetails extends React.Component {
                             </div>
                             <span className='eachOrderDetailsFoodNumber text-left pl-3'>x{eFood.number}</span>
                             <div className='w-100 justify-content-center d-flex'>
-                                <div className='EachOrderDetailsEachFoodName mt-3'>{eFood.name}</div>
+                                <div className='EachOrderDetailsEachFoodName mt-3'>{eFood.persianName}</div>
                             </div>
                         </div>
                     </div>
@@ -87,7 +87,7 @@ class EachOpenOrderDetails extends React.Component {
 
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span
-                            className=''>{this.props.tempOpenOrderInfo['paid_amount'] > 0 ? this.props.tempOpenOrderInfo['paid_amount'] : 0} T</span>
+                            className=''>{this.props.tempOpenOrderInfo['paid_amount'] > 0 ? this.props.tempOpenOrderInfo['paid_amount']/1000 : 0} T</span>
                         <span className='eachOrderDetailsTotalHolder'>پرداختی شما</span>
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
@@ -99,11 +99,9 @@ class EachOpenOrderDetails extends React.Component {
                         <span className=''>{this.props.tempOpenOrderInfo['tracking_id']}</span>
                         <span className='eachOrderDetailsTotalHolder'>شماره سفارش</span>
                     </div>
-                    {console.log(this.props.tempOpenOrderInfo['total_price'])}
                     {
-
                         this.props.tempOpenOrderInfo['paid_amount'] !== null ?
-                            parseInt(this.props.tempOpenOrderInfo['total_price']) === parseInt(this.props.tempOpenOrderInfo['paid_amount']) ?
+                            parseInt(this.props.tempOpenOrderInfo['total_price']) !== parseInt(this.props.tempOpenOrderInfo['paid_amount']) ?
                                 <div className='openOrderHistorySubmit mt-2'
                                      onClick={() => (this.handlePay(this.props.tempOpenOrderInfo['tracking_id']))}>
                                     <span>پرداخت</span>
