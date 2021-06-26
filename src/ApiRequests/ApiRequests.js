@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import getReduxStore from "../stores/reduxStore/getRedux";
-import * as actions from "../stores/reduxStore/actions"
+import * as ls from "../stores/localStorage/localStorage"
 import getComName from "../functions/getComName";
 import * as adaptors from "./Adaptors";
 
@@ -11,21 +11,40 @@ const BASE_PAY_URL = "https://api.cukim.ir/api/v1/pay/";
 const BASE_API_URL_CUKIM_V1 = "https://api.cukim.ir/api/v1/cuki/"
 
 
+export const getRestaurantParts = (callbackFunction)=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "getResParts" ,{resEnglishName:getComName()}).then(res=>{
+        callbackFunction(res);
+    })
+}
 
 export const getRestaurantInfo = (callbackFunction)=>{
-    $.post(BASE_API_URL_CUKIM_V1+ "getResData" ,{resEnglishName:getComName()}).then(res=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "getResInfo" ,{resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
-        res.data = adaptors.getAllRestaurantDataTOGetResData(res.data)
         if(res.statusCode === 200){
-            actions.restaurantSetData(res.data)
-            document.title = res.data.restaurantInfo.english_name;
-            document.getElementById('app-name').name = res.data.restaurantInfo.english_name
+            ls.setLSResInfo(res.data)
+            document.title = res.data.restaurantInfo.englishName;
+            document.getElementById('app-name').name = res.data.restaurantInfo.englishName
             document.getElementById('favicon').href = res.data.restaurantInfo['favicon_link']
             document.getElementById('favicon-apple').href = res.data.restaurantInfo['favicon_link']
         }
         callbackFunction(res);
     })
 }
+
+// export const getRestaurantInfo = (callbackFunction)=>{
+//     $.post(BASE_API_URL_CUKIM_V1+ "getResData" ,{resEnglishName:getComName()}).then(res=>{
+//         res = (res !== undefined && res !== null) ? res : {}
+//         res.data = adaptors.getAllRestaurantDataTOGetResData(res.data)
+//         if(res.statusCode === 200){
+//             actions.restaurantSetData(res.data)
+//             document.title = res.data.restaurantInfo.english_name;
+//             document.getElementById('app-name').name = res.data.restaurantInfo.english_name
+//             document.getElementById('favicon').href = res.data.restaurantInfo['favicon_link']
+//             document.getElementById('favicon-apple').href = res.data.restaurantInfo['favicon_link']
+//         }
+//         callbackFunction(res);
+//     })
+// }
 
 
 export const sendVCode = (callbackFunction,phone)=>{
