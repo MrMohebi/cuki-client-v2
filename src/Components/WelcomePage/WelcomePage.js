@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.gif'
 import getComName, {getFullName} from "../../functions/getComName";
-import {getLSPager, setLSPager} from "../../stores/localStorage/localStorage";
+import * as ls from "../../stores/localStorage/localStorage"
 import $ from 'jquery'
 import ding from './assets/ding.mp3'
 import * as requests from '../../ApiRequests/ApiRequests'
@@ -19,6 +19,7 @@ class WelcomePage extends React.Component {
         handClass: "shakeHands",
         allowToShake: true,
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
+        resParts:ls.getLSResParts(),
         lastPagerTime: 0,
         canCallPager: false,
         timerAnimationClass: 'd-none',
@@ -39,10 +40,10 @@ class WelcomePage extends React.Component {
     }
 
     componentDidMount() {
-        if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
+        if (typeof this.state.resParts !== "object") {
             this.props.history.push("/");
         }
-        let lSPager = getLSPager()
+        let lSPager = ls.getLSPager()
         lSPager = lSPager > 0 ? lSPager : 0
         if (lSPager) {
             this.setState({lastPagerTime:parseInt(lSPager)})
@@ -106,7 +107,7 @@ class WelcomePage extends React.Component {
     }
     callPager = () => {
         let now = Date.now()
-        setLSPager(now)
+        ls.setLSPager(now)
         this.setState({lastPagerTime:now})
         requests.callPager(this.props.tableScanned, this.callPagerCallback)
     }
@@ -116,7 +117,7 @@ class WelcomePage extends React.Component {
     }
 
     togglePagerCall = (e) => {
-        if (this.props.tableScanned > 0||getLSPager()/1000> (Date.now()/1000)-300) {
+        if (this.props.tableScanned > 0||ls.getLSPager()/1000> (Date.now()/1000)-300) {
             if (this.state.canCallPager) {
                 let audio = new Audio(ding)
                 audio.volume = 0.4
@@ -205,8 +206,8 @@ class WelcomePage extends React.Component {
                         <div className="welcomePageFrames2">
                             <br/>
                             <div className="d-flex justify-content-around">
-
-                                {this.props.foodListConverted.parts ? this.props.foodListConverted.parts.map(eachPart => {
+                                {
+                                    typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
                                     return (
                                         <div onClick={() => {
                                             this.props.history.push("/category/" + eachPart)
@@ -223,9 +224,7 @@ class WelcomePage extends React.Component {
                                             <br/>
                                         </div>
                                     )
-                                }) : null
-                                }
-
+                                }):null}
                                 <div className="openIcons overflow-hidden">
                                     <img alt="vrTour" src={tourImage}
                                          onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}

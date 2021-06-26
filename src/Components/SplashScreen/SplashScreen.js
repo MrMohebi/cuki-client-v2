@@ -1,7 +1,7 @@
 import React from "react";
 import './css/style.css';
 import * as requests from '../../ApiRequests/ApiRequests'
-import foodsListAdaptor from "../../functions/foodsListAdaptor";
+import * as ls from "../../stores/localStorage/localStorage"
 import {connect} from 'react-redux';
 import * as actions from '../../stores/reduxStore/actions';
 import {Snackbar} from "@material-ui/core"
@@ -35,7 +35,8 @@ class SplashScreen extends React.Component{
     goMainPage = (response) =>{
         this.props.setTableScanned(this.urlParams["table"]?this.urlParams["table"]:0)
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
-            this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+            // this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+            ls.setLSResParts(response.data);
             this.props.setResEnglishName(getComName())
             this.props.history.push("/main");
         }else{
@@ -44,7 +45,7 @@ class SplashScreen extends React.Component{
     }
 
     getData = () =>{
-        requests.getRestaurantInfo(this.goMainPage);
+        requests.getRestaurantParts(this.goMainPage);
     }
 
     render() {
