@@ -128,6 +128,22 @@ class PayWay extends React.Component{
         this.mapDetailsTableContainer.current.style.height = '80px'
     }
 
+    enableIWillComeAndGet = () =>{
+        this.setState({
+            inResClass:'payWayNormal',
+            outResClass:'payWayNormal',
+            inOrOut:'in',
+            tableClass:'animate__animated animate__fadeInRight tableContainerClass d-none',
+            mapClass:'animate__animated animate__fadeOut mapContainer d-none',
+            addressDetailsClass:'animate__animated animate__fadeOut d-none',
+            textHolderDetailsClass:'d-none',
+            outResIcon:outResWhite,
+            inResIcon:waiterWhite,
+            table:"iWillComeAndGet",
+        })
+        this.mapDetailsTableContainer.current.style.height = '80px'
+    }
+
     enableOutRes = () =>{
         this.setState({
             inResClass:'payWayNormal',
@@ -149,6 +165,16 @@ class PayWay extends React.Component{
             offlineClass:'payWayNormal',
             onlineOrCash:'online',
             onlineIcon:onlineWhite,
+            cashIcon:cashBlack
+        })
+    }
+
+    enableOnlineAll = () =>{
+        this.setState({
+            onlineClass:'payWayNormal',
+            offlineClass:'payWayNormal',
+            onlineOrCash:'onlineAll',
+            onlineIcon:onlineBlack,
             cashIcon:cashBlack
         })
     }
@@ -175,7 +201,7 @@ class PayWay extends React.Component{
 
 
     handleSubmit = () =>{
-        if(this.state.inOrOut === "in" && this.state.table < 1){
+        if(this.state.inOrOut === "in" && this.state.table !== "iWillComeAndGet"){
             ReactSwal.fire({
                 title: 'نه صبر کن',
                 icon: 'info',
@@ -264,10 +290,66 @@ class PayWay extends React.Component{
                 this.getOpenOrders()
                 if(this.state.onlineOrCash === "cash"){
                     this.props.history.push("/main")
-                }else {
+                }else if(this.state.onlineOrCash === "onlineAll"){
+                    requests.sendPaymentRequestFood(
+                        this.callbackPaymentRequest,
+                        this.props.orderList.map(eachFood =>{return {id:eachFood.id, number:eachFood.number}}),
+                        res.data.totalPrice,
+                        res.data.trackingId
+                    );
+                } else {
                     this.props.history.push("/dongi?trackingId="+res.data.trackingId)
                 }
             })
+            fixBodyClass()
+        }
+    }
+
+    callbackPaymentRequest = (res) => {
+        if (res.statusCode === 200) {
+            this.setState({
+                loading: false,
+                selectedToPay: [],
+                notPaidList:[]
+            })
+            ReactSwal.fire({
+                title: 'تمومه',
+                icon: 'success',
+                confirmButtonText: 'بریم درگاه پرداخت',
+                showDenyButton: true,
+                denyButtonText: "میخوام لینک پرداخت رو ارسال کنم واسه دوستم",
+                denyButtonColor: "#47b8e5",
+                text: "مبلغ : " + res.data.amount / 1000 + " تومن \n",
+            }).then(resultSwalPay => {
+                if (resultSwalPay.isConfirmed) {
+                    this.props.history.push("/main")
+                    window.open(res.data.url, '_blank').focus()
+                } else if (resultSwalPay.isDenied) {
+                    if (navigator.clipboard !== undefined) {
+                        navigator.clipboard.writeText(
+                            "لینک پرداخت دونگ کوکی\n\n"  +
+                            "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" +
+                            "بزن روی لینک پایین تا هدایت شی درگاه پرداخت\n" + res.data.url ).then(() => {
+                            ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
+                        })
+                    } else {
+                        this.setState({
+                            dialogClassName: 'animate__fadeIn animate__animated',
+                            payLink: res.data.url
+                        })
+                    }
+
+
+                }
+            });
+            fixBodyClass()
+        } else {
+            ReactSwal.fire({
+                title: '!!! آخ',
+                icon: 'error',
+                confirmButtonText: 'اوکیه',
+                text: "یه چیزی درست کار نکرد، میشه از اول امتحان کنی؟",
+            });
             fixBodyClass()
         }
     }
@@ -316,12 +398,16 @@ class PayWay extends React.Component{
                             <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
                                 <span className='IranSans payWayText ' >نحوه پرداخت چجوری باشه؟</span>
                                 <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
-                                    <div className={this.state.onlineClass} onClick={this.enableOnline}
-                                    >آنلاین
+                                    <div className={this.state.onlineClass} onClick={this.enableOnline}>
+                                        آنلاین دونگی
                                         <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.onlineIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                                     </div>
-
-                                    <div className={this.state.offlineClass} onClick={this.enableCash}>نقدی
+                                    <div className={this.state.onlineClass} onClick={this.enableOnlineAll}>
+                                        آنلاین یکجا
+                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.onlineIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                    </div>
+                                    <div className={this.state.offlineClass} onClick={this.enableCash}>
+                                        نقدی
                                         <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.cashIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                                     </div>
                                 </div>
@@ -333,7 +419,12 @@ class PayWay extends React.Component{
                                         درون رستوران
                                         <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                                     </div>
-                                    <div className={this.state.outResClass} onClick={this.enableOutRes}>بیرون بر
+                                    <div className={this.state.inResClass +' inResTextSmaller'} onClick={this.enableIWillComeAndGet}>
+                                        اماده کن میام میبرم
+                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                    </div>
+                                    <div className={this.state.outResClass} onClick={this.enableOutRes}>
+                                        بیرون بر
                                         <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.inResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                                     </div>
 
