@@ -18,6 +18,10 @@ class SplashScreen extends React.Component{
     urlParams = url2paramsArray(this.searchParam) // 12827295
 
     componentDidMount() {
+        this.props.setResEnglishName(getComName())
+        if(typeof ls.getLSResParts() === "object"){
+            this.props.history.push("/main");
+        }
         this.getData();
     }
 
@@ -35,9 +39,7 @@ class SplashScreen extends React.Component{
     goMainPage = (response) =>{
         this.props.setTableScanned(this.urlParams["table"]?this.urlParams["table"]:0)
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
-            // this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
             ls.setLSResParts(response.data);
-            this.props.setResEnglishName(getComName())
             this.props.history.push("/main");
         }else{
             this.setOpenSnackbar(true)

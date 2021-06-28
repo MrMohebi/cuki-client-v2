@@ -1,18 +1,29 @@
 import getComName from "../../functions/getComName";
+import foodsListAdaptor from "../../functions/foodsListAdaptor";
 
 let ComName = getComName()
 
-const lSNameToken = ComName+"Token_010312"
-const lSNamePhone = ComName+"Phone_010312"
+const lSNameToken = "generalToken_010312"
+const lSNamePhone = "generalPhone_010312"
 const lSNamePager = ComName+"Pager_010312"
 const lSNameResParts = ComName+"ResParts_020626"
 const lSNameResInfo = ComName+"ResInfo_010626"
 const lSNameResInfoUpdatedAt = ComName+"ResInfoUpdatedAt_010626"
 const lSNameResFoods = ComName+"ResFoods_010626"
 const lSNameResFoodsUpdatedAt = ComName+"ResFoodsUpdatedAt_010626"
+const lSNameResFullInfoCategories = ComName+"ResFullInfoCategories_010626"
 
 
-
+// -------------------------------------------------------------------------------
+export const setLSResFullInfoCategories = (resFullInfoCategories) =>{
+    if(typeof resFullInfoCategories !== "string") {resFullInfoCategories = JSON.stringify(resFullInfoCategories)}
+    localStorage.setItem(lSNameResFullInfoCategories, resFullInfoCategories)
+}
+export const getLSResFullInfoCategories = () =>{
+    let lSResFullInfoCategories = localStorage.getItem(lSNameResFullInfoCategories)
+    if(lSResFullInfoCategories !== undefined && lSResFullInfoCategories !== null) {lSResFullInfoCategories = JSON.parse(lSResFullInfoCategories)}
+    return (lSResFullInfoCategories !== null && lSResFullInfoCategories !== undefined) ? lSResFullInfoCategories : ""
+}
 // -------------------------------------------------------------------------------
 export const setLSResFoodsUpdatedAt = (resFoodsUpdatedAt) =>{
     localStorage.setItem(lSNameResFoodsUpdatedAt, resFoodsUpdatedAt)
@@ -23,8 +34,14 @@ export const getLSResFoodsUpdatedAt = () =>{
 }
 // -------------------------------------------------------------------------------
 export const setLSResFoods = (resFoods) =>{
-    if(typeof resFoods !== "string") {resFoods = JSON.stringify(resFoods)}
-    localStorage.setItem(lSNameResFoods, resFoods)
+    // create category again
+    setLSResFullInfoCategories(foodsListAdaptor(resFoods))
+    // order foods base on id
+    let newFoodList = []
+    resFoods.map(eFood=>{
+        newFoodList[eFood.id]= eFood;
+    })
+    localStorage.setItem(lSNameResFoods, JSON.stringify(newFoodList))
 }
 export const getLSResFoods = () =>{
     let lSResFoods = localStorage.getItem(lSNameResFoods)

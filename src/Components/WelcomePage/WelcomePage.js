@@ -5,9 +5,9 @@ import {useSwipeable} from 'react-swipeable';
 import tourImage from './img/tour.gif'
 import getComName, {getFullName} from "../../functions/getComName";
 import * as ls from "../../stores/localStorage/localStorage"
+import * as requests from '../../ApiRequests/ApiRequests'
 import $ from 'jquery'
 import ding from './assets/ding.mp3'
-import * as requests from '../../ApiRequests/ApiRequests'
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -42,6 +42,24 @@ class WelcomePage extends React.Component {
     componentDidMount() {
         if (typeof this.state.resParts !== "object") {
             this.props.history.push("/");
+        }
+        // create food list if it doesn't exist
+        if(typeof ls.getLSResFoods() !== "object"){
+            requests.getRestaurantFoods((response)=>{
+                if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
+                    ls.setLSResFoods(response.data)
+                    ls.setLSResFoodsUpdatedAt(Math.floor(Date.now() / 1000))
+                }
+            })
+        }
+        // save res info if it doesn't exist
+        if(typeof ls.getLSResInfo() !== "object"){
+            requests.getRestaurantInfo((response)=>{
+                if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
+                    ls.setLSResInfo(response.data)
+                    ls.setLSResInfoUpdatedAt(Math.floor(Date.now() / 1000))
+                }
+            })
         }
         let lSPager = ls.getLSPager()
         lSPager = lSPager > 0 ? lSPager : 0
@@ -243,9 +261,7 @@ class WelcomePage extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
-        foodListConverted: store.rRestaurantInfo.foodListConverted,
         tableScanned: store.rTempData.tableScanned,
-
     }
 }
 

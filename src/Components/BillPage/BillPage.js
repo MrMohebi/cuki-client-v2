@@ -103,7 +103,7 @@ class BillPage extends React.Component {
                                    }}>
                     <div
                         className='mt-5 w-100 BillRow rtl IranSans'>
-                        <span className='billEachOrderName'>{eachFood.name}</span>
+                        <span className='billEachOrderName'>{eachFood.persianName}</span>
                         <span
                             className='eachFoodPriceBill'>{((eachFood.price * (1 - eachFood.discount / 100)) * eachFood.number) / 1000} T</span>
                         <div className='d-flex justify-content-between umberInDe'>

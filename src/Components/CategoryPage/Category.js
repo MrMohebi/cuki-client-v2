@@ -3,15 +3,12 @@ import './css/style.css'
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
-import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
 import { useSwipeable } from 'react-swipeable';
 import LoadingOverlay from 'react-loading-overlay';
 import {ClimbingBoxLoader} from "react-spinners";
-import foodsListAdaptor from "../../functions/foodsListAdaptor";
-import * as requests from "../../ApiRequests/ApiRequests";
-import * as actions from "../../stores/reduxStore/actions";
-
+import * as ls from "../../stores/localStorage/localStorage"
+import * as requests from '../../ApiRequests/ApiRequests'
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -19,37 +16,41 @@ export const Swipeable = ({children, style, ...props}) => {
 }
 
 class CategoryPage extends React.Component {
+    state = {
+        catsFullInfo:  ls.getLSResFullInfoCategories(),
+    }
+
     componentDidMount() {
-        if(!(this.props.foodListConverted.hasOwnProperty('parts') &&  this.props.foodListConverted.parts.length > 0)){
+        if(!(this.state.catsFullInfo.hasOwnProperty('parts') &&  this.state.catsFullInfo.parts.length > 0)){
             this.getData()
         }
-
     }
 
     dataArrive = (response) => {
         if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
-            this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+            ls.setLSResFoods(response.data)
+            ls.setLSResFoodsUpdatedAt(Math.floor(Date.now() / 1000))
         }
     }
 
     getData = () => {
-        requests.getRestaurantInfo(this.dataArrive);
+        requests.getRestaurantFoods(this.dataArrive);
     }
 
     nextPage = () =>{
-        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params["part"])
-        if(catIndex >= this.props.foodListConverted.parts.length-1)
-            this.props.history.push("/category/"+this.props.foodListConverted.parts[0]);
+        let catIndex = this.state.catsFullInfo["parts"].indexOf(this.props.match.params["part"])
+        if(catIndex >= this.state.catsFullInfo["parts"].length-1)
+            this.props.history.push("/category/"+this.state.catsFullInfo["parts"][0]);
         else
-            this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex+1]);
+            this.props.history.push("/category/"+this.state.catsFullInfo["parts"][catIndex+1]);
     }
 
     previousPage = () =>{
-        let catIndex = this.props.foodListConverted.parts.indexOf(this.props.match.params["part"])
+        let catIndex = this.state.catsFullInfo["parts"].indexOf(this.props.match.params["part"])
         if(catIndex !== 0)
-            this.props.history.push("/category/"+this.props.foodListConverted.parts[catIndex-1]);
+            this.props.history.push("/category/"+this.state.catsFullInfo["parts"][catIndex-1]);
         else
-            this.props.history.push("/category/"+this.props.foodListConverted.parts[this.props.foodListConverted.parts.length-1]);
+            this.props.history.push("/category/"+this.state.catsFullInfo["parts"][this.state.catsFullInfo["parts"].length-1]);
     }
 
     swipeRight = () =>{
@@ -73,7 +74,7 @@ class CategoryPage extends React.Component {
     render() {
         return (
             <LoadingOverlay
-                active={!this.props.foodListConverted.hasOwnProperty('parts')}
+                active={!this.state.catsFullInfo.hasOwnProperty('parts')}
                 spinner={<ClimbingBoxLoader color={'white'}/>}
                 text='وایسا چک کنم ببینم چی چیا داریم'
             >
@@ -93,10 +94,10 @@ class CategoryPage extends React.Component {
                     <div className='categoryPageContainer'>
                         <div className='heightFitContent'>
                             {
-                                this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted.partsCategories[this.props.match.params["part"]].map(eachCategory => {
-                                    let persianName = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].persianName
-                                    let logo = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].logo
-                                    let color = this.props.foodListConverted[this.props.match.params["part"]][eachCategory].averageColor.toString()
+                                this.state.catsFullInfo.hasOwnProperty('parts') ? this.state.catsFullInfo.partsCategories[this.props.match.params["part"]].map(eachCategory => {
+                                    let persianName = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].persianName
+                                    let logo = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].logo
+                                    let color = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].averageColor.toString()
                                     return (
                                         <NavLink key={persianName} to={'/category/'+this.props.match.params["part"]+'/'+eachCategory} className='categoryPageEachCategoryContainer'>
                                             <div  className="categoryPageEachCategory">
@@ -121,18 +122,6 @@ class CategoryPage extends React.Component {
     }
 }
 
-const mapStateToProps = (store) => {
-    return {
-        foodListConverted: store.rRestaurantInfo.foodListConverted
-    }
-}
-
-const mapDispatchToProps = () => {
-    return {
-        setFoodListConverted: actions.setFoodListConverted
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryPage);
+export default CategoryPage
 
 

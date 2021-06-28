@@ -3,7 +3,7 @@ export default function moreOrderedFoods(userHistoryOrders, allFoodsArray) {
 
     let allOrderedFoodTimes = {}
     let draftUserHistoryOrders = [...userHistoryOrders]
-    let draftAllFoodsArray = [...allFoodsArray]
+    let draftAllFoodsArray = [...Object.values(allFoodsArray)]
     draftUserHistoryOrders.map(eachOrder=>{
         return JSON.parse(eachOrder['order_list']).map(eachFood=>{
             if(allOrderedFoodTimes[eachFood.id]){
@@ -34,5 +34,19 @@ export default function moreOrderedFoods(userHistoryOrders, allFoodsArray) {
 
 
 function moreOrderedFoodRestaurant(allFoodsArray) {
-    return allFoodsArray.sort((a,b) => {return b.order_times - a.order_times}).filter(eachFood=> eachFood.group.englishName !== "drink" ).slice(0,10).map((eachFood=>{return eachFood.id}))
+    return allFoodsArray.filter(eachFood=> eachFood !== null ).sort((a,b) => {return b["orderTimes"] - a["orderTimes"]}).filter(eachFood=> eachFood.group.englishName !== "drink" ).slice(0,10).map((eachFood=>{return eachFood.id}))
+}
+
+
+export function convertFoodIdToFoodInfo (foodsIdList, foodsList){
+    let result = [];
+    foodsList.map(eFood=>{
+        foodsIdList.map(eFoodId=>{
+            if(eFoodId === eFood.id)
+                result.push(eFood)
+            return null
+        })
+        return null
+    })
+    return result
 }

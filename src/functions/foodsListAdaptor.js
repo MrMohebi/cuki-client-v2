@@ -108,7 +108,7 @@ export default function foodsListAdaptor (apiFoodsList){
             }
         }
         // add food
-        return final[eFood.group.type][eFood.group.englishName].foodList.push(eFood)
+        return final[eFood.group.type][eFood.group.englishName].foodList.push(eFood.id)
     })
     return final;
 }

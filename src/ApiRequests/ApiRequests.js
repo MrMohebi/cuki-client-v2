@@ -17,6 +17,12 @@ export const getRestaurantParts = (callbackFunction)=>{
     })
 }
 
+export const getRestaurantFoods = (callbackFunction)=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "getResFoods" ,{resEnglishName:getComName()}).then(res=>{
+        callbackFunction(res);
+    })
+}
+
 export const getRestaurantInfo = (callbackFunction)=>{
     $.post(BASE_API_URL_CUKIM_V1+ "getResInfo" ,{resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}

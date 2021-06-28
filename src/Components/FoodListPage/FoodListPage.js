@@ -4,14 +4,14 @@ import './css/style.css';
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
-import * as RandomColor from '../../functions/RandomColor';
 import {useSwipeable} from 'react-swipeable';
-import * as actions from "../../stores/reduxStore/actions";
 import Comments from "../CommetnsSection/Comments";
-import foodsListAdaptor from "../../functions/foodsListAdaptor";
-import * as requests from "../../ApiRequests/ApiRequests";
 import LoadingOverlay from 'react-loading-overlay';
 import {ClimbingBoxLoader} from "react-spinners";
+import * as requests from "../../ApiRequests/ApiRequests";
+import * as ls from "../../stores/localStorage/localStorage"
+import * as actions from "../../stores/reduxStore/actions";
+import * as RandomColor from '../../functions/RandomColor';
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -22,7 +22,8 @@ export const Swipeable = ({children, style, ...props}) => {
 class FoodListPage extends Component {
 
     state = {
-        foodList: <div/>,
+        foodList: this.props.foodList ? this.props.foodList : ls.getLSResFoods(),
+        catsFullInfo:  ls.getLSResFullInfoCategories(),
         foodDetails: <div/>,
         allowToShow: false,
         firstPointerPosition: {
@@ -39,14 +40,14 @@ class FoodListPage extends Component {
     }
 
     componentDidMount() {
-        if (!(this.props.foodListConverted.hasOwnProperty('parts') && this.props.foodListConverted.parts.length > 0)) {
+        if (!(this.state.catsFullInfo.hasOwnProperty('parts') && this.state.catsFullInfo.parts.length > 0)) {
             this.getData()
         }
     }
 
     dataArrive = (response) => {
         if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
-            this.props.setFoodListConverted(foodsListAdaptor(response.data.foods))
+            ls.setLSResFoods(response.data)
         }
     }
     clickAnimation = (id) => {
@@ -76,7 +77,7 @@ class FoodListPage extends Component {
 
 
     getData = () => {
-        requests.getRestaurantInfo(this.dataArrive);
+        requests.getRestaurantFoods(this.dataArrive);
     }
 
     checkForMove = (e) => {
@@ -86,27 +87,20 @@ class FoodListPage extends Component {
         }
     }
 
-    orderScripts = (id, foodsList = this.props.foods) => {
+    orderScripts = (id, foodsList = ls.getLSResFoods()) => {
         if (this.props.isResOpen) {
-            for (let i = 0; i < foodsList.length; i++) {
-                if (foodsList[i].id === id) {
-                    // check if food was already in order list, increase its number
-                    if (this.props.orderList.filter(food => food.id === id).length) {
-                        this.props.increaseFoodNumber(id);
-                        return "increased number"
-                    } else {
-                        //  else add it to order list
-                        let food = {...foodsList[i]};
-                        food["number"] = 1;
-                        food.price = parseInt(food.price)
-                        food["totalPrice"] = food.price * (1 - food.discount  / 100)
-                        this.props.addFoodToOrders(food)
-                        return "food was added"
-                    }
-                }
+            if (this.props.orderList.filter(food => food.id === id).length) {
+                this.props.increaseFoodNumber(id);
+            } else {
+                //  else add it to order list
+                let food = {...foodsList[id]};
+                food["number"] = 1;
+                food["totalPrice"] = (food.price-0) * (1 - food.discount  / 100)
+                this.props.addFoodToOrders(food)
             }
         }
     }
+    
     hideFoodDetails = () => {
         if (this.foodDetailsMain.current.classList.contains('animate__fadeIn')) {
             this.foodDetailsMain.current.classList.remove('animate__fadeIn')
@@ -160,16 +154,8 @@ class FoodListPage extends Component {
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat'
                         }} className='foodDetailsImg'/>
-                        {/*{*/}
-                        {/*    foodInfo.status === 'in stock' ?*/}
-                        {/*        <div className='foodDetailsPrice'>{foodInfo.price / 1000} T</div>*/}
-                        {/*        :*/}
-                        {/*        <div className='foodDetailsPrice IranSans'>نا موجود</div>*/}
-
-
-                        {/*}*/}
                         {
-                            foodInfo.status === 'in stock' ?
+                            foodInfo.status === 'inStock' ?
                                 foodInfo.discount === 0 ?
                                     <span className='foodDetailsPrice pl-4'>
                                         {foodInfo.price / 1000} T
@@ -203,12 +189,12 @@ class FoodListPage extends Component {
                     <div className='foodDetailsTimesAndOrderTimeContainer'>
                         <div className='timesOrderedContainer'>
                             <span className='timesAndOrderTimeText'> تعداد دفعات سفارش غذا</span>
-                            <span>X {foodInfo.order_times}</span>
+                            <span>X {foodInfo.orderTimes}</span>
                         </div>
                         <div className='timesOrderedContainer'>
                             <span className='timesAndOrderTimeText mt-2'>زمان تقریبی آماده شدن</span>
-                            <span className='rtl mt-2'>{foodInfo.delivery_time > 0 ?
-                                <div><span>{foodInfo.delivery_time}</span> <span>دقیقه</span>
+                            <span className='rtl mt-2'>{foodInfo.deliveryTime > 0 ?
+                                <div><span>{foodInfo.deliveryTime}</span> <span>دقیقه</span>
                                 </div> : " والا به منم نگفتن :("}</span>
                         </div>
                     </div>
@@ -223,19 +209,19 @@ class FoodListPage extends Component {
 
 
     previousPage = () => {
-        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params["part"]].indexOf(this.props.match.params.category)
+        let catIndex = this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]].indexOf(this.props.match.params.category)
         if (catIndex !== 0)
-            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.props.foodListConverted.partsCategories[this.props.match.params["part"]][catIndex - 1]);
+            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]][catIndex - 1]);
         else
-            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.props.foodListConverted.partsCategories[this.props.match.params["part"]][this.props.foodListConverted.partsCategories[this.props.match.params["part"]].length - 1]);
+            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]][this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]].length - 1]);
     }
 
     nextPage = () => {
-        let catIndex = this.props.foodListConverted.partsCategories[this.props.match.params["part"]].indexOf(this.props.match.params.category)
-        if (catIndex >= this.props.foodListConverted.partsCategories[this.props.match.params["part"]].length - 1)
-            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.props.foodListConverted.partsCategories[this.props.match.params["part"]][0]);
+        let catIndex = this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]].indexOf(this.props.match.params.category)
+        if (catIndex >= this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]].length - 1)
+            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]][0]);
         else
-            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.props.foodListConverted.partsCategories[this.props.match.params["part"]][catIndex + 1]);
+            this.props.history.push("/category/" + this.props.match.params["part"] + "/" + this.state.catsFullInfo["partsCategories"][this.props.match.params["part"]][catIndex + 1]);
     }
 
     swipeRight = () => {
@@ -270,7 +256,7 @@ class FoodListPage extends Component {
     render() {
         return (
             <LoadingOverlay
-                active={!this.props.foodListConverted.hasOwnProperty('parts')}
+                active={!this.state.catsFullInfo.hasOwnProperty('parts')}
                 spinner={<ClimbingBoxLoader color={'white'}/>}
                 text='وایسا چک کنم ببینم چی چیا داریم'
             >
@@ -286,7 +272,7 @@ class FoodListPage extends Component {
                                            className='headerPageSelector text-center d-flex justify-content-around flex-row'>
                                            <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
                                            <div
-                                               className='categoryPageSelectorText IranSans'>{this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].persianName : ''}</div>
+                                               className='categoryPageSelectorText IranSans'>{this.state.catsFullInfo.hasOwnProperty('parts') ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].persianName : ''}</div>
                                            <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
                                        </div>
                                        <ArrowBackRoundedIcon className='invisible'/>
@@ -298,11 +284,12 @@ class FoodListPage extends Component {
                                         className='foodListPageContainer'>
                                        <div className='heightFitContent'>
                                            {
-                                               this.props.foodListConverted.hasOwnProperty('parts') ? this.props.foodListConverted[this.props.match.params["part"]][this.props.match.params.category].foodList.filter(eFood => eFood.status !== "deleted").map(eachFood => {
+                                               this.state.catsFullInfo.hasOwnProperty('parts') ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].foodList.map(foodId => {
+                                                   let eachFood = this.state.foodList[foodId];
                                                    let colors = RandomColor.RandomColor(eachFood.id);
                                                    let timeout;
                                                    let isInOrderList = false;
-                                                   if ((this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)) {
+                                                   if ((typeof this.props.orderList.filter(food => food.id === eachFood.id)[0] !== "undefined")) {
                                                        isInOrderList = true;
                                                    }
                                                    return (
@@ -313,13 +300,13 @@ class FoodListPage extends Component {
                                                             className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                                             onClick={(e) => {
                                                                 clearTimeout(timeout)
-                                                                if (eachFood.status === 'in stock' || eachFood.status === 'inStock') {
+                                                                if (eachFood.status === 'inStock') {
                                                                     // if (!isInOrderList) {
                                                                     //     this.orderScripts(eachFood.id);
                                                                     // }
                                                                 }
                                                                 this.setState({allowToShow:false})
-                                                                if (!e.target.classList.contains('decrease') && (eachFood.status === 'in stock' || eachFood.status === 'inStock')) {
+                                                                if (!e.target.classList.contains('decrease') && (eachFood.status === 'inStock')) {
                                                                     this.orderScripts(eachFood.id);
                                                                     if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
                                                                         this.clickAnimation('food' + eachFood['id'])
@@ -398,17 +385,6 @@ class FoodListPage extends Component {
                                                                                 ناموجود
                                                                            </span>
                                                                    }
-
-                                                                   {/*<Badge color={"primary"}*/}
-                                                                   {/*       badgeContent={(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}>*/}
-                                                                   {/*    <div className='eachFoodImage'*/}
-                                                                   {/*         style={{*/}
-                                                                   {/*             background: `url(${eachFood.thumbnail})`,*/}
-                                                                   {/*             backgroundSize: 'cover',*/}
-                                                                   {/*             backgroundPosition: 'center'*/}
-                                                                   {/*         }}/>*/}
-                                                                   {/*</Badge>*/}
-
                                                                    <div className='eachFoodImage'
                                                                         style={{
                                                                             background: `url(${eachFood.thumbnail})`,
@@ -419,7 +395,7 @@ class FoodListPage extends Component {
 
                                                                <div className='w-100 justify-content-center d-flex'>
                                                                    <div className='foodName'
-                                                                        style={{color: colors.foreground}}>{eachFood.name}</div>
+                                                                        style={{color: colors.foreground}}>{eachFood.persianName}</div>
                                                                </div>
                                                                {isInOrderList ?
                                                                    <div
@@ -493,8 +469,6 @@ class FoodListPage extends Component {
 
 const mapStateToProps = (store) => {
     return {
-        foods: store.rRestaurantInfo.foods,
-        foodListConverted: store.rRestaurantInfo.foodListConverted,
         orderList: store.rTempData.orderList,
         trackingId: store.rTempData.trackingId,
         isResOpen: store.rTempData.isResOpen,
@@ -506,8 +480,6 @@ const mapDispatchToProps = () => {
         increaseFoodNumber: actions.increaseFoodNumber,
         decreaseFoodNumber: actions.decreaseFoodNumber,
         addFoodToOrders: actions.addFoodToOrders,
-        setFoodListConverted: actions.setFoodListConverted
-
     }
 }
 

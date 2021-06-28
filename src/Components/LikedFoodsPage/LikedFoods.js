@@ -4,62 +4,57 @@ import './css/style.css'
 import KeyboardArrowLeftRoundedIcon from '@material-ui/icons/KeyboardArrowLeftRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
-import * as RandomColor from '../../functions/RandomColor'
 import {useSwipeable} from 'react-swipeable';
+import * as RandomColor from '../../functions/RandomColor'
 import * as actions from "../../stores/reduxStore/actions";
+import * as ls from "../../stores/localStorage/localStorage"
 import moreOrderedFoods from "../../functions/moreOrderedFoods";
+import * as requests from "../../ApiRequests/ApiRequests";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
     return (<div style={style} {...handlers}>{children}</div>);
 }
 
-function convertFoodIdToFoodInfo (foodsIdList, foodsList){
-    let result = [];
-    foodsList.map(eFood=>{
-        foodsIdList.map(eFoodId=>{
-            if(eFoodId === eFood.id)
-                result.push(eFood)
-            return null
-        })
-        return null
-    })
-    return result
-}
-
 
 class LikedFoods extends Component {
     state = {
-        foodsList:convertFoodIdToFoodInfo(moreOrderedFoods(this.props.orderHistoryRestaurant, this.props.foods), this.props.foods),
+        likedFoodsListIds:moreOrderedFoods(this.props.orderHistoryRestaurant, ls.getLSResFoods()),
+        foodList:ls.getLSResFoods(),
+        firstPointerPosition: {
+            x: 0,
+            y: 0
+        },
     }
 
     componentDidMount() {
-        if (!(this.props.foods[1])) {
-            this.props.history.push("/")
+        if (!(this.state.length > 0)) {
+            this.getData()
+        }
+    }
+    getData = () => {
+        requests.getRestaurantFoods(this.dataArrive);
+    }
+    dataArrive = (response) => {
+        if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
+            ls.setLSResFoods(response.data)
         }
     }
 
     giveMyNumber = (fId)=>{
         return this.props.orderList.filter(food=> food.id === fId)[0]? this.props.orderList.filter(food=> food.id === fId)[0].number:0
     }
-    orderScripts = (id, foodsList = this.props.foods) => {
-        if(this.props.isResOpen) {
-            for (let i = 0; i < foodsList.length; i++) {
-                if (foodsList[i].id === id) {
-                    // check if food was already in order list, increase its number
-                    if (this.props.orderList.filter(food => food.id === id).length) {
-                        this.props.increaseFoodNumber(id);
-                        return "increased number"
-                    } else {
-                        //  else add it to order list
-                        let food = {...foodsList[i]};
-                        food["number"] = 1;
-                        food.price = parseInt(food.price)
-                        food["totalPrice"] = food.price * (1 - food.discount  / 100)
-                        this.props.addFoodToOrders(food)
-                        return "food was added"
-                    }
-                }
+
+    orderScripts = (id, foodsList = ls.getLSResFoods()) => {
+        if (this.props.isResOpen) {
+            if (this.props.orderList.filter(food => food.id === id).length) {
+                this.props.increaseFoodNumber(id);
+            } else {
+                //  else add it to order list
+                let food = {...foodsList[id]};
+                food["number"] = 1;
+                food["totalPrice"] = (food.price-0) * (1 - food.discount  / 100)
+                this.props.addFoodToOrders(food)
             }
         }
     }
@@ -86,6 +81,12 @@ class LikedFoods extends Component {
             }, 300)
         }
 
+    }
+    checkForMove = (e) => {
+        let threshold = 8;
+        if (e.pageX > this.state.firstPointerPosition.x + threshold || e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold || e.pageY < this.state.firstPointerPosition.y - threshold) {
+            this.setState({allowToShow:false})
+        }
     }
     pressAnimation = (id) => {
         let element = document.getElementById(id);
@@ -114,95 +115,45 @@ class LikedFoods extends Component {
                     <div
                         className='foodListPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
                         <ArrowBackRoundedIcon onClick={this.handleBack}/>
-                        <div className='headerPageSelector text-center d-flex justify-content-around flex-row'>
-                            <KeyboardArrowLeftRoundedIcon/>
-                            <div
-                                className='categoryPageSelectorText IranSans'>دوس داشتنی ترین ها</div>
-                            <KeyboardArrowRightRoundedIcon/>
+                        <div
+                            className='headerPageSelector text-center d-flex justify-content-around flex-row'>
+                            <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
+                            <div className='categoryPageSelectorText IranSans'>
+                                دوست داشتنی ها
+                            </div>
+                            <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
                         </div>
                         <ArrowBackRoundedIcon className='invisible'/>
                     </div>
 
                     <div className='foodListPageContainer'>
                         <div className='heightFitContent'>
-
-                            {/*{*/}
-                            {/*    this.state.foodsList.map(eachFood => {*/}
-                            {/*        let colors = RandomColor.RandomColor()*/}
-                            {/*        return (*/}
-                            {/*            <div  key={eachFood['id']}*/}
-                            {/*                  className='foodListEachFoodContainer animate__animated animate__fadeInDown'*/}
-                            {/*                  onClick={() => {*/}
-                            {/*                      if (eachFood.status === 'in stock') {*/}
-                            {/*                          this.orderScripts(eachFood.id);*/}
-                            {/*                      }*/}
-                            {/*                  }}>*/}
-                            {/*                <div className='foodListEachFood' style={{backgroundColor: colors.background}}>*/}
-                            {/*                    <div className='priceAndImage'>*/}
-                            {/*                        <span className='eachFoodPrice'>*/}
-                            {/*                            {eachFood.price / 1000} T*/}
-                            {/*                        </span>*/}
-                            {/*                        <Badge color={"primary"} badgeContent={this.giveMyNumber(eachFood.id)}>*/}
-                            {/*                            <div className='eachFoodImage'*/}
-                            {/*                                 style={{*/}
-                            {/*                                     background: `url(${eachFood.thumbnail})`,*/}
-                            {/*                                     backgroundSize: 'cover',*/}
-                            {/*                                     backgroundPosition: 'center'*/}
-                            {/*                                 }}/>*/}
-                            {/*                        </Badge>*/}
-                            {/*                    </div>*/}
-                            {/*                    <div className='w-100 justify-content-center d-flex'>*/}
-                            {/*                        <div className='foodName' style={{color: colors.foreground}}>{eachFood.name}</div>*/}
-                            {/*                    </div>*/}
-                            {/*                    <div className='w-100 d-flex justify-content-center'>*/}
-                            {/*                        <div className='foodDetails'>{eachFood.details.join(' ')}</div>*/}
-                            {/*                    </div>*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        )*/}
-                            {/*    })*/}
-                            {/*}*/}
-
                             {
-                                this.state.foodsList.map(eachFood => {
+                                this.state.likedFoodsListIds.map(foodId => {
+                                    let eachFood = this.state.foodList[foodId];
                                     let colors = RandomColor.RandomColor(eachFood.id);
-                                    let timeout;
                                     let isInOrderList = false;
-                                    if ((this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)) {
+                                    if ((typeof this.props.orderList.filter(food => food.id === eachFood.id)[0] !== "undefined")) {
                                         isInOrderList = true;
                                     }
                                     return (
-                                        <div onContextMenu={(e) => {
-                                            e.preventDefault()
-                                        }}
-                                             key={eachFood['id']}
-                                             className='foodListEachFoodContainer animate__animated animate__fadeInDown'
-                                             onClick={(e) => {
-                                                 clearTimeout(timeout)
-                                                 if ((eachFood.status === 'in stock' || eachFood.status === 'inStock')) {
-                                                     // if (!isInOrderList) {
-                                                     //     this.orderScripts(eachFood.id);
-                                                     // }
-                                                 }
-                                                 this.setState({allowToShow:false})
-                                                 if (!e.target.classList.contains('decrease')){
+                                        <div onContextMenu={(e) => {e.preventDefault()}} key={eachFood['id']} className='foodListEachFoodContainer animate__animated animate__fadeInDown'
+                                             onClick={() => {
+                                                 if ((eachFood.status === 'inStock')) {
                                                      this.orderScripts(eachFood.id);
-                                                     if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
-                                                         this.clickAnimation('food' + eachFood['id'])
-                                                     }
+                                                     this.clickAnimation('food' + eachFood['id'])
                                                  }
-
                                              }}
-
                                              onTouchStart={(e) => {
-                                                 if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                 if ((eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
                                                      this.pressAnimation('food' + eachFood['id'])
                                                  }
                                              }}
-
+                                             onPointerMove={(e) => {
+                                                 this.checkForMove(e)
+                                             }}
                                              onTouchEnd={() => {
-                                                 this.setState({allowToShow:false})
-                                                 this.releaseAnimation('food'+eachFood['id'])
+                                                 this.releaseAnimation('food' + eachFood['id'])
                                              }}
                                         >
                                             <div className='foodListEachFood'
@@ -210,51 +161,30 @@ class LikedFoods extends Component {
                                                  style={{backgroundColor: colors.background}}>
                                                 {
                                                     parseInt(eachFood.discount) > 0 ?
-                                                        <span className={'discountPercentage'}>60%</span>
+                                                        <span
+                                                            className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
                                                         :
                                                         <div/>
                                                 }
                                                 <div className='priceAndImage'>
                                                     {
-                                                        (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
+                                                        (eachFood.status === 'inStock') ?
                                                             eachFood.discount === 0 ?
-                                                                <span className='eachFoodPrice '>
-                                                                                {eachFood.price / 1000} T
-                                                                            </span>
+                                                                <span className='eachFoodPrice '>{eachFood.price / 1000} T</span>
                                                                 :
-                                                                <div
-
-                                                                    className={'d-flex flex-column justify-content-center'}>
-                                                                                   <span style={{
-                                                                                       textDecoration: 'line-through',
-                                                                                       fontSize: '0.6rem',
-                                                                                       lineHeight: '1.5rem',
-                                                                                       color: '#787878'
-                                                                                   }} className='eachFoodPrice'>
-                                                                                {eachFood.price / 1000} T
-                                                                            </span>
-                                                                    <span style={{fontWeight: 'bolder'}}
-                                                                          className='eachFoodPriceDiscount'>
-                                                                                {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
-                                                                            </span>
+                                                                <div className={'d-flex flex-column justify-content-center'}>
+                                                                    <span style={{textDecoration: 'line-through', fontSize: '0.6rem', lineHeight: '1.5rem', color: '#787878'}} className='eachFoodPrice'>
+                                                                        {eachFood.price / 1000} T
+                                                                    </span>
+                                                                    <span style={{fontWeight: 'bolder'}} className='eachFoodPriceDiscount'>
+                                                                        {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
+                                                                    </span>
                                                                 </div>
-
                                                             :
                                                             <span className='outOfStockTextHolder'>
-                                                                                ناموجود
-                                                                           </span>
+                                                                ناموجود
+                                                            </span>
                                                     }
-
-                                                    {/*<Badge color={"primary"}*/}
-                                                    {/*       badgeContent={(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}>*/}
-                                                    {/*    <div className='eachFoodImage'*/}
-                                                    {/*         style={{*/}
-                                                    {/*             background: `url(${eachFood.thumbnail})`,*/}
-                                                    {/*             backgroundSize: 'cover',*/}
-                                                    {/*             backgroundPosition: 'center'*/}
-                                                    {/*         }}/>*/}
-                                                    {/*</Badge>*/}
-
                                                     <div className='eachFoodImage'
                                                          style={{
                                                              background: `url(${eachFood.thumbnail})`,
@@ -265,7 +195,7 @@ class LikedFoods extends Component {
 
                                                 <div className='w-100 justify-content-center d-flex'>
                                                     <div className='foodName'
-                                                         style={{color: colors.foreground}}>{eachFood.name}</div>
+                                                         style={{color: colors.foreground}}>{eachFood.persianName}</div>
                                                 </div>
                                                 {isInOrderList ?
                                                     <div
@@ -285,7 +215,7 @@ class LikedFoods extends Component {
                                                                      className="bi bi-dash decrease"
                                                                      viewBox="0 0 16 16">
                                                                     <path className={'decrease'}
-                                                                        d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                          d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                                                 </svg>
                                                             </div>
                                                         </div>
@@ -308,8 +238,8 @@ class LikedFoods extends Component {
                                                                      fill="black"
                                                                      className="bi bi-plus increase "
                                                                      viewBox="0 0 16 16">
-                                                                    <path
-                                                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                    <path className={'increase'}
+                                                                          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                                                 </svg>
                                                             </div>
                                                         </div>
@@ -330,16 +260,15 @@ class LikedFoods extends Component {
                         </div>
                     </div>
                 </React.Fragment>
-            }/>
+            }
+            />
         )
     }
 }
 
 const mapStateToProps = (store) => {
     return {
-        foods: store.rRestaurantInfo.foods,
         orderList: store.rTempData.orderList,
-        trackingId: store.rTempData.trackingId,
         orderHistoryRestaurant: store.rUserInfo.orderHistoryRestaurant,
         isResOpen: store.rTempData.isResOpen,
     }
