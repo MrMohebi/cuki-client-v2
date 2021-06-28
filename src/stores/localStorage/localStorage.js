@@ -21,8 +21,11 @@ export const setLSResFullInfoCategories = (resFullInfoCategories) =>{
 }
 export const getLSResFullInfoCategories = () =>{
     let lSResFullInfoCategories = localStorage.getItem(lSNameResFullInfoCategories)
-    if(lSResFullInfoCategories !== undefined && lSResFullInfoCategories !== null) {lSResFullInfoCategories = JSON.parse(lSResFullInfoCategories)}
-    return (lSResFullInfoCategories !== null && lSResFullInfoCategories !== undefined) ? lSResFullInfoCategories : ""
+    if(lSResFullInfoCategories !== undefined && lSResFullInfoCategories !== null) {
+        return JSON.parse(lSResFullInfoCategories)
+    }else{
+        return []
+    }
 }
 // -------------------------------------------------------------------------------
 export const setLSResFoodsUpdatedAt = (resFoodsUpdatedAt) =>{
@@ -38,15 +41,18 @@ export const setLSResFoods = (resFoods) =>{
     setLSResFullInfoCategories(foodsListAdaptor(resFoods))
     // order foods base on id
     let newFoodList = []
-    resFoods.map(eFood=>{
-        newFoodList[eFood.id]= eFood;
-    })
+    for(const eFood of resFoods)
+        newFoodList[eFood.id] = eFood;
+
     localStorage.setItem(lSNameResFoods, JSON.stringify(newFoodList))
 }
 export const getLSResFoods = () =>{
     let lSResFoods = localStorage.getItem(lSNameResFoods)
-    if(lSResFoods !== undefined && lSResFoods !== null) {lSResFoods = JSON.parse(lSResFoods)}
-    return (lSResFoods !== null && lSResFoods !== undefined) ? lSResFoods : ""
+    if(lSResFoods !== undefined && lSResFoods !== null) {
+        return JSON.parse(lSResFoods)
+    }else{
+        return []
+    }
 }
 // -------------------------------------------------------------------------------
 export const setLSResInfoUpdatedAt = (resInfoUpdatedAt) =>{
@@ -63,8 +69,11 @@ export const setLSResInfo = (resInfo) =>{
 }
 export const getLSResInfo = () =>{
     let lSResInfo = localStorage.getItem(lSNameResInfo)
-    if(lSResInfo !== undefined && lSResInfo !== null) {lSResInfo = JSON.parse(lSResInfo);}
-    return (lSResInfo !== null && lSResInfo !== undefined) ? lSResInfo : ""
+    if(lSResInfo !== undefined && lSResInfo !== null) {
+        return JSON.parse(lSResInfo)
+    }else{
+        return {}
+    }
 }
 // -------------------------------------------------------------------------------
 export const setLSResParts = (resParts) =>{
@@ -73,8 +82,11 @@ export const setLSResParts = (resParts) =>{
 }
 export const getLSResParts = () =>{
     let lSResParts = localStorage.getItem(lSNameResParts)
-    if(lSResParts !== undefined && lSResParts !== null) {lSResParts = JSON.parse(lSResParts);}
-    return (lSResParts !== null && lSResParts !== undefined) ? lSResParts : ""
+    if(lSResParts !== undefined && lSResParts !== null) {
+        return JSON.parse(lSResParts)
+    }else{
+        return []
+    }
 }
 // -------------------------------------------------------------------------------
 export const setLSToken = (token) =>{

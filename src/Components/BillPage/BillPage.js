@@ -143,8 +143,8 @@ class BillPage extends React.Component {
     openGiftCode = () => {
         let timeline = gsap.timeline();
         if (!this.state.isOffCodeOpen) {
-            this.state.isOffCodeOpen = true;
             this.setState({
+                isOffCodeOpen:true,
                 giftSVGHolder: svg.check,
                 giftDialogOpened: true
             }, () => {
@@ -166,7 +166,9 @@ class BillPage extends React.Component {
 
         } else {
 
-            this.state.isOffCodeOpen = false;
+            this.setState({
+                isOffCodeOpen:true
+            })
 
             timeline.to('.gift-code-input', {
                 display: 'none',

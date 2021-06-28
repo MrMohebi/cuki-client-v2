@@ -22,9 +22,9 @@ import CukiCode from "./Components/CukiCode/CukiCode";
 import ResDetails from "./Components/ResDetails/ResDetails";
 
 
-import {getLSPhone, getLSToken} from "./stores/localStorage/localStorage";
 import * as actions from "./stores/reduxStore/actions"
 import * as requests from "./ApiRequests/ApiRequests";
+import * as ls from "./stores/localStorage/localStorage"
 import Banner from "./Components/Banner/Banner";
 import isResOpen from "./functions/isResOpen";
 import getComName, {getFullName} from "./functions/getComName";
@@ -42,8 +42,8 @@ function App() {
   }
 
   useSelector((state)=>{
-    const cacheToken = getLSToken()
-    const cachePhone = getLSPhone()
+    const cacheToken = ls.getLSToken()
+    const cachePhone = ls.getLSPhone()
     if(state.rUserInfo.token !== cacheToken && cacheToken !== undefined && cacheToken.length > 10){
       actions.userSetToken(cacheToken);
       getOpenOrders(cacheToken)
@@ -55,8 +55,9 @@ function App() {
 
   // ********** check res is open or close **********
   useSelector(state=>{
-    if(typeof state.rRestaurantInfo.restaurantInfo['open_time'] !== "undefined" && state.rRestaurantInfo.restaurantInfo['open_time'].length > 3){
-      let resStatus = isResOpen(JSON.parse(state.rRestaurantInfo.restaurantInfo['open_time']))
+    const openTime = JSON.parse(ls.getLSResInfo()["openTime"])
+    if(typeof openTime !== "undefined" && openTime.length > 3){
+      let resStatus = isResOpen(openTime)
       if(resStatus !== state.rTempData.isResOpen){
         actions.setIsResOpen(resStatus)
       }
@@ -72,7 +73,7 @@ function App() {
 
         {/* is res open banner*/}
         {useSelector(state=>(
-            state.rTempData.isResOpen && ((state.rRestaurantInfo.restaurantInfo.status === "active") || (state.rRestaurantInfo.restaurantInfo.status === "open"))  ?
+            state.rTempData.isResOpen && ls.getLSResInfo()['status'] === "open"  ?
                 null
                 :
                 window.location.pathname === "/" ?

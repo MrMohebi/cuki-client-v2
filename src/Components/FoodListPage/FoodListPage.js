@@ -399,7 +399,7 @@ class FoodListPage extends Component {
                                                                </div>
                                                                {isInOrderList ?
                                                                    <div
-                                                                       className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__fastee'}
+                                                                       className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}
                                                                    >
                                                                        <div
                                                                            style={{backgroundColor: colors.foreground + '50'}}
