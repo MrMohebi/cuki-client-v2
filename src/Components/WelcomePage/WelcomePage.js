@@ -48,7 +48,6 @@ class WelcomePage extends React.Component {
             requests.getRestaurantFoods((response)=>{
                 if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
                     ls.setLSResFoods(response.data)
-                    ls.setLSResFoodsUpdatedAt(Math.floor(Date.now() / 1000))
                 }
             })
         }
@@ -57,7 +56,6 @@ class WelcomePage extends React.Component {
             requests.getRestaurantInfo((response)=>{
                 if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
                     ls.setLSResInfo(response.data)
-                    ls.setLSResInfoUpdatedAt(Math.floor(Date.now() / 1000))
                 }
             })
         }

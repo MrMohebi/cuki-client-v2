@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter,Route} from "react-router-dom";
 import {useSelector} from "react-redux"
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -28,9 +28,22 @@ import * as ls from "./stores/localStorage/localStorage"
 import Banner from "./Components/Banner/Banner";
 import isResOpen from "./functions/isResOpen";
 import getComName, {getFullName} from "./functions/getComName";
+import updateResInfo from "./functions/updateResInfo";
 
 
 function App() {
+  // execute only one time in each app load
+  useEffect(()=>{
+    if(getComName().length > 2) {
+      requests.getRestaurantUpdateDates((res)=>{
+        if(res.hasOwnProperty("statusCode") && res.statusCode === 200)
+          updateResInfo(res.data)
+      })
+    }
+
+  },[])
+
+
   // *****action for cached data*******
   let getOpenOrders=(token)=>{
     requests.getOpenOrders(callbackOpenOrders, token);
@@ -46,7 +59,9 @@ function App() {
     const cachePhone = ls.getLSPhone()
     if(state.rUserInfo.token !== cacheToken && cacheToken !== undefined && cacheToken.length > 10){
       actions.userSetToken(cacheToken);
-      getOpenOrders(cacheToken)
+      if(getComName().length > 2){
+        getOpenOrders(cacheToken)
+      }
     }
     if(state.rUserInfo.phone !== cachePhone && cachePhone !== undefined && cachePhone.length === 11){
       actions.userSetPhone(cachePhone)
@@ -55,8 +70,9 @@ function App() {
 
   // ********** check res is open or close **********
   useSelector(state=>{
-    const openTime = JSON.parse(ls.getLSResInfo()["openTime"])
-    if(typeof openTime !== "undefined" && openTime.length > 3){
+    let openTime = ls.getLSResInfo()["openTime"]
+    if(typeof openTime !== "undefined"){
+      openTime = JSON.parse(openTime)
       let resStatus = isResOpen(openTime)
       if(resStatus !== state.rTempData.isResOpen){
         actions.setIsResOpen(resStatus)
@@ -68,7 +84,7 @@ function App() {
     <React.Fragment>
 
       <BrowserRouter basename={getFullName()}>
-        <Route exact path='/'  component={ getComName() === "notSet" ?  CukiCode : SplashScreen}/>
+        <Route exact path='/'  component={ getComName() === "" ?  CukiCode : SplashScreen}/>
         <Route path={['/main','/resDetails', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway"]} component={BottomNavBar}/>
 
         {/* is res open banner*/}

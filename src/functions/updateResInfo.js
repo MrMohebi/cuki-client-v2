@@ -1,0 +1,30 @@
+import * as ls from "../stores/localStorage/localStorage"
+import * as requests from "../ApiRequests/ApiRequests";
+
+export default function updateResInfo (resDates){
+    updateFoods(resDates.foods)
+}
+
+function updateFoods(foodsUpdates){
+    let foodList = ls.getLSResFoods();
+    let newFoodList = []
+    let foodsNeedToBeUpdate = []
+    for (const eFood of foodList) {
+        if(eFood !== null){
+            if(foodsUpdates[eFood.id][0] !== eFood["updatedAt"]){
+                foodsNeedToBeUpdate.push(eFood.id)
+            }
+            eFood["orderTimes"] = foodsUpdates[eFood.id][1];
+            newFoodList[eFood.id] = eFood;
+        }
+    }
+    if(foodsNeedToBeUpdate.length > 0){
+        let newFoodsInfoResponse = requests.getFoodById(foodsNeedToBeUpdate)
+        if(newFoodsInfoResponse.hasOwnProperty("statusCode") && newFoodsInfoResponse.statusCode === 200){
+            newFoodsInfoResponse.data.map(eNewFood=>(
+                newFoodList[eNewFood.id] = eNewFood
+            ))
+        }
+    }
+    ls.setLSResFoods(newFoodList);
+}

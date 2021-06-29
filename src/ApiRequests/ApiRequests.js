@@ -13,12 +13,14 @@ const BASE_API_URL_CUKIM_V1 = "https://api.cukim.ir/api/v1/cuki/"
 
 export const getRestaurantParts = (callbackFunction)=>{
     $.post(BASE_API_URL_CUKIM_V1+ "getResParts" ,{resEnglishName:getComName()}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
 }
 
 export const getRestaurantFoods = (callbackFunction)=>{
     $.post(BASE_API_URL_CUKIM_V1+ "getResFoods" ,{resEnglishName:getComName()}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
 }
@@ -36,6 +38,20 @@ export const getRestaurantInfo = (callbackFunction)=>{
         callbackFunction(res);
     })
 }
+
+export const getRestaurantUpdateDates = (callbackFunction)=>{
+    $.post(BASE_API_URL_CUKIM_V1+ "getResUpdateDates" ,{resEnglishName:getComName()}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
+export const getFoodById = (foodId)=>{
+    if(typeof foodId == "object")
+        foodId = JSON.stringify(foodId)
+    return $.ajax({method: "POST", url: BASE_API_URL_CUKIM_V1+ "getFoodById", data: { foodId:foodId , resEnglishName:getComName()}, async:false})['responseJSON']
+}
+
 
 // export const getRestaurantInfo = (callbackFunction)=>{
 //     $.post(BASE_API_URL_CUKIM_V1+ "getResData" ,{resEnglishName:getComName()}).then(res=>{

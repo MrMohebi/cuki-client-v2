@@ -29,7 +29,6 @@ class CategoryPage extends React.Component {
     dataArrive = (response) => {
         if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
             ls.setLSResFoods(response.data)
-            ls.setLSResFoodsUpdatedAt(Math.floor(Date.now() / 1000))
         }
     }
 

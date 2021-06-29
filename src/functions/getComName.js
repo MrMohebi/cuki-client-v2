@@ -5,7 +5,7 @@ export default function getComName(){
     if(fullName[0] === "c"){
         return fullName[1];
     }else {
-        return 'notSet';
+        return '';
     }
 }
 
@@ -16,6 +16,6 @@ export function getFullName(){
     if(fullName[0] === "c"){
         return urlPathArr[1];
     }else {
-        return 'notSet';
+        return '';
     }
 }

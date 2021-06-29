@@ -8,9 +8,7 @@ const lSNamePhone = "generalPhone_010312"
 const lSNamePager = ComName+"Pager_010312"
 const lSNameResParts = ComName+"ResParts_020626"
 const lSNameResInfo = ComName+"ResInfo_010626"
-const lSNameResInfoUpdatedAt = ComName+"ResInfoUpdatedAt_010626"
 const lSNameResFoods = ComName+"ResFoods_010626"
-const lSNameResFoodsUpdatedAt = ComName+"ResFoodsUpdatedAt_010626"
 const lSNameResFullInfoCategories = ComName+"ResFullInfoCategories_010626"
 
 
@@ -28,22 +26,15 @@ export const getLSResFullInfoCategories = () =>{
     }
 }
 // -------------------------------------------------------------------------------
-export const setLSResFoodsUpdatedAt = (resFoodsUpdatedAt) =>{
-    localStorage.setItem(lSNameResFoodsUpdatedAt, resFoodsUpdatedAt)
-}
-export const getLSResFoodsUpdatedAt = () =>{
-    let lSResFoodsUpdatedAt = localStorage.getItem(lSNameResFoodsUpdatedAt)
-    return (lSResFoodsUpdatedAt !== null && lSResFoodsUpdatedAt !== undefined) ? lSResFoodsUpdatedAt : ""
-}
-// -------------------------------------------------------------------------------
 export const setLSResFoods = (resFoods) =>{
     // create category again
     setLSResFullInfoCategories(foodsListAdaptor(resFoods))
     // order foods base on id
     let newFoodList = []
-    for(const eFood of resFoods)
-        newFoodList[eFood.id] = eFood;
-
+    for(const eFood of resFoods){
+        if (typeof eFood == "object")
+            newFoodList[eFood.id] = eFood;
+    }
     localStorage.setItem(lSNameResFoods, JSON.stringify(newFoodList))
 }
 export const getLSResFoods = () =>{
@@ -53,14 +44,6 @@ export const getLSResFoods = () =>{
     }else{
         return []
     }
-}
-// -------------------------------------------------------------------------------
-export const setLSResInfoUpdatedAt = (resInfoUpdatedAt) =>{
-    localStorage.setItem(lSNameResInfoUpdatedAt, resInfoUpdatedAt)
-}
-export const getLSResInfoUpdatedAt = () =>{
-    let lSResInfoUpdatedAt = localStorage.getItem(lSNameResInfoUpdatedAt)
-    return (lSResInfoUpdatedAt !== null && lSResInfoUpdatedAt !== undefined) ? lSResInfoUpdatedAt : ""
 }
 // -------------------------------------------------------------------------------
 export const setLSResInfo = (resInfo) =>{
