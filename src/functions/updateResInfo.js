@@ -3,6 +3,7 @@ import * as requests from "../ApiRequests/ApiRequests";
 
 export default function updateResInfo (resDates){
     updateFoods(resDates.foods)
+    updateInfo(resDates.restaurantInfo)
 }
 
 function updateFoods(foodsUpdates){
@@ -27,4 +28,15 @@ function updateFoods(foodsUpdates){
         }
     }
     ls.setLSResFoods(newFoodList);
+}
+
+function updateInfo(infoUpdateDate){
+    let resInfo = ls.getLSResInfo();
+    if(infoUpdateDate !== resInfo['updatedAt']){
+        requests.getRestaurantInfo((res)=>{
+            if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+                ls.setLSResInfo(res.data)
+            }
+        })
+    }
 }

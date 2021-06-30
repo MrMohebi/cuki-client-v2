@@ -30,10 +30,10 @@ export const getRestaurantInfo = (callbackFunction)=>{
         res = (res !== undefined && res !== null) ? res : {}
         if(res.statusCode === 200){
             ls.setLSResInfo(res.data)
-            document.title = res.data.restaurantInfo.englishName;
-            document.getElementById('app-name').name = res.data.restaurantInfo.englishName
-            document.getElementById('favicon').href = res.data.restaurantInfo['favicon_link']
-            document.getElementById('favicon-apple').href = res.data.restaurantInfo['favicon_link']
+            document.title = res.data.englishName;
+            document.getElementById('app-name').name = res.data.englishName
+            document.getElementById('favicon').href = res.data['favicon_link']
+            document.getElementById('favicon-apple').href = res.data['favicon_link']
         }
         callbackFunction(res);
     })
@@ -51,22 +51,6 @@ export const getFoodById = (foodId)=>{
         foodId = JSON.stringify(foodId)
     return $.ajax({method: "POST", url: BASE_API_URL_CUKIM_V1+ "getFoodById", data: { foodId:foodId , resEnglishName:getComName()}, async:false})['responseJSON']
 }
-
-
-// export const getRestaurantInfo = (callbackFunction)=>{
-//     $.post(BASE_API_URL_CUKIM_V1+ "getResData" ,{resEnglishName:getComName()}).then(res=>{
-//         res = (res !== undefined && res !== null) ? res : {}
-//         res.data = adaptors.getAllRestaurantDataTOGetResData(res.data)
-//         if(res.statusCode === 200){
-//             actions.restaurantSetData(res.data)
-//             document.title = res.data.restaurantInfo.english_name;
-//             document.getElementById('app-name').name = res.data.restaurantInfo.english_name
-//             document.getElementById('favicon').href = res.data.restaurantInfo['favicon_link']
-//             document.getElementById('favicon-apple').href = res.data.restaurantInfo['favicon_link']
-//         }
-//         callbackFunction(res);
-//     })
-// }
 
 
 export const sendVCode = (callbackFunction,phone)=>{

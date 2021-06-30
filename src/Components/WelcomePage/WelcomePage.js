@@ -20,6 +20,7 @@ class WelcomePage extends React.Component {
         allowToShake: true,
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         resParts:ls.getLSResParts(),
+        resInfo:ls.getLSResInfo(),
         lastPagerTime: 0,
         canCallPager: false,
         timerAnimationClass: 'd-none',
@@ -170,7 +171,7 @@ class WelcomePage extends React.Component {
                     >...</div>
                     <div className="forLittlePhones">
                         <p className="welcomePageHeader">
-                            <span className="textColor">{getComName()} </span>
+                            <span className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
                             <span>  app</span>
                         </p>
                         <div className="welcomePageFrames1">
