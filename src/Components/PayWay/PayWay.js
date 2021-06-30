@@ -23,6 +23,7 @@ import outResWhite from './img/outResWhite.png'
 import fixBodyClass from "../../functions/fixSwalBody";
 import {HashLoader} from "react-spinners";
 import LoadingOverlay from "react-loading-overlay";
+import * as ls from "../../stores/localStorage/localStorage";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -423,7 +424,7 @@ class PayWay extends React.Component{
                                         اماده کن میام میبرم
                                         <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                                     </div>
-                                    <div className={this.state.outResClass} onClick={this.enableOutRes}>
+                                    <div className={this.state.outResClass + (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("delivery") !== -1  ? "" : " d-none ")} onClick={this.enableOutRes}>
                                         بیرون بر
                                         <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.inResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
                                     </div>

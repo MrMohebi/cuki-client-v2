@@ -145,7 +145,6 @@ class WelcomePage extends React.Component {
                 }, 200)
                 this.callPager()
             } else {
-
                 let rand = Math.floor(Math.random() * this.state.chefSentences.length)
                 this.chefTooltip(this.state.chefSentences[rand], 0, 3000)
             }
@@ -213,7 +212,13 @@ class WelcomePage extends React.Component {
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat'
                             }}
-                                 onClick={this.togglePagerCall}
+                                 onClick={()=>{
+                                     if(ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("pager") !== -1){
+                                         this.togglePagerCall()
+                                     }else {
+                                         this.chefTooltip("متاسفانه پیجر گارسونمون فعال نیست.", 0, 3000)
+                                     }
+                                 }}
                             />
                             <div id={'pagerTimer'} ref={this.Timer}
                                  className={'text-left IranSans w-100 pagerTimer animate__animated ' + this.state.timerAnimationClass}>{this.state.timerText ? this.state.timerText : '00:00'}</div>
@@ -243,7 +248,7 @@ class WelcomePage extends React.Component {
                                         </div>
                                     )
                                 }):null}
-                                <div className="openIcons overflow-hidden">
+                                <div className={"openIcons overflow-hidden " + (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("360tour") !== -1  ? "" : " d-none ")}>
                                     <img alt="vrTour" src={tourImage}
                                          onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
                                          className='h-100 w-100 tourHolder'/>

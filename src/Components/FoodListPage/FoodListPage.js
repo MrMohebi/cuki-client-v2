@@ -199,8 +199,11 @@ class FoodListPage extends Component {
                                 </div> : " والا به منم نگفتن :("}</span>
                         </div>
                     </div>
+                    {ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("comment") !== -1  ?
+                        <Comments foodId={foodInfo.id}/>
+                        :
+                        null}
 
-                    <Comments foodId={foodInfo.id}/>
 
                 </div>
             </div>,
