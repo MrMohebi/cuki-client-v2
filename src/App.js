@@ -89,7 +89,7 @@ function App() {
 
         {/* is res open banner*/}
         {useSelector(state=>(
-            state.rTempData.isResOpen && ls.getLSResInfo()['status'] === "open"  ?
+            state.rTempData.isResOpen && ((ls.getLSResInfo().hasOwnProperty("status") && ls.getLSResInfo()['status'] === "open") || (!ls.getLSResInfo().hasOwnProperty("status")) )  ?
                 null
                 :
                 window.location.pathname === "/" ?
