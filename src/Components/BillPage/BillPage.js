@@ -16,6 +16,7 @@ import withReactContent from 'sweetalert2-react-content'
 import {useSwipeable} from 'react-swipeable';
 import fixBodyClass from "../../functions/fixSwalBody";
 import * as svg from './svg'
+import {CircularProgress} from "@material-ui/core";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -60,9 +61,10 @@ class BillPage extends React.Component {
             return number
         }
     }
+    tokenLength = 20
     handleSubmit = () => {
         if (this.props.orderList.length > 0) {
-            if (this.props.token.length > 20) {
+            if (this.props.token.length > this.tokenLength) {
                 this.props.history.push('/payway');
             } else {
                 requests.getIP(this.callbackGetIP);
@@ -74,7 +76,8 @@ class BillPage extends React.Component {
             requests.getTempToken(this.callbackGetTempToken, res.ip, navigator.userAgent, "", res.city)
     }
     callbackGetTempToken = (res) => {
-        if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
+        let success = 200;
+        if (res.hasOwnProperty("statusCode") && res.statusCode === success) {
             this.props.setToken(res.data.token)
             this.props.history.push('/payway');
         }
@@ -105,7 +108,7 @@ class BillPage extends React.Component {
                         className='mt-5 w-100 BillRow rtl IranSans'>
                         <span className='billEachOrderName'>{eachFood.persianName}</span>
                         <span
-                            className='eachFoodPriceBill'>{((eachFood.price * (1 - eachFood.discount / 100)) * eachFood.number) / 1000} T</span>
+                            className='eachFoodPriceBill'>{((eachFood['price'] * (1 - eachFood['discount'] / 100)) * eachFood.number) / 1000} T</span>
                         <div className='d-flex justify-content-between umberInDe'>
                             <AddRoundedIcon onClick={() => (this.handleIncreaseFoodNumber(eachFood["id"]))}/>
                             <span
@@ -118,18 +121,6 @@ class BillPage extends React.Component {
         )
     }
 
-    swipeRight = () => {
-        // if(this.props.openOrdersList.length !== 0){
-        //     this.props.history.push("/openOrders")
-        //
-        // } else{
-        //     this.props.history.push("/login")
-        // }
-    }
-
-    swipeLeft = () => {
-        // this.props.history.push("/main")
-    }
 
     giftCodeSuccess = () => {
         this.setState({
@@ -167,7 +158,7 @@ class BillPage extends React.Component {
         } else {
 
             this.setState({
-                isOffCodeOpen:true
+                isOffCodeOpen:false
             })
 
             timeline.to('.gift-code-input', {
@@ -178,7 +169,7 @@ class BillPage extends React.Component {
                 duration: 0.2,
                 onComplete: () => {
                     this.setState({
-                        giftSVGHolder: svg.gift
+                        giftSVGHolder: <CircularProgress size={20} />
                     })
                 }
             }).to('.gift-button', {
@@ -193,8 +184,6 @@ class BillPage extends React.Component {
                 duration: 0.2,
 
             })
-
-
         }
     }
 
@@ -241,14 +230,7 @@ class BillPage extends React.Component {
                             </tr>
                         </table>
 
-                        {/*<div className='totalPriceAndTextHolder  d-flex w-100 justify-content-between'>*/}
-                        {/*    <span>{this.sumTotalOrderPrice() / 1000}T</span>*/}
-                        {/*    <span>جمع نهایی فاکتور</span>*/}
-                        {/*</div>*/}
-                        <div className='BillSubmitButton'
-                            onClick={this.handleSubmit}
-
-                        >
+                        <div className='BillSubmitButton'>
                             <div className={'gift-button d-flex justify-content-center align-items-center'}
                             >
                                 <div
@@ -269,23 +251,17 @@ class BillPage extends React.Component {
 
                             </div>
 
-                            <span style={{position: 'absolute'}} onClick={
-                                this.handleSubmit
-                            }>پرداخت</span>
+                            <span onClick={this.handleSubmit} style={{position: 'absolute'}} >پرداخت</span>
                             <div className={'h-100 w-75 d-flex flex-row-reverse align-content-start'} onClick={
                                 this.handleSubmit
                             }>
                                 {/*  here is the pay button Collision  */}
                             </div>
-
-
                             <div className={' h-100 w-25 d-flex flex-row-reverse'}>
                                 {/*  here is the gift button Collision  */}
-
                             </div>
                         </div>
                     </div>
-
                 </React.Fragment>
             }/>
         )
