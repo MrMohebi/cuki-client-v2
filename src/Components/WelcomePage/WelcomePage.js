@@ -19,7 +19,7 @@ class WelcomePage extends React.Component {
         handClass: "shakeHands",
         allowToShake: true,
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
-        resParts:ls.getLSResParts(),
+        resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
         resInfo:ls.getLSResInfo(),
         lastPagerTime: 0,
         canCallPager: false,
@@ -41,11 +41,11 @@ class WelcomePage extends React.Component {
     }
 
     componentDidMount() {
-        if (typeof this.state.resParts !== "object") {
+        if (this.state.resParts.length < 1) {
             this.props.history.push("/");
         }
         // create food list if it doesn't exist
-        if(typeof ls.getLSResFoods() !== "object"){
+        if(ls.getLSResFoods().length < 1){
             requests.getRestaurantFoods((response)=>{
                 if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
                     ls.setLSResFoods(response.data)
@@ -53,7 +53,7 @@ class WelcomePage extends React.Component {
             })
         }
         // save res info if it doesn't exist
-        if(typeof ls.getLSResInfo() !== "object"){
+        if(!ls.getLSResInfo().hasOwnProperty("id")){
             requests.getRestaurantInfo((response)=>{
                 if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
                     ls.setLSResInfo(response.data)
@@ -261,11 +261,13 @@ class WelcomePage extends React.Component {
 const mapStateToProps = (store) => {
     return {
         tableScanned: store.rTempData.tableScanned,
+        resParts: store.rRestaurantInfo.resParts
     }
 }
 
 const mapDispatchToProps = () => {
-    return {}
+    return {
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WelcomePage);

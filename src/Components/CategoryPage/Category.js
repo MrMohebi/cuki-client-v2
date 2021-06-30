@@ -9,6 +9,7 @@ import LoadingOverlay from 'react-loading-overlay';
 import {ClimbingBoxLoader} from "react-spinners";
 import * as ls from "../../stores/localStorage/localStorage"
 import * as requests from '../../ApiRequests/ApiRequests'
+import foodsListAdaptor from "../../functions/foodsListAdaptor";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -21,6 +22,7 @@ class CategoryPage extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.state.catsFullInfo);
         if(!(this.state.catsFullInfo.hasOwnProperty('parts') &&  this.state.catsFullInfo.parts.length > 0)){
             this.getData()
         }
@@ -29,6 +31,9 @@ class CategoryPage extends React.Component {
     dataArrive = (response) => {
         if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
             ls.setLSResFoods(response.data)
+            this.setState({
+                catsFullInfo: foodsListAdaptor(response.data)
+            })
         }
     }
 
@@ -93,7 +98,7 @@ class CategoryPage extends React.Component {
                     <div className='categoryPageContainer'>
                         <div className='heightFitContent'>
                             {
-                                this.state.catsFullInfo.hasOwnProperty('parts') ? this.state.catsFullInfo.partsCategories[this.props.match.params["part"]].map(eachCategory => {
+                                this.state.catsFullInfo.hasOwnProperty('parts') && this.state.catsFullInfo.parts.length > 0 ? this.state.catsFullInfo.partsCategories[this.props.match.params["part"]].map(eachCategory => {
                                     let persianName = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].persianName
                                     let logo = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].logo
                                     let color = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].averageColor.toString()

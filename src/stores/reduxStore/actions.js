@@ -37,6 +37,17 @@ export const restaurantSetData = restaurantData => (
     })
 )
 
+
+
+export const setResParts = resParts => (
+    store.dispatch({
+        type: actionTypes.SET_RES_PARTS,
+        payload:{
+            resParts
+        }
+    })
+)
+
 export const userSetData = userData => (
     store.dispatch({
         type: actionTypes.SET_USER_DATA,

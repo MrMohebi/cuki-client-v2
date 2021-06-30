@@ -19,7 +19,7 @@ class SplashScreen extends React.Component{
 
     componentDidMount() {
         this.props.setResEnglishName(getComName())
-        if(typeof ls.getLSResParts() === "object"){
+        if(ls.getLSResParts().length > 1){
             this.props.history.push("/main");
         }
         this.getData();
@@ -39,6 +39,7 @@ class SplashScreen extends React.Component{
     goMainPage = (response) =>{
         this.props.setTableScanned(this.urlParams["table"]?this.urlParams["table"]:0)
         if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
+            this.props.setResParts(response.data)
             ls.setLSResParts(response.data);
             this.props.history.push("/main");
         }else{
@@ -66,15 +67,14 @@ class SplashScreen extends React.Component{
     }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = () => {
     return {
-        foodListConverted:store.rRestaurantInfo.foodListConverted
     }
 }
 
 const mapDispatchToProps = () => {
     return {
-        setFoodListConverted:actions.setFoodListConverted,
+        setResParts:actions.setResParts,
         setTableScanned:actions.setTableScanned,
         setResEnglishName:actions.setResEnglishName,
     }

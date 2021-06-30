@@ -12,6 +12,7 @@ import * as requests from "../../ApiRequests/ApiRequests";
 import * as ls from "../../stores/localStorage/localStorage"
 import * as actions from "../../stores/reduxStore/actions";
 import * as RandomColor from '../../functions/RandomColor';
+import foodsListAdaptor from "../../functions/foodsListAdaptor";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -22,7 +23,7 @@ export const Swipeable = ({children, style, ...props}) => {
 class FoodListPage extends Component {
 
     state = {
-        foodList: this.props.foodList ? this.props.foodList : ls.getLSResFoods(),
+        foodList: ls.getLSResFoods(),
         catsFullInfo:  ls.getLSResFullInfoCategories(),
         foodDetails: <div/>,
         allowToShow: false,
@@ -48,6 +49,9 @@ class FoodListPage extends Component {
     dataArrive = (response) => {
         if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
             ls.setLSResFoods(response.data)
+            this.setState({
+                catsFullInfo: foodsListAdaptor(response.data)
+            })
         }
     }
     clickAnimation = (id) => {
@@ -284,7 +288,7 @@ class FoodListPage extends Component {
                                         className='foodListPageContainer'>
                                        <div className='heightFitContent'>
                                            {
-                                               this.state.catsFullInfo.hasOwnProperty('parts') ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].foodList.map(foodId => {
+                                               this.state.catsFullInfo.hasOwnProperty('parts') && this.state.catsFullInfo.parts.length > 0 ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].foodList.map(foodId => {
                                                    let eachFood = this.state.foodList[foodId];
                                                    let colors = RandomColor.RandomColor(eachFood.id);
                                                    let timeout;

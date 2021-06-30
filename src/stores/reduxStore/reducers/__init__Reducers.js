@@ -7,6 +7,7 @@ export const __init__RestaurantInfo = {
     restaurantInfo: [],
     reservedTableList: [],
     foodListConverted:{},
+    resParts:[],
 }
 
 export const __init__UserInfo = {

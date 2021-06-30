@@ -17,6 +17,10 @@ export default function reducerRestaurant (state= __init__RestaurantInfo, action
             return produce(state, draftState =>{
                 draftState.englishName = action.payload.resEnglishName;
             });
+        case actionTypes.SET_RES_PARTS:
+            return produce(state, draftState =>{
+                draftState.resParts = action.payload.resParts;
+            });
         default:
             return state;
     }
