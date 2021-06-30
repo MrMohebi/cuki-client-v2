@@ -5,31 +5,39 @@ import phoneImage from './img/phone.png';
 import instagramImage from './img/instagram.png';
 import locationImage from './img/location.png';
 
-
+import * as ls from "../../stores/localStorage/localStorage"
 import * as requests from '../../ApiRequests/ApiRequests'
 
 
 class ResDetails extends React.Component{
 
+    // TODO:show all res data base on resInfo field
     state = {
+        resInfo:ls.getLSResInfo(),
         resPhone:'',
         resAddress:'',
         resInstagram:'',
         resWebsite:''
     }
     componentDidMount() {
-        requests.getRestaurantInfo((res)=>{
-            let data = res['data']['restaurantInfo'];
-            console.log(data)
-            this.setState({
-                resPhone:JSON.parse(data.phone).join(',  '),
-                resAddress:data.address
-            })
-            console.log(res)
-        })
+        if(typeof this.state.resInfo !== "object"){
+            this.getResData()
+        }
     }
+
     handleBack = ()=>{
         this.props.history.goBack();
+    }
+
+    getResData = () =>{
+        requests.getRestaurantInfo((res)=>{
+            if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+                ls.setLSResInfo(res.data)
+                this.setState({
+                    resInfo:res.data,
+                })
+            }
+        })
     }
 
 
