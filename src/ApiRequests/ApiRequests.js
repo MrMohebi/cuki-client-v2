@@ -4,10 +4,7 @@ import * as ls from "../stores/localStorage/localStorage"
 import getComName from "../functions/getComName";
 import * as adaptors from "./Adaptors";
 
-const BASE_API_URL = "https://api.cuki.ir/v201/";
 const BASE_PAY_URL = "https://api.cukim.ir/api/v1/pay/";
-
-
 const BASE_API_URL_CUKIM_V1 = "https://api.cukim.ir/api/v1/cuki/"
 
 
@@ -187,7 +184,7 @@ export const getTempToken = (callbackFunction,ip, userAgent, isp="",city="")=>{
 
 
 export const getIP = (callbackFunction)=>{
-    $.getJSON(BASE_API_URL+ "getIpInfo.php").then(res=>{
+    $.getJSON(BASE_API_URL_CUKIM_V1 + "getIpInfo").then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         callbackFunction(res);
     })
