@@ -22,7 +22,6 @@ class CategoryPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.state.catsFullInfo);
         if(!(this.state.catsFullInfo.hasOwnProperty('parts') &&  this.state.catsFullInfo.parts.length > 0)){
             this.getData()
         }

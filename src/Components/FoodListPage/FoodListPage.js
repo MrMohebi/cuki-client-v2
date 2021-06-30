@@ -12,7 +12,6 @@ import * as requests from "../../ApiRequests/ApiRequests";
 import * as ls from "../../stores/localStorage/localStorage"
 import * as actions from "../../stores/reduxStore/actions";
 import * as RandomColor from '../../functions/RandomColor';
-import foodsListAdaptor from "../../functions/foodsListAdaptor";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -43,15 +42,13 @@ class FoodListPage extends Component {
     componentDidMount() {
         if (!(this.state.catsFullInfo.hasOwnProperty('parts') && this.state.catsFullInfo.parts.length > 0)) {
             this.getData()
+            this.props.history.push("/main");
         }
     }
 
     dataArrive = (response) => {
         if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
             ls.setLSResFoods(response.data)
-            this.setState({
-                catsFullInfo: foodsListAdaptor(response.data)
-            })
         }
     }
     clickAnimation = (id) => {

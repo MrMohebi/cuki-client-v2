@@ -227,7 +227,8 @@ class WelcomePage extends React.Component {
                                     typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
                                     return (
                                         <div onClick={() => {
-                                            this.props.history.push("/category/" + eachPart)
+                                            if(ls.getLSResFullInfoCategories().hasOwnProperty(eachPart))
+                                                this.props.history.push("/category/" + eachPart)
                                         }} key={eachPart} className="openIcons">
                                             <div className="burger" style={{
                                                 background: 'url("/img/resParts/' + eachPart + '.png")',
