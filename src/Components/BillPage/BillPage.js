@@ -31,6 +31,9 @@ class BillPage extends React.Component {
     state = {
         isOffCodeOpen: false,
         giftSVGHolder: svg.gift,
+        allowToClickOnSubmit: true,
+        offCode: '',
+        offCodeUsed: false,
     }
 
     componentDidMount() {
@@ -93,7 +96,6 @@ class BillPage extends React.Component {
 
 
     createOrderList = () => {
-        console.log(this.props.orderList)
         return this.props.orderList.map(eachFood => (
                 <SwipeableListItem key={eachFood["id"]}
                                    swipeLeft={{
@@ -123,68 +125,114 @@ class BillPage extends React.Component {
 
 
     giftCodeSuccess = () => {
+        this.state.allowToClickOnSubmit = true;
         this.setState({
             giftSVGHolder: svg.gift
         })
+        this.state.offCodeUsed = true;
         gsap.to('.gift-button', {
             backgroundColor: 'green'
         })
     }
 
-    openGiftCode = () => {
-        let timeline = gsap.timeline();
-        if (!this.state.isOffCodeOpen) {
-            this.setState({
-                isOffCodeOpen:true,
-                giftSVGHolder: svg.check,
-                giftDialogOpened: true
-            }, () => {
-                timeline.to('.gift-button', {
-                    height: "40px",
-                    width: '92%',
-                    y: '-280%',
-                    right: '4%',
-                    borderRadius: '10px',
-                    duration: 0.2,
+    giftCodeFail = () => {
 
-                }).to('.BillSubmitButton', {
-                    y: '120px',
-                }, 0).to('.gift-code-input', {
-                    display: 'flex',
-                }, 0)
+        this.setState({
+            allowToClickOnSubmit: true,
+        }, () => {
 
-            })
-
-        } else {
-
-            this.setState({
-                isOffCodeOpen:false
-            })
-
-            timeline.to('.gift-code-input', {
-                display: 'none',
-                duration: '0'
-            }, 0).to('.BillSubmitButton', {
-                y: '0px',
-                duration: 0.2,
+            gsap.to('.gift-button', {
+                delay: 1,
+                backgroundColor: 'red',
                 onComplete: () => {
                     this.setState({
-                        giftSVGHolder: <CircularProgress size={20} />
+                        giftSVGHolder: svg.gift
                     })
                 }
-            }).to('.gift-button', {
-                position: 'absolute',
-                height: "35px",
-                width: '35px',
-                y: '0',
-                boxShadow: ' none',
-                right: '20px',
-                borderRadius: '50%',
-                overflow: 'hidden',
-                duration: 0.2,
+            })
+            gsap.to('.gift-button', {
+                delay: 1.2,
+                backgroundColor: 'white',
 
             })
+        })
+
+    }
+
+    openGiftCode = () => {
+
+        if (!this.state.offCodeUsed) {
+            let timeline = gsap.timeline();
+            if (!this.state.isOffCodeOpen) {
+                this.setState({
+                    isOffCodeOpen: true,
+                    giftSVGHolder: svg.check,
+                    giftDialogOpened: true
+                }, () => {
+                    timeline.to('.gift-button', {
+                        height: "40px",
+                        width: '92%',
+                        y: '-280%',
+                        right: '4%',
+                        borderRadius: '10px',
+                        duration: 0.2,
+
+                    }).to('.BillSubmitButton', {
+                        y: '120px',
+                    }, 0).to('.gift-code-input', {
+                        display: 'flex',
+                    }, 0)
+
+                })
+
+            } else {
+
+                this.setState({
+                    isOffCodeOpen: false
+                })
+                if (this.state.offCode) {
+                    requests.validateOffCode(this.state.offCode, this.sumTotalOrderPrice(), (res) => {
+                        console.log(res)
+                        if (res['data']['isOffCodeValid']) {
+                            this.giftCodeSuccess()
+                        } else {
+                            this.giftCodeFail()
+                        }
+                    })
+                }
+                if (this.state.allowToClickOnSubmit) {
+                    this.state.allowToClickOnSubmit = false;
+                    timeline.to('.gift-code-input', {
+                        display: 'none',
+                        duration: '0'
+                    }, 0).to('.BillSubmitButton', {
+                        y: '0px',
+                        duration: 0.2,
+                        onComplete: () => {
+                            this.setState({
+                                giftSVGHolder: <CircularProgress size={20}/>
+                            })
+                        }
+                    }).to('.gift-button', {
+                        position: 'absolute',
+                        height: "35px",
+                        width: '35px',
+                        y: '0',
+                        boxShadow: ' none',
+                        right: '20px',
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        duration: 0.2,
+                    })
+                }
+
+
+            }
+
+        }else{
+            //-------------if offCode was used------------
         }
+
     }
 
 
@@ -236,7 +284,10 @@ class BillPage extends React.Component {
                                 <div
                                     className={'gift-inner w-100 h-100 d-flex justify-content-center align-items-center'}>
                                     <div>
-                                        <input type="text" className={'gift-code-input'} placeholder="c-1498"/>
+                                        <input type="text" className={'gift-code-input'} placeholder="c-1498"
+                                               onChange={(e) => {
+                                                   this.state.offCode = e.currentTarget.value
+                                               }}/>
                                     </div>
                                     <div className={'gift-button-svg d-flex justify-content-center align-items-center'}
                                          onClick={() => {
@@ -251,7 +302,7 @@ class BillPage extends React.Component {
 
                             </div>
 
-                            <span onClick={this.handleSubmit} style={{position: 'absolute'}} >پرداخت</span>
+                            <span onClick={this.handleSubmit} style={{position: 'absolute'}}>پرداخت</span>
                             <div className={'h-100 w-75 d-flex flex-row-reverse align-content-start'} onClick={
                                 this.handleSubmit
                             }>
