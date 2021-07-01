@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
 import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import DatePicker from 'react-modern-calendar-datepicker';
+import gsap from "gsap";
 import moment from 'jalali-moment';
 
 
@@ -35,7 +36,8 @@ class ProfilePage extends React.Component {
         birthday: 1022716800,
         name: '',
         job: 'pilot',
-        birthdayInputValue: ''
+        birthdayInputValue: '',
+        offCodes: []
     }
 
     constructor(props) {
@@ -43,7 +45,59 @@ class ProfilePage extends React.Component {
         this.birthdayRef = React.createRef()
     }
 
+    getOffCodes = () => {
+        requests.getOffCodes((res) => {
+            let offCodes = res.data.map(eachOffCode => {
+                return <div className={'eachOffCodeContainer'} onClick={(e)=>{
+                    document.getElementById(eachOffCode['code']).select();
+                    document.execCommand('copy');
+                    gsap.to("#"+eachOffCode['code']+'sCopied',{
+                        opacity:1
+                    });
+                    gsap.to("#"+eachOffCode['code']+'gift',{
+                        backgroundSize:'0px',
+                        ease:'power4.out',
+                        duration:0.1
+                    })
+
+                    gsap.to("#"+eachOffCode['code']+'sCopied',{
+                        opacity:0,
+                        delay:1
+                    });
+                    gsap.to("#"+eachOffCode['code']+'gift',{
+                        backgroundSize:'90%',
+                        delay:1
+                    })
+                }
+                }>
+                    <div id={eachOffCode['code']+'gift'} className={'w-25 IranSans giftOffCode'}>
+                        <span id={eachOffCode['code']+'sCopied'} style={{fontSize:'0.8rem',color:'#438D48',opacity:'0'}}>!کپی شد</span>
+                    </div>
+                    <div className={'w-75 d-flex flex-column justify-content-around '}>
+                        <div
+                            className={'w-100 d-flex flex-column IranSans justify-content-center pt-1 overflow-auto'}>
+                            <span
+                                className={'offCodePercent ml-2'}>{eachOffCode['discountAmount'] ?'مبلغ: '+ eachOffCode['discountAmount'] +' تومان ': eachOffCode['discountPercentage'] + '%'}</span>
+                            <span className={'offCodeDetail'}>{eachOffCode['name']}</span>
+                        </div>
+                        <div
+                            className={'w-100 d-flex flex-row-reverse IranSans justify-content-center pt-1 overflow-auto'}>
+                            <input id={eachOffCode['code']} disabled={false} className={'offCodeCode ml-2'} value={eachOffCode['code']}/>
+                            <span className={'offCodeDetail'}>اعتبار: {Math.floor((eachOffCode['to']-eachOffCode['from'])/86400)} روز</span>
+                        </div>
+                    </div>
+                </div>
+            })
+            this.setState({
+                offCodes:offCodes
+            })
+        })
+
+    }
+
     componentDidMount() {
+        this.getOffCodes()
+
         this.props.match.params['part'] === 'club' ? this.userTabClickHandler() : this.historyTabClickHandler()
         this.getUserInfo()
         if (this.state.inputsDisabled) {
@@ -97,7 +151,6 @@ class ProfilePage extends React.Component {
     callbackGetUserInfo = (res) => {
 
         if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
-
             let fixedData = res.data
             fixedData.birthday = parseInt(fixedData.birthday)
             this.props.setUserData(fixedData);
@@ -196,7 +249,6 @@ class ProfilePage extends React.Component {
                             <span className={this.state.HistoryTabClass} onClick={this.historyTabClickHandler}> سفارش های من</span>
                         </div>
 
-                        {/*{this.state.activeProfile === 'club' ? this.clubElement : this.historyElement}*/}
                         <div className={this.state.historyElementClass}>
                             {
                                 this.props.orderHistoryRestaurant.map(eOrder => {
@@ -217,18 +269,7 @@ class ProfilePage extends React.Component {
                         </div>
 
                         <div className={this.state.offCodeElementClass}>
-                            <div className={'eachOffCodeContainer'}>
-                                <div className={'w-25 giftOffCode'} />
-                                <div className={'w-75 d-flex flex-column justify-content-around '}>
-                                    <div className={'w-100 d-flex flex-row-reverse IranSans justify-content-center pt-1 overflow-auto'}>
-                                        <span className={'offCodePercent ml-2'}>20%</span>
-                                        <span className={'offCodeDetail'}>تخفیف ورود به اپلیکیشن کیپو</span>
-                                    </div><div className={'w-100 d-flex flex-row-reverse IranSans justify-content-center pt-1 overflow-auto'}>
-                                        <div className={'offCodeCode ml-2'}>kpo90</div>
-                                        <span className={'offCodeDetail'}>اعتبار: 10 روز</span>
-                                    </div>
-                                </div>
-                            </div>
+                            {this.state.offCodes}
                         </div>
 
                         <div className={this.state.clubElementClass}>

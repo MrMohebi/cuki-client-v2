@@ -15,6 +15,14 @@ export const getRestaurantParts = (callbackFunction)=>{
     })
 }
 
+export const getOffCodes = (callbackFunction)=>{
+    let token = getReduxStore('token')
+    $.post(BASE_API_URL_CUKIM_V1+ "getOffCodes" ,{token,resEnglishName:getComName()}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
 export const getRestaurantFoods = (callbackFunction)=>{
     $.post(BASE_API_URL_CUKIM_V1+ "getResFoods" ,{resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}

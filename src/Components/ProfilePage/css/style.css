@@ -194,6 +194,10 @@ totalBuyAndPrice {
     background-size: 90%;
     background-repeat: no-repeat;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .offCodeDetail{
@@ -213,4 +217,7 @@ totalBuyAndPrice {
     border-radius: 5px;
     font-size: 0.8rem;
     line-height: 23px;
+    text-align: center;
+    outline: none;
+    border: none;
 }
