@@ -31,6 +31,10 @@
   align-items: center;
   text-overflow: ellipsis;
   white-space: nowrap;
+  div{
+    filter: invert(0.5);
+  }
+
 }
 
 .payWayNormal{

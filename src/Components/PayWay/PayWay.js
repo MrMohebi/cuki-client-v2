@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 import './css/style.css'
-import {MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet'
+import {MapContainer, Marker, Popup, TileLayer, useMapEvents} from 'react-leaflet'
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css"
 import markerPNG from './img/marker.png'
@@ -16,6 +16,10 @@ import fixBodyClass from "../../functions/fixSwalBody";
 import {HashLoader} from "react-spinners";
 import LoadingOverlay from "react-loading-overlay";
 import * as ls from "../../stores/localStorage/localStorage";
+import cashWhite from './img/cashWhite.png'
+import onlineWhite from './img/onlineWhite.png'
+import inResWhite from './img/waiterWhite.png'
+import outResWhite from './img/outResWhite.png'
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -104,8 +108,6 @@ class PayWay extends React.Component {
                 tableClass: 'd-none tableContainerClass',
             })
         }
-
-
     }
 
     enableInRes = () => {
@@ -118,9 +120,6 @@ class PayWay extends React.Component {
             mapClass: 'animate__animated animate__fadeOut mapContainer d-none',
             addressDetailsClass: 'animate__animated animate__fadeOut d-none',
             textHolderDetailsClass: 'd-none',
-            // outResIcon: outResWhite,
-            // inResIcon: waiterBlack
-
         })
         this.mapDetailsTableContainer.current.style.height = '80px'
     }
@@ -129,14 +128,13 @@ class PayWay extends React.Component {
         this.setState({
             inResClass: 'payWayNormal',
             outResClass: 'payWayNormal',
-            inOrOut: 'in',
+            //TODO add come and get to the API
+            inOrOut: 'comeAndGet',
             makeIWillComeClass: 'payWayActive',
             tableClass: 'animate__animated animate__fadeInRight tableContainerClass d-none',
             mapClass: 'animate__animated animate__fadeOut mapContainer d-none',
             addressDetailsClass: 'animate__animated animate__fadeOut d-none',
             textHolderDetailsClass: 'd-none',
-            // outResIcon: outResWhite,
-            // inResIcon: waiterWhite,
             table: "iWillComeAndGet",
         })
         this.mapDetailsTableContainer.current.style.height = '80px'
@@ -152,8 +150,6 @@ class PayWay extends React.Component {
             mapClass: 'animate__animated animate__fadeIn mapContainer',
             addressDetailsClass: 'animate__animated animate__fadeIn addressDetails ',
             textHolderDetailsClass: 'w-100 IranSans text-right mt-3',
-            // outResIcon: outResBlack,
-            // inResIcon: waiterWhite
         })
         this.mapDetailsTableContainer.current.style.height = '1000px'
     }
@@ -164,8 +160,6 @@ class PayWay extends React.Component {
             offlineClass: 'payWayNormal',
             onlineCompleteClass: 'payWayNormal',
             onlineOrCash: 'online',
-            // onlineIcon: onlineWhite,
-            // cashIcon: cashBlack
         })
     }
 
@@ -185,8 +179,6 @@ class PayWay extends React.Component {
             offlineClass: 'payWayActive',
             onlineCompleteClass: 'payWayNormal',
             onlineOrCash: 'cash',
-            // cashIcon: cashWhite,
-            // onlineIcon: onlineBlack
         })
 
     }
@@ -209,7 +201,7 @@ class PayWay extends React.Component {
                 icon: 'info',
                 confirmButtonText: "اها اوکیه وایسا",
                 text: "!شماره میزت رو نگفتی"
-            })
+            }).then()
             fixBodyClass()
             return;
         } else if (this.state.inOrOut === "out" && coordinates[0] === 30.287486 && coordinates[1] === 57.052301) {
@@ -218,7 +210,7 @@ class PayWay extends React.Component {
                 icon: 'info',
                 confirmButtonText: "اها اوکیه وایسا",
                 text: "!آدرس رو نگفتی که"
-            })
+            }).then()
             fixBodyClass()
             return;
         }
@@ -229,7 +221,7 @@ class PayWay extends React.Component {
                 icon: 'info',
                 confirmButtonText: "حله",
                 text: "سفارشت رو فکر کنم قبلا ثبت کردیم. توی سفارشت باز اون پایین باید باشه."
-            })
+            }).then()
             fixBodyClass()
             return;
         }
@@ -338,7 +330,7 @@ class PayWay extends React.Component {
                             "لینک پرداخت دونگ کوکی\n\n" +
                             "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" +
                             "بزن روی لینک پایین تا هدایت شی درگاه پرداخت\n" + res.data.url).then(() => {
-                            ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
+                            ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد").then()
                         })
                     } else {
                         this.setState({
@@ -357,7 +349,7 @@ class PayWay extends React.Component {
                 icon: 'error',
                 confirmButtonText: 'اوکیه',
                 text: "یه چیزی درست کار نکرد، میشه از اول امتحان کنی؟",
-            });
+            }).then()
             fixBodyClass()
         }
     }
@@ -412,7 +404,7 @@ class PayWay extends React.Component {
                                         <div className='payWayButtonIcons' style={{
                                             height: this.state.iconSize,
                                             width: this.state.iconSize,
-                                            background: `url(${this.state.onlineIcon})`,
+                                            background: `url(${onlineWhite})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'cover'
                                         }}/>
@@ -422,7 +414,7 @@ class PayWay extends React.Component {
                                         <div className='payWayButtonIcons' style={{
                                             height: this.state.iconSize,
                                             width: this.state.iconSize,
-                                            background: `url(${this.state.onlineIcon})`,
+                                            background: `url(${onlineWhite})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'cover'
                                         }}/>
@@ -432,7 +424,7 @@ class PayWay extends React.Component {
                                         <div className='payWayButtonIcons' style={{
                                             height: this.state.iconSize,
                                             width: this.state.iconSize,
-                                            background: `url(${this.state.cashIcon})`,
+                                            background: `url(${cashWhite})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'cover'
                                         }}/>
@@ -449,7 +441,7 @@ class PayWay extends React.Component {
                                         <div className='payWayButtonIcons' style={{
                                             height: this.state.iconSize,
                                             width: this.state.iconSize,
-                                            background: `url(${this.state.outResIcon})`,
+                                            background: `url(${outResWhite})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'cover'
                                         }}/>
@@ -460,7 +452,7 @@ class PayWay extends React.Component {
                                         <div className='payWayButtonIcons' style={{
                                             height: this.state.iconSize,
                                             width: this.state.iconSize,
-                                            background: `url(${this.state.outResIcon})`,
+                                            background: `url(${outResWhite})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'cover'
                                         }}/>
@@ -472,7 +464,7 @@ class PayWay extends React.Component {
                                         <div className='payWayButtonIcons' style={{
                                             height: this.state.iconSize,
                                             width: this.state.iconSize,
-                                            background: `url(${this.state.inResIcon})`,
+                                            background: `url(${inResWhite})`,
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'cover'
                                         }}/>
@@ -497,7 +489,6 @@ class PayWay extends React.Component {
                                                   addressDetails: e.target.value.toString(),
                                               })
                                           }}/>
-
                                 <div className={this.state.tableClass}>
                                     <span className='tableTextHolder'>شماره میز</span>
                                     <input value={this.state.table} placeholder='000' type='number'

@@ -32,6 +32,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.payWayActive div {
+  filter: invert(0.5);
+}
 
 .payWayNormal {
   transition: all 0.2s ease;
