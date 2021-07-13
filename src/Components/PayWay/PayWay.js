@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
 import './css/style.css'
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet'
+import {MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet'
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css"
 import markerPNG from './img/marker.png'
@@ -12,14 +12,6 @@ import * as actions from "../../stores/reduxStore/actions";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 import {useSwipeable} from 'react-swipeable';
-import cashBlack from './img/cashBlack.png'
-import cashWhite from './img/cashWhite.png'
-import onlineBlack from './img/onlineBlack.png'
-import onlineWhite from './img/onlineWhite.png'
-import waiterBlack from './img/waiterBlack.png'
-import waiterWhite from './img/waiterWhite.png'
-import outResBlack from './img/outResBlack.png'
-import outResWhite from './img/outResWhite.png'
 import fixBodyClass from "../../functions/fixSwalBody";
 import {HashLoader} from "react-spinners";
 import LoadingOverlay from "react-loading-overlay";
@@ -38,11 +30,11 @@ let markerIcon = L.icon({
     iconUrl: markerPNG,
     shadowUrl: markerShadowPNG,
 
-    iconSize:     [40, 60], // size of the icon
-    shadowSize:   [40, 30], // size of the shadow
-    iconAnchor:   [20, 60], // point of the icon which will correspond to marker's location
+    iconSize: [40, 60], // size of the icon
+    shadowSize: [40, 30], // size of the shadow
+    iconAnchor: [20, 60], // point of the icon which will correspond to marker's location
     shadowAnchor: [0, 30],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
 
@@ -52,7 +44,7 @@ function MarkerToolTip() {
         click: (e) => {
             coordinates = [e.latlng['lat'], e.latlng['lng']]
             setPosition(e.latlng)
-            document.getElementsByClassName('payWayContainer')[0].scrollBy(0,250)
+            document.getElementsByClassName('payWayContainer')[0].scrollBy(0, 250)
         },
     })
     return position === null ? null : (
@@ -63,7 +55,7 @@ function MarkerToolTip() {
 }
 
 
-class PayWay extends React.Component{
+class PayWay extends React.Component {
 
     constructor(props) {
         super(props)
@@ -72,125 +64,134 @@ class PayWay extends React.Component{
 
 
     state = {
-        outResClass:'',
-        inResClass:'',
-        onlineClass:'',
-        offlineClass:'',
-        tableClass:'tableContainerClass',
-        table:this.props.tableScanned > 0 ? this.props.tableScanned:"",
-        addressDetailsClass:'addressDetails',
-        mapClass:'mapContainer',
+        outResClass: '',
+        inResClass: '',
+        onlineClass: '',
+        onlineCompleteClass: '',
+        offlineClass: '',
+        makeIWillComeClass: 'payWayNormal',
+        tableClass: 'tableContainerClass',
+        table: this.props.tableScanned > 0 ? this.props.tableScanned : "",
+        addressDetailsClass: 'addressDetails',
+        mapClass: 'mapContainer',
         inOrOut: 'in',
-        onlineOrCash:'online',
+        onlineOrCash: 'online',
         addressDetails: '',
-        textHolderDetailsClass:'w-100 IranSans text-right mt-3',
-        iconSize:'20px',
-        onlineIcon:onlineWhite,
-        cashIcon:cashBlack,
-        inResIcon:waiterBlack,
-        outResIcon:outResBlack,
+        textHolderDetailsClass: 'w-100 IranSans text-right mt-3',
+        iconSize: '20px',
+        // onlineIcon: onlineWhite,
+        // cashIcon: cashBlack,
+        // inResIcon: waiterBlack,
+        // outResIcon: outResBlack,
         loading: false,
-        orderDetails:'',
+        orderDetails: '',
     }
+
     componentDidMount() {
         this.state.inOrOut === 'in' ? this.enableInRes() : this.enableOutRes()
         this.state.onlineOrCash === 'online' ? this.enableOnline() : this.enableCash()
 
-        if (this.state.inOrOut === 'in'){
+        if (this.state.inOrOut === 'in') {
             this.setState({
-                addressDetailsClass:'d-none',
-                mapClass:'d-none',
-                tableClass:'animate__animated animate__fadeInRight tableContainerClass'
+                addressDetailsClass: 'd-none',
+                mapClass: 'd-none',
+                tableClass: 'animate__animated animate__fadeInRight tableContainerClass'
             })
-        }else{
+        } else {
             this.setState({
-                addressDetailsClass:'d-animate__animated animate__fadeInRight addressDetails',
-                mapClass:'d-animate__animated animate__fadeInUp mapContainer',
-                tableClass:'d-none tableContainerClass',
+                addressDetailsClass: 'd-animate__animated animate__fadeInRight addressDetails',
+                mapClass: 'd-animate__animated animate__fadeInUp mapContainer',
+                tableClass: 'd-none tableContainerClass',
             })
         }
 
 
     }
 
-    enableInRes = () =>{
+    enableInRes = () => {
         this.setState({
-            inResClass:'payWayActive',
-            outResClass:'payWayNormal',
-            inOrOut:'in',
-            tableClass:'animate__animated animate__fadeInRight tableContainerClass',
-            mapClass:'animate__animated animate__fadeOut mapContainer d-none',
-            addressDetailsClass:'animate__animated animate__fadeOut d-none',
-            textHolderDetailsClass:'d-none',
-            outResIcon:outResWhite,
-            inResIcon:waiterBlack
+            inResClass: 'payWayActive',
+            outResClass: 'payWayNormal',
+            inOrOut: 'in',
+            makeIWillComeClass: 'payWayNormal',
+            tableClass: 'animate__animated animate__fadeInRight tableContainerClass',
+            mapClass: 'animate__animated animate__fadeOut mapContainer d-none',
+            addressDetailsClass: 'animate__animated animate__fadeOut d-none',
+            textHolderDetailsClass: 'd-none',
+            // outResIcon: outResWhite,
+            // inResIcon: waiterBlack
 
         })
         this.mapDetailsTableContainer.current.style.height = '80px'
     }
 
-    enableIWillComeAndGet = () =>{
+    enableIWillComeAndGet = () => {
         this.setState({
-            inResClass:'payWayNormal',
-            outResClass:'payWayNormal',
-            inOrOut:'in',
-            tableClass:'animate__animated animate__fadeInRight tableContainerClass d-none',
-            mapClass:'animate__animated animate__fadeOut mapContainer d-none',
-            addressDetailsClass:'animate__animated animate__fadeOut d-none',
-            textHolderDetailsClass:'d-none',
-            outResIcon:outResWhite,
-            inResIcon:waiterWhite,
-            table:"iWillComeAndGet",
+            inResClass: 'payWayNormal',
+            outResClass: 'payWayNormal',
+            inOrOut: 'in',
+            makeIWillComeClass: 'payWayActive',
+            tableClass: 'animate__animated animate__fadeInRight tableContainerClass d-none',
+            mapClass: 'animate__animated animate__fadeOut mapContainer d-none',
+            addressDetailsClass: 'animate__animated animate__fadeOut d-none',
+            textHolderDetailsClass: 'd-none',
+            // outResIcon: outResWhite,
+            // inResIcon: waiterWhite,
+            table: "iWillComeAndGet",
         })
         this.mapDetailsTableContainer.current.style.height = '80px'
     }
 
-    enableOutRes = () =>{
+    enableOutRes = () => {
         this.setState({
-            inResClass:'payWayNormal',
-            outResClass:'payWayActive',
-            inOrOut:'out',
-            tableClass:'h-0Animate',
-            mapClass:'animate__animated animate__fadeIn mapContainer',
-            addressDetailsClass:'animate__animated animate__fadeIn addressDetails ',
-            textHolderDetailsClass:'w-100 IranSans text-right mt-3',
-            outResIcon:outResBlack,
-            inResIcon:waiterWhite
+            inResClass: 'payWayNormal',
+            outResClass: 'payWayActive',
+            onlineCompleteClass: 'payWayNormal',
+            inOrOut: 'out',
+            tableClass: 'h-0Animate',
+            mapClass: 'animate__animated animate__fadeIn mapContainer',
+            addressDetailsClass: 'animate__animated animate__fadeIn addressDetails ',
+            textHolderDetailsClass: 'w-100 IranSans text-right mt-3',
+            // outResIcon: outResBlack,
+            // inResIcon: waiterWhite
         })
         this.mapDetailsTableContainer.current.style.height = '1000px'
     }
 
-    enableOnline = () =>{
+    enableOnline = () => {
         this.setState({
-            onlineClass:'payWayActive',
-            offlineClass:'payWayNormal',
-            onlineOrCash:'online',
-            onlineIcon:onlineWhite,
-            cashIcon:cashBlack
+            onlineClass: 'payWayActive',
+            offlineClass: 'payWayNormal',
+            onlineCompleteClass: 'payWayNormal',
+            onlineOrCash: 'online',
+            // onlineIcon: onlineWhite,
+            // cashIcon: cashBlack
         })
     }
 
-    enableOnlineAll = () =>{
+    enableOnlineAll = () => {
         this.setState({
-            onlineClass:'payWayNormal',
-            offlineClass:'payWayNormal',
-            onlineOrCash:'onlineAll',
-            onlineIcon:onlineBlack,
-            cashIcon:cashBlack
+            onlineClass: 'payWayNormal',
+            offlineClass: 'payWayNormal',
+            onlineCompleteClass: 'payWayActive',
+            onlineOrCash: 'onlineAll',
+            // onlineIcon: onlineBlack,
+            // cashIcon: cashBlack
         })
     }
-    enableCash = () =>{
+    enableCash = () => {
         this.setState({
-            onlineClass:'payWayNormal',
-            offlineClass:'payWayActive',
-            onlineOrCash:'cash',
-            cashIcon:cashWhite,
-            onlineIcon:onlineBlack
+            onlineClass: 'payWayNormal',
+            offlineClass: 'payWayActive',
+            onlineCompleteClass: 'payWayNormal',
+            onlineOrCash: 'cash',
+            // cashIcon: cashWhite,
+            // onlineIcon: onlineBlack
         })
 
     }
 
-    calTotalPrice = () =>{
+    calTotalPrice = () => {
         let totalPrice = 0;
         for (let i = 0; i <= this.props.orderList.length; i++) {
             if (this.props.orderList[i]) {
@@ -201,8 +202,8 @@ class PayWay extends React.Component{
     }
 
 
-    handleSubmit = () =>{
-        if(this.state.inOrOut === "in" && this.state.table !== "iWillComeAndGet"){
+    handleSubmit = () => {
+        if (this.state.inOrOut === "in" && this.state.table !== "iWillComeAndGet") {
             ReactSwal.fire({
                 title: 'نه صبر کن',
                 icon: 'info',
@@ -210,8 +211,8 @@ class PayWay extends React.Component{
                 text: "!شماره میزت رو نگفتی"
             })
             fixBodyClass()
-            return ;
-        }else if(this.state.inOrOut === "out" && coordinates[0] === 30.287486 && coordinates[1] === 57.052301){
+            return;
+        } else if (this.state.inOrOut === "out" && coordinates[0] === 30.287486 && coordinates[1] === 57.052301) {
             ReactSwal.fire({
                 title: 'نه صبر کن',
                 icon: 'info',
@@ -219,10 +220,10 @@ class PayWay extends React.Component{
                 text: "!آدرس رو نگفتی که"
             })
             fixBodyClass()
-            return ;
+            return;
         }
 
-        if(this.calTotalPrice() < 900){
+        if (this.calTotalPrice() < 900) {
             ReactSwal.fire({
                 title: 'نه صبر کن',
                 icon: 'info',
@@ -230,7 +231,7 @@ class PayWay extends React.Component{
                 text: "سفارشت رو فکر کنم قبلا ثبت کردیم. توی سفارشت باز اون پایین باید باشه."
             })
             fixBodyClass()
-            return ;
+            return;
         }
 
         ReactSwal.fire({
@@ -242,21 +243,25 @@ class PayWay extends React.Component{
             text: 'قیمت کل  فاکتور: ' + this.calTotalPrice() / 1000 + "هزار تومن \n",
         }).then(result => {
             if (result.isConfirmed) {
-                this.setState({loading:true})
-                if(this.state.inOrOut === "in"){
+                this.setState({loading: true})
+                if (this.state.inOrOut === "in") {
                     requests.sendOrder(
                         this.callbackSendOrder,
                         this.state.table,
                         {},
-                        this.props.orderList.map(eachFood =>{return {id:eachFood.id, number:eachFood.number}}),
+                        this.props.orderList.map(eachFood => {
+                            return {id: eachFood.id, number: eachFood.number}
+                        }),
                         this.state.orderDetails
                     )
-                }else {
+                } else {
                     requests.sendOrder(
                         this.callbackSendOrder,
                         "",
-                        {coordinates:coordinates, addressDetails: this.state.addressDetails},
-                        this.props.orderList.map(eachFood =>{return {id:eachFood.id, number:eachFood.number}}),
+                        {coordinates: coordinates, addressDetails: this.state.addressDetails},
+                        this.props.orderList.map(eachFood => {
+                            return {id: eachFood.id, number: eachFood.number}
+                        }),
                         this.state.orderDetails
                     )
                 }
@@ -266,18 +271,18 @@ class PayWay extends React.Component{
 
     }
 
-    getOpenOrders=()=>{
+    getOpenOrders = () => {
         requests.getOpenOrders(this.callbackOpenOrders, this.props.token);
     }
-    callbackOpenOrders = (res) =>{
-        if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+    callbackOpenOrders = (res) => {
+        if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             actions.setOpenOrdersListInfo(res.data)
         }
     }
 
-    callbackSendOrder = (res) =>{
-        this.setState({loading:false})
-        if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
+    callbackSendOrder = (res) => {
+        this.setState({loading: false})
+        if (res.hasOwnProperty("statusCode") && res.statusCode === 200) {
             this.props.setOrderList([])
             this.props.setTrackingId(res.data.trackingId)
             ReactSwal.fire({
@@ -286,20 +291,22 @@ class PayWay extends React.Component{
                 confirmButtonText: 'اوکیه',
                 html: "خب سفارشت رو ثبت کردیم؛<br/>" +
                     "(: یکم دیگه آمادس<br/>" +
-                     `<span style='font-weight: bold'>${res.data.trackingId}</span> :شماره سفارش`
+                    `<span style='font-weight: bold'>${res.data.trackingId}</span> :شماره سفارش`
             }).then(() => {
                 this.getOpenOrders()
-                if(this.state.onlineOrCash === "cash"){
+                if (this.state.onlineOrCash === "cash") {
                     this.props.history.push("/main")
-                }else if(this.state.onlineOrCash === "onlineAll"){
+                } else if (this.state.onlineOrCash === "onlineAll") {
                     requests.sendPaymentRequestFood(
                         this.callbackPaymentRequest,
-                        this.props.orderList.map(eachFood =>{return {id:eachFood.id, number:eachFood.number}}),
+                        this.props.orderList.map(eachFood => {
+                            return {id: eachFood.id, number: eachFood.number}
+                        }),
                         res.data.totalPrice,
                         res.data.trackingId
                     );
                 } else {
-                    this.props.history.push("/dongi?trackingId="+res.data.trackingId)
+                    this.props.history.push("/dongi?trackingId=" + res.data.trackingId)
                 }
             })
             fixBodyClass()
@@ -311,7 +318,7 @@ class PayWay extends React.Component{
             this.setState({
                 loading: false,
                 selectedToPay: [],
-                notPaidList:[]
+                notPaidList: []
             })
             ReactSwal.fire({
                 title: 'تمومه',
@@ -328,9 +335,9 @@ class PayWay extends React.Component{
                 } else if (resultSwalPay.isDenied) {
                     if (navigator.clipboard !== undefined) {
                         navigator.clipboard.writeText(
-                            "لینک پرداخت دونگ کوکی\n\n"  +
+                            "لینک پرداخت دونگ کوکی\n\n" +
                             "مبلغ : " + res.data.amount / 1000 + " هزار تومن \n" +
-                            "بزن روی لینک پایین تا هدایت شی درگاه پرداخت\n" + res.data.url ).then(() => {
+                            "بزن روی لینک پایین تا هدایت شی درگاه پرداخت\n" + res.data.url).then(() => {
                             ReactSwal.fire("لینک توی کلیپ بورد ذخیره شد")
                         })
                     } else {
@@ -368,12 +375,12 @@ class PayWay extends React.Component{
     }
 
 
-    handleBack = () =>{
+    handleBack = () => {
         this.props.history.goBack();
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
                 <LoadingOverlay
                     active={this.state.loading}
@@ -395,45 +402,88 @@ class PayWay extends React.Component{
                             </div>
                             <ArrowBackRoundedIcon className='invisible'/>
                         </div>
-                        <div  className='payWayContainer'>
-                            <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
-                                <span className='IranSans payWayText ' >نحوه پرداخت چجوری باشه؟</span>
-                                <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
+                        <div className='payWayContainer'>
+                            <div className='payWayOptionsContainer d-flex flex-column justify-content-between'>
+                                <span className='IranSans payWayText '>نحوه پرداخت چجوری باشه؟</span>
+                                <div
+                                    className='payWayButtonsContainer d-flex flex-row-reverse justify-content-around mt-3'>
                                     <div className={this.state.onlineClass} onClick={this.enableOnline}>
                                         آنلاین دونگی
-                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.onlineIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                        <div className='payWayButtonIcons' style={{
+                                            height: this.state.iconSize,
+                                            width: this.state.iconSize,
+                                            background: `url(${this.state.onlineIcon})`,
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover'
+                                        }}/>
                                     </div>
-                                    <div className={this.state.onlineClass} onClick={this.enableOnlineAll}>
+                                    <div className={this.state.onlineCompleteClass} onClick={this.enableOnlineAll}>
                                         آنلاین یکجا
-                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.onlineIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                        <div className='payWayButtonIcons' style={{
+                                            height: this.state.iconSize,
+                                            width: this.state.iconSize,
+                                            background: `url(${this.state.onlineIcon})`,
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover'
+                                        }}/>
                                     </div>
                                     <div className={this.state.offlineClass} onClick={this.enableCash}>
                                         نقدی
-                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.cashIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                        <div className='payWayButtonIcons' style={{
+                                            height: this.state.iconSize,
+                                            width: this.state.iconSize,
+                                            background: `url(${this.state.cashIcon})`,
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover'
+                                        }}/>
                                     </div>
                                 </div>
                             </div>
-                            <div className='payWayOptionsContainer d-flex flex-row-reverse justify-content-between'>
-                                <span className='IranSans payWayText ' >تحویل سفارش چطور؟</span>
-                                <div className='payWayButtonsContainer d-flex flex-column justify-content-between'>
-                                    <div className={this.state.inResClass +' inResTextSmaller'} onClick={this.enableInRes}>
+                            <div className='payWayOptionsContainer d-flex flex-column justify-content-between'>
+                                <span className='IranSans payWayText '>تحویل سفارش چطور؟</span>
+                                <div
+                                    className='payWayButtonsContainer d-flex flex-row-reverse justify-content-around mt-3'>
+                                    <div className={this.state.inResClass + ' inResTextSmaller'}
+                                         onClick={this.enableInRes}>
                                         درون رستوران
-                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                        <div className='payWayButtonIcons' style={{
+                                            height: this.state.iconSize,
+                                            width: this.state.iconSize,
+                                            background: `url(${this.state.outResIcon})`,
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover'
+                                        }}/>
                                     </div>
-                                    <div className={this.state.inResClass +' inResTextSmaller'} onClick={this.enableIWillComeAndGet}>
+                                    <div className={this.state.makeIWillComeClass + ' inResTextSmaller'}
+                                         onClick={this.enableIWillComeAndGet}>
                                         اماده کن میام میبرم
-                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.outResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                        <div className='payWayButtonIcons' style={{
+                                            height: this.state.iconSize,
+                                            width: this.state.iconSize,
+                                            background: `url(${this.state.outResIcon})`,
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover'
+                                        }}/>
                                     </div>
-                                    <div className={this.state.outResClass + (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("delivery") !== -1  ? "" : " d-none ")} onClick={this.enableOutRes}>
+                                    <div
+                                        className={this.state.outResClass + (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("delivery") !== -1 ? "" : " d-none ")}
+                                        onClick={this.enableOutRes}>
                                         بیرون بر
-                                        <div className='payWayButtonIcons' style={{height:this.state.iconSize,width:this.state.iconSize,background:`url(${this.state.inResIcon})`,backgroundRepeat:'no-repeat',backgroundSize:'cover'}}/>
+                                        <div className='payWayButtonIcons' style={{
+                                            height: this.state.iconSize,
+                                            width: this.state.iconSize,
+                                            background: `url(${this.state.inResIcon})`,
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover'
+                                        }}/>
                                     </div>
 
                                 </div>
                             </div>
-                            <div  ref={this.mapDetailsTableContainer} className='mapDetailsTableContainer'>
+                            <div ref={this.mapDetailsTableContainer} className='mapDetailsTableContainer'>
                                 <div className={this.state.mapClass}>
-                                    <MapContainer zoomControl={false} style={{height: "300px"}} center={coordinates} zoom={15} >
+                                    <MapContainer zoomControl={false} style={{height: "300px"}} center={coordinates}
+                                                  zoom={15}>
                                         <TileLayer
                                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
@@ -441,23 +491,27 @@ class PayWay extends React.Component{
                                     </MapContainer>
                                 </div>
                                 <div className={this.state.textHolderDetailsClass}> : توضیحات آدرس</div>
-                                <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass} onChange={(e)=>{
-                                    this.setState({
-                                        addressDetails:e.target.value.toString(),
-                                    })
-                                }}/>
+                                <textarea name="Text1" cols="40" rows="5" className={this.state.addressDetailsClass}
+                                          onChange={(e) => {
+                                              this.setState({
+                                                  addressDetails: e.target.value.toString(),
+                                              })
+                                          }}/>
 
                                 <div className={this.state.tableClass}>
                                     <span className='tableTextHolder'>شماره میز</span>
-                                    <input value={this.state.table} placeholder='000' type='number' className='tableInput' onChange={(e)=>( e.target.value.length > 3 ? null : this.setState({table:e.target.value}))}/>
+                                    <input value={this.state.table} placeholder='000' type='number'
+                                           className='tableInput'
+                                           onChange={(e) => (e.target.value.length > 3 ? null : this.setState({table: e.target.value}))}/>
                                 </div>
                             </div>
                             <div className={'w-100 IranSans text-right mt-3'}> : توضیحات سفارش</div>
-                            <textarea name="Text1" cols="40" rows="5" className={"addressDetails mb-2"} onChange={(e)=>{
-                                this.setState({
-                                    orderDetails:e.target.value.toString(),
-                                })
-                            }}/>
+                            <textarea name="Text1" cols="40" rows="5" className={"addressDetails mb-2"}
+                                      onChange={(e) => {
+                                          this.setState({
+                                              orderDetails: e.target.value.toString(),
+                                          })
+                                      }}/>
                             <div className='BillSubmitButton mt-2' onClick={this.handleSubmit}>
                                 <span>پرداخت</span>
                             </div>
@@ -472,17 +526,17 @@ class PayWay extends React.Component{
 const mapStateToProps = (store) => {
     return {
         openOrdersList: store.rTempData.openOrdersList,
-        token:store.rUserInfo.token,
+        token: store.rUserInfo.token,
         orderList: store.rTempData.orderList,
         trackingId: store.rTempData.trackingId,
-        tableScanned:store.rTempData.tableScanned,
+        tableScanned: store.rTempData.tableScanned,
     }
 }
 
 const mapDispatchToProps = () => {
     return {
         setTrackingId: actions.setTrackingId,
-        setOrderList:actions.setOrderList,
+        setOrderList: actions.setOrderList,
     }
 }
 
