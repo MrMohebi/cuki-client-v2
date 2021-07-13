@@ -17,6 +17,7 @@ import {useSwipeable} from 'react-swipeable';
 import fixBodyClass from "../../functions/fixSwalBody";
 import * as svg from './svg'
 import {CircularProgress} from "@material-ui/core";
+import {gift} from "./svg";
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -192,16 +193,38 @@ class BillPage extends React.Component {
                 })
                 if (this.state.offCode) {
                     requests.validateOffCode(this.state.offCode, this.sumTotalOrderPrice(), (res) => {
-                        console.log(res)
                         if (res['data']['isOffCodeValid']) {
                             this.giftCodeSuccess()
                         } else {
                             this.giftCodeFail()
                         }
                     })
-                }
-                if (this.state.allowToClickOnSubmit) {
-                    this.state.allowToClickOnSubmit = false;
+                    if (this.state.allowToClickOnSubmit) {
+                        this.state.allowToClickOnSubmit = false;
+                        timeline.to('.gift-code-input', {
+                            display: 'none',
+                            duration: '0'
+                        }, 0).to('.BillSubmitButton', {
+                            y: '0px',
+                            duration: 0.2,
+                            onComplete: () => {
+                                this.setState({
+                                    giftSVGHolder: <CircularProgress size={20}/>
+                                })
+                            }
+                        }).to('.gift-button', {
+                            position: 'absolute',
+                            height: "35px",
+                            width: '35px',
+                            y: '0',
+                            boxShadow: ' none',
+                            right: '20px',
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            duration: 0.2,
+                        })
+                    }
+                }else{
                     timeline.to('.gift-code-input', {
                         display: 'none',
                         duration: '0'
@@ -210,7 +233,7 @@ class BillPage extends React.Component {
                         duration: 0.2,
                         onComplete: () => {
                             this.setState({
-                                giftSVGHolder: <CircularProgress size={20}/>
+                                giftSVGHolder: gift
                             })
                         }
                     }).to('.gift-button', {
@@ -225,6 +248,7 @@ class BillPage extends React.Component {
                         duration: 0.2,
                     })
                 }
+
 
 
             }
@@ -264,13 +288,13 @@ class BillPage extends React.Component {
 
                         <table style={{direction: 'rtl'}} align={'center'} className={'w-100 bill-texts-table'}>
                             <tr>
-                                <td className={'bill-td'}><span className={'bill-texts'}>جمع نهایی</span></td>
+                                <td className={'bill-td'}><span className={'bill-texts'}>مبلغ</span></td>
                                 <td className={'bill-td'}><span className={'bill-texts'}>جمع تخفیف</span></td>
                                 <td className={'bill-td'}><span className={'bill-texts'}>جمع نهایی فاکتور</span></td>
 
                             </tr>
                             <tr>
-                                <td className={'bill-td'}><span className={'bill-texts'}> 250T2</span></td>
+                                <td className={'bill-td'}><span className={'bill-texts'}> {this.sumTotalOrderPrice() / 1000}T</span></td>
                                 <td className={'bill-td'}><span className={'bill-texts'}> 2522</span></td>
                                 <td className={'bill-td'}><span
                                     className={'bill-texts'}> {this.sumTotalOrderPrice() / 1000}T</span></td>
@@ -298,8 +322,6 @@ class BillPage extends React.Component {
                                     </div>
 
                                 </div>
-
-
                             </div>
 
                             <span onClick={this.handleSubmit} style={{position: 'absolute'}}>پرداخت</span>
