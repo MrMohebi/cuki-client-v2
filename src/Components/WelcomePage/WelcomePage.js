@@ -2,7 +2,6 @@ import React from "react";
 import './css/style.css';
 import {connect} from "react-redux";
 import {useSwipeable} from 'react-swipeable';
-import tourImage from './img/tour.gif'
 import getComName, {getFullName} from "../../functions/getComName";
 import * as ls from "../../stores/localStorage/localStorage"
 import * as requests from '../../ApiRequests/ApiRequests'
@@ -20,7 +19,7 @@ class WelcomePage extends React.Component {
         allowToShake: true,
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
-        resInfo:ls.getLSResInfo(),
+        resInfo: ls.getLSResInfo(),
         lastPagerTime: 0,
         canCallPager: false,
         timerAnimationClass: 'd-none',
@@ -45,17 +44,17 @@ class WelcomePage extends React.Component {
             this.props.history.push("/");
         }
         // create food list if it doesn't exist
-        if(ls.getLSResFoods().length < 1){
-            requests.getRestaurantFoods((response)=>{
-                if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
+        if (ls.getLSResFoods().length < 1) {
+            requests.getRestaurantFoods((response) => {
+                if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
                     ls.setLSResFoods(response.data)
                 }
             })
         }
         // save res info if it doesn't exist
-        if(!ls.getLSResInfo().hasOwnProperty("id")){
-            requests.getRestaurantInfo((response)=>{
-                if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
+        if (!ls.getLSResInfo().hasOwnProperty("id")) {
+            requests.getRestaurantInfo((response) => {
+                if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
                     ls.setLSResInfo(response.data)
                 }
             })
@@ -63,9 +62,9 @@ class WelcomePage extends React.Component {
         let lSPager = ls.getLSPager()
         lSPager = lSPager > 0 ? lSPager : 0
         if (lSPager) {
-            this.setState({lastPagerTime:parseInt(lSPager)})
+            this.setState({lastPagerTime: parseInt(lSPager)})
         } else {
-            this.setState({lastPagerTime:parseInt(lSPager)})
+            this.setState({lastPagerTime: parseInt(lSPager)})
         }
         setInterval(this.updateTimer, 1000)
         setTimeout(() => {
@@ -79,7 +78,7 @@ class WelcomePage extends React.Component {
 
     chefTooltip = (text, delay, duration) => {
         if (this.state.chefTooltipCoolDown === false) {
-            this.setState({chefTooltipCoolDown:true})
+            this.setState({chefTooltipCoolDown: true})
             let chef = $('#chef')
             chef ? chef.tooltip('dispose')
                 :
@@ -96,7 +95,7 @@ class WelcomePage extends React.Component {
             }, delay)
             setTimeout(() => {
                 chef.tooltip('hide')
-                this.setState({chefTooltipCoolDown:false})
+                this.setState({chefTooltipCoolDown: false})
             }, duration + delay)
         }
     }
@@ -109,12 +108,12 @@ class WelcomePage extends React.Component {
         })
         if (seconds < 1) {
             this.setState({
-                canCallPager:true,
+                canCallPager: true,
                 timerAnimationClass: 'd-none'
             })
         } else {
             this.setState({
-                canCallPager:false,
+                canCallPager: false,
                 timerAnimationClass: 'animate__fadeIn'
             })
         }
@@ -125,7 +124,7 @@ class WelcomePage extends React.Component {
     callPager = () => {
         let now = Date.now()
         ls.setLSPager(now)
-        this.setState({lastPagerTime:now})
+        this.setState({lastPagerTime: now})
         requests.callPager(this.props.tableScanned, this.callPagerCallback)
     }
 
@@ -134,7 +133,7 @@ class WelcomePage extends React.Component {
     }
 
     togglePagerCall = (e) => {
-        if (this.props.tableScanned > 0||ls.getLSPager()/1000> (Date.now()/1000)-300) {
+        if (this.props.tableScanned > 0 || ls.getLSPager() / 1000 > (Date.now() / 1000) - 300) {
             if (this.state.canCallPager) {
                 let audio = new Audio(ding)
                 audio.volume = 0.4
@@ -159,18 +158,22 @@ class WelcomePage extends React.Component {
 
     render() {
         return (
-            <Swipeable style={{height: "100%",position:'relative'}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft} children={
+            <Swipeable style={{height: "100%", position: 'relative'}} onSwipedRight={this.swipeRight}
+                       onSwipedLeft={this.swipeLeft} children={
                 <div className='welcomePageMainContainerCover w-100 h-100'>
                     <div className={'more-options'}
-                    onClick={
-                        ()=>{
-                            this.props.history.push('/resDetails')}
+                         onClick={
+                             () => {
+                                 this.props.history.push('/resDetails')
+                             }
 
-                    }
-                    >...</div>
+                         }
+                    >...
+                    </div>
                     <div className="forLittlePhones">
                         <p className="welcomePageHeader">
-                            <span className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
+                            <span
+                                className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
                             <span>  app</span>
                         </p>
                         <div className="welcomePageFrames1">
@@ -212,10 +215,10 @@ class WelcomePage extends React.Component {
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat'
                             }}
-                                 onClick={()=>{
-                                     if(ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("pager") !== -1){
+                                 onClick={() => {
+                                     if (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("pager") !== -1) {
                                          this.togglePagerCall()
-                                     }else {
+                                     } else {
                                          this.chefTooltip("متاسفانه پیجر گارسونمون فعال نیست.", 0, 3000)
                                      }
                                  }}
@@ -225,34 +228,39 @@ class WelcomePage extends React.Component {
                             <br/>
                         </div>
                         <br/>
-                        <div className="welcomePageFrames2">
-                            <br/>
-                            <div className="d-flex justify-content-around">
+                        <div className="welcomePageFrames2 pt-1 ">
+                            <div className="d-flex justify-content-around ">
                                 {
                                     typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
-                                    return (
-                                        <div onClick={() => {
-                                            if(ls.getLSResFullInfoCategories().hasOwnProperty(eachPart))
-                                                this.props.history.push("/category/" + eachPart)
-                                        }} key={eachPart} className="openIcons">
-                                            <div className="burger" style={{
-                                                background: 'url("/img/resParts/' + eachPart + '.png")',
-                                                backgroundSize: '95%',
-                                                backgroundPosition: 'center',
-                                                backgroundRepeat: 'no-repeat',
-                                            }}/>
-                                            <span
-                                                className="burgersAndDonatDescription">{this.state.partsPersianNames[eachPart]}</span>
-                                            <br/>
-                                            <br/>
-                                        </div>
-                                    )
-                                }):null}
-                                <div className={"openIcons overflow-hidden " + (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("360tour") !== -1  ? "" : " d-none ")}>
-                                    <img alt="vrTour" src={tourImage}
-                                         onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
-                                         className='h-100 w-100 tourHolder'/>
+                                        return (
+                                            <div onClick={() => {
+                                                if (ls.getLSResFullInfoCategories().hasOwnProperty(eachPart))
+                                                    this.props.history.push("/category/" + eachPart)
+                                            }} key={eachPart} className="openIcons">
+                                                <img alt={'F'} src={'/img/resParts/' + eachPart + '.png'}
+                                                     className="burger" style={{}}/>
+                                                <span
+                                                    className="burgersAndDonatDescription">{this.state.partsPersianNames[eachPart]}</span>
+                                                <br/>
+                                                <br/>
+                                            </div>
+                                        )
+                                    }) : <div/>}
+
+                                <div onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
+                                     className="openIcons">
+                                    <div className="burger" style={{
+                                        background: 'url("/img/resParts/vr.png")',
+                                        backgroundSize: '95%',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                    }}/>
+                                    <span
+                                        className="burgersAndDonatDescription">تور مجازی</span>
+                                    <br/>
+                                    <br/>
                                 </div>
+
 
                             </div>
                         </div>
@@ -272,8 +280,7 @@ const mapStateToProps = (store) => {
 }
 
 const mapDispatchToProps = () => {
-    return {
-    }
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WelcomePage);

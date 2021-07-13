@@ -1,5 +1,5 @@
 .welcomePageHeader {
-    font-family: Eurose;
+    font-family: Eurose, serif;
     font-size: 30px;
     text-align: right;
     padding-right: 5%;
@@ -29,7 +29,7 @@
 }
 
 .welcomePageDescriptionH {
-    font-family: AppIranSans;
+    font-family: AppIranSans, serif;
     margin-bottom: 10px;
     font-weight: bold;
     font-size: 23px;
@@ -37,7 +37,7 @@
 }
 
 .welcomePageDescription {
-    font-family: AppIranSans;
+    font-family: AppIranSans, serif;
     font-size: 13px;
 }
 
@@ -111,12 +111,14 @@
     width: 22vw;
     height: 22vw;
     margin: 20px auto;
-    box-shadow: 0px 2px 1px #e2e2e2;
-    font-family: AppIranSansMedium;
+    box-shadow: 0 2px 1px #e2e2e2;
+    font-family: AppIranSansMedium, serif;
     font-weight: bold;
     font-size: 0.5rem;
     max-width: 100px;
     max-height: 100px;
+    display: flex;
+    flex-flow: column;
 }
 
 .donat {
@@ -138,7 +140,7 @@
 }
 
 .burgersAndDonatDescription {
-    font-family: AppIranSans;
+    font-family: AppIranSans, serif;
     font-size: 15px;
     line-height: 35px;
 }
@@ -150,7 +152,7 @@
     }
 
     .burgersAndDonatDescription {
-        font-family: AppIranSans;
+        font-family: AppIranSans, serif;
         font-size: 10px;
     }
 
