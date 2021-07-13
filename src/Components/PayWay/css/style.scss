@@ -1,4 +1,4 @@
-.payWayContainer {
+.payWayContainer{
   background-color: #FFF1DA;
   margin: 20px auto auto auto;
   height: calc(100% - 100px);
@@ -11,7 +11,7 @@
   scroll-behavior: smooth;
 }
 
-.payWayActive {
+.payWayActive{
   transition: all 0.2s ease;
   background-color: #FFA833;
   color: #fff;
@@ -33,7 +33,7 @@
   white-space: nowrap;
 }
 
-.payWayNormal {
+.payWayNormal{
   transition: all 0.2s ease;
   background-color: #DBDBDB;
   width: 100px;
@@ -53,32 +53,29 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-.inResTextSmaller {
+.inResTextSmaller{
   font-size: 0.5rem !important;
 }
 
-.payWayButtonsContainer {
+
+
+.payWayButtonsContainer{
   /*height: 80px;*/
 }
-
-.payWayOptionsContainer {
+.payWayOptionsContainer{
   margin-top: 20px;
 }
-
-.payWayText {
+.payWayText{
   font-size: 0.8rem;
 }
-
-.mapContainer {
+.mapContainer{
   width: 100%;
   background-color: white;
   height: 300px;
   min-height: 300px;
   margin-top: 15px;
 }
-
-.addressDetails {
+.addressDetails{
   background-color: white;
   width: 100%;
   height: 60px;
@@ -90,8 +87,7 @@
   text-align: right;
   direction: rtl;
 }
-
-.tableInput {
+.tableInput{
   border: none;
   border-radius: 8px;
   margin-top: 10px;
@@ -105,61 +101,51 @@
   font-family: AppIranSans, serif;
   line-height: 35px;
 }
-
-.tableInput::placeholder {
+.tableInput::placeholder{
   font-size: 1rem;
   opacity: 0.5;
 }
-
-.tableTextHolder {
+.tableTextHolder{
   font-family: AppIranSans, serif;
   margin-right: 0;
   margin-left: auto;
 }
-
-.tableContainerClass {
+.tableContainerClass{
   transition: all 0.2s ease;
   display: flex;
   flex-flow: column;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
-.h-0Animate {
+.h-0Animate{
   transition: all 0.2s ease;
   height: 0;
   overflow: hidden;
 }
 
-.h-100Animate {
+.h-100Animate{
   transition: all 0.2s ease;
-  height: auto;
+  height:auto;
 }
-
-.SubmitButtonContainer {
+.SubmitButtonContainer{
   position: absolute;
   bottom: 0;
 }
-
-.mapDetailsTableContainer {
+.mapDetailsTableContainer{
   transition: all 0.8s ease;
   height: 20px;
   margin-top: 20px;
 }
-
-.payWayButtonIcons {
+.payWayButtonIcons{
   background-size: cover !important;
   background-position: center !important;
 }
 
 @media only screen and (max-width: 350px) {
-  .payWayNormal {
+  .payWayNormal{
     transform: scale(0.9);
   }
-
-  .payWayActive {
+  .payWayActive{
     transform: scale(0.9);
   }
 }
-
-/*# sourceMappingURL=style.css.map */

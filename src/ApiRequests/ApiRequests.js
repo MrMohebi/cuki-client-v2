@@ -44,6 +44,14 @@ export const getRestaurantInfo = (callbackFunction)=>{
     })
 }
 
+export const validateOffCode = (offCode,amount,callbackFunction)=>{
+    let token = getReduxStore('token')
+    $.post(BASE_API_URL_CUKIM_V1+ "validateOffCode" ,{token,resEnglishName:getComName(),offCode,amount}).then(res=>{
+        res = (res !== undefined && res !== null) ? res : {}
+        callbackFunction(res);
+    })
+}
+
 export const getRestaurantUpdateDates = (callbackFunction)=>{
     $.post(BASE_API_URL_CUKIM_V1+ "getResUpdateDates" ,{resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
