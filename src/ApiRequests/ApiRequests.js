@@ -148,7 +148,6 @@ export const getOrderByTrackingId = (callbackFunction, trackingId)=>{
     let token = getReduxStore('token')
     $.post(BASE_API_URL_CUKIM_V1 + "getOrderByTrackingId" ,{token, trackingId, resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
-        res.data = adaptors.getOrderByTrackingIdTOGetOrderByTrackingId(res.data);
         callbackFunction(res);
     })
 }
@@ -169,7 +168,6 @@ export const getOpenOrders = (callbackFunction, dToken = null)=>{
     let token = dToken ? dToken : getReduxStore('token')
     $.post(BASE_API_URL_CUKIM_V1+ "getOpenOrders" ,{resEnglishName:getComName(), token}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
-        res.data = adaptors.getOrderByTrackingIdTOGetOrderByTrackingId(res.data);
         callbackFunction(res);
     })
 }

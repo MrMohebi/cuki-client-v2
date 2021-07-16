@@ -75,16 +75,16 @@ class OpenOrders extends Component {
                     <div className='openOrdersContainer'>
                         {this.props.openOrdersList.length > 0 ?
                             this.props.openOrdersList.map(eOrder=>{
-                                let orderList = JSON.parse(eOrder['order_list'])
-                                let orderTime = moment.unix(parseInt(eOrder['ordered_date'])).format("HH:mm")
+                                let orderList = JSON.parse(eOrder['items'])
+                                let orderTime = moment.unix(parseInt(eOrder['createdAt'])).format("HH:mm")
                                 return(
                                     <div key={eOrder["id"]} onClick={()=>(this.handleSelectOrder(eOrder))} className='eachOpenOrderContainer position-relative w-100'>
                                         <div className='w-100 d-flex justify-content-between mt-1'>
-                                            <span className='IranSans paidItemsText'>{eOrder["paid_amount"] ? (parseInt(eOrder["paid_amount"]) / 1000) : 0}T </span>
+                                            <span className='IranSans paidItemsText'>{eOrder["paidAmount"] ? (parseInt(eOrder["paidAmount"]) / 1000) : 0}T </span>
                                             <span className='IranSans openOrdersNames'>{orderList.map(eFood=>(eFood.persianName)).join(" / ")}</span>
                                         </div>
                                         <div className='w-100 d-flex justify-content-between mt-1'>
-                                            <span className='IranSans'>{parseInt(eOrder["total_price"]) / 1000}T</span>
+                                            <span className='IranSans'>{parseInt(eOrder["totalPrice"]) / 1000}T</span>
                                             <span className='IranSans'>{orderTime}</span>
                                         </div>
                                     </div>

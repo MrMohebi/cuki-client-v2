@@ -163,16 +163,16 @@ class PayWay extends React.Component {
         })
     }
 
-    enableOnlineAll = () => {
-        this.setState({
-            onlineClass: 'payWayNormal',
-            offlineClass: 'payWayNormal',
-            onlineCompleteClass: 'payWayActive',
-            onlineOrCash: 'onlineAll',
-            // onlineIcon: onlineBlack,
-            // cashIcon: cashBlack
-        })
-    }
+    // enableOnlineAll = () => {
+    //     this.setState({
+    //         onlineClass: 'payWayNormal',
+    //         offlineClass: 'payWayNormal',
+    //         onlineCompleteClass: 'payWayActive',
+    //         onlineOrCash: 'onlineAll',
+    //         // onlineIcon: onlineBlack,
+    //         // cashIcon: cashBlack
+    //     })
+    // }
     enableCash = () => {
         this.setState({
             onlineClass: 'payWayNormal',
@@ -195,7 +195,7 @@ class PayWay extends React.Component {
 
 
     handleSubmit = () => {
-        if (this.state.inOrOut === "in" && this.state.table !== "iWillComeAndGet") {
+        if (this.state.inOrOut === "in" && this.state.table !== "iWillComeAndGet" && this.state.table.length === 0) {
             ReactSwal.fire({
                 title: 'نه صبر کن',
                 icon: 'info',
@@ -288,18 +288,26 @@ class PayWay extends React.Component {
                 this.getOpenOrders()
                 if (this.state.onlineOrCash === "cash") {
                     this.props.history.push("/main")
-                } else if (this.state.onlineOrCash === "onlineAll") {
-                    requests.sendPaymentRequestFood(
-                        this.callbackPaymentRequest,
-                        this.props.orderList.map(eachFood => {
-                            return {id: eachFood.id, number: eachFood.number}
-                        }),
-                        res.data.totalPrice,
-                        res.data.trackingId
-                    );
-                } else {
-                    this.props.history.push("/dongi?trackingId=" + res.data.trackingId)
+                }else{
+                    ReactSwal.fire({
+                        icon: 'info',
+                        text: "بعد از تایید سفارش توسط رستوران میتونی انلاین پرداخت کنی، سفارش رو میتونی از بخش سفارشات باز اون پایین صفحه گوشه چپ ببینی"
+                    })
+                    this.props.history.push("/openOrders")
                 }
+
+                // else if (this.state.onlineOrCash === "onlineAll") {
+                //     requests.sendPaymentRequestFood(
+                //         this.callbackPaymentRequest,
+                //         this.props.orderList.map(eachFood => {
+                //             return {id: eachFood.id, number: eachFood.number}
+                //         }),
+                //         res.data.totalPrice,
+                //         res.data.trackingId
+                //     );
+                // } else {
+                //     this.props.history.push("/dongi?trackingId=" + res.data.trackingId)
+                // }
             })
             fixBodyClass()
         }
@@ -400,7 +408,7 @@ class PayWay extends React.Component {
                                 <div
                                     className='payWayButtonsContainer d-flex flex-row-reverse justify-content-around mt-3'>
                                     <div className={this.state.onlineClass} onClick={this.enableOnline}>
-                                        آنلاین دونگی
+                                        آنلاین
                                         <div className='payWayButtonIcons' style={{
                                             height: this.state.iconSize,
                                             width: this.state.iconSize,
@@ -409,16 +417,16 @@ class PayWay extends React.Component {
                                             backgroundSize: 'cover'
                                         }}/>
                                     </div>
-                                    <div className={this.state.onlineCompleteClass} onClick={this.enableOnlineAll}>
-                                        آنلاین یکجا
-                                        <div className='payWayButtonIcons' style={{
-                                            height: this.state.iconSize,
-                                            width: this.state.iconSize,
-                                            background: `url(${onlineWhite})`,
-                                            backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'cover'
-                                        }}/>
-                                    </div>
+                                    {/*<div className={this.state.onlineCompleteClass} onClick={this.enableOnlineAll}>*/}
+                                    {/*    آنلاین یکجا*/}
+                                    {/*    <div className='payWayButtonIcons' style={{*/}
+                                    {/*        height: this.state.iconSize,*/}
+                                    {/*        width: this.state.iconSize,*/}
+                                    {/*        background: `url(${onlineWhite})`,*/}
+                                    {/*        backgroundRepeat: 'no-repeat',*/}
+                                    {/*        backgroundSize: 'cover'*/}
+                                    {/*    }}/>*/}
+                                    {/*</div>*/}
                                     <div className={this.state.offlineClass} onClick={this.enableCash}>
                                         نقدی
                                         <div className='payWayButtonIcons' style={{
