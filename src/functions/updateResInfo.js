@@ -23,18 +23,7 @@ function updateFoods(foodsUpdates){
             newFoodList[foodList[eFoodUpdateId].id] = foodList[eFoodUpdateId];
         }
     }
-    // for (const eFood of foodList) {
-    //     if(eFood !== null){
-    //         if(foodsUpdates.hasOwnProperty(eFood.id)){
-    //             if(foodsUpdates[eFood.id][0] !== eFood["updatedAt"]){
-    //                 foodsNeedToBeUpdate.push(eFood.id)
-    //             }
-    //             eFood["orderTimes"] = foodsUpdates[eFood.id][1];
-    //             newFoodList[eFood.id] = eFood;
-    //         }
-    //     }
-    // }
-    console.log(foodsNeedToBeUpdate);
+
     if(foodsNeedToBeUpdate.length > 0){
         let newFoodsInfoResponse = requests.getFoodById(foodsNeedToBeUpdate)
         if(newFoodsInfoResponse.hasOwnProperty("statusCode") && newFoodsInfoResponse.statusCode === 200){
