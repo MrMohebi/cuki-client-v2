@@ -12,11 +12,14 @@ function updateFoods(foodsUpdates){
     let foodsNeedToBeUpdate = []
     for (const eFood of foodList) {
         if(eFood !== null){
-            if(foodsUpdates[eFood.id][0] !== eFood["updatedAt"]){
-                foodsNeedToBeUpdate.push(eFood.id)
+            console.log("food update", foodsUpdates)
+            if(foodsUpdates.hasOwnProperty(eFood.id)){
+                if(foodsUpdates[eFood.id][0] !== eFood["updatedAt"]){
+                    foodsNeedToBeUpdate.push(eFood.id)
+                }
+                eFood["orderTimes"] = foodsUpdates[eFood.id][1];
+                newFoodList[eFood.id] = eFood;
             }
-            eFood["orderTimes"] = foodsUpdates[eFood.id][1];
-            newFoodList[eFood.id] = eFood;
         }
     }
     if(foodsNeedToBeUpdate.length > 0){
