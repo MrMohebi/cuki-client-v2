@@ -236,11 +236,19 @@ class FoodListPage extends Component {
             allowToShow: false
         })
     }
+
     handleDecreaseFoodNumber = (foodId) => {
-        this.props.decreaseFoodNumber(foodId)
+        let selectedFood = this.props.orderList.filter(food => food.id === foodId)[0];
+        if(selectedFood.hasOwnProperty("number")){
+            if(selectedFood.number < 2){
+                this.props.deleteFoodFromOrders(foodId)
+            }else {
+                this.props.decreaseFoodNumber(foodId)
+            }
+        }
     }
     handleIncreaseFoodNumber = (foodId) => {
-        this.props.increaseFoodNumber(foodId)
+        this.orderScripts(foodId)
     }
 
     swipeLeft = () => {
@@ -402,9 +410,7 @@ class FoodListPage extends Component {
                                                                         style={{color: colors.foreground}}>{eachFood.persianName}</div>
                                                                </div>
                                                                {isInOrderList ?
-                                                                   <div
-                                                                       className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}
-                                                                   >
+                                                                   <div className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
                                                                        <div
                                                                            style={{backgroundColor: colors.foreground + '50'}}
                                                                            onClick={() => {
@@ -484,6 +490,7 @@ const mapDispatchToProps = () => {
         increaseFoodNumber: actions.increaseFoodNumber,
         decreaseFoodNumber: actions.decreaseFoodNumber,
         addFoodToOrders: actions.addFoodToOrders,
+        deleteFoodFromOrders: actions.deleteFoodFromOrders,
     }
 }
 
