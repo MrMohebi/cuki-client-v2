@@ -106,7 +106,18 @@ class LikedFoods extends Component {
         }
     }
     handleDecreaseFoodNumber = (foodId) => {
-        this.props.decreaseFoodNumber(foodId)
+        let selectedFood = this.props.orderList.filter(food => food.id === foodId)[0];
+        if(selectedFood.hasOwnProperty("number")){
+            if(selectedFood.number < 2){
+                this.props.deleteFoodFromOrders(foodId)
+            }else {
+                this.props.decreaseFoodNumber(foodId)
+            }
+        }
+    }
+
+    handleIncreaseFoodNumber = (foodId) => {
+        this.orderScripts(foodId)
     }
 
 
@@ -205,9 +216,7 @@ class LikedFoods extends Component {
                                                              style={{color: colors.foreground}}>{eachFood.persianName}</div>
                                                     </div>
                                                     {isInOrderList ?
-                                                        <div
-                                                            className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}
-                                                        >
+                                                        <div className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
                                                             <div
                                                                 style={{backgroundColor: colors.foreground + '50'}}
                                                                 onClick={() => {
@@ -229,8 +238,8 @@ class LikedFoods extends Component {
                                                             <div
                                                                 style={{backgroundColor: colors.foreground + '50'}}
                                                                 className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
-                                                                               <span
-                                                                                   className={'IranSans'}>{(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}</span>
+                                                                           <span
+                                                                               className={'IranSans'}>{(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}</span>
                                                             </div>
                                                             <div
                                                                 style={{backgroundColor: colors.foreground + '50'}}
@@ -287,6 +296,7 @@ const mapDispatchToProps = () => {
         increaseFoodNumber: actions.increaseFoodNumber,
         decreaseFoodNumber: actions.decreaseFoodNumber,
         addFoodToOrders: actions.addFoodToOrders,
+        deleteFoodFromOrders: actions.deleteFoodFromOrders,
     }
 }
 
