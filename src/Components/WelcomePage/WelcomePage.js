@@ -248,7 +248,7 @@ class WelcomePage extends React.Component {
                                     }) : <div/>}
 
                                 <div onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
-                                     className="openIcons">
+                                     className={"openIcons"+ (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("360tour") !== -1  ? "" : " d-none ")}>
                                     <div className="burger" style={{
                                         background: 'url("/img/resParts/vr.png")',
                                         backgroundSize: '95%',
