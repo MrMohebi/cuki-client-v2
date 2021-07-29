@@ -67,9 +67,10 @@ class ResDetails extends React.Component{
                         <img className={'res-details-logo'} src={this.state.logoLink} style={{opacity:this.state.logoLink?1:0,transition:'all 0.5s ease'}} alt=''/>
                     </div>
 
-                    <section className={' w-100'} style={{transition:'all 0.2s ease',opacity:this.state.resPhone?1:0}}>
+                    <section className={' w-100'} style={{transition:'all 0.2s ease',opacity:this.state.resPhone?1:0,display:this.state.resPhone.length?'block':'none'}}>
+
                         <div className={'mt-5 w-100 d-flex flex-row justify-content-around align-items-center'}>
-                            <div className={'w-75 text-right'}>{this.state.resPhone}</div>
+                            <span className={'w-75 text-right'}>{this.state.resPhone}</span>
                                 <div className={'res-details-icons'} style={{background:`url(${phoneImage})`,backgroundSize:'cover'}}/>
                         </div>
                         <div className={'mt-3 w-100 d-flex flex-row justify-content-around align-items-center'}>
@@ -97,10 +98,10 @@ class ResDetails extends React.Component{
                     <section>
 
                             <div>
-                                <div className={'w-100 text-right pr-3 mt-5 IranSans'} style={{fontSize:'1.5rem'}}>ساعات کار مجموعه</div>
+                                <div className={'w-100  mt-5 IranSans'} style={{fontSize:'1.5rem'}}>ساعات کار مجموعه</div>
 
                             </div>
-                        <div className={'res-details-open-time-container rtl'}>
+                        <div className={'res-details-open-time-container d-flex flex-column align-items-start rtl'}>
                             <span className={'open-time-texts'}>شنبه از {this.state.openTimes[0][0]} تا {this.state.openTimes[0][this.state.openTimes[0].length-1]}</span>
                             <span className={'open-time-texts'}>یک شنبه از {this.state.openTimes[1][0]} تا {this.state.openTimes[1][this.state.openTimes[1].length-1]}</span>
                             <span className={'open-time-texts'}>دو شنبه از {this.state.openTimes[2][0]} تا {this.state.openTimes[2][this.state.openTimes[2].length-1]}</span>
