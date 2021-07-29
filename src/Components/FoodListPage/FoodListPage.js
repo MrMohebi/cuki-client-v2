@@ -123,7 +123,7 @@ class FoodListPage extends Component {
 
 
     maxFontSize = 1.8;
-    baseFontSize = 20;
+    baseFontSize = 15;
     foodDetails = (foodInfo) => {
         this.setState({
             foodDetails: <div onContextMenu={(e) => {
@@ -150,15 +150,15 @@ class FoodListPage extends Component {
                     }} className=' foodDetailsCloseButton'>x
                     </div>
                     <div className='imageAndFoodNameContainer'>
-                        <div className={'d-flex flex-row-reverse align-items-center'}>
+                        <div className={'d-flex flex-column align-items-end'}>
                             <div style={{
                                 background: `url(` + foodInfo.thumbnail + `)`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat'
                             }} className='foodDetailsImg'/>
-                            <div id={'food-name-span'} className={'IranSans mr-3'}
-                                 style={{fontSize: (((this.baseFontSize / foodInfo['persianName'].length) > this.maxFontSize ? this.maxFontSize : (this.baseFontSize / foodInfo['persianName'].length)) + 'rem')}}>{(foodInfo['persianName'])}</div>
+                            <div id={'food-name-span'} className={'IranSans mt-3 mb-3'}
+                                 style={{fontSize:'1rem',marginRight:20,fontWeight:'bold'}}>{(foodInfo['persianName'])}</div>
                         </div>
                         {
                             foodInfo.status === 'inStock' ?
@@ -406,15 +406,17 @@ class FoodListPage extends Component {
                                                                    }
                                                                    <div className='eachFoodImage'
                                                                         style={{
-                                                                            background: `url(${eachFood.thumbnail})`,
+                                                                            background:"transparent" ,
                                                                             backgroundSize: 'cover',
                                                                             backgroundPosition: 'center'
-                                                                        }}/>
+                                                                        }}>
+                                                                       <img src={eachFood['thumbnail']} style={{width:'100%',height:'100%'}} alt={'foodImage'}/>
+                                                                   </div>
                                                                </div>
 
                                                                <div className='w-100 justify-content-center d-flex'>
                                                                    <div className='foodName'
-                                                                        style={{color: colors.foreground}}>{eachFood.persianName}</div>
+                                                                        style={{color: colors.foreground,fontSize: ((20 / eachFood['persianName'].length)>=1.5?1.5:(20 / eachFood['persianName'].length) )+ 'rem'}}>{eachFood.persianName}</div>
                                                                </div>
                                                                {isInOrderList ?
                                                                    <div

@@ -83,7 +83,6 @@
         white-space: nowrap;
         overflow: hidden;
         font-family: Aviny;
-        font-size: 1.3rem !important;
         white-space: nowrap;
         margin-top: 10px !important;
         text-overflow: ellipsis;
@@ -206,7 +205,6 @@
     white-space: nowrap;
     overflow: hidden;
     font-family: Aviny;
-    font-size: 1.5rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     direction: rtl;
@@ -219,7 +217,8 @@
     width: 65px;
     overflow: hidden;
     border-radius: 50px;
-    box-shadow: -3px 11px 1rem #adadad9c;
+    filter: drop-shadow(-3px 4px 6px rgba(161, 161, 161, 0.61));
+    /*box-shadow: ;*/
 }
 
 .foodDetails {
@@ -262,12 +261,14 @@
 .foodDetailsImg {
     height: 7rem;
     width: 7rem;
+    min-width: 7rem;
     border-radius: 90px;
 }
 
 .foodDetailsPrice {
     line-height: 5rem;
     font-family: KingArthurSpecialNormal;
+    white-space: nowrap;
 }
 
 .foodDetailsDetails {
