@@ -27,8 +27,9 @@ export const Swipeable = ({children, style, ...props}) => {
 }
 
 const ReactSwal = withReactContent(Swal)
-
-let coordinates = [30.287486, 57.052301]
+let x = 30.287486;
+let y = 57.052301;
+let coordinates = [x, y]
 
 let markerIcon = L.icon({
     iconUrl: markerPNG,
@@ -288,26 +289,13 @@ class PayWay extends React.Component {
                 this.getOpenOrders()
                 if (this.state.onlineOrCash === "cash") {
                     this.props.history.push("/main")
-                }else{
+                } else {
                     ReactSwal.fire({
                         icon: 'info',
                         text: "بعد از تایید سفارش توسط رستوران میتونی انلاین پرداخت کنی، سفارش رو میتونی از بخش سفارشات باز اون پایین صفحه گوشه چپ ببینی"
                     })
                     this.props.history.push("/openOrders")
                 }
-
-                // else if (this.state.onlineOrCash === "onlineAll") {
-                //     requests.sendPaymentRequestFood(
-                //         this.callbackPaymentRequest,
-                //         this.props.orderList.map(eachFood => {
-                //             return {id: eachFood.id, number: eachFood.number}
-                //         }),
-                //         res.data.totalPrice,
-                //         res.data.trackingId
-                //     );
-                // } else {
-                //     this.props.history.push("/dongi?trackingId=" + res.data.trackingId)
-                // }
             })
             fixBodyClass()
         }
