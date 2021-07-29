@@ -23,7 +23,7 @@ class FoodListPage extends Component {
 
     state = {
         foodList: ls.getLSResFoods(),
-        catsFullInfo:  ls.getLSResFullInfoCategories(),
+        catsFullInfo: ls.getLSResFullInfoCategories(),
         foodDetails: <div/>,
         allowToShow: false,
         firstPointerPosition: {
@@ -32,7 +32,7 @@ class FoodListPage extends Component {
         },
         foodDetailsAnimateClass: 'animate__fadeIn',
     }
-
+successStatusCode = 200
     constructor(props) {
         super(props);
         this.foodDetailsBlur = React.createRef();
@@ -47,7 +47,7 @@ class FoodListPage extends Component {
     }
 
     dataArrive = (response) => {
-        if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
+        if (response.hasOwnProperty('statusCode') && response.statusCode === successStatusCode) {
             ls.setLSResFoods(response.data)
         }
     }
@@ -84,7 +84,7 @@ class FoodListPage extends Component {
     checkForMove = (e) => {
         let threshold = 8;
         if (e.pageX > this.state.firstPointerPosition.x + threshold || e.pageX < this.state.firstPointerPosition.x - threshold || e.pageY > this.state.firstPointerPosition.y + threshold || e.pageY < this.state.firstPointerPosition.y - threshold) {
-            this.setState({allowToShow:false})
+            this.setState({allowToShow: false})
         }
     }
 
@@ -96,12 +96,12 @@ class FoodListPage extends Component {
                 //  else add it to order list
                 let food = {...foodsList[id]};
                 food["number"] = 1;
-                food["totalPrice"] = (food.price-0) * (1 - food.discount  / 100)
+                food["totalPrice"] = (food.price - 0) * (1 - food.discount / 100)
                 this.props.addFoodToOrders(food)
             }
         }
     }
-    
+
     hideFoodDetails = () => {
         if (this.foodDetailsMain.current.classList.contains('animate__fadeIn')) {
             this.foodDetailsMain.current.classList.remove('animate__fadeIn')
@@ -120,6 +120,10 @@ class FoodListPage extends Component {
             }
             , 200)
     }
+
+
+    maxFontSize = 1.8;
+    baseFontSize = 20;
     foodDetails = (foodInfo) => {
         this.setState({
             foodDetails: <div onContextMenu={(e) => {
@@ -128,11 +132,9 @@ class FoodListPage extends Component {
                 if (e.target.classList.contains('detailsMainActive') || e.target.classList.contains('foodDetailsPrice') || e.target.classList.contains('timesOrderedContainer') || e.target.classList.contains('timesAndOrderTimeText') || e.target.classList.contains('foodDetailsTimesAndOrderTimeContainer') || e.target.classList.contains('foodDetailsDetails') || e.target.classList.contains('foodDetailsMain') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer') || e.target.classList.contains('imageAndFoodNameContainer')) {
                     this.hideFoodDetails()
                     this.setState({
-                        // foodDetails: <div/>,
                         allowToShow: false
                     })
                 }
-
             }} ref={this.foodDetailsBlur}
                               className={'detailsMainActive animate__animated animateFast ' + this.state.foodDetailsAnimateClass}>
 
@@ -143,18 +145,21 @@ class FoodListPage extends Component {
                     <div onClick={() => {
                         this.hideFoodDetails()
                         this.setState({
-                            // foodDetails: <div/>,
                             allowToShow: false
                         })
                     }} className=' foodDetailsCloseButton'>x
                     </div>
                     <div className='imageAndFoodNameContainer'>
-                        <div style={{
-                            background: `url(`+foodInfo.thumbnail+`)`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat'
-                        }} className='foodDetailsImg'/>
+                        <div className={'d-flex flex-row-reverse align-items-center'}>
+                            <div style={{
+                                background: `url(` + foodInfo.thumbnail + `)`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat'
+                            }} className='foodDetailsImg'/>
+                            <div id={'food-name-span'} className={'IranSans mr-3'}
+                                 style={{fontSize: (((this.baseFontSize / foodInfo['persianName'].length) > this.maxFontSize ? this.maxFontSize : (this.baseFontSize / foodInfo['persianName'].length)) + 'rem')}}>{(foodInfo['persianName'])}</div>
+                        </div>
                         {
                             foodInfo.status === 'inStock' ?
                                 foodInfo.discount === 0 ?
@@ -199,7 +204,7 @@ class FoodListPage extends Component {
                                 </div> : " والا به منم نگفتن :("}</span>
                         </div>
                     </div>
-                    {ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("comment") !== -1  ?
+                    {ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("comment") !== -1 ?
                         <Comments foodId={foodInfo.id}/>
                         :
                         null}
@@ -209,6 +214,8 @@ class FoodListPage extends Component {
             </div>,
             allowToShow: false
         })
+
+
     }
 
 
@@ -239,10 +246,10 @@ class FoodListPage extends Component {
 
     handleDecreaseFoodNumber = (foodId) => {
         let selectedFood = this.props.orderList.filter(food => food.id === foodId)[0];
-        if(selectedFood.hasOwnProperty("number")){
-            if(selectedFood.number < 2){
+        if (selectedFood.hasOwnProperty("number")) {
+            if (selectedFood.number < 2) {
                 this.props.deleteFoodFromOrders(foodId)
-            }else {
+            } else {
                 this.props.decreaseFoodNumber(foodId)
             }
         }
@@ -291,7 +298,7 @@ class FoodListPage extends Component {
                                    </div>
 
                                    <div onScroll={() => {
-                                       this.setState({allowToShow:false})
+                                       this.setState({allowToShow: false})
                                    }}
                                         className='foodListPageContainer'>
                                        <div className='heightFitContent'>
@@ -317,7 +324,7 @@ class FoodListPage extends Component {
                                                                     //     this.orderScripts(eachFood.id);
                                                                     // }
                                                                 }
-                                                                this.setState({allowToShow:false})
+                                                                this.setState({allowToShow: false})
                                                                 if (!e.target.classList.contains('decrease') && (eachFood.status === 'inStock')) {
                                                                     this.orderScripts(eachFood.id);
                                                                     if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
@@ -333,17 +340,17 @@ class FoodListPage extends Component {
                                                                     this.pressAnimation('food' + eachFood['id'])
                                                                 }
                                                                 this.setState({
-                                                                    firstPointerPosition:{
+                                                                    firstPointerPosition: {
                                                                         x: e.targetTouches[0].pageX,
                                                                         y: e.targetTouches[0].pageY
                                                                     }
                                                                 })
-                                                                this.setState({allowToShow:true})
+                                                                this.setState({allowToShow: true})
                                                                 timeout = setTimeout(() => {
                                                                     if (this.state.allowToShow) {
                                                                         this.foodDetails(eachFood);
                                                                     }
-                                                                    this.setState({allowToShow:false})
+                                                                    this.setState({allowToShow: false})
                                                                     clearTimeout(timeout)
                                                                 }, 400)
 
@@ -353,7 +360,7 @@ class FoodListPage extends Component {
                                                                 this.checkForMove(e)
                                                             }}
                                                             onTouchEnd={() => {
-                                                                this.setState({allowToShow:false})
+                                                                this.setState({allowToShow: false})
                                                                 this.releaseAnimation('food' + eachFood['id'])
                                                             }}
                                                        >
@@ -410,7 +417,8 @@ class FoodListPage extends Component {
                                                                         style={{color: colors.foreground}}>{eachFood.persianName}</div>
                                                                </div>
                                                                {isInOrderList ?
-                                                                   <div className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
+                                                                   <div
+                                                                       className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
                                                                        <div
                                                                            style={{backgroundColor: colors.foreground + '50'}}
                                                                            onClick={() => {
