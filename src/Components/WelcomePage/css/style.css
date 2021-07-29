@@ -147,7 +147,6 @@
 
 @media only screen and (max-height: 700px) {
     .forLittlePhones {
-        height: calc(100% - 90px);
         overflow: scroll;
     }
 
