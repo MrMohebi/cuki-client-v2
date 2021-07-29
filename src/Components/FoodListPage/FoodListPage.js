@@ -32,7 +32,7 @@ class FoodListPage extends Component {
         },
         foodDetailsAnimateClass: 'animate__fadeIn',
     }
-successStatusCode = 200
+
     constructor(props) {
         super(props);
         this.foodDetailsBlur = React.createRef();
@@ -47,7 +47,7 @@ successStatusCode = 200
     }
 
     dataArrive = (response) => {
-        if (response.hasOwnProperty('statusCode') && response.statusCode === successStatusCode) {
+        if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
             ls.setLSResFoods(response.data)
         }
     }
