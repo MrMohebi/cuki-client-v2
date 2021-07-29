@@ -32,7 +32,6 @@ class FoodListPage extends Component {
         },
         foodDetailsAnimateClass: 'animate__fadeIn',
     }
-successStatusCode = 200
     constructor(props) {
         super(props);
         this.foodDetailsBlur = React.createRef();
@@ -47,7 +46,7 @@ successStatusCode = 200
     }
 
     dataArrive = (response) => {
-        if (response.hasOwnProperty('statusCode') && response.statusCode === successStatusCode) {
+        if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
             ls.setLSResFoods(response.data)
         }
     }
@@ -414,7 +413,7 @@ successStatusCode = 200
 
                                                                <div className='w-100 justify-content-center d-flex'>
                                                                    <div className='foodName'
-                                                                        style={{color: colors.foreground}}>{eachFood.persianName}</div>
+                                                                        style={{color: colors.foreground,fontSize: (((this.baseFontSize / eachFood['persianName'].length) > this.maxFontSize ? this.maxFontSize : (this.baseFontSize / eachFood['persianName'].length)) + 'rem')}}>{eachFood.persianName}</div>
                                                                </div>
                                                                {isInOrderList ?
                                                                    <div
