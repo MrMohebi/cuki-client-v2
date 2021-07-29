@@ -1,5 +1,5 @@
 .foodListPageContainer {
-    background-color: #D4EBEF;
+    background-color: #f1f1f1;
     margin: 20px auto auto auto;
     height: calc(100% - 100px);
     width: 90%;
@@ -19,7 +19,7 @@
     margin-top: 50px;
     height: 175px;
     width: 140px;
-    background-color: #fff;
+    background-color: #fff !important;
     border-radius: 20px 35px 20px 20px;
     display: flex;
     flex-flow: column;
@@ -206,6 +206,7 @@
     overflow: hidden;
     font-family: Aviny;
     white-space: nowrap;
+    color: black !important;
     text-overflow: ellipsis;
     direction: rtl;
     margin-top: 10px;

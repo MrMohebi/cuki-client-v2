@@ -1,5 +1,5 @@
 .payWayContainer {
-  background-color: #FFF1DA;
+  background-color: #f1f1f1;
   margin: 20px auto auto auto;
   height: calc(100% - 100px);
   width: 90%;
@@ -38,12 +38,13 @@
 
 .payWayNormal {
   transition: all 0.2s ease;
-  background-color: #DBDBDB;
+  background-color: #949494;
   width: 100px;
   height: 30px;
   border-radius: 16px;
   font-family: AppIranSansMedium, serif;
   line-height: 30px;
+  color: white;
   font-size: 0.7rem;
   display: flex;
   flex-flow: row-reverse;

@@ -422,7 +422,7 @@ class FoodListPage extends Component {
                                                                    <div
                                                                        className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
                                                                        <div
-                                                                           style={{backgroundColor: colors.foreground + '50'}}
+                                                                           style={{backgroundColor: "#f1f1f1"}}
                                                                            onClick={() => {
                                                                                this.handleDecreaseFoodNumber(eachFood['id'])
                                                                            }}
@@ -440,13 +440,13 @@ class FoodListPage extends Component {
                                                                            </div>
                                                                        </div>
                                                                        <div
-                                                                           style={{backgroundColor: colors.foreground + '50'}}
+                                                                           style={{backgroundColor: "#f1f1f1"}}
                                                                            className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
                                                                            <span
                                                                                className={'IranSans'}>{(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}</span>
                                                                        </div>
                                                                        <div
-                                                                           style={{backgroundColor: colors.foreground + '50'}}
+                                                                           style={{backgroundColor: "#f1f1f1"}}
                                                                            onClick={() => {
                                                                                this.clickAnimation(eachFood['id'])
                                                                            }}

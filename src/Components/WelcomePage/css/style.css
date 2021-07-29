@@ -12,7 +12,7 @@
 
 .welcomePageFrames1 {
     border-radius: 25px;
-    background: #fffaef;
+    background: #f1f1f1;
     padding: 15px;
     margin: auto;
     width: 85%;
@@ -52,7 +52,7 @@
 .welcomePageFrames2 {
     width: 85%;
     border-radius: 25px;
-    background: #FFF7F7;
+    background: #f1f1f1;
     margin: auto;
 }
 
@@ -147,7 +147,6 @@
 
 @media only screen and (max-height: 700px) {
     .forLittlePhones {
-        height: calc(100% - 90px);
         overflow: scroll;
     }
 
@@ -165,7 +164,6 @@
 
     .welcomePageFrames1 {
         border-radius: 25px;
-        background: #fffaef;
         padding: 15px;
         margin: auto;
         width: 85%;
