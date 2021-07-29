@@ -32,6 +32,7 @@ class FoodListPage extends Component {
         },
         foodDetailsAnimateClass: 'animate__fadeIn',
     }
+
     constructor(props) {
         super(props);
         this.foodDetailsBlur = React.createRef();
@@ -413,7 +414,7 @@ class FoodListPage extends Component {
 
                                                                <div className='w-100 justify-content-center d-flex'>
                                                                    <div className='foodName'
-                                                                        style={{color: colors.foreground,fontSize: (((this.baseFontSize / eachFood['persianName'].length) > this.maxFontSize ? this.maxFontSize : (this.baseFontSize / eachFood['persianName'].length)) + 'rem')}}>{eachFood.persianName}</div>
+                                                                        style={{color: colors.foreground}}>{eachFood.persianName}</div>
                                                                </div>
                                                                {isInOrderList ?
                                                                    <div
