@@ -16,6 +16,80 @@
     text-align: center;
     justify-content: center;
 }.cukiCodeSnackbar div div{
-    font-family: AppIranSans;
+     font-family: AppIranSans, serif;
     text-align: center;
 }
+.main-code-section{
+     width: 100%;
+    background-color: rgb(254,250,239);
+    border-radius: 12px;
+ }
+.input-section{
+    background: rgb(255,237,197);
+    border-radius: 12px;
+}
+.search-place-holder{
+    position: absolute;
+    right: 10px;
+    font-size: 0.7rem;
+}
+.restaurants-container{
+    width: 100%;
+    background: rgb(255,246,247);
+    /*height: 50px;*/
+    border-radius: 12px;
+    /*position: absolute;*/
+    /*bottom: 0;*/
+}
+.each-res-holder{
+    width: 49%;
+}
+.each-res{
+    margin-top: 20px;
+    width: 100%;
+    height: 40px;
+    background: #efced5;
+    border-radius: 50px;
+    position: relative;
+}
+.res-score{
+    background-color: #ff7489;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    border-radius: 10px;
+    color: white;
+    line-height: 20px;
+    font-size: 0.7rem;
+}
+.drawer{
+    margin-top: 10px;
+    min-height: 5px;
+    min-width: 80px;
+    background: white;
+    border: 1px solid #ffffff;
+}
+
+.auto-complete-holder{
+    position: absolute;
+    top: 40px ;
+    width: 100%;
+    transform: translate(50%, 0px);
+    right: 50%;
+    background: rgb(255,237,197);
+    border-radius:  0 0 15px 15px;
+    overflow-x: hidden;
+    transition: .2s ease;
+
+}
+.each-suggest{
+    font-size: 0.9rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.each-res-image{
+
+}
+

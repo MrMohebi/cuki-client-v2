@@ -22,6 +22,11 @@ export const getOffCodes = (callbackFunction)=>{
         callbackFunction(res);
     })
 }
+export const getAllRestaurants = (callbackFunction)=>{
+    $.get(BASE_API_URL_CUKIM_V1+ "getResNames" ,{}).then(res=>{
+        callbackFunction(res);
+    })
+}
 
 export const getRestaurantFoods = (callbackFunction)=>{
     $.post(BASE_API_URL_CUKIM_V1+ "getResFoods" ,{resEnglishName:getComName()}).then(res=>{

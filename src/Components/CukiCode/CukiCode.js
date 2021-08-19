@@ -1,8 +1,11 @@
 import React from "react";
-import {Button, CircularProgress, Snackbar, TextField, withStyles} from "@material-ui/core";
+import {CircularProgress} from "@material-ui/core";
 import * as requests from '../../ApiRequests/ApiRequests'
 import './css/CukiCode.css';
 import * as PropTypes from "prop-types";
+import {SphereSpinner} from "react-spinners-kit";
+import * as queries from '../../ApiRequests/ApiRequests'
+
 
 function Alert() {
     return null;
@@ -14,105 +17,179 @@ Alert.propTypes = {
     children: PropTypes.node
 };
 
+
 class CukiCode extends React.Component {
 
     state = {
-        code: "",
-        submitButtonInside: 'مشاهده مجموعه',
-        buttonAndTextFieldDisabled: false,
-        errorSnackbar:false
-
+        inputValue: '',
+        restaurantsPersianName: [],
+        restaurantsEnglishName: []
     }
+
+
+    componentDidMount() {
+        queries.getAllRestaurants((res) => {
+            if (res['statusCode'] === 200) {
+                console.log(res)
+                this.setState({
+                    restaurantsPersianName: res['data']['persianNames'],
+                    restaurantsEnglishName: res['data']['englishNames']
+
+                })
+            }
+        })
+    }
+
     getCodeCallback = (res) => {
-        if (res.statusCode === 200){
-            window.location.href = "/c-"+res.data.resEnglishName
-            // this.props.history.replace("/c-"+res.data.resEnglishName)
-        }else{
+        if (res.statusCode === 200) {
+            window.location.href = "/c-" + res.data.resEnglishName
+        } else {
             this.setState({
                 submitButtonInside: 'مشاهده مجموعه',
                 buttonAndTextFieldDisabled: false,
-                errorSnackbar:true
+                errorSnackbar: true
             })
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.setState({
-                    errorSnackbar:false
+                    errorSnackbar: false
                 })
-            },1500)
+            }, 1500)
         }
 
     }
+
     handleSubmitClick = (event) => {
         event.preventDefault()
         this.setState({
             submitButtonInside: <CircularProgress size={28} color={"inherit"}/>,
-            buttonAndTextFieldDisabled:true
+            buttonAndTextFieldDisabled: true
         })
         requests.getResByCode(this.state.code, this.getCodeCallback)
     }
 
-    handleChangeCodeInput = (event) =>{
-        if(event.target.value < 10000)
+    handleChangeCodeInput = (event) => {
+        if (event.target.value < 10000)
             this.setState({code: event.target.value})
     }
 
+
     render() {
-        const CssTextField = withStyles({
-            root: {
-                '& label.Mui-focused': {
-                    color: '#bc845e',
-                },
-                '& .MuiInput-underline:after': {
-                    borderBottomColor: '#bc845e',
-                },
-                '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                        borderColor: '#bc845e',
-                    },
-                    '&:hover fieldset': {
-                        borderColor: 'yellow',
-                    },
-                    '&.Mui-focused fieldset': {
-                        borderColor: '#bc845e',
-                    },
-                },
-            },
-        })(TextField);
 
         return (
-            <div className={'h-100 d-flex flex-column justify-content-center align-items-center IranSans'}>
-                <div className={'logoInputContainer d-flex flex-column justify-content-center align-items-center'}>
-                    <div className={'codeCukiIcon'}
+            <div className={'w-100 h-100 d-flex flex-column align-items-center px-3  position-relative'}>
+                <div className={'main-code-section mt-4 mr-4 ml-4 d-flex flex-column align-items-center pt-4'}>
+                    <img src="/img/logo/logoNoText64x64.png" alt="Cuki"/>
+                    <h6 className={'cuki-code-header-text'}>cuki</h6>
+                    <div
+                        className={'input-section  px-2 mb-4 mt-5 d-flex flex-row align-items-center position-relative'}>
+                        <div className={'d-flex justify-content-center align-items-center'} style={{
+                            width: 30,
+                            height: 30,
+                        }}>
 
-                         style={{
-                             background: `url(${process.env.PUBLIC_URL + '/img/SplashScreen/splashicon.png'})`,
-                             backgroundSize: 'cover'
-                         }}
-                    />
-                    <form autoComplete="off" onSubmit={this.handleSubmitClick}>
-                        <div className={'mb-3 mt-3'}>
-                            <CssTextField className={'IranSans'}
-                                          autoFocus
-                                          id="outlined-multiline-flexible"
-                                          label="کد مجموعه"
-                                          variant="outlined"
-                                          onChange={this.handleChangeCodeInput}
-                                          value={this.state.code}
-                            />
+                            <div style={{
+                                transition: '.3s ease',
+                                opacity: this.state.inputValue ? 1 : 0
+                            }}>
+                                {
+                                    this.state.inputValue ?
+                                        <SphereSpinner color={'gray'} size={20}/>
+                                        :
+                                        <div/>
+                                }
+                            </div>
                         </div>
 
-                        <Button className={'IranSans codeButton'} variant="contained" type="submit" disabled={this.state.buttonAndTextFieldDisabled}>
-                            {this.state.submitButtonInside}
-                        </Button>
-                    </form>
-                    <Snackbar
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                        }}
-                        className={'cukiCodeSnackbar IranSans'}
-                        open={this.state.errorSnackbar}
-                        message={'انگاری کد اشتباهه'}
-                    />
+                        <span style={{
+                            transform: `translateY(${this.state.inputValue ? '-40px' : '0px'})`,
+                            transition: '.2s ease'
+                        }} className={'search-place-holder IranSans'}> جستجوی رستوران</span>
+
+                        <input id={'search-input'} onChange={(e) => {
+                            this.setState({
+                                inputValue: e.target.value
+                            })
+                        }} className={'IranSans'} style={{
+                            outline: 'none',
+                            border: 'none',
+                            height: 50,
+                            background: 'transparent',
+                            fontSize: '0.9rem', zIndex: '9'
+                        }} dir={'rtl'} type="text"/>
+                        <div style={{
+                            opacity: this.state.inputValue ? 1 : 0,
+                            transition: '0.4 ease'
+                        }} className={'auto-complete-holder '}>
+                            {
+                                this.state.restaurantsPersianName.map((eachRes, index) => {
+                                    if (eachRes.includes(this.state.inputValue) && this.state.inputValue) {
+                                        return (
+                                            <div className={'each-suggest IranSans'} onClick={() => {
+                                                window.location.href = `https://cuki.ir/c-${this.state.restaurantsEnglishName[index]}`
+                                            }}>{eachRes}</div>
+                                        )
+
+
+                                    }
+                                })
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div className={'restaurants-container mt-4 d-flex flex-column align-items-center '}>
+                    <div
+                        className={'restaurants-header d-flex flex-column w-100 align-items-center'}>
+                        <div className={'drawer shadow-sm'}/>
+                        <h6 className={'mt-4'} style={{
+                            fontFamily: 'AppIranSansBold'
+                        }}>ستوران های برتر</h6>
+                        <span className={'IranSansLight'} style={{
+                            fontSize: '0.7rem'
+                        }}>( بر اساس امتیاز)</span>
+                    </div>
+
+                    <div className={'d-flex flex-wrap w-100 justify-content-between mt-3'}>
+                        <div className={'each-res-holder'}>
+                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
+                                <div className={'res-score'}>4.2</div>
+                                <img width={29} height={29} src="" alt=""/>
+                                <span className={'text-center IranSans w-100'}>باملند</span>
+                            </div>
+                        </div>
+                        <div className={'each-res-holder'}>
+                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
+                                <img width={29} height={29} src="" alt=""/>
+                                <span className={'text-center IranSans w-100'}>باملند</span>
+                            </div>
+                        </div>
+
+                        <div className={'each-res-holder'}>
+                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
+                                <img width={29} height={29} src="" alt=""/>
+                                <span className={'text-center IranSans w-100'}>باملند</span>
+                            </div>
+                        </div>
+                        <div className={'each-res-holder'}>
+                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
+                                <img width={29} height={29} src="" alt=""/>
+                                <span className={'text-center IranSans w-100'}>باملند</span>
+                            </div>
+                        </div>
+                        <div className={'each-res-holder'}>
+                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
+                                <img width={29} height={29} className={'each-res-image'} src="" alt=""/>
+                                <span className={'text-center IranSans w-100'}>باملند</span>
+                            </div>
+                        </div>
+                        <div className={'each-res-holder'}>
+                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
+                                <img width={29} height={29} src="" alt=""/>
+                                <span className={'text-center IranSans w-100'}>باملند</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         )

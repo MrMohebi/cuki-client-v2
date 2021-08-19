@@ -14,10 +14,10 @@ a{
   max-width: 800px;
 }
 .IranSans{
-  font-family: AppIranSans !important;
+  font-family: AppIranSans, serif !important;
 }
 .IranSansLight{
-  font-family: AppIranSansLight;
+  font-family: AppIranSansLight, serif;
 }
 *{
   user-select: none;
@@ -30,6 +30,10 @@ a{
 @font-face {
   font-family: 'AppIranSansLight';
   src: local('AppIranSans'), url(./assets/fonts/MobileFonts/IRANSansMobile_Light.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'AppIranSansBold';
+  src: local('AppIranSansBold'), url(./assets/fonts/MobileFonts/IRANSansMobile_Bold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'AppIranSansMedium';
@@ -92,5 +96,5 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 .tooltip-inner{
-  font-family: AppIranSans;
+  font-family: AppIranSans, serif;
 }
