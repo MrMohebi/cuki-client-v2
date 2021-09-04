@@ -20,6 +20,7 @@
     "mapir-react-component": "^1.8.1",
     "moment": "^2.29.1",
     "pannellum-react": "^1.2.4",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-autocomplete-input": "^1.0.18",
     "react-autosuggestions": "^3.2.0",

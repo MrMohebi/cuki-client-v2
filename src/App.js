@@ -29,6 +29,7 @@ import Banner from "./Components/Banner/Banner";
 import isResOpen from "./functions/isResOpen";
 import getComName, {getFullName} from "./functions/getComName";
 import updateResInfo from "./functions/updateResInfo";
+import {getLSResInfo} from "./stores/localStorage/localStorage";
 
 
 function App() {
@@ -86,18 +87,12 @@ function App() {
       <BrowserRouter basename={getFullName()}>
         <Route exact path='/'  component={ getComName() === "" ?  CukiCode : SplashScreen}/>
         <Route path={['/main','/resDetails', '/category', '/bill', '/profile', '/eachOrderHistoryDetails', '/login', '/dongi', '/openOrders', '/eachOpenOrderDetails','/likedFoods', "/payway"]} component={BottomNavBar}/>
-
-        {/* is res open banner*/}
-        {useSelector(state=>(
-            state.rTempData.isResOpen && ((ls.getLSResInfo().hasOwnProperty("status") && ls.getLSResInfo()['status'] === "open") || (!ls.getLSResInfo().hasOwnProperty("status")) )  ?
-                null
-                :
-                window.location.pathname === "/" ?
-                    null
-                    :
-                    <Banner color={'#d43737'} closable={false} text={'رستوران تعطیل است'}/>
-          ))}
-
+        {
+          isResOpen(JSON.parse(getLSResInfo()['openTime']))?
+              null
+              :
+              <Banner color={'#d43737'} closable={false} text={'رستوران تعطیل است'}/>
+        }
         <Route path='/main' component={WelcomePage}/>
         <Route exact path='/category/:part' component={CategoryPage}/>
         <Route exact path='/category/:part/:category' component={FoodListPage}/>
