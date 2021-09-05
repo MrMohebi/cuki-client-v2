@@ -247,6 +247,17 @@ class PayWay extends React.Component {
                         }),
                         this.state.orderDetails
                     )
+                } else if (this.state.inOrOut === "comeAndGet") {
+                    requests.sendOrder(
+                        this.callbackSendOrder,
+                        "",
+
+                        "restaurant",
+                        this.props.orderList.map(eachFood => {
+                            return {id: eachFood.id, number: eachFood.number}
+                        }),
+                        this.state.orderDetails
+                    )
                 } else {
                     requests.sendOrder(
                         this.callbackSendOrder,
@@ -261,7 +272,6 @@ class PayWay extends React.Component {
             }
         })
         fixBodyClass()
-
     }
 
     getOpenOrders = () => {

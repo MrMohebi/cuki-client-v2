@@ -30,7 +30,6 @@ class CukiCode extends React.Component {
     componentDidMount() {
         queries.getAllRestaurants((res) => {
             if (res['statusCode'] === 200) {
-                console.log(res)
                 this.setState({
                     restaurantsPersianName: res['data']['persianNames'],
                     restaurantsEnglishName: res['data']['englishNames']

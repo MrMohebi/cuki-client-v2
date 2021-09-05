@@ -15,6 +15,7 @@ class EachOpenOrderDetails extends React.Component {
         this.setState({
             foods: this.createFoods()
         })
+        console.log(this.props)
     }
 
     handlePay = (trackingId) => {
@@ -92,8 +93,8 @@ class EachOpenOrderDetails extends React.Component {
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span
-                            className=''>{this.props.tempOpenOrderInfo['table'] === "iWillComeAndGet" ? "" : (this.props.tempOpenOrderInfo['table'] > 0 ? this.props.tempOpenOrderInfo['table'] : JSON.parse(this.props.tempOpenOrderInfo['address'])['addressText'])}</span>
-                        <span className='eachOrderDetailsTotalHolder'>{this.props.tempOpenOrderInfo['table'] === "iWillComeAndGet" ? ("اماده کن میام میگیرم") : (this.props.tempOpenOrderInfo['table'] > 0 ? "شماره میز"  : "آدرس")}</span>
+                            className=''>{JSON.parse(this.props.tempOpenOrderInfo['address']) === "restaurant" ? "تحویل در رستوران" : (this.props.tempOpenOrderInfo['table'] > 0 ? this.props.tempOpenOrderInfo['table'] : JSON.parse(this.props.tempOpenOrderInfo['address'])['addressText'])}</span>
+                        <span className='eachOrderDetailsTotalHolder'>{JSON.parse(this.props.tempOpenOrderInfo['address']) === "restaurant" ? ("آدرس") : (this.props.tempOpenOrderInfo['table'] > 0 ? "شماره میز"  : "آدرس")}</span>
                     </div>
                     <div className='mt-2 IranSans d-flex w-100 justify-content-between pr-4 pl-4'>
                         <span className=''>{this.props.tempOpenOrderInfo['trackingId']}</span>

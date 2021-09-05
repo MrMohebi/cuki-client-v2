@@ -129,7 +129,6 @@ class WelcomePage extends React.Component {
     }
 
     callPagerCallback = (res) => {
-        console.log(res);
     }
 
     togglePagerCall = (e) => {

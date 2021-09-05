@@ -36,8 +36,6 @@ class ResDetails extends React.Component{
 
         requests.getRestaurantInfo((res)=>{
             if(res.hasOwnProperty("statusCode") && res.statusCode === 200){
-                console.log(res)
-                console.log(JSON.parse(res.data['openTime']))
                 ls.setLSResInfo(res.data)
                 this.setState({
                     resInfo:res.data,
