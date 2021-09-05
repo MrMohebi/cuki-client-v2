@@ -3,7 +3,7 @@ import {CircularProgress} from "@material-ui/core";
 import * as requests from '../../ApiRequests/ApiRequests'
 import './css/CukiCode.css';
 import * as PropTypes from "prop-types";
-import {SphereSpinner} from "react-spinners-kit";
+import {CircleSpinner, SphereSpinner} from "react-spinners-kit";
 import * as queries from '../../ApiRequests/ApiRequests'
 
 
@@ -23,17 +23,19 @@ class CukiCode extends React.Component {
     state = {
         inputValue: '',
         restaurantsPersianName: [],
-        restaurantsEnglishName: []
+        restaurantsEnglishName: [],
+        loadingRestaurants:true,
     }
 
 
     componentDidMount() {
         queries.getAllRestaurants((res) => {
             if (res['statusCode'] === 200) {
+
                 this.setState({
                     restaurantsPersianName: res['data']['persianNames'],
-                    restaurantsEnglishName: res['data']['englishNames']
-
+                    restaurantsEnglishName: res['data']['englishNames'],
+                    loadingRestaurants:false
                 })
             }
         })
@@ -148,45 +150,27 @@ class CukiCode extends React.Component {
                         }}>( بر اساس امتیاز)</span>
                     </div>
 
-                    <div className={'d-flex flex-wrap w-100 justify-content-between mt-3'}>
-                        <div className={'each-res-holder'}>
-                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
-                                <div className={'res-score'}>4.2</div>
-                                <img width={29} height={29} src="" alt=""/>
-                                <span className={'text-center IranSans w-100'}>باملند</span>
-                            </div>
-                        </div>
-                        <div className={'each-res-holder'}>
-                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
-                                <img width={29} height={29} src="" alt=""/>
-                                <span className={'text-center IranSans w-100'}>باملند</span>
-                            </div>
-                        </div>
+                    <div className={'d-flex w-100  mt-3 pb-3 px-3 '+(this.state.loadingRestaurants?"justify-content-center flex-row":" flex-wrap justify-content-between ")}>
+                        {
+                            !this.state.loadingRestaurants?
+                            this.state.restaurantsPersianName.map((eachItem,index)=>{
+                                return(
+                                    <div className={'each-res-holder'} onClick={(e)=>{
+                                    this.props.history.push('/c-'+this.state.restaurantsEnglishName[index])
+                                    }}>
+                                    <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
+                                        <div className={'res-score'}>4.2</div>
+                                        <img width={29} height={29} src="/img/logo/logoNoText64x64.png" alt=""/>
+                                        <span className={'text-center IranSans w-100'}>{eachItem}</span>
+                                    </div>
+                                </div>
+                                )
+                            })
+                                :
+                                <CircleSpinner color={'#af9e9e'}/>
+                        }
 
-                        <div className={'each-res-holder'}>
-                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
-                                <img width={29} height={29} src="" alt=""/>
-                                <span className={'text-center IranSans w-100'}>باملند</span>
-                            </div>
-                        </div>
-                        <div className={'each-res-holder'}>
-                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
-                                <img width={29} height={29} src="" alt=""/>
-                                <span className={'text-center IranSans w-100'}>باملند</span>
-                            </div>
-                        </div>
-                        <div className={'each-res-holder'}>
-                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
-                                <img width={29} height={29} className={'each-res-image'} src="" alt=""/>
-                                <span className={'text-center IranSans w-100'}>باملند</span>
-                            </div>
-                        </div>
-                        <div className={'each-res-holder'}>
-                            <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
-                                <img width={29} height={29} src="" alt=""/>
-                                <span className={'text-center IranSans w-100'}>باملند</span>
-                            </div>
-                        </div>
+
                     </div>
 
                 </div>
