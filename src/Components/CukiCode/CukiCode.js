@@ -155,9 +155,8 @@ class CukiCode extends React.Component {
                             !this.state.loadingRestaurants?
                             this.state.restaurantsPersianName.map((eachItem,index)=>{
                                 return(
-                                    <div className={'each-res-holder'} onClick={(e)=>{
-                                    this.props.history.push('/c-'+this.state.restaurantsEnglishName[index])
-                                    }}>
+                                    <div className={'each-res-holder'} onClick={()=>{
+                                        window.location.href = `https://cuki.ir/c-${this.state.restaurantsEnglishName[index]}`                                    }}>
                                     <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
                                         <div className={'res-score'}>4.2</div>
                                         <img width={29} height={29} src="/img/logo/logoNoText64x64.png" alt=""/>
