@@ -1,5 +1,7 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './css/Banner.css'
+import isResOpen from "../../functions/isResOpen";
+import {getLSResInfo} from "../../stores/localStorage/localStorage";
 
 /*
 props:
@@ -12,6 +14,15 @@ props:
 function Banner(props) {
     const Banner = useRef(null)
     const [closedClass] = useState('')
+    useEffect(()=>{
+        if (isResOpen(JSON.parse(getLSResInfo()['openTime']))){
+            Banner.current.style.height='0px'
+        }else{
+            Banner.current.style.height='40px'
+
+        }
+    },[])
+
     return(
         <div ref={Banner} className={'w-100 d-flex justify-content-between bannerContainer align-items-center' + closedClass} style={{backgroundColor:props.color}} >
             {props.closable?
