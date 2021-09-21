@@ -10,6 +10,7 @@
     color: #F07A3E;
 }
 
+
 .welcomePageFrames1 {
     border-radius: 25px;
     background: #fffaef;
@@ -106,21 +107,28 @@
 }
 
 .openIcons {
-    border-radius: 17px;
-    background-color: #FFFFFF;
-    width: 22vw;
-    height: 22vw;
-    margin: 20px auto;
-    box-shadow: 0 2px 1px #e2e2e2;
+    transition: all 0.2s ease;
+    border-radius: 17px !important;
+    background-color: #FFFFFF !important;
+    width: 22vw !important;
+    height: 22vw !important;
+    margin: 20px auto !important;
+    box-shadow: 0 2px 1px #e2e2e2 !important;
     font-family: AppIranSansMedium, serif;
-    font-weight: bold;
-    font-size: 0.5rem;
+    font-weight: bold !important;
+    font-size: 0.5rem !important;
     max-width: 100px;
     max-height: 100px;
     display: flex;
     flex-flow: column;
+    transform: translateY(0px) !important;
+    border:solid #fff 1px !important;
 }
-
+.active-part{
+    border: solid 1px #ffb100 !important;
+    transform: translateY(-15px) !important;
+    box-shadow: #c1c1c1 1px 4px 8px 0px !important;
+}
 .donat {
     text-align: center;
     margin-top: -20px;
@@ -176,7 +184,9 @@
     overflow: scroll;
     height: calc(100% - 50px);
 }
-
+.active-cat{
+    border: solid orange 1px;
+}
 .tourHolder {
 }
 

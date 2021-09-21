@@ -12,6 +12,8 @@ import * as requests from "../../ApiRequests/ApiRequests";
 import * as ls from "../../stores/localStorage/localStorage"
 import * as actions from "../../stores/reduxStore/actions";
 import * as RandomColor from '../../functions/RandomColor';
+import {useLocation} from 'react-router-dom'
+
 
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
@@ -39,7 +41,12 @@ class FoodListPage extends Component {
         this.foodDetailsMain = React.createRef();
     }
 
+
     componentDidMount() {
+        console.log()
+        console.log(this.state)
+        console.log(this.props)
+        console.log(ls.getLSResFullInfoCategories())
         if (!(this.state.catsFullInfo.hasOwnProperty('parts') && this.state.catsFullInfo.parts.length > 0)) {
             this.getData()
             this.props.history.push("/main");
@@ -158,7 +165,11 @@ class FoodListPage extends Component {
                                 backgroundRepeat: 'no-repeat'
                             }} className='foodDetailsImg'/>
                             <div id={'food-name-span'} className={'IranSans mt-3 mb-3'}
-                                 style={{fontSize:'1rem',marginRight:20,fontWeight:'bold'}}>{(foodInfo['persianName'])}</div>
+                                 style={{
+                                     fontSize: '1rem',
+                                     marginRight: 20,
+                                     fontWeight: 'bold'
+                                 }}>{(foodInfo['persianName'])}</div>
                         </div>
                         {
                             foodInfo.status === 'inStock' ?
@@ -273,118 +284,119 @@ class FoodListPage extends Component {
 
 
     render() {
-        return (
-            <LoadingOverlay
-                active={!this.state.catsFullInfo.hasOwnProperty('parts')}
-                spinner={<ClimbingBoxLoader color={'white'}/>}
-                text='وایسا چک کنم ببینم چی چیا داریم'
-            >
-                <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
-                           delta={60}
-                           children={
-                               <React.Fragment>
-                                   {this.state.foodDetails}
-                                   <div
-                                       className='foodListPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
-                                       <ArrowBackRoundedIcon onClick={this.handleBack}/>
+        if (!window.location.pathname.includes('main')) {
+            return (
+                <LoadingOverlay
+                    active={!this.state.catsFullInfo.hasOwnProperty('parts')}
+                    spinner={<ClimbingBoxLoader color={'white'}/>}
+                    text='وایسا چک کنم ببینم چی چیا داریم'
+                >
+                    <Swipeable style={{height: "100%"}} onSwipedRight={this.swipeRight} onSwipedLeft={this.swipeLeft}
+                               delta={60}
+                               children={
+                                   <React.Fragment>
+                                       {this.state.foodDetails}
                                        <div
-                                           className='headerPageSelector text-center d-flex justify-content-around flex-row'>
-                                           <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
+                                           className='foodListPageHeader pl-2 pr-2 pt-2 d-flex flex-row justify-content-between align-items-center'>
+                                           <ArrowBackRoundedIcon onClick={this.handleBack}/>
                                            <div
-                                               className='categoryPageSelectorText IranSans'>{this.state.catsFullInfo.hasOwnProperty('parts') ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].persianName : ''}</div>
-                                           <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
+                                               className='headerPageSelector text-center d-flex justify-content-around flex-row'>
+                                               <KeyboardArrowLeftRoundedIcon onClick={this.previousPage}/>
+                                               <div
+                                                   className='categoryPageSelectorText IranSans'>{this.state.catsFullInfo.hasOwnProperty('parts') ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].persianName : ''}</div>
+                                               <KeyboardArrowRightRoundedIcon onClick={this.nextPage}/>
+                                           </div>
+                                           <ArrowBackRoundedIcon className='invisible'/>
                                        </div>
-                                       <ArrowBackRoundedIcon className='invisible'/>
-                                   </div>
 
-                                   <div onScroll={() => {
-                                       this.setState({allowToShow: false})
-                                   }}
-                                        className='foodListPageContainer'>
-                                       <div className='heightFitContent'>
-                                           {
-                                               this.state.catsFullInfo.hasOwnProperty('parts') && this.state.catsFullInfo.parts.length > 0 ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].foodList.map(foodId => {
-                                                   let eachFood = this.state.foodList[foodId];
-                                                   let colors = RandomColor.RandomColor(eachFood.id);
-                                                   let timeout;
-                                                   let isInOrderList = false;
-                                                   if ((typeof this.props.orderList.filter(food => food.id === eachFood.id)[0] !== "undefined")) {
-                                                       isInOrderList = true;
-                                                   }
-                                                   return (
-                                                       <div onContextMenu={(e) => {
-                                                           e.preventDefault()
-                                                       }}
-                                                            key={eachFood['id']}
-                                                            className='foodListEachFoodContainer animate__animated animate__fadeInDown'
-                                                            onClick={(e) => {
-                                                                clearTimeout(timeout)
-                                                                if (eachFood.status === 'inStock') {
-                                                                    // if (!isInOrderList) {
-                                                                    //     this.orderScripts(eachFood.id);
-                                                                    // }
-                                                                }
-                                                                this.setState({allowToShow: false})
-                                                                if (!e.target.classList.contains('decrease') && (eachFood.status === 'inStock')) {
-                                                                    this.orderScripts(eachFood.id);
-                                                                    if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
-                                                                        this.clickAnimation('food' + eachFood['id'])
-                                                                    }
-                                                                }
-
-
-                                                            }}
-
-                                                            onTouchStart={(e) => {
-                                                                if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
-                                                                    this.pressAnimation('food' + eachFood['id'])
-                                                                }
-                                                                this.setState({
-                                                                    firstPointerPosition: {
-                                                                        x: e.targetTouches[0].pageX,
-                                                                        y: e.targetTouches[0].pageY
-                                                                    }
-                                                                })
-                                                                this.setState({allowToShow: true})
-                                                                timeout = setTimeout(() => {
-                                                                    if (this.state.allowToShow) {
-                                                                        this.foodDetails(eachFood);
+                                       <div onScroll={() => {
+                                           this.setState({allowToShow: false})
+                                       }}
+                                            className='foodListPageContainer'>
+                                           <div className='heightFitContent'>
+                                               {
+                                                   this.state.catsFullInfo.hasOwnProperty('parts') && this.state.catsFullInfo.parts.length > 0 ? this.state.catsFullInfo[this.props.match.params["part"]][this.props.match.params.category].foodList.map(foodId => {
+                                                       let eachFood = this.state.foodList[foodId];
+                                                       let colors = RandomColor.RandomColor(eachFood.id);
+                                                       let timeout;
+                                                       let isInOrderList = false;
+                                                       if ((typeof this.props.orderList.filter(food => food.id === eachFood.id)[0] !== "undefined")) {
+                                                           isInOrderList = true;
+                                                       }
+                                                       return (
+                                                           <div onContextMenu={(e) => {
+                                                               e.preventDefault()
+                                                           }}
+                                                                key={eachFood['id']}
+                                                                className='foodListEachFoodContainer animate__animated animate__fadeInDown'
+                                                                onClick={(e) => {
+                                                                    clearTimeout(timeout)
+                                                                    if (eachFood.status === 'inStock') {
+                                                                        // if (!isInOrderList) {
+                                                                        //     this.orderScripts(eachFood.id);
+                                                                        // }
                                                                     }
                                                                     this.setState({allowToShow: false})
-                                                                    clearTimeout(timeout)
-                                                                }, 400)
+                                                                    if (!e.target.classList.contains('decrease') && (eachFood.status === 'inStock')) {
+                                                                        this.orderScripts(eachFood.id);
+                                                                        if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                                            this.clickAnimation('food' + eachFood['id'])
+                                                                        }
+                                                                    }
 
-                                                            }}
 
-                                                            onPointerMove={(e) => {
-                                                                this.checkForMove(e)
-                                                            }}
-                                                            onTouchEnd={() => {
-                                                                this.setState({allowToShow: false})
-                                                                this.releaseAnimation('food' + eachFood['id'])
-                                                            }}
-                                                       >
-                                                           <div className='foodListEachFood'
-                                                                id={'food' + eachFood['id']}
-                                                                style={{backgroundColor: colors.background}}>
-                                                               {
-                                                                   parseInt(eachFood.discount) > 0 ?
-                                                                       <span
-                                                                           className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
-                                                                       :
-                                                                       <div/>
-                                                               }
-                                                               <div className='priceAndImage'>
+                                                                }}
+
+                                                                onTouchStart={(e) => {
+                                                                    if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                                        this.pressAnimation('food' + eachFood['id'])
+                                                                    }
+                                                                    this.setState({
+                                                                        firstPointerPosition: {
+                                                                            x: e.targetTouches[0].pageX,
+                                                                            y: e.targetTouches[0].pageY
+                                                                        }
+                                                                    })
+                                                                    this.setState({allowToShow: true})
+                                                                    timeout = setTimeout(() => {
+                                                                        if (this.state.allowToShow) {
+                                                                            this.foodDetails(eachFood);
+                                                                        }
+                                                                        this.setState({allowToShow: false})
+                                                                        clearTimeout(timeout)
+                                                                    }, 400)
+
+                                                                }}
+
+                                                                onPointerMove={(e) => {
+                                                                    this.checkForMove(e)
+                                                                }}
+                                                                onTouchEnd={() => {
+                                                                    this.setState({allowToShow: false})
+                                                                    this.releaseAnimation('food' + eachFood['id'])
+                                                                }}
+                                                           >
+                                                               <div className='foodListEachFood'
+                                                                    id={'food' + eachFood['id']}
+                                                                    style={{backgroundColor: colors.background}}>
                                                                    {
-                                                                       (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
-                                                                           eachFood.discount === 0 ?
-                                                                               <span className='eachFoodPrice '>
+                                                                       parseInt(eachFood.discount) > 0 ?
+                                                                           <span
+                                                                               className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
+                                                                           :
+                                                                           <div/>
+                                                                   }
+                                                                   <div className='priceAndImage'>
+                                                                       {
+                                                                           (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
+                                                                               eachFood.discount === 0 ?
+                                                                                   <span className='eachFoodPrice '>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
-                                                                               :
-                                                                               <div
+                                                                                   :
+                                                                                   <div
 
-                                                                                   className={'d-flex flex-column justify-content-center'}>
+                                                                                       className={'d-flex flex-column justify-content-center'}>
                                                                                    <span style={{
                                                                                        textDecoration: 'line-through',
                                                                                        fontSize: '0.6rem',
@@ -393,98 +405,319 @@ class FoodListPage extends Component {
                                                                                    }} className='eachFoodPrice'>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
-                                                                                   <span style={{fontWeight: 'bolder'}}
-                                                                                         className='eachFoodPriceDiscount'>
+                                                                                       <span
+                                                                                           style={{fontWeight: 'bolder'}}
+                                                                                           className='eachFoodPriceDiscount'>
                                                                                 {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
                                                                             </span>
-                                                                               </div>
+                                                                                   </div>
 
-                                                                           :
-                                                                           <span className='outOfStockTextHolder'>
+                                                                               :
+                                                                               <span className='outOfStockTextHolder'>
                                                                                 ناموجود
                                                                            </span>
-                                                                   }
-                                                                   <div className='eachFoodImage'
-                                                                        style={{
-                                                                            background:"transparent" ,
-                                                                            backgroundSize: 'cover',
-                                                                            backgroundPosition: 'center'
-                                                                        }}>
-                                                                       <img src={eachFood['thumbnail']} style={{width:'100%',height:'100%'}} alt={'foodImage'}/>
-                                                                   </div>
-                                                               </div>
-
-                                                               <div className='w-100 justify-content-center d-flex'>
-                                                                   <div className='foodName'
-                                                                        style={{color: colors.foreground,fontSize: ((20 / eachFood['persianName'].length)>=1.5?1.5:(20 / eachFood['persianName'].length) )+ 'rem'}}>{eachFood.persianName}</div>
-                                                               </div>
-                                                               {isInOrderList ?
-                                                                   <div
-                                                                       className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
-                                                                       <div
-                                                                           style={{backgroundColor: colors.foreground + '50'}}
-                                                                           onClick={() => {
-                                                                               this.handleDecreaseFoodNumber(eachFood['id'])
-                                                                           }}
-                                                                           className={'decreaseFoodNumberButtonContainer decrease d-flex justify-content-center align-items-center'}>
-                                                                           <div
-                                                                               className="foodNumberIncreaseButton decrease d-flex justify-content-center align-items-center">
-                                                                               <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                    width="20" height="20"
-                                                                                    fill="black"
-                                                                                    className="bi bi-dash decrease"
-                                                                                    viewBox="0 0 16 16">
-                                                                                   <path className={'decrease'}
-                                                                                         d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                                                               </svg>
-                                                                           </div>
+                                                                       }
+                                                                       <div className='eachFoodImage'
+                                                                            style={{
+                                                                                background: "transparent",
+                                                                                backgroundSize: 'cover',
+                                                                                backgroundPosition: 'center'
+                                                                            }}>
+                                                                           <img src={eachFood['thumbnail']}
+                                                                                style={{width: '100%', height: '100%'}}
+                                                                                alt={'foodImage'}/>
                                                                        </div>
+                                                                   </div>
+
+                                                                   <div className='w-100 justify-content-center d-flex'>
+                                                                       <div className='foodName'
+                                                                            style={{
+                                                                                color: colors.foreground,
+                                                                                fontSize: ((20 / eachFood['persianName'].length) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
+                                                                            }}>{eachFood.persianName}</div>
+                                                                   </div>
+                                                                   {isInOrderList ?
                                                                        <div
-                                                                           style={{backgroundColor: colors.foreground + '50'}}
-                                                                           className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
+                                                                           className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
+                                                                           <div
+                                                                               style={{backgroundColor: colors.foreground + '50'}}
+                                                                               onClick={() => {
+                                                                                   this.handleDecreaseFoodNumber(eachFood['id'])
+                                                                               }}
+                                                                               className={'decreaseFoodNumberButtonContainer decrease d-flex justify-content-center align-items-center'}>
+                                                                               <div
+                                                                                   className="foodNumberIncreaseButton decrease d-flex justify-content-center align-items-center">
+                                                                                   <svg
+                                                                                       xmlns="http://www.w3.org/2000/svg"
+                                                                                       width="20" height="20"
+                                                                                       fill="black"
+                                                                                       className="bi bi-dash decrease"
+                                                                                       viewBox="0 0 16 16">
+                                                                                       <path className={'decrease'}
+                                                                                             d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                   </svg>
+                                                                               </div>
+                                                                           </div>
+                                                                           <div
+                                                                               style={{backgroundColor: colors.foreground + '50'}}
+                                                                               className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
                                                                            <span
                                                                                className={'IranSans'}>{(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}</span>
-                                                                       </div>
-                                                                       <div
-                                                                           style={{backgroundColor: colors.foreground + '50'}}
-                                                                           onClick={() => {
-                                                                               this.clickAnimation(eachFood['id'])
-                                                                           }}
-                                                                           className={'increaseFoodNumberButtonContainer increase d-flex justify-content-center align-items-center'}>
+                                                                           </div>
                                                                            <div
-                                                                               className="foodNumberIncreaseButton increase d-flex justify-content-center align-items-center">
-                                                                               <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                    width="20" height="20"
-                                                                                    fill="black"
-                                                                                    className="bi bi-plus increase "
-                                                                                    viewBox="0 0 16 16">
-                                                                                   <path className={'increase'}
-                                                                                         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                                                               </svg>
+                                                                               style={{backgroundColor: colors.foreground + '50'}}
+                                                                               onClick={() => {
+                                                                                   this.clickAnimation(eachFood['id'])
+                                                                               }}
+                                                                               className={'increaseFoodNumberButtonContainer increase d-flex justify-content-center align-items-center'}>
+                                                                               <div
+                                                                                   className="foodNumberIncreaseButton increase d-flex justify-content-center align-items-center">
+                                                                                   <svg
+                                                                                       xmlns="http://www.w3.org/2000/svg"
+                                                                                       width="20" height="20"
+                                                                                       fill="black"
+                                                                                       className="bi bi-plus increase "
+                                                                                       viewBox="0 0 16 16">
+                                                                                       <path className={'increase'}
+                                                                                             d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                   </svg>
+                                                                               </div>
                                                                            </div>
                                                                        </div>
-                                                                   </div>
-                                                                   :
-                                                                   <div className='w-100 d-flex justify-content-center'>
+                                                                       :
                                                                        <div
-                                                                           className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}
+                                                                           className='w-100 d-flex justify-content-center'>
+                                                                           <div
+                                                                               className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}
+                                                                           </div>
                                                                        </div>
-                                                                   </div>
-                                                               }
+                                                                   }
 
+                                                               </div>
                                                            </div>
-                                                       </div>
-                                                   )
-                                               }) : ''
-                                           }
+                                                       )
+                                                   }) : ''
+                                               }
+                                           </div>
                                        </div>
-                                   </div>
-                               </React.Fragment>
-                           }
-                />
-            </LoadingOverlay>
-        )
+                                   </React.Fragment>
+                               }
+                    />
+                </LoadingOverlay>
+            )
+        } else {
+            return (
+                <React.Fragment>
+                    {/*{this.state.foodDetails}*/}
+                    <div onScroll={() => {
+                        this.setState({allowToShow: false})
+                    }}
+                         className='foodListPageContainer' style={{
+                        background: 'rgba(246,246,246,0.34)',
+                        border: 'solid #000000 1px',
+                        borderColor: 'rgba(56,56,56,0.1)',
+                        height: 'auto',
+                        overflow: 'hidden',
+                        marginBottom: 90
+                    }}>
+                        <div className='heightFitContent'>
+                            {
+                                this.state.foodList ? this.state.foodList.map(foodId => {
+
+                                    let eachFood = foodId;
+                                    let colors = {
+                                        backgroundColor: '#000000',
+                                        foregroundColor: '#000000'
+                                    };
+                                    let timeout;
+                                    let isInOrderList = false;
+                                    if ((typeof this.props.orderList.filter(food => food.id === eachFood.id)[0] !== "undefined")) {
+                                        isInOrderList = true;
+                                    }
+
+                                    if (foodId !== null&&this.props.foodList.includes(foodId.id))
+                                        return (
+                                            <div onContextMenu={(e) => {
+                                                e.preventDefault()
+                                            }}
+                                                 key={eachFood['id']}
+                                                 className='foodListEachFoodContainer animate__animated animate__fadeInDown'
+                                                 onClick={(e) => {
+                                                     clearTimeout(timeout)
+                                                     if (eachFood.status === 'inStock') {
+                                                         // if (!isInOrderList) {
+                                                         //     this.orderScripts(eachFood.id);
+                                                         // }
+                                                     }
+                                                     this.setState({allowToShow: false})
+                                                     if (!e.target.classList.contains('decrease') && (eachFood.status === 'inStock')) {
+                                                         this.orderScripts(eachFood.id);
+                                                         if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                             this.clickAnimation('food' + eachFood['id'])
+                                                         }
+                                                     }
+
+
+                                                 }}
+
+                                                 onTouchStart={(e) => {
+                                                     if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                         this.pressAnimation('food' + eachFood['id'])
+                                                     }
+                                                     this.setState({
+                                                         firstPointerPosition: {
+                                                             x: e.targetTouches[0].pageX,
+                                                             y: e.targetTouches[0].pageY
+                                                         }
+                                                     })
+                                                     this.setState({allowToShow: true})
+                                                     timeout = setTimeout(() => {
+                                                         if (this.state.allowToShow) {
+                                                             this.foodDetails(eachFood);
+                                                         }
+                                                         this.setState({allowToShow: false})
+                                                         clearTimeout(timeout)
+                                                     }, 400)
+
+                                                 }}
+
+                                                 onPointerMove={(e) => {
+                                                     this.checkForMove(e)
+                                                 }}
+                                                 onTouchEnd={() => {
+                                                     this.setState({allowToShow: false})
+                                                     this.releaseAnimation('food' + eachFood['id'])
+                                                 }}
+                                            >
+                                                <div className='foodListEachFood'
+                                                     id={'food' + eachFood['id']}
+                                                     style={{
+                                                         backgroundColor: colors.background,
+                                                         boxShadow: "0px 0 6px 0px #bbbbbb"
+                                                     }}>
+                                                    {
+                                                        parseInt(eachFood.discount) > 0 ?
+                                                            <span
+                                                                className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
+                                                            :
+                                                            <div/>
+                                                    }
+                                                    <div className='priceAndImage'>
+                                                        {
+                                                            (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
+                                                                eachFood.discount === 0 ?
+                                                                    <span className='eachFoodPrice '>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                    :
+                                                                    <div
+
+                                                                        className={'d-flex flex-column justify-content-center'}>
+                                                                                   <span style={{
+                                                                                       textDecoration: 'line-through',
+                                                                                       fontSize: '0.6rem',
+                                                                                       lineHeight: '1.5rem',
+                                                                                       color: '#787878'
+                                                                                   }} className='eachFoodPrice'>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                        <span style={{fontWeight: 'bolder'}}
+                                                                              className='eachFoodPriceDiscount'>
+                                                                                {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
+                                                                            </span>
+                                                                    </div>
+
+                                                                :
+                                                                <span className='outOfStockTextHolder'>
+                                                                                ناموجود
+                                                                           </span>
+                                                        }
+                                                        <div className='eachFoodImage'
+                                                             style={{
+                                                                 background: "transparent",
+                                                                 backgroundSize: 'cover',
+                                                                 backgroundPosition: 'center'
+                                                             }}>
+                                                            <img src={eachFood['thumbnail']}
+                                                                 style={{width: '100%', height: '100%'}}
+                                                                 alt={'foodImage'}/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className='w-100 justify-content-center d-flex'>
+                                                        <div className='foodName'
+                                                             style={{
+                                                                 color: colors.foreground,
+                                                                 fontSize: ((20 / eachFood['persianName'].length ? 2 : 2) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
+                                                             }}>{eachFood.persianName}</div>
+                                                    </div>
+                                                    {isInOrderList ?
+                                                        <div
+                                                            className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
+                                                            <div
+                                                                style={{backgroundColor: colors.foreground + '50'}}
+                                                                onClick={() => {
+                                                                    this.handleDecreaseFoodNumber(eachFood['id'])
+                                                                }}
+                                                                className={'decreaseFoodNumberButtonContainer decrease d-flex justify-content-center align-items-center'}>
+                                                                <div
+                                                                    className="foodNumberIncreaseButton decrease d-flex justify-content-center align-items-center">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="20" height="20"
+                                                                         fill="black"
+                                                                         className="bi bi-dash decrease"
+                                                                         viewBox="0 0 16 16">
+                                                                        <path className={'decrease'}
+                                                                              d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                style={{backgroundColor: colors.foreground + '50'}}
+                                                                className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
+                                                                           <span
+                                                                               className={'IranSans'}>{(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}</span>
+                                                            </div>
+                                                            <div
+                                                                style={{backgroundColor: colors.foreground + '50'}}
+                                                                onClick={() => {
+                                                                    this.clickAnimation(eachFood['id'])
+                                                                }}
+                                                                className={'increaseFoodNumberButtonContainer increase d-flex justify-content-center align-items-center'}>
+                                                                <div
+                                                                    className="foodNumberIncreaseButton increase d-flex justify-content-center align-items-center">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="20" height="20"
+                                                                         fill="black"
+                                                                         className="bi bi-plus increase "
+                                                                         viewBox="0 0 16 16">
+                                                                        <path className={'increase'}
+                                                                              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        :
+                                                        <div className='w-100 d-flex justify-content-center'>
+                                                            <div
+                                                                className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        )
+                                }) : ''
+                            }
+                        </div>
+                    </div>
+                </React.Fragment>
+            )
+        }
+
     }
+
 }
 
 const mapStateToProps = (store) => {
