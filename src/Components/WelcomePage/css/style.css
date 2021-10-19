@@ -125,7 +125,7 @@
     border:solid #fff 1px !important;
 }
 .active-part{
-    border: solid 1px #ffb100 !important;
+    border: solid 1px #a7a7a7 !important;
     transform: translateY(-15px) !important;
     box-shadow: #c1c1c1 1px 4px 8px 0px !important;
 }

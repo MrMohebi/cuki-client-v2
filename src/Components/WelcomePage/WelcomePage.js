@@ -10,8 +10,11 @@ import $ from 'jquery'
 import ding from './assets/ding.mp3'
 import FoodListPage from "../FoodListPage/FoodListPage";
 import {NavLink} from "react-router-dom";
-import {ButtonBase} from "@material-ui/core";
+import {ButtonBase, rgbToHex} from "@material-ui/core";
+import ColorThief from "colorthief/dist/color-thief";
 
+
+const CT = new ColorThief();
 export const Swipeable = ({children, style, ...props}) => {
     const handlers = useSwipeable(props);
     return (<div style={style}  {...handlers}>{children}</div>);
@@ -46,7 +49,23 @@ class WelcomePage extends React.Component {
         this.Timer = React.createRef()
     }
 
+
+    updatePart(){
+        let allCurrentPartIds=[];
+        Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).forEach(key=>{
+            this.state.catsFullInfo[this.state.currentActivePart][key]['foodList'].forEach(id=>{
+                allCurrentPartIds.push(id)
+            });
+        })
+        this.setState({
+            currentFoodIDs : allCurrentPartIds
+        })
+    }
+
+
     componentDidMount() {
+
+
         console.log(this.state)
         console.log(this.state.catsFullInfo[this.state.currentActivePart])
         if (this.state.resParts.length < 1) {
@@ -75,7 +94,7 @@ class WelcomePage extends React.Component {
         } else {
             this.setState({lastPagerTime: parseInt(lSPager)})
         }
-        setInterval(this.updateTimer, 1000)
+        setInterval(this.updateTimer, 5000)
         setTimeout(() => {
             if (this.state.canCallPager) {
                 if (this.props.tableScanned)
@@ -83,6 +102,10 @@ class WelcomePage extends React.Component {
             }
         }, 1500)
 
+    }
+
+    rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
 
     chefTooltip = (text, delay, duration) => {
@@ -184,7 +207,7 @@ class WelcomePage extends React.Component {
                                    <p className="welcomePageHeader">
                             <span
                                 className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
-                                       <span>  app</span>
+                                       <span> app</span>
                                    </p>
                                    <div className="welcomePageFrames1">
                                        <div className='HandAndHeaderText'>
@@ -264,6 +287,8 @@ class WelcomePage extends React.Component {
                                                        <div onClick={() => {
                                                            this.setState({
                                                                currentActivePart: eachPart
+                                                           },()=>{
+                                                               this.updatePart()
                                                            })
 
                                                        }} key={eachPart}
@@ -307,18 +332,22 @@ class WelcomePage extends React.Component {
                                }}>
 
                                    <ButtonBase style={{
-                                       height: 40,
+                                       height: '100%',
                                        width: 40,
                                        position: 'absolute',
                                        zIndex: 2,
-                                       left: 10,
+                                       left: 0,
+                                       borderRadius:200,
                                        transform: 'translate(0,50%)',
                                        bottom: '50%',
-                                       borderRadius: 50,
                                        background: 'white',
-                                       boxShadow: '#c7c7c7 0px 0px 9px',
+                                       boxShadow: 'rgb(255 255 255) 14px 0px 20px',
                                        fontSize: 20
-                                   }}>
+                                   }}
+                                               onClick={()=>{
+                                                   document.getElementById('category-scroller').scrollBy(100,0)
+                                               }}
+                                   >
                                        <i className="fas fa-angle-left " style={{
                                            // border:'solid 1px gray',
                                            width: 50,
@@ -328,18 +357,22 @@ class WelcomePage extends React.Component {
                                    </ButtonBase>
 
                                    <ButtonBase style={{
-                                       height: 40,
+                                       height: '100%',
                                        width: 40,
                                        position: 'absolute',
                                        zIndex: 2,
-                                       right: 10,
+                                       right: 0,
                                        transform: 'translate(0,50%)',
                                        bottom: '50%',
-                                       borderRadius: 50,
+                                       borderRadius:200,
                                        background: 'white',
-                                       boxShadow: '#c7c7c7 0px 0px 9px',
+                                       boxShadow: 'rgb(255 255 255) -14px 0px 20px',
                                        fontSize: 20
-                                   }}>
+                                   }}
+                                   onClick={()=>{
+                                       document.getElementById('category-scroller').scrollBy(-100,0)
+                                   }}
+                                   >
                                        <i className="fas fa-angle-right " style={{
                                            // border:'solid 1px gray',
                                            width: 50,
@@ -349,21 +382,26 @@ class WelcomePage extends React.Component {
                                    </ButtonBase>
 
 
-                                   <div className={'d-flex flex-row-reverse mt-3   '} style={{
-                                       padding: '0 50px 0 50px',
+                                   <div id={'category-scroller'} className={'d-flex flex-row-reverse mt-3'} style={{
+                                       padding: '10px 50px 0 50px',
                                        overflow: 'scroll',
+                                       scrollBehavior:'smooth'
                                    }}>
                                        {
                                            Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).map(eachCategory => {
                                                let persianName = this.state.catsFullInfo[this.state.currentActivePart][eachCategory]['persianName']
                                                // let logo = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].logo
                                                // let color = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].averageColor.toString()
+                                               // let color = CT.getColor(<img alt={'ad'} src={'/img/categories/' + (eachCategory.toLowerCase().includes('pizza') ? 'pizza' : eachCategory) + '.png'}/>)
+
+                                               // console.log(CT.getColor(img))
                                                return (
                                                    <ButtonBase style={{
                                                        borderRadius: 15,
                                                        transition: '0.2s ease ',
-                                                       boxShadow:this.state.currentCat === eachCategory ?'orange 0 0 6px':'',
-                                                       border: this.state.currentCat === eachCategory ? 'solid orange 1px' : 'white 1px solid'
+                                                       boxShadow: this.state.currentCat === eachCategory ? "#dbdbdb 0 0 6px" : '',
+                                                       border: this.state.currentCat === eachCategory ? 'solid #a7a7a7 1px' : 'white 1px solid',
+                                                       transform:this.state.currentCat === eachCategory ?'translateY(-10px)':'translateY(0px)'
                                                    }}
                                                                onClick={() => {
                                                                    this.setState({

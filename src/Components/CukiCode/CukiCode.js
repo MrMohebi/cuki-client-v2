@@ -170,8 +170,7 @@ class CukiCode extends React.Component {
                                 :
                                 <CircleSpinner color={'#af9e9e'}/>
                         }
-
-
+                        
                     </div>
 
                 </div>
