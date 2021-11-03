@@ -47,7 +47,7 @@ class WelcomePage extends React.Component {
             'چشم، الان میام'
         ]
     }
-    expanderW=50;
+    expanderW=300;
 
     constructor(props) {
         super(props);
@@ -202,6 +202,38 @@ class WelcomePage extends React.Component {
     swipeLeft = () => {
         this.props.history.push("/likedFoods")
     }
+    openExpander = (e)=>{
+        let expander = document.getElementById('expander')
+        expander.style.height = this.expanderW + 'px'
+        expander.style.width = this.expanderW+ 'px'
+        expander.style.top = "calc(100vh + " + (e.currentTarget.getBoundingClientRect().y-13) + "px )"
+        let duplicated = e.currentTarget.firstChild.cloneNode(true)
+        let offset = 0;
+        if (window.innerWidth>800){
+            offset = window.innerWidth - 800
+            console.log(offset)
+        }
+        expander.style.left =((e.currentTarget.getBoundingClientRect().x-offset/2)+e.currentTarget.getBoundingClientRect().width/2 - this.expanderW/2+ "px")
+        duplicated.style.marginTop = '0px';
+        setTimeout(()=>{
+            expander.style.left = ((window.innerWidth/2 - this.expanderW/2)-offset/2)+'px'
+            expander.style.top = "calc(100vh + " + (window.innerHeight/2 - this.expanderW/2) + "px )"
+            expander.style.width = (window.innerWidth - offset)+'px'
+            expander.style.left = 0
+            expander.style.height = window.innerHeight + 'px'
+            expander.style.top = '100vh'
+
+            setTimeout(()=>{
+                expander.firstChild.style.height = window.innerHeight + 'px'
+            },200)
+
+        },2000)
+
+        // console.log(e.currentTarget.getBoundingClientRect().x-offset)
+        expander.firstChild?expander.firstChild.replaceWith(duplicated):
+            expander.append(duplicated)
+    }
+
 
     render() {
         return (
@@ -217,10 +249,15 @@ class WelcomePage extends React.Component {
                                     style={
                                         {
                                             position: "absolute",
-                                            background: "red",
+                                            background: "transparent",
                                             width: this.expanderW,
                                             height: this.expanderW,
-                                            zIndex:9
+                                            zIndex:9999,
+                                            display:'flex',
+                                            justifyContent:'center',
+                                            alignItems:'center',
+                                            transition:'.3s ease'
+
                                         }
                                     }
                                />
@@ -594,14 +631,8 @@ class WelcomePage extends React.Component {
                                                                                         //         this.clickAnimation('food' + eachFood['id'])
                                                                                         //     }
                                                                                         // }
-                                                                                        let a = $(e.currentTarget)
-                                                                                        let expander = document.getElementById('expander')
-                                                                                        expander.style.top = "calc(100vh + " + (e.currentTarget.getBoundingClientRect().y + e.currentTarget.getBoundingClientRect().height / 2) + "px )"
-                                                                                        expander.style.left =((e.currentTarget.getBoundingClientRect().x - e.currentTarget.getBoundingClientRect().width/2)-this.expanderW/2 + "px")
-                                                                                        let duplicated = e.currentTarget.firstChild.cloneNode(true)
-                                                                                        console.log(duplicated)
-                                                                                        expander.firstChild?expander.firstChild.replaceWith(duplicated):
-                                                                                            expander.append(duplicated)
+                                                                                        this.openExpander(e)
+
 
                                                                                     }}
 

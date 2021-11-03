@@ -234,6 +234,7 @@ body {
 .welcomePageMainContainerCover {
   overflow-y: scroll;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 .active button {
