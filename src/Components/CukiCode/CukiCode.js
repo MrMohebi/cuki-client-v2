@@ -147,7 +147,8 @@ class CukiCode extends React.Component {
                             fontFamily: 'AppIranSansBold'
                         }}>ستوران های برتر</h6>
                         <span className={'IranSansLight'} style={{
-                            fontSize: '0.7rem'
+                            fontSize: '0.7rem',
+                            whiteSpace:'nowrap'
                         }}>( بر اساس امتیاز)</span>
                     </div>
 

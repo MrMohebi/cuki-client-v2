@@ -12,6 +12,9 @@ import FoodListPage from "../FoodListPage/FoodListPage";
 import {NavLink} from "react-router-dom";
 import {ButtonBase, rgbToHex} from "@material-ui/core";
 import ColorThief from "colorthief/dist/color-thief";
+import ActiveMenuLink from "active-menu-link";
+import scrollSpy from 'simple-scrollspy'
+import * as RandomColor from "../../functions/RandomColor";
 
 
 const CT = new ColorThief();
@@ -22,6 +25,7 @@ export const Swipeable = ({children, style, ...props}) => {
 
 class WelcomePage extends React.Component {
     state = {
+        foodList: ls.getLSResFoods(),
         currentFoodIDs: [],
         catsFullInfo: ls.getLSResFullInfoCategories(),
         currentActivePart: 'restaurant',
@@ -43,6 +47,7 @@ class WelcomePage extends React.Component {
             'چشم، الان میام'
         ]
     }
+    expanderW=50;
 
     constructor(props) {
         super(props);
@@ -50,21 +55,33 @@ class WelcomePage extends React.Component {
     }
 
 
-    updatePart(){
-        let allCurrentPartIds=[];
-        Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).forEach(key=>{
-            this.state.catsFullInfo[this.state.currentActivePart][key]['foodList'].forEach(id=>{
+    updatePart() {
+        let allCurrentPartIds = [];
+        Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).forEach(key => {
+            this.state.catsFullInfo[this.state.currentActivePart][key]['foodList'].forEach(id => {
                 allCurrentPartIds.push(id)
             });
         })
         this.setState({
-            currentFoodIDs : allCurrentPartIds
+            currentFoodIDs: allCurrentPartIds
         })
     }
 
 
     componentDidMount() {
 
+
+        const options = {
+            sectionClass: '.sections',           // Query selector to your sections
+            menuActiveTarget: '.menu-item',       // Query selector to your elements that will be added `active` class
+            offset: 180,                          // Menu item will active before scroll to a matched section 100px
+            scrollContainer: '#scroller', // Listen scroll behavior on `.scroll-container` instead of `window`
+        }
+        setTimeout(() => {
+            // console.log(this.state.catsFullInfo[this.state.currentActivePart])
+            scrollSpy('#category-scroller', options)
+
+        }, 1000)
 
         console.log(this.state)
         console.log(this.state.catsFullInfo[this.state.currentActivePart])
@@ -101,7 +118,6 @@ class WelcomePage extends React.Component {
                     this.chefTooltip('با لمس گارسونمون میتونی صداش بزنی!', 0, 3000)
             }
         }, 1500)
-
     }
 
     rgbToHex(r, g, b) {
@@ -193,7 +209,21 @@ class WelcomePage extends React.Component {
                 // onSwipedRight={this.swipeRight}
                 // onSwipedLeft={this.swipeLeft}
                        children={
-                           <div className='welcomePageMainContainerCover w-100 h-100'>
+                           <div className='welcomePageMainContainerCover w-100 h-100' style={{
+                               scrollSnapType: 'y mandatory',
+                               position: 'relative'
+                           }}>
+                               <div id={'expander'} className={'expander'}
+                                    style={
+                                        {
+                                            position: "absolute",
+                                            background: "red",
+                                            width: this.expanderW,
+                                            height: this.expanderW,
+                                            zIndex:9
+                                        }
+                                    }
+                               />
                                <div className={'more-options'}
                                     onClick={
                                         () => {
@@ -203,7 +233,7 @@ class WelcomePage extends React.Component {
                                     }
                                >...
                                </div>
-                               <div className="forLittlePhones">
+                               <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder'}>
                                    <p className="welcomePageHeader">
                             <span
                                 className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
@@ -211,7 +241,7 @@ class WelcomePage extends React.Component {
                                    </p>
                                    <div className="welcomePageFrames1">
                                        <div className='HandAndHeaderText'>
-                                           <span className="welcomePageDescriptionH"> دوست داری چی بخوری؟</span>
+                                           <span className="welcomePageDescriptionH">چی میل داری؟</span>
                                            <div onClick={(d) => {
                                                if (this.state.allowToShake) {
                                                    d.target['classList'].add("element")
@@ -241,7 +271,8 @@ class WelcomePage extends React.Component {
                                            <span
                                                className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
                                            <br/>
-                                           <span className="welcomePageDescription">حتی میتونی دونگی پرداخت کنی</span>
+                                           <span
+                                               className="welcomePageDescription">حتی میتونی دونگی پرداخت کنی</span>
                                        </div>
                                        <div id={'chef'} className="chefImage " style={{
                                            background: 'url("/img/WelcomePage/chefIcon.png")',
@@ -285,16 +316,17 @@ class WelcomePage extends React.Component {
                                                typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
                                                    return (
                                                        <div onClick={() => {
+                                                           document.getElementsByClassName('welcomePageMainContainerCover')[0].scrollBy(0, 1000)
                                                            this.setState({
                                                                currentActivePart: eachPart
-                                                           },()=>{
+                                                           }, () => {
                                                                this.updatePart()
                                                            })
 
                                                        }} key={eachPart}
                                                             className={"openIcons " + (this.state.currentActivePart === eachPart ? 'active-part' : '')}>
                                                            <img alt={'F'} src={'/img/resParts/' + eachPart + '.png'}
-                                                                className="burger" style={{}}/>
+                                                                className="burger"/>
                                                            <span
                                                                className="burgersAndDonatDescription">{this.state.partsPersianNames[eachPart]}</span>
                                                            <br/>
@@ -321,116 +353,448 @@ class WelcomePage extends React.Component {
 
                                        </div>
                                    </div>
-                                   <div className={'pt-3 pb-1'}>
-                                       <span className={'IranSans mt-3'}>دسته بندی</span>
-
-                                   </div>
-
                                </div>
-                               <div className={'w-100 '} style={{
-                                   position: 'relative',
+
+
+                               {/*---------------------------------- NAVBAR ----------------------------------*/}
+                               <div className={'sections-holder'} style={{
+                                   scrollSnapAlign: 'center'
                                }}>
 
-                                   <ButtonBase style={{
-                                       height: '100%',
-                                       width: 40,
+                                   <div id={'top-nav-container'} style={{
+                                       height: '160px',
+                                       width: '99%',
+                                       zIndex: 999,
+                                       minHeight: '160px',
                                        position: 'absolute',
-                                       zIndex: 2,
-                                       left: 0,
-                                       borderRadius:200,
-                                       transform: 'translate(0,50%)',
-                                       bottom: '50%',
-                                       background: 'white',
-                                       boxShadow: 'rgb(255 255 255) 14px 0px 20px',
-                                       fontSize: 20
-                                   }}
-                                               onClick={()=>{
-                                                   document.getElementById('category-scroller').scrollBy(100,0)
-                                               }}
-                                   >
-                                       <i className="fas fa-angle-left " style={{
-                                           // border:'solid 1px gray',
-                                           width: 50,
-                                           height: 50,
-                                           lineHeight: 2.5,
-                                       }}/>
-                                   </ButtonBase>
-
-                                   <ButtonBase style={{
-                                       height: '100%',
-                                       width: 40,
-                                       position: 'absolute',
-                                       zIndex: 2,
-                                       right: 0,
-                                       transform: 'translate(0,50%)',
-                                       bottom: '50%',
-                                       borderRadius:200,
-                                       background: 'white',
-                                       boxShadow: 'rgb(255 255 255) -14px 0px 20px',
-                                       fontSize: 20
-                                   }}
-                                   onClick={()=>{
-                                       document.getElementById('category-scroller').scrollBy(-100,0)
-                                   }}
-                                   >
-                                       <i className="fas fa-angle-right " style={{
-                                           // border:'solid 1px gray',
-                                           width: 50,
-                                           height: 50,
-                                           lineHeight: 2.5,
-                                       }}/>
-                                   </ButtonBase>
-
-
-                                   <div id={'category-scroller'} className={'d-flex flex-row-reverse mt-3'} style={{
-                                       padding: '10px 50px 0 50px',
-                                       overflow: 'scroll',
-                                       scrollBehavior:'smooth'
+                                       top: '0',
+                                       background: 'rgba(255,255,255,0.84)',
+                                       backdropFilter: 'blur(20px)'
                                    }}>
-                                       {
-                                           Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).map(eachCategory => {
-                                               let persianName = this.state.catsFullInfo[this.state.currentActivePart][eachCategory]['persianName']
-                                               // let logo = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].logo
-                                               // let color = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].averageColor.toString()
-                                               // let color = CT.getColor(<img alt={'ad'} src={'/img/categories/' + (eachCategory.toLowerCase().includes('pizza') ? 'pizza' : eachCategory) + '.png'}/>)
 
-                                               // console.log(CT.getColor(img))
-                                               return (
-                                                   <ButtonBase style={{
-                                                       borderRadius: 15,
-                                                       transition: '0.2s ease ',
-                                                       boxShadow: this.state.currentCat === eachCategory ? "#dbdbdb 0 0 6px" : '',
-                                                       border: this.state.currentCat === eachCategory ? 'solid #a7a7a7 1px' : 'white 1px solid',
-                                                       transform:this.state.currentCat === eachCategory ?'translateY(-10px)':'translateY(0px)'
-                                                   }}
-                                                               onClick={() => {
-                                                                   this.setState({
-                                                                       currentFoodIDs: this.state.catsFullInfo[this.state.currentActivePart][eachCategory]['foodList'],
-                                                                       currentCat: eachCategory
-                                                                   })
+                                       <div className={' pb-1'}>
+                                           <span className={'IranSans mt-3'}>دسته بندی</span>
+
+                                       </div>
+
+
+                                       <div className={'w-100'} style={{
+                                           position: 'relative',
+                                       }}>
+
+                                           <ButtonBase style={{
+                                               height: '100%',
+                                               width: 40,
+                                               position: 'absolute',
+                                               zIndex: 2,
+                                               left: 0,
+                                               borderRadius: '0 100 100 0',
+                                               transform: 'translate(0,50%)',
+                                               bottom: '50%',
+                                               background: 'white',
+                                               boxShadow: 'rgb(255 255 255) 14px 0px 20px',
+                                               fontSize: 20
+                                           }}
+                                                       onClick={() => {
+                                                           document.getElementById('category-scroller').scrollBy(-100, 0)
+                                                       }}
+                                           >
+                                               <i className="fas fa-angle-left " style={{
+                                                   // border:'solid 1px gray',
+                                                   width: 50,
+                                                   height: 50,
+                                                   lineHeight: 2.5,
+                                               }}/>
+                                           </ButtonBase>
+
+                                           <ButtonBase style={{
+                                               height: '100%',
+                                               width: 40,
+                                               position: 'absolute',
+                                               zIndex: 2,
+                                               right: 0,
+                                               transform: 'translate(0,50%)',
+                                               bottom: '50%',
+                                               borderRadius: '100 0 0 100',
+                                               background: 'white',
+                                               boxShadow: 'rgb(255 255 255) -14px 0px 20px',
+                                               fontSize: 20
+                                           }}
+                                                       onClick={() => {
+                                                           document.getElementById('category-scroller').scrollBy(100, 0)
+                                                       }}
+                                           >
+                                               <i className="fas fa-angle-right " style={{
+                                                   // border:'solid 1px gray',
+                                                   width: 50,
+                                                   height: 50,
+                                                   lineHeight: 2.5,
+                                               }}/>
+                                           </ButtonBase>
+
+
+                                           <div id={'category-scroller'} className={'d-flex flex-row-reverse mt-3'}
+                                                style={{
+                                                    padding: '10px 50px 0 100px',
+                                                    overflow: 'scroll',
+                                                    scrollBehavior: 'smooth',
+
+                                                }}>
+                                               {
+                                                   this.state.catsFullInfo[this.state.currentActivePart] ? Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).map(eachCategory => {
+                                                           let persianName = this.state.catsFullInfo[this.state.currentActivePart][eachCategory]['persianName']
+                                                           // let logo = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].logo
+                                                           // let color = this.state.catsFullInfo[this.props.match.params["part"]][eachCategory].averageColor.toString()
+                                                           // let color = CT.getColor(<img alt={'ad'} src={'/img/categories/' + (eachCategory.toLowerCase().includes('pizza') ? 'pizza' : eachCategory) + '.png'}/>)
+
+                                                           // console.log(CT.getColor(img))
+                                                           // console.log(eachCategory)
+                                                           return (
+                                                               <a style={{
+                                                                   display: 'contents'
+                                                               }} className={'menu-item'} href={'#' + eachCategory}>
+                                                                   <ButtonBase style={{
+                                                                       borderRadius: 15,
+                                                                       transition: '0.2s ease ',
+                                                                       minWidth: '75px'
+                                                                       // boxShadow: this.state.currentCat === eachCategory ? "#dbdbdb 0 0 6px" : '',
+                                                                       // border: this.state.currentCat === eachCategory ? 'solid #a7a7a7 1px' : 'white 1px solid',
+                                                                       // transform: this.state.currentCat === eachCategory ? 'translateY(-10px)' : 'translateY(0px)'
+                                                                   }}
+                                                                               onClick={() => {
+                                                                                   this.setState({
+                                                                                       currentFoodIDs: this.state.catsFullInfo[this.state.currentActivePart][eachCategory]['foodList'],
+                                                                                       currentCat: eachCategory
+                                                                                   })
+                                                                               }}
+                                                                               className='categoryPageEachCategoryContainer mx-2 my-2'>
+                                                                       <div style={{
+                                                                           boxShadow: " 0 0 7px 0px #b9b9b9"
+                                                                       }} className="categoryPageEachCategory">
+                                                                           <div className="categoryPageEachCategoryImage"
+                                                                                style={{
+                                                                                    backgroundImage: 'url(/img/categories/' + (eachCategory.toLowerCase().includes('pizza') ? 'pizza' : eachCategory) + '.png)',
+                                                                                    backgroundSize: 'cover',
+                                                                                    backgroundPosition: 'center',
+                                                                                    backgroundRepeat: 'no-repeat'
+                                                                                }}/>
+                                                                           <span
+                                                                               className="categoryPageEachCategoryName">{persianName}</span>
+                                                                       </div>
+                                                                   </ButtonBase>
+                                                               </a>
+
+
+                                                           )
+                                                       })
+                                                       :
+                                                       <div></div>
+                                               }
+                                           </div>
+
+                                       </div>
+                                   </div>
+
+                                   {/*<FoodListPage foodList={this.state.currentFoodIDs}/>*/}
+                                   {/*<ul*/}
+                                   {/*    style={{*/}
+                                   {/*        marginTop: "10px",*/}
+                                   {/*        display: "flex",*/}
+                                   {/*        flexDirection: "row",*/}
+                                   {/*        overflowY: "hidden",*/}
+                                   {/*        whiteSpace: "nowrap",*/}
+                                   {/*        listStyleType: "none",*/}
+                                   {/*        paddingLeft: "20px",*/}
+                                   {/*        backgroundColor: "#e2e2e2",*/}
+                                   {/*        flexWrap: "nowrap",*/}
+                                   {/*        height: "70px",*/}
+                                   {/*        justifyItems: "center"*/}
+                                   {/*    }}*/}
+                                   {/*>*/}
+                                   {/*    /!*{this.state.catsFullInfo[this.state.currentActivePart].map(category => (*!/*/}
+                                   {/*    /!*    <li*!/*/}
+                                   {/*    /!*        key={category.id}*!/*/}
+                                   {/*    /!*        style={{*!/*/}
+                                   {/*    /!*            display: "inline-block",*!/*/}
+                                   {/*    /!*            margin: "20px"*!/*/}
+                                   {/*    /!*        }}*!/*/}
+                                   {/*    /!*        ref={this[category.id]}*!/*/}
+                                   {/*    /!*    >*!/*/}
+
+                                   {/*    /!*    </li>*!/*/}
+                                   {/*    /!*))}*!/*/}
+                                   {/*</ul>*/}
+
+                                   {/*<div id={'fader'}/>*/}
+
+                                   {/*---------------------------------- FOODS ----------------------------------*/}
+                                   <div style={{
+                                       height: '100%',
+                                       overflowY: 'scroll',
+                                       scrollBehavior: 'smooth',
+                                       paddingTop: '180px',
+                                   }} id={'scroller'}>
+                                       {
+                                           this.state.catsFullInfo[this.state.currentActivePart] ? Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).map(eachCat => {
+                                                   let category = this.state.catsFullInfo[this.state.currentActivePart][eachCat]
+                                                   // console.log(category.foodList)
+
+                                                   // console.log(this.state.foodList)
+                                                   let filteredFoods = this.state.foodList.filter(eachFood => {
+                                                       if (eachFood) {
+                                                           // console.log(eachFood.id)
+                                                           return category.foodList.includes(eachFood.id);
+                                                       }
+
+                                                   })
+                                                   // console.log('filtered foods')
+                                                   // console.log(filteredFoods)
+                                                   return (
+                                                       <div className={'sections '} style={{
+                                                           paddingTop: 170,
+                                                           marginTop: -130
+                                                       }} id={category['englishName']}>
+                                                           <div className={'line'}>
+                                                               <p style={{
+                                                                   fontSize: '0.9rem',
+                                                                   paddingTop: '15px'
                                                                }}
-                                                               className='categoryPageEachCategoryContainer mx-2 my-2'>
-                                                       <div style={{
-                                                           boxShadow: " 0 0 7px 0px #b9b9b9"
-                                                       }} className="categoryPageEachCategory">
-                                                           <div className="categoryPageEachCategoryImage" style={{
-                                                               backgroundImage: 'url(/img/categories/' + (eachCategory.toLowerCase().includes('pizza') ? 'pizza' : eachCategory) + '.png)',
-                                                               backgroundSize: 'cover',
-                                                               backgroundPosition: 'center',
-                                                               backgroundRepeat: 'no-repeat'
-                                                           }}/>
-                                                           <span
-                                                               className="categoryPageEachCategoryName">{persianName}</span>
+                                                                  className={'food-category-text text-black-50 IranSans'}>{category['persianName']}</p>
+
+                                                           </div>
+                                                           <div className={'mt-3 d-flex flex-wrap'}>
+
+
+                                                               {
+                                                                   filteredFoods.map(eachFood => {
+                                                                       if (eachFood) {
+                                                                           let colors = RandomColor.RandomColor(eachFood.id);
+                                                                           let timeout;
+                                                                           let isInOrderList = false;
+                                                                           // if ((typeof this.props.orderList.filter(food => food.id === eachFood.id)[0] !== "undefined")) {
+                                                                           //     isInOrderList = true;
+                                                                           // }
+                                                                           return (
+                                                                               <div onContextMenu={(e) => {
+                                                                                   e.preventDefault()
+                                                                               }}
+                                                                                    key={eachFood['id']}
+                                                                                    className='foodListEachFoodContainer animate__animated animate__fadeInDown'
+                                                                                    onClick={(e) => {
+                                                                                        // // clearTimeout(timeout)
+                                                                                        // if (eachFood.status === 'inStock') {
+                                                                                        //     // if (!isInOrderList) {
+                                                                                        //     //     this.orderScripts(eachFood.id);
+                                                                                        //     // }
+                                                                                        // }
+                                                                                        // this.setState({allowToShow: false})
+                                                                                        // if (!e.target.classList.contains('decrease') && (eachFood.status === 'inStock')) {
+                                                                                        //     this.orderScripts(eachFood.id);
+                                                                                        //     if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                                                        //         this.clickAnimation('food' + eachFood['id'])
+                                                                                        //     }
+                                                                                        // }
+                                                                                        let a = $(e.currentTarget)
+                                                                                        let expander = document.getElementById('expander')
+                                                                                        expander.style.top = "calc(100vh + " + (e.currentTarget.getBoundingClientRect().y + e.currentTarget.getBoundingClientRect().height / 2) + "px )"
+                                                                                        expander.style.left =((e.currentTarget.getBoundingClientRect().x - e.currentTarget.getBoundingClientRect().width/2)-this.expanderW/2 + "px")
+                                                                                        let duplicated = e.currentTarget.firstChild.cloneNode(true)
+                                                                                        console.log(duplicated)
+                                                                                        expander.firstChild?expander.firstChild.replaceWith(duplicated):
+                                                                                            expander.append(duplicated)
+
+                                                                                    }}
+
+                                                                                   // onTouchStart={(e) => {
+                                                                                   //     if ((eachFood.status === 'in stock' || eachFood.status === 'inStock') && !e.target.classList.contains('increase') && !e.target.classList.contains('decrease')) {
+                                                                                   //         this.pressAnimation('food' + eachFood['id'])
+                                                                                   //     }
+                                                                                   //     this.setState({
+                                                                                   //         firstPointerPosition: {
+                                                                                   //             x: e.targetTouches[0].pageX,
+                                                                                   //             y: e.targetTouches[0].pageY
+                                                                                   //         }
+                                                                                   //     })
+                                                                                   //     this.setState({allowToShow: true})
+                                                                                   //     // timeout = setTimeout(() => {
+                                                                                   //     //     if (this.state.allowToShow) {
+                                                                                   //     //         this.foodDetails(eachFood);
+                                                                                   //     //     }
+                                                                                   //     //     this.setState({allowToShow: false})
+                                                                                   //     //     clearTimeout(timeout)
+                                                                                   //     // }, 400)
+                                                                                   //
+                                                                                   // }}
+                                                                                   //
+                                                                                   // onPointerMove={(e) => {
+                                                                                   //     this.checkForMove(e)
+                                                                                   // }}
+                                                                                   // onTouchEnd={() => {
+                                                                                   //     this.setState({allowToShow: false})
+                                                                                   //     this.releaseAnimation('food' + eachFood['id'])
+                                                                                   // }}
+                                                                               >
+                                                                                   <div className='foodListEachFood'
+                                                                                        id={'food' + eachFood['id']}
+                                                                                        style={{backgroundColor: colors.background}}>
+                                                                                       {
+                                                                                           parseInt(eachFood.discount) > 0 ?
+                                                                                               <span
+                                                                                                   className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
+                                                                                               :
+                                                                                               <div/>
+                                                                                       }
+                                                                                       <div className='priceAndImage'>
+                                                                                           {
+                                                                                               (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
+                                                                                                   eachFood.discount === 0 ?
+                                                                                                       <span
+                                                                                                           className='eachFoodPrice '>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                                                       :
+                                                                                                       <div
+
+                                                                                                           className={'d-flex flex-column justify-content-center'}>
+                                                                                   <span style={{
+                                                                                       textDecoration: 'line-through',
+                                                                                       fontSize: '0.6rem',
+                                                                                       lineHeight: '1.5rem',
+                                                                                       color: '#787878'
+                                                                                   }} className='eachFoodPrice'>
+                                                                                {eachFood.price / 1000} T
+                                                                            </span>
+                                                                                                           <span
+                                                                                                               style={{fontWeight: 'bolder'}}
+                                                                                                               className='eachFoodPriceDiscount'>
+                                                                                {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
+                                                                            </span>
+                                                                                                       </div>
+
+                                                                                                   :
+                                                                                                   <span
+                                                                                                       className='outOfStockTextHolder'>
+                                                                                ناموجود
+                                                                           </span>
+                                                                                           }
+                                                                                           <div className='eachFoodImage'
+                                                                                                style={{
+                                                                                                    background: "transparent",
+                                                                                                    backgroundSize: 'cover',
+                                                                                                    backgroundPosition: 'center'
+                                                                                                }}>
+                                                                                               <img
+                                                                                                   src={eachFood['thumbnail']}
+                                                                                                   style={{
+                                                                                                       width: '100%',
+                                                                                                       height: '100%'
+                                                                                                   }}
+                                                                                                   alt={'foodImage'}/>
+                                                                                           </div>
+                                                                                       </div>
+
+                                                                                       <div
+                                                                                           className='w-100 justify-content-center d-flex'>
+                                                                                           <div className='foodName'
+                                                                                                style={{
+                                                                                                    color: colors.foreground,
+                                                                                                    fontSize: ((20 / eachFood['persianName'].length) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
+                                                                                                }}>{eachFood.persianName}</div>
+                                                                                       </div>
+                                                                                       {isInOrderList ?
+                                                                                           <div
+                                                                                               className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
+                                                                                               <div
+                                                                                                   style={{backgroundColor: colors.foreground + '50'}}
+                                                                                                   onClick={() => {
+                                                                                                       this.handleDecreaseFoodNumber(eachFood['id'])
+                                                                                                   }}
+                                                                                                   className={'decreaseFoodNumberButtonContainer decrease d-flex justify-content-center align-items-center'}>
+                                                                                                   <div
+                                                                                                       className="foodNumberIncreaseButton decrease d-flex justify-content-center align-items-center">
+                                                                                                       <svg
+                                                                                                           xmlns="http://www.w3.org/2000/svg"
+                                                                                                           width="20"
+                                                                                                           height="20"
+                                                                                                           fill="black"
+                                                                                                           className="bi bi-dash decrease"
+                                                                                                           viewBox="0 0 16 16">
+                                                                                                           <path
+                                                                                                               className={'decrease'}
+                                                                                                               d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                                       </svg>
+                                                                                                   </div>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                   style={{backgroundColor: colors.foreground + '50'}}
+                                                                                                   className={'FoodNumberHolderContainer increase d-flex justify-content-center align-items-center'}>
+                                                                           <span
+                                                                               className={'IranSans'}>{(this.props.orderList.filter(food => food.id === eachFood.id)[0] ? this.props.orderList.filter(food => food.id === eachFood.id)[0].number : 0)}</span>
+                                                                                               </div>
+                                                                                               <div
+                                                                                                   style={{backgroundColor: colors.foreground + '50'}}
+                                                                                                   onClick={() => {
+                                                                                                       this.clickAnimation(eachFood['id'])
+                                                                                                   }}
+                                                                                                   className={'increaseFoodNumberButtonContainer increase d-flex justify-content-center align-items-center'}>
+                                                                                                   <div
+                                                                                                       className="foodNumberIncreaseButton increase d-flex justify-content-center align-items-center">
+                                                                                                       <svg
+                                                                                                           xmlns="http://www.w3.org/2000/svg"
+                                                                                                           width="20"
+                                                                                                           height="20"
+                                                                                                           fill="black"
+                                                                                                           className="bi bi-plus increase "
+                                                                                                           viewBox="0 0 16 16">
+                                                                                                           <path
+                                                                                                               className={'increase'}
+                                                                                                               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                                       </svg>
+                                                                                                   </div>
+                                                                                               </div>
+                                                                                           </div>
+                                                                                           :
+                                                                                           <div
+                                                                                               className='w-100 d-flex justify-content-center'>
+                                                                                               <div
+                                                                                                   className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}
+                                                                                               </div>
+                                                                                           </div>
+                                                                                       }
+
+                                                                                   </div>
+                                                                               </div>
+                                                                           )
+                                                                       }
+                                                                   })
+
+                                                               }
+
+
+                                                               {/*{*/}
+                                                               {/*    filteredFoods.map(eachfood => {*/}
+                                                               {/*        return <h4>{eachfood['persianName']}</h4>*/}
+                                                               {/*    })*/}
+                                                               {/*}*/}
+
+                                                           </div>
+                                                           {/*<p>{this.state.catsFullInfo[this.state.currentActivePart][eachCat]}</p>*/}
                                                        </div>
-                                                   </ButtonBase>
-                                               )
-                                           })
+
+
+                                                   )
+                                               }) :
+                                               <div></div>
                                        }
+
+                                       <div style={{
+                                           height: '70vh'
+                                       }}/>
                                    </div>
 
                                </div>
 
-                               <FoodListPage foodList={this.state.currentFoodIDs}/>
+
                            </div>
 
                        }/>

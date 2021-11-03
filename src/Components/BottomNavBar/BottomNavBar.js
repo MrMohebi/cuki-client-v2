@@ -24,111 +24,112 @@ class BottomNavBar extends React.Component {
     }
 
     render() {
-        return (
-            <div className='w-100 d-flex justify-content-center position-absolute bottomNavContainer '>
-                <div className='bottomNavBarMain' onContextMenu={(e) => {
-                    e.preventDefault()
-                }}>
-
-                    {
-                        this.props.openOrdersList.length > 0 ?
-                            <Badge color='default' badgeContent={window.location.pathname === "/openOrders" ? 0 : this.props.openOrdersList.length}>
-                                <NavLink className='navLinkBottomNav' to={"/openOrders"}>
-                                    {window.location.pathname.split("/").some(ePath=> ["eachOpenOrderDetails", 'openOrders'].indexOf(ePath) !== -1)  ?
-                                        <IconButton className='BottomNavigationIcons'
-                                                    style={{
-                                                        width: `${this.state.iconSize}`,
-                                                        height: `${this.state.iconSize}`,
-                                                        background: `url(${chf})`
-                                                    }}/>
-                                        :
-                                        <IconButton className='BottomNavigationIcons'
-                                                    style={{
-                                                        width: `${this.state.iconSize}`,
-                                                        height: `${this.state.iconSize}`,
-                                                        background: `url(${cho})`
-                                                    }}/>
-                                    }
-                                </NavLink>
-                            </Badge>
-                            :
-                            null
-                    }
-                    <Badge color='secondary' badgeContent={window.location.pathname === "/bill" ? 0 : this.props.orderList.length}>
-                        <NavLink className='navLinkBottomNav' to={"/bill"}>
-                            {window.location.pathname.split("/").some(ePath=> ["bill", "payway", 'dongi'].indexOf(ePath) !== -1) ?
-                                <IconButton className='BottomNavigationIcons'
-                                            style={{
-                                                width: `${this.state.iconSize}`,
-                                                height: `${this.state.iconSize}`,
-                                                background: `url(${cf})`
-                                            }}/>
-                                :
-                                <IconButton className='BottomNavigationIcons'
-                                            style={{
-                                                width: `${this.state.iconSize}`,
-                                                height: `${this.state.iconSize}`,
-                                                background: `url(${co})`
-                                            }}/>
-                            }
-                        </NavLink>
-                    </Badge>
-
-                    <NavLink className='navLinkBottomNav' to={"/main"}>
-                        {window.location.pathname.split("/").some(ePath=> ["main", "category"].indexOf(ePath) !== -1) ?
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{
-                                            width: `${this.state.iconSize}`,
-                                            height: `${this.state.iconSize}`,
-                                            background: `url(${hf})`
-                                        }}/>
-                            :
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{
-                                            width: `${this.state.iconSize}`,
-                                            height: `${this.state.iconSize}`,
-                                            background: `url(${ho})`
-                                        }}/>
-                        }
-                    </NavLink>
-                    <NavLink className='navLinkBottomNav' to={"/likedFoods"}>
-                        {window.location.pathname.split("/").some(ePath=> ['likedFoods'].indexOf(ePath) !== -1)  ?
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{
-                                            width: `${this.state.iconSize}`,
-                                            height: `${this.state.iconSize}`,
-                                            background: `url(${hef})`
-                                        }}/>
-                            :
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{
-                                            width: `${this.state.iconSize}`,
-                                            height: `${this.state.iconSize}`,
-                                            background: `url(${heo})`
-                                        }}/>
-                        }
-                    </NavLink>
-                    <NavLink className='navLinkBottomNav' to={"/login"}>
-                        {window.location.pathname.split("/").some(ePath=> ['profile', 'eachOrderHistoryDetails', 'login', 'signup'].indexOf(ePath) !== -1)  ?
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{
-                                            width: `${this.state.iconSize}`,
-                                            height: `${this.state.iconSize}`,
-                                            background: `url(${uf})`
-                                        }}/>
-                            :
-                            <IconButton className='BottomNavigationIcons'
-                                        style={{
-                                            width: `${this.state.iconSize}`,
-                                            height: `${this.state.iconSize}`,
-                                            background: `url(${uo})`
-                                        }}/>
-                        }
-                    </NavLink>
-                </div>
-            </div>
-
-        )
+        // return (
+        //     <div className='w-100 d-flex justify-content-center position-absolute bottomNavContainer '>
+        //         <div className='bottomNavBarMain' onContextMenu={(e) => {
+        //             e.preventDefault()
+        //         }}>
+        //
+        //             {
+        //                 this.props.openOrdersList.length > 0 ?
+        //                     <Badge color='default' badgeContent={window.location.pathname === "/openOrders" ? 0 : this.props.openOrdersList.length}>
+        //                         <NavLink className='navLinkBottomNav' to={"/openOrders"}>
+        //                             {window.location.pathname.split("/").some(ePath=> ["eachOpenOrderDetails", 'openOrders'].indexOf(ePath) !== -1)  ?
+        //                                 <IconButton className='BottomNavigationIcons'
+        //                                             style={{
+        //                                                 width: `${this.state.iconSize}`,
+        //                                                 height: `${this.state.iconSize}`,
+        //                                                 background: `url(${chf})`
+        //                                             }}/>
+        //                                 :
+        //                                 <IconButton className='BottomNavigationIcons'
+        //                                             style={{
+        //                                                 width: `${this.state.iconSize}`,
+        //                                                 height: `${this.state.iconSize}`,
+        //                                                 background: `url(${cho})`
+        //                                             }}/>
+        //                             }
+        //                         </NavLink>
+        //                     </Badge>
+        //                     :
+        //                     null
+        //             }
+        //             <Badge color='secondary' badgeContent={window.location.pathname === "/bill" ? 0 : this.props.orderList.length}>
+        //                 <NavLink className='navLinkBottomNav' to={"/bill"}>
+        //                     {window.location.pathname.split("/").some(ePath=> ["bill", "payway", 'dongi'].indexOf(ePath) !== -1) ?
+        //                         <IconButton className='BottomNavigationIcons'
+        //                                     style={{
+        //                                         width: `${this.state.iconSize}`,
+        //                                         height: `${this.state.iconSize}`,
+        //                                         background: `url(${cf})`
+        //                                     }}/>
+        //                         :
+        //                         <IconButton className='BottomNavigationIcons'
+        //                                     style={{
+        //                                         width: `${this.state.iconSize}`,
+        //                                         height: `${this.state.iconSize}`,
+        //                                         background: `url(${co})`
+        //                                     }}/>
+        //                     }
+        //                 </NavLink>
+        //             </Badge>
+        //
+        //             <NavLink className='navLinkBottomNav' to={"/main"}>
+        //                 {window.location.pathname.split("/").some(ePath=> ["main", "category"].indexOf(ePath) !== -1) ?
+        //                     <IconButton className='BottomNavigationIcons'
+        //                                 style={{
+        //                                     width: `${this.state.iconSize}`,
+        //                                     height: `${this.state.iconSize}`,
+        //                                     background: `url(${hf})`
+        //                                 }}/>
+        //                     :
+        //                     <IconButton className='BottomNavigationIcons'
+        //                                 style={{
+        //                                     width: `${this.state.iconSize}`,
+        //                                     height: `${this.state.iconSize}`,
+        //                                     background: `url(${ho})`
+        //                                 }}/>
+        //                 }
+        //             </NavLink>
+        //             <NavLink className='navLinkBottomNav' to={"/likedFoods"}>
+        //                 {window.location.pathname.split("/").some(ePath=> ['likedFoods'].indexOf(ePath) !== -1)  ?
+        //                     <IconButton className='BottomNavigationIcons'
+        //                                 style={{
+        //                                     width: `${this.state.iconSize}`,
+        //                                     height: `${this.state.iconSize}`,
+        //                                     background: `url(${hef})`
+        //                                 }}/>
+        //                     :
+        //                     <IconButton className='BottomNavigationIcons'
+        //                                 style={{
+        //                                     width: `${this.state.iconSize}`,
+        //                                     height: `${this.state.iconSize}`,
+        //                                     background: `url(${heo})`
+        //                                 }}/>
+        //                 }
+        //             </NavLink>
+        //             <NavLink className='navLinkBottomNav' to={"/login"}>
+        //                 {window.location.pathname.split("/").some(ePath=> ['profile', 'eachOrderHistoryDetails', 'login', 'signup'].indexOf(ePath) !== -1)  ?
+        //                     <IconButton className='BottomNavigationIcons'
+        //                                 style={{
+        //                                     width: `${this.state.iconSize}`,
+        //                                     height: `${this.state.iconSize}`,
+        //                                     background: `url(${uf})`
+        //                                 }}/>
+        //                     :
+        //                     <IconButton className='BottomNavigationIcons'
+        //                                 style={{
+        //                                     width: `${this.state.iconSize}`,
+        //                                     height: `${this.state.iconSize}`,
+        //                                     background: `url(${uo})`
+        //                                 }}/>
+        //                 }
+        //             </NavLink>
+        //         </div>
+        //     </div>
+        //
+        // )
+        return <div></div>
     }
 }
 

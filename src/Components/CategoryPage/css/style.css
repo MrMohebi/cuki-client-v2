@@ -2,7 +2,7 @@
     flex: 1;
 }
 
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 380px) {
 
     .categoryPageEachCategoryImage {
         height: 35px !important;
@@ -77,7 +77,7 @@
 
 .categoryPageEachCategory {
     transition: all 0.2s ease;
-    height: 95px;
+    height: 86px;
     width: 85px;
     background-color: white;
     border: none;
@@ -89,7 +89,7 @@
 
 .categoryPageEachCategory:active {
     transition: all 0.2s ease;
-    height: 95px;
+    height: 86px;
     width: 85px;
     background-color: white;
     border: none;
@@ -126,10 +126,33 @@
     font-size: 0.7rem;
     font-family: AppIranSans;
     font-weight: bold;
-    margin-top: 8px;
+    margin-top: 5px;
     text-decoration: none;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     text-underline-position: under;
+}
+*::-webkit-scrollbar{
+    /*width: 8px;*/
+    /*background: #e8e8e8;*/
+    /*z-index: 9999999;*/
+}
+*::-webkit-scrollbar-thumb{
+    background: #b9b9b9;
+    border-radius: 10px;
+    z-index: 9999999;
+
+}
+
+.sections-holder{
+    height: 100%;
+    padding-top: 1rem;
+    position: relative;
+}
+*{
+    scroll-behavior: smooth;
+}
+#top-nav-container{
+    -webkit-backdrop-filter: blur(20px);
 }
