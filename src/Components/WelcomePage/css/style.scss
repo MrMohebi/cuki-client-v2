@@ -241,6 +241,21 @@ body {
   top: 0;
   z-index: 99;
 }
+.expended{
+  max-width: 500px;
+  max-height: 85vh;
+}
+.expander-overlay{
+  top: 100%;
+  height: 100vh;
+  width: 100vh;
+  background: rgba(0,0,0,0.5);
+  position: absolute;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: .3s ease;
+}
 
 
 

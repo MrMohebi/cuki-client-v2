@@ -24,6 +24,7 @@ export const Swipeable = ({children, style, ...props}) => {
 }
 
 class WelcomePage extends React.Component {
+
     state = {
         foodList: ls.getLSResFoods(),
         currentFoodIDs: [],
@@ -47,11 +48,14 @@ class WelcomePage extends React.Component {
             'چشم، الان میام'
         ]
     }
-    expanderW=300;
+    expanderW = 300;
 
     constructor(props) {
         super(props);
         this.Timer = React.createRef()
+        this.lastExpanderPosition = React.createRef();
+        this.lastClickedFood = React.createRef();
+
     }
 
 
@@ -202,36 +206,85 @@ class WelcomePage extends React.Component {
     swipeLeft = () => {
         this.props.history.push("/likedFoods")
     }
-    openExpander = (e)=>{
+    openExpander = (e, open) => {
+        let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
         let expander = document.getElementById('expander')
-        expander.style.height = this.expanderW + 'px'
-        expander.style.width = this.expanderW+ 'px'
-        expander.style.top = "calc(100vh + " + (e.currentTarget.getBoundingClientRect().y-13) + "px )"
-        let duplicated = e.currentTarget.firstChild.cloneNode(true)
-        let offset = 0;
-        if (window.innerWidth>800){
-            offset = window.innerWidth - 800
-            console.log(offset)
+        let overlay = document.getElementById('expander-overlay')
+        if (open) {
+            mainContainer.style.overflow = 'hidden'
+            expander.style.height = this.expanderW + 'px'
+            expander.style.width = this.expanderW + 'px'
+            this.lastExpanderPosition.current = {
+                top: '',
+                left: ''
+            }
+            let offset = 0;
+            if (window.innerWidth > 800) {
+                offset = window.innerWidth - 800
+                console.log(offset)
+            }
+            expander.style.transition = '0s ease'
+            expander.style.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - 13) + "px )"
+            this.lastExpanderPosition.current.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - 13) + "px )"
+            expander.style.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - this.expanderW / 2 + "px")
+            this.lastExpanderPosition.current.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - this.expanderW / 2 + "px")
+            expander.style.transition = '.3s ease'
+
+            expander.style.pointerEvents = 'all'
+
+            overlay.style.opacity = 1;
+            overlay.style.pointerEvents = 'all';
+            // e.currentTarget.style.opacity = 0
+            let duplicated = e.currentTarget.firstChild.cloneNode(true)
+            e.currentTarget.firstChild.style.opacity = 0
+            this.lastClickedFood.current = e.currentTarget.firstChild;
+
+            duplicated.style.marginTop = '0px';
+            duplicated.style.transition = '.4s ease';
+            duplicated.classList.add('expended');
+            // duplicated.firstChild.children[1].
+            duplicated.querySelector('.priceAndImage').children[1].style.margin = '10px'
+            setTimeout(() => {
+                expander.style.left = ((window.innerWidth / 2 - this.expanderW / 2) - offset / 2) + 'px';
+                expander.style.top = "calc(100vh + " + (window.innerHeight / 2 - this.expanderW / 2) + "px )";
+                expander.style.width = (window.innerWidth - offset) + 'px'
+                expander.style.left = '0';
+                expander.style.height = window.innerHeight + 'px';
+                expander.style.top = '100%';
+                setTimeout(() => {
+                    duplicated.style.height = window.innerHeight + 'px';
+                    duplicated.style.width = window.innerWidth + 'px';
+                }, 0)
+
+            }, 0)
+
+            // console.log(e.currentTarget.getBoundingClientRect().x-offset)
+            expander.firstChild ? expander.firstChild.replaceWith(duplicated) :
+                expander.append(duplicated)
+
+            setTimeout(() => {
+                // this.openExpander(null, false)
+                // console.log(this.lastExpanderPosition)
+            }, 2000)
+        } else {
+            let duplicated = document.getElementById('expander').firstChild
+            overlay.style.pointerEvents = 'none'
+            expander.style.left = this.lastExpanderPosition.current.left
+            expander.style.top = this.lastExpanderPosition.current.top
+            expander.style.width = this.expanderW + 'px'
+            expander.style.height = this.expanderW + 'px'
+            duplicated.style.height = '';
+            duplicated.style.width = '';
+            expander.style.pointerEvents = 'none'
+            this.lastClickedFood.current.style.opacity = 1
+            duplicated.querySelector('.priceAndImage').children[1].style.margin = '0px'
+            setTimeout(() => {
+                overlay.style.opacity = 0;
+                duplicated.style.opacity = 0
+            }, 300)
+
         }
-        expander.style.left =((e.currentTarget.getBoundingClientRect().x-offset/2)+e.currentTarget.getBoundingClientRect().width/2 - this.expanderW/2+ "px")
-        duplicated.style.marginTop = '0px';
-        setTimeout(()=>{
-            expander.style.left = ((window.innerWidth/2 - this.expanderW/2)-offset/2)+'px'
-            expander.style.top = "calc(100vh + " + (window.innerHeight/2 - this.expanderW/2) + "px )"
-            expander.style.width = (window.innerWidth - offset)+'px'
-            expander.style.left = 0
-            expander.style.height = window.innerHeight + 'px'
-            expander.style.top = '100vh'
 
-            setTimeout(()=>{
-                expander.firstChild.style.height = window.innerHeight + 'px'
-            },200)
-
-        },2000)
-
-        // console.log(e.currentTarget.getBoundingClientRect().x-offset)
-        expander.firstChild?expander.firstChild.replaceWith(duplicated):
-            expander.append(duplicated)
     }
 
 
@@ -245,18 +298,27 @@ class WelcomePage extends React.Component {
                                scrollSnapType: 'y mandatory',
                                position: 'relative'
                            }}>
-                               <div id={'expander'} className={'expander'}
+                               <div id={'expander-overlay'} className={'expander-overlay'}
+
+
+                               />
+                               <div id={'expander'} className={'expander px-3 py-3'}
+                                    onClick={(e) => {
+                                        if (e.target.classList.contains('expander')) {
+                                            this.openExpander(null, false)
+                                        }
+                                    }}
                                     style={
                                         {
                                             position: "absolute",
                                             background: "transparent",
                                             width: this.expanderW,
                                             height: this.expanderW,
-                                            zIndex:9999,
-                                            display:'flex',
-                                            justifyContent:'center',
-                                            alignItems:'center',
-                                            transition:'.3s ease'
+                                            zIndex: 9999,
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            transition: '.3s ease'
 
                                         }
                                     }
@@ -406,7 +468,7 @@ class WelcomePage extends React.Component {
                                        position: 'absolute',
                                        top: '0',
                                        background: 'rgba(255,255,255,0.84)',
-                                       backdropFilter: 'blur(20px)'
+                                       // backdropFilter: 'blur(20px)'
                                    }}>
 
                                        <div className={' pb-1'}>
@@ -631,7 +693,7 @@ class WelcomePage extends React.Component {
                                                                                         //         this.clickAnimation('food' + eachFood['id'])
                                                                                         //     }
                                                                                         // }
-                                                                                        this.openExpander(e)
+                                                                                        this.openExpander(e, true)
 
 
                                                                                     }}
@@ -673,7 +735,7 @@ class WelcomePage extends React.Component {
                                                                                                <span
                                                                                                    className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
                                                                                                :
-                                                                                               <div/>
+                                                                                               null
                                                                                        }
                                                                                        <div className='priceAndImage'>
                                                                                            {
@@ -718,7 +780,8 @@ class WelcomePage extends React.Component {
                                                                                                    src={eachFood['thumbnail']}
                                                                                                    style={{
                                                                                                        width: '100%',
-                                                                                                       height: '100%'
+                                                                                                       height: '100%',
+                                                                                                       borderRadius: '50px'
                                                                                                    }}
                                                                                                    alt={'foodImage'}/>
                                                                                            </div>
