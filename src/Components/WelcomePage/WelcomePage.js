@@ -55,7 +55,6 @@ class WelcomePage extends React.Component {
         this.Timer = React.createRef()
         this.lastExpanderPosition = React.createRef();
         this.lastClickedFood = React.createRef();
-
     }
 
 
