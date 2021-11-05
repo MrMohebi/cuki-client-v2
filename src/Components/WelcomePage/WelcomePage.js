@@ -207,6 +207,7 @@ class WelcomePage extends React.Component {
         this.props.history.push("/likedFoods")
     }
     openExpander = (e, open) => {
+        console.log(document.body.getBoundingClientRect().width)
         let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
         let expander = document.getElementById('expander')
         let overlay = document.getElementById('expander-overlay')
@@ -252,8 +253,9 @@ class WelcomePage extends React.Component {
                 expander.style.height = window.innerHeight + 'px';
                 expander.style.top = '100%';
                 setTimeout(() => {
-                    duplicated.style.height = window.innerHeight + 'px';
-                    duplicated.style.width = window.innerWidth + 'px';
+
+                    // duplicated.style.height = document.body.getBoundingClientRect().width + 'px';
+                    // duplicated.style.width = document.body.getBoundingClientRect().width + 'px';
                 }, 0)
 
             }, 0)
