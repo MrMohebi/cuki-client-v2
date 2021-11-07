@@ -303,12 +303,13 @@ class WelcomePage extends React.Component {
                 image.style.right = '10px'
                 image.style.top = '10px'
 
-                price.style.top = '10px'
-                price.style.left = '10px'
+                price.style.top = '50px'
+                // price.style.left = '0px'
+                price.style.right = '120px'
 
                 name.style.width = '0%'
                 name.style.right = '120px'
-                name.style.top = '30px'
+                name.style.top = '15px'
 
                 details.style.top = '90px'
                 details.style.textAlign = 'right'
@@ -351,7 +352,7 @@ class WelcomePage extends React.Component {
             image.style.top = '0px'
 
             price.style.top = '0px'
-            price.style.left = '0px'
+            price.style.right = '65px'
 
             name.style.width = '100%'
             name.style.right = '0px'
@@ -840,7 +841,8 @@ class WelcomePage extends React.Component {
                                                                                                            id={'food-price'}
                                                                                                            style={{
                                                                                                                position: 'absolute',
-                                                                                                               left: 0,
+                                                                                                               // left: 0,
+                                                                                                               right:'70px',
                                                                                                                top: 0
 
                                                                                                            }}
@@ -887,7 +889,8 @@ class WelcomePage extends React.Component {
 
                                                                                                 }}>
                                                                                                <img
-                                                                                                   src={eachFood['thumbnail']}
+                                                                                                   // src={eachFood['thumbnail']}
+                                                                                                   src={'https://cdn0.iconfinder.com/data/icons/foody-icons/32/FoodyIcons_color-06-512.png'}
                                                                                                    style={{
                                                                                                        width: '100%',
                                                                                                        height: '100%',
