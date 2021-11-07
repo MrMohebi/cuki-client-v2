@@ -425,7 +425,7 @@ class WelcomePage extends React.Component {
                                </div>
                                <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder'}>
                                    <p className="welcomePageHeader">
-                                       <PhotoSlider/>
+                                       {/*<PhotoSlider/>*/}
 
                                        <span
                                 className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
