@@ -242,8 +242,8 @@ body {
   z-index: 99;
 }
 .expended{
-  max-width: 500px;
-  max-height: 85vh;
+  //max-width: 500px;
+  //max-height: 85vh;
 }
 .expander-overlay{
   top: 100%;
@@ -256,6 +256,7 @@ body {
   opacity: 0;
   transition: .3s ease;
 }
+
 
 
 

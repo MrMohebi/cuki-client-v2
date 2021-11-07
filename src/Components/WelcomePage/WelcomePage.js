@@ -15,6 +15,8 @@ import ColorThief from "colorthief/dist/color-thief";
 import ActiveMenuLink from "active-menu-link";
 import scrollSpy from 'simple-scrollspy'
 import * as RandomColor from "../../functions/RandomColor";
+import gsap from "gsap";
+import PhotoSlider from "./Components/PhotoSlider";
 
 
 const CT = new ColorThief();
@@ -72,6 +74,7 @@ class WelcomePage extends React.Component {
 
 
     componentDidMount() {
+
 
 
         const options = {
@@ -209,37 +212,44 @@ class WelcomePage extends React.Component {
         let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
         let expander = document.getElementById('expander')
         let overlay = document.getElementById('expander-overlay')
+
         if (open) {
+            expander.style.transition = '0s ease'
+
             mainContainer.style.overflow = 'hidden'
+
             expander.style.height = this.expanderW + 'px'
             expander.style.width = this.expanderW + 'px'
+
             this.lastExpanderPosition.current = {
                 top: '',
                 left: ''
             }
+
             let offset = 0;
             if (window.innerWidth > 800) {
                 offset = window.innerWidth - 800
                 console.log(offset)
             }
-            expander.style.transition = '0s ease'
+
             expander.style.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - 13) + "px )"
             this.lastExpanderPosition.current.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - 13) + "px )"
             expander.style.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - this.expanderW / 2 + "px")
             this.lastExpanderPosition.current.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - this.expanderW / 2 + "px")
-            expander.style.transition = '.3s ease'
 
+            expander.style.transition = '.3s ease'
             expander.style.pointerEvents = 'all'
 
-            overlay.style.opacity = 1;
+            overlay.style.opacity = '1';
             overlay.style.pointerEvents = 'all';
             // e.currentTarget.style.opacity = 0
             let duplicated = e.currentTarget.firstChild.cloneNode(true)
+            duplicated.style.transition = '0.3s ease';
+
             e.currentTarget.firstChild.style.opacity = 0
             this.lastClickedFood.current = e.currentTarget.firstChild;
 
             duplicated.style.marginTop = '0px';
-            duplicated.style.transition = '.4s ease';
             duplicated.classList.add('expended');
             // duplicated.firstChild.children[1].
             duplicated.querySelector('.priceAndImage').children[1].style.margin = '10px'
@@ -250,10 +260,23 @@ class WelcomePage extends React.Component {
                 expander.style.left = '0';
                 expander.style.height = window.innerHeight + 'px';
                 expander.style.top = '100%';
+
+
+                // gsap.to(duplicated, {
+                //     height: window.innerHeight,
+                //     borderRadius: 0,
+                //     minHeight: window.innerHeight,
+                //     width: window.innerWidth,
+                //     // duration: 0.3,
+                //     // ease:'power.out'
+                // })
                 setTimeout(() => {
-                    duplicated.style.height = window.innerHeight + 'px';
-                    duplicated.style.width = window.innerWidth + 'px';
-                }, 0)
+                    // this.openExpander(null, false)
+                }, 2000)
+                duplicated.style.height = document.body.getBoundingClientRect().width - 50 + 'px';
+                duplicated.style.width = document.body.getBoundingClientRect().width - 50 + 'px';
+                // duplicated.style.borderRadius = 0;
+
 
             }, 0)
 
@@ -264,7 +287,37 @@ class WelcomePage extends React.Component {
             setTimeout(() => {
                 // this.openExpander(null, false)
                 // console.log(this.lastExpanderPosition)
-            }, 2000)
+                let image = duplicated.querySelector('#food-image')
+                let price = duplicated.querySelector('#food-price')
+                let name = duplicated.querySelector('#food-name')
+                let details = duplicated.querySelector('#food-details')
+                let elementTransitions = '.3s ease'
+                // image.style.marginRight = (document.body.getBoundingClientRect().width/2 - 50)+'px'
+                image.style.setProperty('transition', elementTransitions, 'important')
+                price.style.setProperty('transition', elementTransitions, 'important')
+                name.style.setProperty('transition', elementTransitions, 'important')
+                details.style.setProperty('transition', elementTransitions, 'important')
+
+                image.style.setProperty('height', '80px', 'important')
+                image.style.setProperty('width', '80px', 'important')
+                image.style.right = '10px'
+                image.style.top = '10px'
+
+                price.style.top = '10px'
+                price.style.left = '10px'
+
+                name.style.width = '0%'
+                name.style.right = '120px'
+                name.style.top = '30px'
+
+                details.style.top = '90px'
+                details.style.textAlign = 'right'
+                details.style.padding = '20px'
+                details.style.whiteSpace = 'normal'
+
+            }, 50)
+
+
         } else {
             let duplicated = document.getElementById('expander').firstChild
             overlay.style.pointerEvents = 'none'
@@ -275,12 +328,45 @@ class WelcomePage extends React.Component {
             duplicated.style.height = '';
             duplicated.style.width = '';
             expander.style.pointerEvents = 'none'
+            duplicated.style.borderRadius = '20px 35px 20px 20px';
+
+
             this.lastClickedFood.current.style.opacity = 1
             duplicated.querySelector('.priceAndImage').children[1].style.margin = '0px'
+
+            let image = duplicated.querySelector('#food-image')
+            let price = duplicated.querySelector('#food-price')
+            let name = duplicated.querySelector('#food-name')
+            let details = duplicated.querySelector('#food-details')
+            let elementTransitions = '.3s ease'
+            // image.style.marginRight = (document.body.getBoundingClientRect().width/2 - 50)+'px'
+            image.style.setProperty('transition', elementTransitions, 'important')
+            price.style.setProperty('transition', elementTransitions, 'important')
+            name.style.setProperty('transition', elementTransitions, 'important')
+            details.style.setProperty('transition', elementTransitions, 'important')
+
+            image.style.setProperty('height', '', 'important')
+            image.style.setProperty('width', '', 'important')
+            image.style.right = '0px'
+            image.style.top = '0px'
+
+            price.style.top = '0px'
+            price.style.left = '0px'
+
+            name.style.width = '100%'
+            name.style.right = '0px'
+            name.style.top = '60px'
+
+            details.style.top = '90px'
+            details.style.textAlign = 'center'
+            details.style.padding = '0px'
+            details.style.whiteSpace = 'nowrap'
+
             setTimeout(() => {
                 overlay.style.opacity = 0;
                 duplicated.style.opacity = 0
             }, 300)
+
 
         }
 
@@ -297,11 +383,17 @@ class WelcomePage extends React.Component {
                                scrollSnapType: 'y mandatory',
                                position: 'relative'
                            }}>
-                               <div id={'expander-overlay'} className={'expander-overlay'}
+                               <div id={'expander-overlay'} className={'expander-overlay'}>
+                                   <div
+                                       className={'close-button d-flex flex-row-reverse align-items-center justify-content-between'}>
+                                       <i className={'fa fa-times'}/>
+                                       <span>بستن</span>
+                                   </div>
+
+                               </div>
 
 
-                               />
-                               <div id={'expander'} className={'expander px-3 py-3'}
+                               <div id={'expander'} className={'expander '}
                                     onClick={(e) => {
                                         if (e.target.classList.contains('expander')) {
                                             this.openExpander(null, false)
@@ -333,7 +425,9 @@ class WelcomePage extends React.Component {
                                </div>
                                <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder'}>
                                    <p className="welcomePageHeader">
-                            <span
+                                       <PhotoSlider/>
+
+                                       <span
                                 className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
                                        <span> app</span>
                                    </p>
@@ -736,11 +830,20 @@ class WelcomePage extends React.Component {
                                                                                                :
                                                                                                null
                                                                                        }
-                                                                                       <div className='priceAndImage'>
+                                                                                       <div style={{
+                                                                                           minHeight: '50px'
+                                                                                       }} className='priceAndImage'>
                                                                                            {
                                                                                                (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
                                                                                                    eachFood.discount === 0 ?
                                                                                                        <span
+                                                                                                           id={'food-price'}
+                                                                                                           style={{
+                                                                                                               position: 'absolute',
+                                                                                                               left: 0,
+                                                                                                               top: 0
+
+                                                                                                           }}
                                                                                                            className='eachFoodPrice '>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
@@ -748,12 +851,15 @@ class WelcomePage extends React.Component {
                                                                                                        <div
 
                                                                                                            className={'d-flex flex-column justify-content-center'}>
-                                                                                   <span style={{
-                                                                                       textDecoration: 'line-through',
-                                                                                       fontSize: '0.6rem',
-                                                                                       lineHeight: '1.5rem',
-                                                                                       color: '#787878'
-                                                                                   }} className='eachFoodPrice'>
+
+                                                                                                           <span
+                                                                                                               style={{
+                                                                                                                   textDecoration: 'line-through',
+                                                                                                                   fontSize: '0.6rem',
+                                                                                                                   lineHeight: '1.5rem',
+                                                                                                                   color: '#787878'
+                                                                                                               }}
+                                                                                                               className='eachFoodPrice'>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
                                                                                                            <span
@@ -769,11 +875,16 @@ class WelcomePage extends React.Component {
                                                                                 ناموجود
                                                                            </span>
                                                                                            }
-                                                                                           <div className='eachFoodImage'
+                                                                                           <div id={'food-image'}
+                                                                                                className='eachFoodImage'
                                                                                                 style={{
                                                                                                     background: "transparent",
                                                                                                     backgroundSize: 'cover',
-                                                                                                    backgroundPosition: 'center'
+                                                                                                    backgroundPosition: 'center',
+                                                                                                    position: 'absolute',
+                                                                                                    right: '0px',
+                                                                                                    top: '0px'
+
                                                                                                 }}>
                                                                                                <img
                                                                                                    src={eachFood['thumbnail']}
@@ -786,14 +897,20 @@ class WelcomePage extends React.Component {
                                                                                            </div>
                                                                                        </div>
 
-                                                                                       <div
-                                                                                           className='w-100 justify-content-center d-flex'>
-                                                                                           <div className='foodName'
-                                                                                                style={{
-                                                                                                    color: colors.foreground,
-                                                                                                    fontSize: ((20 / eachFood['persianName'].length) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
-                                                                                                }}>{eachFood.persianName}</div>
-                                                                                       </div>
+                                                                                       {/*<div*/}
+                                                                                       {/*    // className='w-100 justify-content-center d-flex'>*/}
+                                                                                       <span id={'food-name'}
+                                                                                             className='foodName'
+                                                                                             style={{
+                                                                                                 width: '100%',
+                                                                                                 top: '60px',
+                                                                                                 overflow: 'visible',
+                                                                                                 right: 0,
+                                                                                                 position: 'absolute',
+                                                                                                 color: colors.foreground,
+                                                                                                 fontSize: ((20 / eachFood['persianName'].length) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
+                                                                                             }}>{eachFood.persianName}</span>
+                                                                                       {/*</div>*/}
                                                                                        {isInOrderList ?
                                                                                            <div
                                                                                                className={'foodNumberIncreaseDecreaseContainer  increase highBrightness d-flex flex-row justify-content-center  mt-3 animate__animated animate__fadeIn animate__faster'}>
@@ -849,9 +966,16 @@ class WelcomePage extends React.Component {
                                                                                            :
                                                                                            <div
                                                                                                className='w-100 d-flex justify-content-center'>
-                                                                                               <div
-                                                                                                   className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' ') : ''}
-                                                                                               </div>
+                                                                                               <span id={'food-details'}
+                                                                                                     style={{
+                                                                                                         width: '100%',
+                                                                                                         right: 0,
+                                                                                                         position: 'absolute',
+                                                                                                         top: '90px',
+                                                                                                         overflow: 'hidden'
+                                                                                                     }}
+                                                                                                     className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' - ') : ''}
+                                                                                               </span>
                                                                                            </div>
                                                                                        }
 
