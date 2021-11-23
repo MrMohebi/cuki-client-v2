@@ -161,7 +161,7 @@ const Expander = () => {
             <div id={'expander-overlay'} className={'expander-overlay'}/>
 
 
-            <div id={'expander'} className={'expander '}
+            <div id={'expander'} className={'expander'}
 
                  onClick={(e) => {
                      if (e.target.classList.contains('expander')) {
@@ -178,7 +178,8 @@ const Expander = () => {
                          display: 'flex',
                          justifyContent: 'center',
                          alignItems: 'center',
-                         transition: '.3s ease'
+                         transition: '.3s ease',
+                         pointerEvents:'none'
                      }
                  }
             />

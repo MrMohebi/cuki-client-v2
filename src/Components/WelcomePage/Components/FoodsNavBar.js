@@ -116,7 +116,7 @@ const FoodsNavBar = (props) => {
                 fontSize: 20
             }}
                         onClick={() => {
-                            document.getElementById('category-scroller').scrollBy(-100, 0)
+                            document.getElementById('category-scroller').scrollBy(100, 0)
                         }}
             >
                 <i className="fas fa-angle-right " style={{
