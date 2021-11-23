@@ -1,42 +1,92 @@
 import React from 'react';
 
-const PhotoSlider = () => {
+const PhotoSlider = (props) => {
     return (
-        <div style={{
+        <div id={'photo-slider'} style={{
+            position:'relative',
             width:'100%',
-            overflowX:'scroll',
-            height:'300px',
-            scrollSnapType:'x mandatory',
-            display:'flex',
-            flexFlow:'row'
+            height:'200px',
+            marginTop:'200px',
+            paddingRight:'10px',
+            paddingLeft:'10px',
         }}>
+            <div
+                onClick={()=>{
+                }}
+                style={{
+                    cursor:'pointer',
+                    height:"100%",
+                    width:'50px',
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    position:'absolute',
+                    left:'10px',
+                    color:'white',
+                    fontSize:'2rem',
+                    zIndex:5,
+                    background: 'linear-gradient(to right, #00000087 00%, rgba(51, 51, 51, 0))'
+                }}
+            >
+                <i className="fas fa-angle-left"/>
+            </div>
 
-            <div style={{
-                minHeight:300,
-                minWidth:300,
-                background:'red',
-                scrollSnapAlign:'center',
-                marginLeft:20,
-                marginRight:20,
-            }}/>
-            <div style={{
-                minHeight:300,
-                minWidth:300,
-                background:'red',
-                scrollSnapAlign:'center',
-                marginLeft:20,
-                marginRight:20,
-            }}/>
-            <div style={{
-                minHeight:300,
-                minWidth:300,
-                background:'red',
-                scrollSnapAlign:'center',
-                marginLeft:20,
-                marginRight:20,
-            }}/>
-            
+            <div className={'photo-slider-inner'}  style={{
+                width:'100%',
+                overflowX:'scroll',
+                overflowY:'hidden',
+                height:'200px',
+                scrollSnapType:'x mandatory',
+                display:'flex',
+                flexFlow:'row',
+                position:"relative",
+                // justifyContent:'center'
+            }}>
+
+                {props.images.map(eachURL=>{
+                    return(
+                        <div style={{
+                            minHeight:200,
+                            minWidth:200,
+                            height:200,
+                            width:200,
+                            backgroundImage:'url('+eachURL+')',
+                            scrollSnapAlign:'center',
+                            marginLeft:5,
+                            marginRight:5,
+                            borderRadius:10
+                        }}/>
+                    )
+                })}
+
+
+
+            </div>
+            <div
+                onClick={()=>{
+                    console.log('holad')
+                }}
+                style={{
+                    cursor:'pointer',
+                    height:"100%",
+                    width:'50px',
+                    // background:'black',
+                    display:'flex',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    position:'absolute',
+                    right:'10px',
+                    top:'0',
+                    color:'white',
+                    fontSize:'2rem',
+                    zIndex:5,
+                    background: 'linear-gradient(to left, #00000087 00%, rgba(51, 51, 51, 0))'
+                }}
+            >
+                <i className="fas fa-angle-right"/>
+            </div>
         </div>
+
     );
 };
 

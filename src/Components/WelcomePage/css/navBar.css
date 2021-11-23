@@ -1,0 +1,10 @@
+#category-scroller:after {
+  content: "";
+  height: 100%;
+  top: 0;
+  right: 0;
+  width: 50px;
+  background: rebeccapurple;
+}
+
+/*# sourceMappingURL=navBar.css.map */

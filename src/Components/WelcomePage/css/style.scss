@@ -1,3 +1,15 @@
+@import "foods";
+@import "navBar";
+
+*{
+  scroll-behavior: smooth;
+}
+*::-webkit-scrollbar-thumb{
+  background: #b9b9b9;
+  border-radius: 10px;
+  z-index: 9999999;
+}
+
 .welcomePageHeader {
   font-family: Eurose, serif;
   font-size: 30px;
@@ -140,7 +152,7 @@ body {
 .active-part{
   border: solid 1px #a7a7a7 !important;
   transform: translateY(-15px) !important;
-  box-shadow: #c1c1c1 1px 4px 8px 0px !important;
+  box-shadow: #c1c1c1 1px 4px 8px 0 !important;
 }
 .donat {
   text-align: center;
@@ -213,20 +225,20 @@ body {
     background: rebeccapurple;
     //border: 1px solid rgb(167, 167, 167) !important;
     transform: translateY(-10px) !important;
-    box-shadow: rgb(219 219 219) 0 0 6px !important;
+    box-shadow: #999999 0 0 6px 2px !important;
   }
 }
 
 .food-category-text{
   width: auto;
-  font-family: IRANSans;
+  font-family: IRANSans, serif;
   padding-top: 10px;
   background: white;
   padding-right: 10px;
   padding-left: 10px;
 }
 .line{
-  height: 0px;
+  height: 0;
   width: 100%;
   border: 1px solid #ededed;
   display: flex;
@@ -258,6 +270,17 @@ body {
   transition: .3s ease;
 }
 
+
+// expander
+
+.expended{
+  max-width: 500px;
+}
+.photo-slider-inner{
+  &::-webkit-scrollbar{
+    display: none;
+  }
+}
 
 
 
