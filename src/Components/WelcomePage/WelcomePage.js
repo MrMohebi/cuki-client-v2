@@ -26,6 +26,7 @@ class WelcomePage extends React.Component {
         resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
         resInfo: ls.getLSResInfo(),
     }
+
     constructor(props) {
         super(props);
     }
@@ -76,7 +77,7 @@ class WelcomePage extends React.Component {
 
     render() {
         return (
-            <div className='welcomePageMainContainerCover w-100 h-100' style={{
+            <div id={'welcome-page-main-container'} className='welcomePageMainContainerCover w-100 h-100' style={{
                 scrollSnapType: 'y mandatory',
                 position: 'relative'
             }}>
@@ -192,14 +193,38 @@ class WelcomePage extends React.Component {
                     scrollSnapAlign: 'center',
                     paddingTop: 0
                 }}>
-                    <div className={' pb-1'}>
-                        <span className={'IranSans mt-3'}>دسته بندی</span>
+                    <div style={{
+                    }}>
+                        <div className={' pb-1'} style={{
+                            position: 'relative',
+                            height:'35px'
+                        }}>
+                            <div onClick={
+                                () => {
+                                    document.getElementById('welcome-page-main-container').scrollBy(0, -5000)
+                                }
+                            }>
+                                <i className={'fas fa-angle-double-up'} style={{
+                                    position: 'absolute',
+                                    right: 10,
+                                    top: 5,
+                                    width: 10,
+                                    height: 10
+                                }}
+
+
+                                />
+                            </div>
+
+                            <span className={'IranSans mt-3'}>دسته بندی</span>
+                        </div>
+
+                        <FoodsNavBar catsFullInfo={this.state.catsFullInfo} currentActivePart={this.state.currentActivePart}
+                                     setState={(object) => {
+                                         this.setState(object)
+                                     }}/>
                     </div>
 
-                    <FoodsNavBar catsFullInfo={this.state.catsFullInfo} currentActivePart={this.state.currentActivePart}
-                                 setState={(object) => {
-                                     this.setState(object)
-                                 }}/>
 
                     <FoodList catsFullInfo={this.state.catsFullInfo} currentActivePart={this.state.currentActivePart}
                               foodList={this.state.foodList} randomColors={this.randomColors}

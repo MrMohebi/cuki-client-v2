@@ -10,10 +10,9 @@ const FoodList = (props) => {
         "#fff1da",
         "#D4EBEF",
     ]
-
     return (
         <div style={{
-            height: '100%',
+            height: 'calc(100% - 121px)',
             overflowY: 'scroll',
             scrollBehavior: 'smooth',
             paddingTop: '180px',

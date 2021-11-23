@@ -10,7 +10,8 @@ const FoodsNavBar = (props) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            flexFlow: 'row'
+            flexFlow: 'row',
+            height:'101px'
         }}>
             <ButtonBase style={{
                 width: '7.5%',
