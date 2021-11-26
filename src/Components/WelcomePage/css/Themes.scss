@@ -1,0 +1,95 @@
+
+.light-wood {
+  $primary-color: #6F432A;
+  $secondary-color: #DEB886;
+  $background-color: #98633B;
+  $text-color: #F7E5D1;
+  background: $background-color;
+
+  #category-scroller-outer {
+    background-color: $secondary-color;
+
+    #nav-right-shadow {
+      background: linear-gradient(to left, $secondary-color, rgba(255, 241, 218, 0)) !important;
+    }
+
+    #nav-left-shadow {
+      background: linear-gradient(to right, $secondary-color, rgba(255, 241, 218, 0)) !important;
+    }
+  }
+
+  .welcomePageFrames1 {
+    background: $secondary-color;
+  }
+
+  .welcomePageFrames2 {
+    background: $secondary-color;
+  }
+
+  .openIcons {
+    background-color: $primary-color;
+    border: solid 1px #DEB886 !important;
+    box-shadow: #6f432a 0 0 0 0 !important;
+    span {
+      color: $text-color;
+    }
+  }
+
+  .active-part {
+    border: solid 1px #DEB886 !important;
+    box-shadow: #6f432a 1px 4px 8px 0 !important;
+  }
+
+  .navbar-navigation-btn {
+    color: $text-color;
+  }
+
+  .cat-text-placeholder {
+    color: $text-color;
+  }
+
+  .food-category-text {
+    color: $text-color !important;
+  }
+
+  .food-section {
+    background-color: $secondary-color !important;
+  }
+
+  .foodListEachFood {
+    background-color: $primary-color !important;
+    box-shadow: 0 0 5px 0 #000000;
+
+    .eachFoodImage {
+      filter: drop-shadow(0 0 0 black) !important;
+    }
+
+    .eachFoodPrice {
+      color: $text-color;
+    }
+
+    .foodName {
+      color: $text-color !important;
+    }
+
+    .foodDetails {
+      color: $text-color;
+    }
+  }
+
+  .categoryPageEachCategory {
+    background-color: $primary-color;
+    color: $text-color;
+  }
+
+  .categoryPageEachCategoryImage {
+    filter: sepia(1);
+  }
+
+  .go-up-button {
+    color: $text-color;
+  }
+  #app-placeholder{
+    color: $text-color;
+  }
+}

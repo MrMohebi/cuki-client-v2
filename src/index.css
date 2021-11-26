@@ -8,7 +8,7 @@ html, body,#root{
 }
 a{
   text-decoration: none ;
-  color: black !important;
+  color: #000000 !important;
 }
 .max500{
   max-width: 800px;

@@ -25,6 +25,7 @@ class WelcomePage extends React.Component {
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
         resInfo: ls.getLSResInfo(),
+        currentTheme:'light-wood',
     }
 
     constructor(props) {
@@ -60,7 +61,7 @@ class WelcomePage extends React.Component {
         // create food list if it doesn't exist
         if (ls.getLSResFoods().length < 1) {
             requests.getRestaurantFoods((response) => {
-                if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
+                if (response.hasOwnProperty('statusCode') && response.statusCode === 100*2) {
                     ls.setLSResFoods(response.data)
                 }
             })
@@ -68,7 +69,7 @@ class WelcomePage extends React.Component {
         // save res info if it doesn't exist
         if (!ls.getLSResInfo().hasOwnProperty("id")) {
             requests.getRestaurantInfo((response) => {
-                if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
+                if (response.hasOwnProperty('statusCode') && response.statusCode === 100*2) {
                     ls.setLSResInfo(response.data)
                 }
             })
@@ -77,9 +78,9 @@ class WelcomePage extends React.Component {
 
     render() {
         return (
-            <div id={'welcome-page-main-container'} className='welcomePageMainContainerCover w-100 h-100' style={{
+            <div id={'welcome-page-main-container'} className={'welcomePageMainContainerCover w-100 h-100 '+this.state.currentTheme} style={{
                 scrollSnapType: 'y mandatory',
-                position: 'relative'
+                position: 'relative',
             }}>
                 <div style={{
                     height: 0,
@@ -105,9 +106,9 @@ class WelcomePage extends React.Component {
                     <p className="welcomePageHeader">
                         <span
                             className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
-                        <span> app</span>
+                        <span id={'app-placeholder'}> app</span>
                     </p>
-                    <div className="welcomePageFrames1">
+                    <div className="welcomePageFrames1" >
                         <div className='HandAndHeaderText'>
                             <span className="welcomePageDescriptionH">چی میل داری؟</span>
                             <div onClick={(d) => {
@@ -147,7 +148,7 @@ class WelcomePage extends React.Component {
                         />
                     </div>
                     <br/>
-                    <div className="welcomePageFrames2 pt-1 ">
+                    <div className="welcomePageFrames2 pt-1 " >
                         <div className="d-flex justify-content-around ">
                             {
                                 typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
@@ -159,8 +160,12 @@ class WelcomePage extends React.Component {
                                             }, () => {
                                                 this.updatePart()
                                             })
-                                        }} key={eachPart}
-                                             className={"openIcons " + (this.state.currentActivePart === eachPart ? 'active-part' : '')}>
+                                        }}
+                                             key={eachPart}
+                                             className={"openIcons " + (this.state.currentActivePart === eachPart ? 'active-part' : '')}
+
+
+                                        >
                                             <img alt={'F'} src={'/img/resParts/' + eachPart + '.png'}
                                                  className="burger"/>
                                             <span
@@ -193,18 +198,17 @@ class WelcomePage extends React.Component {
                     scrollSnapAlign: 'center',
                     paddingTop: 0
                 }}>
-                    <div style={{
-                    }}>
+                    <div style={{}}>
                         <div className={' pb-1'} style={{
                             position: 'relative',
-                            height:'35px'
+                            height: '35px'
                         }}>
                             <div onClick={
                                 () => {
-                                    document.getElementById('welcome-page-main-container').scrollBy(0, -5000)
+                                    document.getElementById('welcome-page-main-container').scrollBy(0, -(100*10*5))
                                 }
                             }>
-                                <i className={'fas fa-angle-double-up'} style={{
+                                <i className={'fas fa-angle-double-up go-up-button'} style={{
                                     position: 'absolute',
                                     right: 10,
                                     top: 5,
@@ -216,10 +220,11 @@ class WelcomePage extends React.Component {
                                 />
                             </div>
 
-                            <span className={'IranSans mt-3'}>دسته بندی</span>
+                            <span className={'IranSans mt-3 cat-text-placeholder'}>دسته بندی</span>
                         </div>
 
-                        <FoodsNavBar catsFullInfo={this.state.catsFullInfo} currentActivePart={this.state.currentActivePart}
+                        <FoodsNavBar catsFullInfo={this.state.catsFullInfo}
+                                     currentActivePart={this.state.currentActivePart}
                                      setState={(object) => {
                                          this.setState(object)
                                      }}/>

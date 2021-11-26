@@ -27,12 +27,12 @@ export let openExpander = (e, open) => {
         }
 
         let offset = 0;
-        if (window.innerWidth > 800) {
-            offset = window.innerWidth - 800
+        if (window.innerWidth > 100*8) {
+            offset = window.innerWidth - 100*8
         }
 
-        expander.style.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - 20) + "px )"
-        lastExpanderPosition.current.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - 25) + "px )"
+        expander.style.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - (10*2)) + "px )"
+        lastExpanderPosition.current.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - (10*2+5)) + "px )"
         expander.style.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - expanderW / 2 + "px")
         lastExpanderPosition.current.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - expanderW / 2 + "px")
 
@@ -60,7 +60,7 @@ export let openExpander = (e, open) => {
             expander.style.height = window.innerHeight + 'px';
             expander.style.top = '100%';
             duplicated.style.height = '500px';
-            duplicated.style.width = document.body.getBoundingClientRect().width - 50 + 'px';
+            duplicated.style.width = document.body.getBoundingClientRect().width - (10*5) + 'px';
 
         }, 0)
 
@@ -96,7 +96,7 @@ export let openExpander = (e, open) => {
             details.style.padding = '20px'
             details.style.whiteSpace = 'normal'
 
-        }, 50)
+        }, (10*5))
 
 
     } else {
@@ -143,9 +143,9 @@ export let openExpander = (e, open) => {
         details.style.whiteSpace = 'nowrap'
 
         setTimeout(() => {
-            overlay.style.opacity = 0;
+            overlay.style.opacity = '0';
             duplicated.style.opacity = 0
-        }, 300)
+        }, (100*3))
 
     }
 

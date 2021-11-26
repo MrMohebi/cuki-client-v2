@@ -1,5 +1,9 @@
 #category-scroller-outer{
   overflow:hidden;
+  position: relative;
+  background: #FFF1DA;
+  width: 85%;
+  border-radius: 15px;
   div{
     transition: 0.3s;
     z-index: 999999999;
@@ -119,10 +123,11 @@
   text-underline-position: under;
 }
 
-
-
 .sections-holder{
   height: 100%;
   padding-top: 1rem;
   position: relative;
+}
+.navbar-navigation-btn{
+  background: transparent !important;
 }

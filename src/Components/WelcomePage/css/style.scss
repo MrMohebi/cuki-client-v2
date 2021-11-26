@@ -1,6 +1,6 @@
 @import "foods";
 @import "navBar";
-
+@import "Themes";
 *{
   scroll-behavior: smooth;
 }
@@ -134,7 +134,7 @@ body {
 .openIcons {
   transition: all 0.2s ease;
   border-radius: 17px !important;
-  background-color: #FFFFFF !important;
+  background-color: #FFFFFF ;
   width: 22vw !important;
   height: 22vw !important;
   margin: 20px auto !important;
@@ -147,7 +147,7 @@ body {
   display: flex;
   flex-flow: column;
   transform: translateY(0px) !important;
-  border:solid #fff 1px !important;
+  //border:solid #fff 1px !important;
 }
 .active-part{
   border: solid 1px #a7a7a7 !important;

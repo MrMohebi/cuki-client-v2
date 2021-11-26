@@ -2,7 +2,7 @@ import React from 'react';
 import * as RandomColor from "../../../functions/RandomColor";
 
 const FoodList = (props) => {
-  let   randomColors = [
+    let randomColors = [
         "#FFF7F7",
         "#D7E2DE",
         "#D4EBEF",
@@ -31,13 +31,10 @@ const FoodList = (props) => {
                                 paddingTop: 170,
                                 marginTop: '-130px'
                             }} id={category['englishName']}>
-                                <div className={'line'}>
-                                    <p style={{
-                                        fontSize: '0.9rem',
-                                        paddingTop: '15px'
-                                    }}
-                                       className={'food-category-text text-black-50 IranSans'}>{category['persianName']}</p>
-                                </div>
+                                <p className={'food-category-text text-black-50 IranSans'}>{
+                                    category['persianName']}
+                                </p>
+
                                 <div className={'mt-3 d-flex flex-wrap food-section'} style={{
                                     backgroundColor: randomColors[index] ? randomColors[index] : randomColors[index - randomColors.length]
                                 }}>
@@ -53,7 +50,7 @@ const FoodList = (props) => {
                                                          key={eachFood['id']}
                                                          className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                                          onClick={(e) => {
-                                                             props.openExpander(e,true)
+                                                             props.openExpander(e, true)
                                                          }}
                                                     >
                                                         <div className='foodListEachFood'
@@ -143,7 +140,7 @@ const FoodList = (props) => {
                                                                      right: '0',
                                                                      position: 'absolute',
                                                                      color: colors.foreground,
-                                                                     fontSize: ((20 / eachFood['persianName'].length) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
+                                                                     fontSize: (((10*2) / eachFood['persianName'].length) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
                                                                  }}>{eachFood.persianName}</div>
                                                             <div
                                                                 className='w-100 d-flex justify-content-center'>

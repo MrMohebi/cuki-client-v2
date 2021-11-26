@@ -20,6 +20,7 @@ const FoodsNavBar = (props) => {
                 background: 'white',
                 fontSize: 20
             }}
+                        className={'navbar-navigation-btn'}
                         onClick={() => {
                             document.getElementById('category-scroller').scrollBy(-100, 0)
                         }}
@@ -33,12 +34,7 @@ const FoodsNavBar = (props) => {
             </ButtonBase>
 
 
-            <div id={'category-scroller-outer'} style={{
-                position: 'relative',
-                background: '#FFF1DA',
-                width: '85%',
-                borderRadius: 15
-            }}>
+            <div id={'category-scroller-outer'} >
                 <div id={'category-scroller'} className={'d-flex flex-row-reverse '}
                      style={{
                          padding: '10px 0px 0 0px',
@@ -109,7 +105,7 @@ const FoodsNavBar = (props) => {
 
             </div>
 
-            <ButtonBase style={{
+            <ButtonBase className={'navbar-navigation-btn'} style={{
                 width: '7.5%',
                 zIndex: 2,
                 borderRadius: '0 100 100 0',

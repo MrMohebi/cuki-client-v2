@@ -296,8 +296,18 @@
   padding-left: 10px;
 }
 
+.food-category-text {
+  font-size: 0.9rem;
+  padding-top: 15px;
+  background: transparent !important;
+}
+
 #category-scroller-outer {
   overflow: hidden;
+  position: relative;
+  background: #FFF1DA;
+  width: 85%;
+  border-radius: 15px;
 }
 #category-scroller-outer div {
   transition: 0.3s;
@@ -421,6 +431,82 @@
   height: 100%;
   padding-top: 1rem;
   position: relative;
+}
+
+.navbar-navigation-btn {
+  background: transparent !important;
+}
+
+.light-wood {
+  background: #98633B;
+}
+.light-wood #category-scroller-outer {
+  background-color: #DEB886;
+}
+.light-wood #category-scroller-outer #nav-right-shadow {
+  background: linear-gradient(to left, #DEB886, rgba(255, 241, 218, 0)) !important;
+}
+.light-wood #category-scroller-outer #nav-left-shadow {
+  background: linear-gradient(to right, #DEB886, rgba(255, 241, 218, 0)) !important;
+}
+.light-wood .welcomePageFrames1 {
+  background: #DEB886;
+}
+.light-wood .welcomePageFrames2 {
+  background: #DEB886;
+}
+.light-wood .openIcons {
+  background-color: #6F432A;
+  border: solid 1px #DEB886 !important;
+  box-shadow: #6f432a 0 0 0 0 !important;
+}
+.light-wood .openIcons span {
+  color: #F7E5D1;
+}
+.light-wood .active-part {
+  border: solid 1px #DEB886 !important;
+  box-shadow: #6f432a 1px 4px 8px 0 !important;
+}
+.light-wood .navbar-navigation-btn {
+  color: #F7E5D1;
+}
+.light-wood .cat-text-placeholder {
+  color: #F7E5D1;
+}
+.light-wood .food-category-text {
+  color: #F7E5D1 !important;
+}
+.light-wood .food-section {
+  background-color: #DEB886 !important;
+}
+.light-wood .foodListEachFood {
+  background-color: #6F432A !important;
+  box-shadow: 0 0 5px 0 #000000;
+}
+.light-wood .foodListEachFood .eachFoodImage {
+  filter: drop-shadow(0 0 0 black) !important;
+}
+.light-wood .foodListEachFood .eachFoodPrice {
+  color: #F7E5D1;
+}
+.light-wood .foodListEachFood .foodName {
+  color: #F7E5D1 !important;
+}
+.light-wood .foodListEachFood .foodDetails {
+  color: #F7E5D1;
+}
+.light-wood .categoryPageEachCategory {
+  background-color: #6F432A;
+  color: #F7E5D1;
+}
+.light-wood .categoryPageEachCategoryImage {
+  filter: sepia(1);
+}
+.light-wood .go-up-button {
+  color: #F7E5D1;
+}
+.light-wood #app-placeholder {
+  color: #F7E5D1;
 }
 
 * {
@@ -585,7 +671,7 @@ body {
 .openIcons {
   transition: all 0.2s ease;
   border-radius: 17px !important;
-  background-color: #FFFFFF !important;
+  background-color: #FFFFFF;
   width: 22vw !important;
   height: 22vw !important;
   margin: 20px auto !important;
@@ -598,7 +684,6 @@ body {
   display: flex;
   flex-flow: column;
   transform: translateY(0px) !important;
-  border: solid #fff 1px !important;
 }
 
 .active-part {
