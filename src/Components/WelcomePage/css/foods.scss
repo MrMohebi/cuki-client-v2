@@ -293,3 +293,26 @@
   padding-top: 15px;
   background: transparent !important;
 }
+.normal-font-size{
+  font-size: 1.5rem !important;
+}
+.size-price{
+  width: 100%;
+  margin-top: 45px;
+}
+.each-size-price{
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #ebebeb;
+  height: 30px;
+  width: 100%;
+  z-index: 999;
+  font-size: 0.8rem;
+  margin-top: 3px;
+}
+.extended-prices{
+  width: 140px;
+  margin-top: 45px;
+  margin-right: 10px;
+  margin-left: auto;
+}

@@ -10,6 +10,10 @@ const FoodList = (props) => {
         "#fff1da",
         "#D4EBEF",
     ]
+
+    let calculateTheFontSize = (foodName) => {
+        return ((((10 * 2) / foodName.length) >= 1.5 ? 1.5 : (20 / foodName.length)) + 'rem')
+    }
     return (
         <div style={{
             height: 'calc(100% - 121px)',
@@ -35,12 +39,12 @@ const FoodList = (props) => {
                                     category['persianName']}
                                 </p>
 
-                                <div className={'mt-3 d-flex flex-wrap food-section'} style={{
+                                <section className={'mt-3 d-flex flex-wrap food-section'} style={{
                                     backgroundColor: randomColors[index] ? randomColors[index] : randomColors[index - randomColors.length]
                                 }}>
 
                                     {
-                                        filteredFoods.map(eachFood => {
+                                        filteredFoods.map((eachFood, index) => {
                                             if (eachFood) {
                                                 let colors = RandomColor.RandomColor(eachFood.id);
                                                 return (
@@ -50,14 +54,14 @@ const FoodList = (props) => {
                                                          key={eachFood['id']}
                                                          className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                                          onClick={(e) => {
-                                                             props.openExpander(e, true)
+                                                             props.openExpander(e, true, index === 2)
                                                          }}
                                                     >
                                                         <div className='foodListEachFood'
                                                              id={'food' + eachFood['id']}
                                                              style={{backgroundColor: colors.background}}>
                                                             {
-                                                                parseInt(eachFood.discount) > 0 ?
+                                                                parseInt(eachFood['discount']) > 0 ?
                                                                     <span
                                                                         className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
                                                                     :
@@ -69,22 +73,21 @@ const FoodList = (props) => {
                                                                 {
                                                                     (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
                                                                         eachFood.discount === 0 ?
-                                                                            <span
-                                                                                id={'food-price'}
-                                                                                style={{
-                                                                                    position: 'absolute',
-                                                                                    right: '70px',
-                                                                                    top: 0
+                                                                            index===2?
+                                                                                null:
 
-                                                                                }}
-                                                                                className='eachFoodPrice '>
+                                                                                <span id={'food-price'}
+                                                                                      style={{
+                                                                                          position: 'absolute',
+                                                                                          right: '70px',
+                                                                                          top: 0
+                                                                                      }} className='eachFoodPrice '>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
+
                                                                             :
                                                                             <div
-
                                                                                 className={'d-flex flex-column justify-content-center'}>
-
                                                                                                            <span
                                                                                                                style={{
                                                                                                                    textDecoration: 'line-through',
@@ -95,12 +98,13 @@ const FoodList = (props) => {
                                                                                                                className='eachFoodPrice'>
                                                                                 {eachFood.price / 1000} T
                                                                             </span>
+
                                                                                 <span
-                                                                                    id={'food-price'}
+                                                                                    id={'food-price ' +index }
                                                                                     style={{fontWeight: 'bolder'}}
                                                                                     className='eachFoodPriceDiscount'>
-                                                                                {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
-                                                                            </span>
+                                                                                            {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
+                                                                                        </span>
                                                                             </div>
 
                                                                         :
@@ -135,26 +139,47 @@ const FoodList = (props) => {
                                                                  className='foodName'
                                                                  style={{
                                                                      width: '100%',
-                                                                     top: '60px',
+                                                                     top: '50px',
                                                                      overflow: 'visible',
                                                                      right: '0',
                                                                      position: 'absolute',
                                                                      color: colors.foreground,
-                                                                     fontSize: (((10*2) / eachFood['persianName'].length) >= 1.5 ? 1.5 : (20 / eachFood['persianName'].length)) + 'rem'
+                                                                     fontSize: calculateTheFontSize(eachFood['persianName'])
                                                                  }}>{eachFood.persianName}</div>
-                                                            <div
-                                                                className='w-100 d-flex justify-content-center'>
-                                                                                               <span id={'food-details'}
-                                                                                                     style={{
-                                                                                                         width: '100%',
-                                                                                                         right: 0,
-                                                                                                         position: 'absolute',
-                                                                                                         top: '90px',
-                                                                                                         overflow: 'hidden'
-                                                                                                     }}
-                                                                                                     className='foodDetails animate__animated animate__fadeInUp animate__faster'>{eachFood.details ? eachFood.details.join(' - ') : ''}
-                                                                                               </span>
+                                                            <div className='w-100 d-flex justify-content-center'>
+                                                                <span id={'food-details'}
+                                                                      style={{
+                                                                          width: '100%',
+                                                                          right: 0,
+                                                                          position: 'absolute',
+                                                                          top: '90px',
+                                                                          overflow: 'hidden',
+                                                                          opacity: index === 2 ? 0 : 1
+                                                                      }}
+                                                                      className='foodDetails animate__animated animate__fadeInUp animate__faster'>
+                                                                    {eachFood.details ? eachFood.details.join(' - ') : ''}
+                                                                </span>
+
                                                             </div>
+                                                            {
+                                                                index === 2 ?
+                                                                    <div id={'size-price'}
+                                                                         className={'size-price px-2 IranSans'}>
+                                                                        <div
+                                                                            className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>
+                                                                            <span>{"25" + " " + "T"}</span>
+                                                                            <span>کوچک</span>
+                                                                        </div>
+                                                                        <div
+                                                                            className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>
+                                                                            <span>{"75" + " " + "T"}</span>
+                                                                            <span>بزرگ</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    :
+                                                                    null
+                                                            }
+
                                                         </div>
                                                     </div>
                                                 )
@@ -162,7 +187,7 @@ const FoodList = (props) => {
                                         })
 
                                     }
-                                </div>
+                                </section>
                             </div>
 
 

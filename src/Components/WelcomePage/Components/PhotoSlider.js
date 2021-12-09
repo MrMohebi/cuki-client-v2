@@ -1,18 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const PhotoSlider = (props) => {
+    let photoSliderInner = React.useRef()
+    let pointerDown = React.useRef(false)
+    let pointerDownX = React.useRef(0)
+
+    useEffect(() => {
+        photoSliderInner.current = document.getElementById('photo-slider-inner');
+    }, [])
     return (
         <div id={'photo-slider'} style={{
-            position: 'relative',
+            position: 'absolute',
             width: '100%',
             height: '200px',
-            marginTop: '200px',
+            top: '275px',
             paddingRight: '10px',
             paddingLeft: '10px',
         }}>
             <div
                 onClick={() => {
-                    document.getElementById('photo-slider-inner').scrollBy(-100, 0)
+                    photoSliderInner.current.scrollBy(-100, 0)
                 }}
                 style={{
                     cursor: 'pointer',
@@ -32,7 +39,19 @@ const PhotoSlider = (props) => {
                 <i className="fas fa-angle-left"/>
             </div>
 
-            <div className={'photo-slider-inner'} id={'photo-slider-inner'} style={{
+            <div
+                onPointerDown={(e) => {
+                    pointerDown.current = true
+                    pointerDownX = e.clientX
+
+                }}
+                onPointerUp={() => {
+                    pointerDown.current = false
+                }}
+                onPointerMove={() => {
+
+                }}
+                className={'photo-slider-inner'} id={'photo-slider-inner'} style={{
                 width: '100%',
                 overflowX: 'scroll',
                 overflowY: 'hidden',
@@ -64,7 +83,7 @@ const PhotoSlider = (props) => {
             </div>
             <div
                 onClick={() => {
-                    document.getElementById('photo-slider-inner').scrollBy(100, 0)
+                    photoSliderInner.current.scrollBy(100, 0)
                 }}
                 style={{
                     cursor: 'pointer',

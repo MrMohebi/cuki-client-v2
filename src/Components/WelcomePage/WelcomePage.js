@@ -25,7 +25,7 @@ class WelcomePage extends React.Component {
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
         resInfo: ls.getLSResInfo(),
-        currentTheme:'light-wood',
+        currentTheme:'',
     }
 
     constructor(props) {
@@ -215,8 +215,6 @@ class WelcomePage extends React.Component {
                                     width: 10,
                                     height: 10
                                 }}
-
-
                                 />
                             </div>
 

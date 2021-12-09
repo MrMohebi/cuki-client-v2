@@ -4,11 +4,14 @@ import React from 'react';
 const expanderW = 300;
 let lastExpanderPosition = React.createRef();
 let lastClickedFood = React.createRef();
+let lastOpenedMultiplePrices = React.createRef();
 
-export let openExpander = (e, open) => {
+export let openExpander = (e, open, multiplePrices) => {
+    console.log(multiplePrices)
     let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
     let expander = document.getElementById('expander')
     let overlay = document.getElementById('expander-overlay')
+    lastOpenedMultiplePrices.current = multiplePrices
 
     if (open) {
         let slider = document.getElementById('photo-slider')
@@ -27,12 +30,12 @@ export let openExpander = (e, open) => {
         }
 
         let offset = 0;
-        if (window.innerWidth > 100*8) {
-            offset = window.innerWidth - 100*8
+        if (window.innerWidth > 100 * 8) {
+            offset = window.innerWidth - 100 * 8
         }
 
-        expander.style.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - (10*2)) + "px )"
-        lastExpanderPosition.current.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - (10*2+5)) + "px )"
+        expander.style.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - (10 * 2)) + "px )"
+        lastExpanderPosition.current.top = "calc(100% + " + (e.currentTarget.getBoundingClientRect().y - (10 * 2 + 5)) + "px )"
         expander.style.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - expanderW / 2 + "px")
         lastExpanderPosition.current.left = ((e.currentTarget.getBoundingClientRect().x - offset / 2) + e.currentTarget.getBoundingClientRect().width / 2 - expanderW / 2 + "px")
 
@@ -51,7 +54,8 @@ export let openExpander = (e, open) => {
         duplicated.style.marginTop = '0px';
         duplicated.style.overflow = 'hidden';
         duplicated.classList.add('expended');
-        duplicated.querySelector('.priceAndImage').children[1].style.margin = '10px'
+        if (!multiplePrices)
+            duplicated.querySelector('.priceAndImage').children[1].style.margin = '10px'
         setTimeout(() => {
             expander.style.left = ((window.innerWidth / 2 - expanderW / 2) - offset / 2) + 'px';
             expander.style.top = "calc(100vh + " + (window.innerHeight / 2 - expanderW / 2) + "px )";
@@ -60,7 +64,7 @@ export let openExpander = (e, open) => {
             expander.style.height = window.innerHeight + 'px';
             expander.style.top = '100%';
             duplicated.style.height = '500px';
-            duplicated.style.width = document.body.getBoundingClientRect().width - (10*5) + 'px';
+            duplicated.style.width = document.body.getBoundingClientRect().width - (10 * 5) + 'px';
 
         }, 0)
 
@@ -71,10 +75,12 @@ export let openExpander = (e, open) => {
             let price = duplicated.querySelector('#food-price')
             let name = duplicated.querySelector('#food-name')
             let details = duplicated.querySelector('#food-details')
+            let prices = duplicated.querySelector('#size-price')
             let elementTransitions = '.3s ease '
 
             image.style.setProperty('transition', elementTransitions, 'important')
-            price.style.setProperty('transition', elementTransitions, 'important')
+            if (!multiplePrices)
+                price.style.setProperty('transition', elementTransitions, 'important')
             name.style.setProperty('transition', elementTransitions, 'important')
             details.style.setProperty('transition', elementTransitions, 'important')
 
@@ -82,26 +88,37 @@ export let openExpander = (e, open) => {
             image.style.setProperty('width', '80px', 'important')
             image.style.right = '10px'
             image.style.top = '10px'
+            if (!multiplePrices) {
+                price.style.top = '60px'
+                price.style.right = '110px'
+            }
 
-            price.style.top = '60px'
-            price.style.right = '110px'
 
             name.style.width = '0'
             name.style.right = '110px'
             name.style.top = '30px'
+            name.classList.add('normal-font-size')
 
-            details.style.top = '90px'
+            if (multiplePrices)
+                details.style.top = '150px'
+            else
+                details.style.top = '90px'
             details.style.fontSize = '0.8rem'
             details.style.textAlign = 'right'
             details.style.padding = '20px'
             details.style.whiteSpace = 'normal'
+            details.style.opacity = '1'
 
-        }, (10*5))
+            if (prices) {
+                prices.classList.add('extended-prices')
+            }
+
+        }, (10 * 5))
 
 
     } else {
         let duplicated = document.getElementById('expander').firstChild
-        overlay.style.pointerEvents = 'none'
+
         expander.style.left = lastExpanderPosition.current.left
         expander.style.top = lastExpanderPosition.current.top
         expander.style.width = expanderW + 'px'
@@ -112,8 +129,12 @@ export let openExpander = (e, open) => {
         duplicated.style.borderRadius = '20px 35px 20px 20px';
 
 
-        lastClickedFood.current.style.opacity = 1
-        duplicated.querySelector('.priceAndImage').children[1].style.margin = '0px'
+        setTimeout(() => {
+            lastClickedFood.current.style.opacity = 1
+        }, 300)
+        if (!multiplePrices)
+            duplicated.querySelector('.priceAndImage').children[1].style.margin = '0px'
+
 
         let image = duplicated.querySelector('#food-image')
         let price = duplicated.querySelector('#food-price')
@@ -121,7 +142,8 @@ export let openExpander = (e, open) => {
         let details = duplicated.querySelector('#food-details')
         let elementTransitions = '.3s ease'
         image.style.setProperty('transition', elementTransitions, 'important')
-        price.style.setProperty('transition', elementTransitions, 'important')
+        if (!multiplePrices)
+            price.style.setProperty('transition', elementTransitions, 'important')
         name.style.setProperty('transition', elementTransitions, 'important')
         details.style.setProperty('transition', elementTransitions, 'important')
 
@@ -130,22 +152,32 @@ export let openExpander = (e, open) => {
         image.style.right = '0px'
         image.style.top = '0px'
 
-        price.style.top = '0px'
-        price.style.right = '70px'
+        if (!multiplePrices) {
+            price.style.top = '0px'
+            price.style.right = '70px'
+        }
+
 
         name.style.width = '100%'
         name.style.right = '0px'
-        name.style.top = '60px'
-
+        name.style.top = '50px'
+        name.classList.remove('normal-font-size')
         details.style.top = '90px'
-        details.style.textAlign = 'center'
+        setTimeout(()=>{
+            details.style.textAlign = 'center'
+        },200)
         details.style.padding = '0px'
         details.style.whiteSpace = 'nowrap'
+        multiplePrices ?
+            details.style.opacity = '0'
+            :
+            details.style.opacity = '1'
 
         setTimeout(() => {
             overlay.style.opacity = '0';
             duplicated.style.opacity = 0
-        }, (100*3))
+            overlay.style.pointerEvents = 'none'
+        }, (100 * 3))
 
     }
 
@@ -153,7 +185,6 @@ export let openExpander = (e, open) => {
 
 
 const Expander = () => {
-
 
 
     return (
@@ -165,7 +196,7 @@ const Expander = () => {
 
                  onClick={(e) => {
                      if (e.target.classList.contains('expander')) {
-                         openExpander(null, false)
+                         openExpander(null, false, lastOpenedMultiplePrices.current)
                      }
                  }}
                  style={
@@ -179,7 +210,7 @@ const Expander = () => {
                          justifyContent: 'center',
                          alignItems: 'center',
                          transition: '.3s ease',
-                         pointerEvents:'none'
+                         pointerEvents: 'none'
                      }
                  }
             />
