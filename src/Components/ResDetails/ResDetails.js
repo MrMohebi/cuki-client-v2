@@ -54,7 +54,6 @@ class ResDetails extends React.Component {
                 openTime.forEach((day, index) => {
                     day.push(this.daysOfTheWeek[index])
                 })
-                // console.log(openTime)
 
 
                 openTime.forEach(()=>{
@@ -66,7 +65,6 @@ class ResDetails extends React.Component {
                     })
                 })
 
-                console.log(sameDays)
                 this.setState({
                     resInfo: res.data,
                     logoLink: res.data['logoLink'],

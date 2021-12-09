@@ -7,7 +7,6 @@ let lastClickedFood = React.createRef();
 let lastOpenedMultiplePrices = React.createRef();
 
 export let openExpander = (e, open, multiplePrices) => {
-    console.log(multiplePrices)
     let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
     let expander = document.getElementById('expander')
     let overlay = document.getElementById('expander-overlay')

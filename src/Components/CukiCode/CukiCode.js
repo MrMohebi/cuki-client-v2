@@ -126,7 +126,6 @@ class CukiCode extends React.Component {
                                     if (eachRes.includes(this.state.inputValue) && this.state.inputValue) {
                                         return (
                                             <div className={'each-suggest IranSans'} onClick={() => {
-                                                console.log(window.location)
                                                 window.location.href = window.location.origin+`/c-${this.state.restaurantsEnglishName[index]}`
                                             }}>{eachRes}</div>
                                         )
