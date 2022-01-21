@@ -19,7 +19,7 @@ const FoodList = (props) => {
             height: 'calc(100% - 121px)',
             overflowY: 'scroll',
             scrollBehavior: 'smooth',
-            paddingTop: '180px',
+            // paddingTop: '180px',
             marginTop: '-15px'
         }} id={'scroller'}>
             {
@@ -45,7 +45,8 @@ const FoodList = (props) => {
 
                                     {
                                         filteredFoods.map((eachFood, index) => {
-                                            if (eachFood) {
+                                            let subsets = props.subsets[eachFood.persianName];
+                                            if (eachFood && !eachFood['relatedMainPersianName']) {
                                                 let colors = RandomColor.RandomColor(eachFood.id);
                                                 return (
                                                     <div onContextMenu={(e) => {
@@ -54,7 +55,8 @@ const FoodList = (props) => {
                                                          key={eachFood['id']}
                                                          className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                                          onClick={(e) => {
-                                                             props.openExpander(e, true, index === 2)
+                                                             console.log(props.subsets[eachFood.persianName])
+                                                             props.openExpander(e, true, !!subsets)
                                                          }}
                                                     >
                                                         <div className='foodListEachFood'
@@ -62,6 +64,8 @@ const FoodList = (props) => {
                                                              style={{backgroundColor: colors.background}}>
                                                             {
                                                                 parseInt(eachFood['discount']) > 0 ?
+                                                                    subsets?
+                                                                        null:
                                                                     <span
                                                                         className={'discountPercentage'}>{eachFood.discount ? eachFood.discount + "%" : '0'}  </span>
                                                                     :
@@ -73,45 +77,49 @@ const FoodList = (props) => {
                                                                 {
                                                                     (eachFood.status === 'in stock' || eachFood.status === 'inStock') ?
                                                                         eachFood.discount === 0 ?
-                                                                            index===2?
-                                                                                null:
-
-                                                                                <span id={'food-price'}
-                                                                                      style={{
-                                                                                          position: 'absolute',
-                                                                                          right: '70px',
-                                                                                          top: 0
-                                                                                      }} className='eachFoodPrice '>
-                                                                                {eachFood.price / 1000} T
-                                                                            </span>
-
-                                                                            :
-                                                                            <div
-                                                                                className={'d-flex flex-column justify-content-center'}>
-                                                                                                           <span
-                                                                                                               style={{
-                                                                                                                   textDecoration: 'line-through',
-                                                                                                                   fontSize: '0.6rem',
-                                                                                                                   lineHeight: '1.5rem',
-                                                                                                                   color: '#787878'
-                                                                                                               }}
-                                                                                                               className='eachFoodPrice'>
-                                                                                {eachFood.price / 1000} T
-                                                                            </span>
+                                                                            subsets ?
+                                                                                null :
 
                                                                                 <span
-                                                                                    id={'food-price ' +index }
+                                                                                    id={'food-price'}
+                                                                                    style={{
+                                                                                        position: 'absolute',
+                                                                                        right: '70px',
+                                                                                        top: 0
+                                                                                    }} className='eachFoodPrice '>
+                                                                                {eachFood.price / 1000} T
+                                                                                </span>
+
+                                                                            :
+                                                                            subsets ?
+                                                                                null
+                                                                                :
+                                                                            <div
+                                                                                className={'d-flex flex-column justify-content-center'}>
+                                                                                <span
+                                                                                    style={{
+                                                                                        textDecoration: 'line-through',
+                                                                                        fontSize: '0.6rem',
+                                                                                        lineHeight: '1.5rem',
+                                                                                        color: '#787878'
+                                                                                    }}
+                                                                                    className='eachFoodPrice'>
+                                                                                    {eachFood.price / 1000} T
+                                                                                </span>
+
+                                                                                <span
+                                                                                    id={'food-price ' + index}
                                                                                     style={{fontWeight: 'bolder'}}
                                                                                     className='eachFoodPriceDiscount'>
-                                                                                            {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
-                                                                                        </span>
+                                                                                        {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
+                                                                                </span>
                                                                             </div>
 
                                                                         :
                                                                         <span
                                                                             className='outOfStockTextHolder'>
                                                                                 ناموجود
-                                                                           </span>
+                                                                        </span>
                                                                 }
                                                                 <div id={'food-image'}
                                                                      className='eachFoodImage'
@@ -154,7 +162,7 @@ const FoodList = (props) => {
                                                                           position: 'absolute',
                                                                           top: '90px',
                                                                           overflow: 'hidden',
-                                                                          opacity: index === 2 ? 0 : 1
+                                                                          opacity: subsets ? 0 : 1
                                                                       }}
                                                                       className='foodDetails animate__animated animate__fadeInUp animate__faster'>
                                                                     {eachFood.details ? eachFood.details.join(' - ') : ''}
@@ -162,19 +170,27 @@ const FoodList = (props) => {
 
                                                             </div>
                                                             {
-                                                                index === 2 ?
+                                                                subsets ?
                                                                     <div id={'size-price'}
                                                                          className={'size-price px-2 IranSans'}>
-                                                                        <div
-                                                                            className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>
-                                                                            <span>{"25" + " " + "T"}</span>
-                                                                            <span>کوچک</span>
-                                                                        </div>
-                                                                        <div
-                                                                            className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>
-                                                                            <span>{"75" + " " + "T"}</span>
-                                                                            <span>بزرگ</span>
-                                                                        </div>
+                                                                        {
+                                                                            props.subsets[eachFood.persianName].map(subset => {
+                                                                                console.log(props.subsets)
+                                                                                return (
+                                                                                    <div
+                                                                                        className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>
+                                                                                        <span>{subset['price'] + " " + "T"}</span>
+                                                                                        <span>{subset['persianName']}</span>
+                                                                                    </div>
+                                                                                )
+                                                                            })
+                                                                        }
+
+                                                                        {/*<div*/}
+                                                                        {/*    className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>*/}
+                                                                        {/*    <span>{"75" + " " + "T"}</span>*/}
+                                                                        {/*    <span>بزرگ</span>*/}
+                                                                        {/*</div>*/}
                                                                     </div>
                                                                     :
                                                                     null

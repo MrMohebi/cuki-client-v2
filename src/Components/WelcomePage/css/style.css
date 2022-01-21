@@ -431,7 +431,7 @@
 
 .categoryPageEachCategoryContainer {
   margin-top: 50px;
-  width: 33.3333333%;
+  width: auto;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -464,81 +464,85 @@
   background: transparent !important;
 }
 
-.light-wood {
-  background: #98633B;
+:root {
+  --primary-color: white;
+  --secondary-color: linen;
+  --background-color: white;
+  --text-color: black;
 }
-.light-wood #category-scroller-outer {
-  background-color: #DEB886;
+
+.theme-base {
+  background: var(--background-color);
 }
-.light-wood #category-scroller-outer #nav-right-shadow {
-  background: linear-gradient(to left, #DEB886, rgba(255, 241, 218, 0)) !important;
+.theme-base #category-scroller-outer {
+  background-color: var(--secondary-color);
 }
-.light-wood #category-scroller-outer #nav-left-shadow {
-  background: linear-gradient(to right, #DEB886, rgba(255, 241, 218, 0)) !important;
+.theme-base #category-scroller-outer #nav-right-shadow {
+  background: linear-gradient(to left, var(--secondary-color), rgba(255, 241, 218, 0)) !important;
 }
-.light-wood .welcomePageFrames1 {
-  background: #DEB886;
+.theme-base #category-scroller-outer #nav-left-shadow {
+  background: linear-gradient(to right, var(--secondary-color), rgba(255, 241, 218, 0)) !important;
 }
-.light-wood .welcomePageFrames2 {
-  background: #DEB886;
+.theme-base .welcomePageFrames1 {
+  background: var(--secondary-color);
 }
-.light-wood .openIcons {
-  background-color: #6F432A;
-  border: solid 1px #DEB886 !important;
-  box-shadow: #6f432a 0 0 0 0 !important;
+.theme-base .welcomePageFrames2 {
+  background: var(--secondary-color);
 }
-.light-wood .openIcons span {
-  color: #F7E5D1;
+.theme-base .openIcons {
+  background-color: var(--primary-color);
+  border: solid 1px var(--secondary-color) !important;
+  box-shadow: var(--primary-color) 0 0 0 0 !important;
 }
-.light-wood .active-part {
-  border: solid 1px #DEB886 !important;
-  box-shadow: #6f432a 1px 4px 8px 0 !important;
+.theme-base .openIcons span {
+  color: var(--text-color);
 }
-.light-wood .navbar-navigation-btn {
-  color: #F7E5D1;
+.theme-base .active-part {
+  border: solid 1px var(--secondary-color) !important;
+  box-shadow: var(--primary-color) 1px 4px 8px 0 !important;
 }
-.light-wood .cat-text-placeholder {
-  color: #F7E5D1;
+.theme-base .navbar-navigation-btn {
+  color: var(--text-color);
 }
-.light-wood .food-category-text {
-  color: #F7E5D1 !important;
+.theme-base .cat-text-placeholder {
+  color: var(--text-color);
 }
-.light-wood .food-section {
-  background-color: #DEB886 !important;
+.theme-base .food-category-text {
+  color: var(--text-color) !important;
 }
-.light-wood .foodListEachFood {
-  background-color: #6F432A !important;
+.theme-base .food-section {
+  background-color: var(--secondary-color) !important;
+}
+.theme-base .foodListEachFood {
+  background-color: var(--primary-color) !important;
   box-shadow: 0 0 5px 0 #000000;
 }
-.light-wood .foodListEachFood .eachFoodImage {
+.theme-base .foodListEachFood .eachFoodImage {
   filter: drop-shadow(0 0 0 black) !important;
 }
-.light-wood .foodListEachFood .eachFoodPrice {
-  color: #F7E5D1;
+.theme-base .foodListEachFood .eachFoodPrice {
+  color: var(--text-color);
 }
-.light-wood .foodListEachFood .foodName {
-  color: #F7E5D1 !important;
+.theme-base .foodListEachFood .foodName {
+  color: var(--text-color) !important;
 }
-.light-wood .foodListEachFood .foodDetails {
-  color: #F7E5D1;
+.theme-base .foodListEachFood .foodDetails {
+  color: var(--text-color);
 }
-.light-wood .categoryPageEachCategory {
-  background-color: #6F432A;
-  color: #F7E5D1;
+.theme-base .categoryPageEachCategory {
+  background-color: var(--primary-color);
+  color: var(--text-color);
 }
-.light-wood .categoryPageEachCategoryImage {
-  filter: sepia(1);
+.theme-base .go-up-button {
+  color: var(--text-color);
 }
-.light-wood .go-up-button {
-  color: #F7E5D1;
+.theme-base #app-placeholder {
+  color: var(--text-color);
 }
-.light-wood #app-placeholder {
-  color: #F7E5D1;
-}
-.light-wood .each-size-price {
-  background: #6F432A;
-  color: #F7E5D1;
-  border: 1px solid #F7E5D1;
+.theme-base .each-size-price {
+  background: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
 }
 
 * {

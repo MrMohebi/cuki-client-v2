@@ -1,63 +1,66 @@
+:root{
+  --primary-color: white;
+  --secondary-color: linen;
+  --background-color: white;
+  --text-color: black;
+}
+.theme-base {
 
-.light-wood {
-  $primary-color: #6F432A;
-  $secondary-color: #DEB886;
-  $background-color: #98633B;
-  $text-color: #F7E5D1;
-  background: $background-color;
+  background: var(--background-color);
 
   #category-scroller-outer {
-    background-color: $secondary-color;
+    background-color: var(--secondary-color);
 
     #nav-right-shadow {
-      background: linear-gradient(to left, $secondary-color, rgba(255, 241, 218, 0)) !important;
+      background: linear-gradient(to left, var(--secondary-color), rgba(255, 241, 218, 0)) !important;
     }
 
     #nav-left-shadow {
-      background: linear-gradient(to right, $secondary-color, rgba(255, 241, 218, 0)) !important;
+      background: linear-gradient(to right, var(--secondary-color), rgba(255, 241, 218, 0)) !important;
     }
   }
 
   .welcomePageFrames1 {
-    background: $secondary-color;
+    background: var(--secondary-color);
   }
 
   .welcomePageFrames2 {
-    background: $secondary-color;
+    background: var(--secondary-color);
   }
 
   .openIcons {
-    background-color: $primary-color;
-    border: solid 1px #DEB886 !important;
-    box-shadow: #6f432a 0 0 0 0 !important;
+    background-color: var(--primary-color);
+    border: solid 1px var(--secondary-color) !important;
+    box-shadow: var(--primary-color) 0 0 0 0 !important;
+
     span {
-      color: $text-color;
+      color: var(--text-color);
     }
   }
 
   .active-part {
-    border: solid 1px #DEB886 !important;
-    box-shadow: #6f432a 1px 4px 8px 0 !important;
+    border: solid 1px var(--secondary-color) !important;
+    box-shadow: var(--primary-color) 1px 4px 8px 0 !important;
   }
 
   .navbar-navigation-btn {
-    color: $text-color;
+    color: var(--text-color);
   }
 
   .cat-text-placeholder {
-    color: $text-color;
+    color: var(--text-color);
   }
 
   .food-category-text {
-    color: $text-color !important;
+    color: var(--text-color) !important;
   }
 
   .food-section {
-    background-color: $secondary-color !important;
+    background-color: var(--secondary-color) !important;
   }
 
   .foodListEachFood {
-    background-color: $primary-color !important;
+    background-color: var(--primary-color) !important;
     box-shadow: 0 0 5px 0 #000000;
 
     .eachFoodImage {
@@ -65,36 +68,38 @@
     }
 
     .eachFoodPrice {
-      color: $text-color;
+      color: var(--text-color);
     }
 
     .foodName {
-      color: $text-color !important;
+      color: var(--text-color) !important;
     }
 
     .foodDetails {
-      color: $text-color;
+      color: var(--text-color);
     }
   }
 
   .categoryPageEachCategory {
-    background-color: $primary-color;
-    color: $text-color;
+    background-color: var(--primary-color);
+    color: var(--text-color);
   }
 
   .categoryPageEachCategoryImage {
-    filter: sepia(1);
+    //filter: sepia(1);
   }
 
   .go-up-button {
-    color: $text-color;
+    color: var(--text-color);
   }
-  #app-placeholder{
-    color: $text-color;
+
+  #app-placeholder {
+    color: var(--text-color);
   }
-  .each-size-price{
-    background: $primary-color;
-    color:$text-color;
-    border: 1px solid $text-color;
+
+  .each-size-price {
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
   }
 }

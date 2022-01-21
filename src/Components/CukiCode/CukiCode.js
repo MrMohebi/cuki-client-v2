@@ -144,7 +144,7 @@ class CukiCode extends React.Component {
                         <div className={'drawer shadow-sm'}/>
                         <h6 className={'mt-4'} style={{
                             fontFamily: 'AppIranSansBold'
-                        }}>ستوران های برتر</h6>
+                        }}>رستوران های برتر</h6>
                         <span className={'IranSansLight'} style={{
                             fontSize: '0.7rem',
                             whiteSpace:'nowrap'

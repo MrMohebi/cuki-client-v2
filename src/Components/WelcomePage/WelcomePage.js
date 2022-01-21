@@ -11,6 +11,7 @@ import FoodsNavBar from "./Components/FoodsNavBar";
 import FoodList from "./Components/FoodList";
 import Expander from "./Components/Expander";
 import {openExpander} from "./Components/Expander";
+import {Themes} from "../../assets/Themes";
 
 class WelcomePage extends React.Component {
 
@@ -25,7 +26,8 @@ class WelcomePage extends React.Component {
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
         resInfo: ls.getLSResInfo(),
-        currentTheme:'',
+        currentTheme: '',
+        subsetFoods: {},
     }
 
     constructor(props) {
@@ -44,12 +46,27 @@ class WelcomePage extends React.Component {
         })
     }
 
+    changeTheme(){
+        if (Themes[this.state.currentTheme]['primary_color']){
+            let colors = document.querySelector(':root')
+            colors.style.setProperty('--primary-color',Themes[this.state.currentTheme]['primary_color'])
+            colors.style.setProperty('--background-color',Themes[this.state.currentTheme]['background_color'])
+            console.log('set')
+        }else{
+            console.log('theme doesnt exist')
+        }
+
+    }
+
+
     componentDidMount() {
+        this.changeTheme()
         const options = {
             sectionClass: '.sections',
             menuActiveTarget: '.menu-item',
             offset: 400,
             scrollContainer: '#scroller',
+            smoothScroll:true,
         }
         setTimeout(() => {
             scrollSpy('#category-scroller', options)
@@ -61,7 +78,7 @@ class WelcomePage extends React.Component {
         // create food list if it doesn't exist
         if (ls.getLSResFoods().length < 1) {
             requests.getRestaurantFoods((response) => {
-                if (response.hasOwnProperty('statusCode') && response.statusCode === 100*2) {
+                if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
                     ls.setLSResFoods(response.data)
                 }
             })
@@ -69,16 +86,43 @@ class WelcomePage extends React.Component {
         // save res info if it doesn't exist
         if (!ls.getLSResInfo().hasOwnProperty("id")) {
             requests.getRestaurantInfo((response) => {
-                if (response.hasOwnProperty('statusCode') && response.statusCode === 100*2) {
+                if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
                     ls.setLSResInfo(response.data)
                 }
             })
         }
+        let subsets = {};
+        let foodArray = [];
+        for (let i = 0; i <= this.state.foodList.length; i++) {
+            let food = this.state.foodList[i]
+            if (food) {
+                if (food['relatedMainPersianName']) {
+                    if (subsets[food.relatedMainPersianName]) {
+                        foodArray = subsets[food.relatedMainPersianName]
+                        foodArray.push(food)
+                        subsets[food.relatedMainPersianName] = foodArray
+                    } else {
+                        foodArray = []
+                        foodArray.push(food)
+                        subsets[food.relatedMainPersianName] = foodArray
+                    }
+                }
+            }
+            foodArray = [];
+
+        }
+        this.setState({
+            subsetFoods: subsets
+        })
+
     }
+
+
 
     render() {
         return (
-            <div id={'welcome-page-main-container'} className={'welcomePageMainContainerCover w-100 h-100 '+this.state.currentTheme} style={{
+            <div id={'welcome-page-main-container'}
+                 className={'welcomePageMainContainerCover w-100 h-100 theme-base ' } style={{
                 scrollSnapType: 'y mandatory',
                 position: 'relative',
             }}>
@@ -108,7 +152,7 @@ class WelcomePage extends React.Component {
                             className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
                         <span id={'app-placeholder'}> app</span>
                     </p>
-                    <div className="welcomePageFrames1" >
+                    <div className="welcomePageFrames1">
                         <div className='HandAndHeaderText'>
                             <span className="welcomePageDescriptionH">چی میل داری؟</span>
                             <div onClick={(d) => {
@@ -148,7 +192,7 @@ class WelcomePage extends React.Component {
                         />
                     </div>
                     <br/>
-                    <div className="welcomePageFrames2 pt-1 " >
+                    <div className="welcomePageFrames2 pt-1 ">
                         <div className="d-flex justify-content-around ">
                             {
                                 typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
@@ -205,7 +249,7 @@ class WelcomePage extends React.Component {
                         }}>
                             <div onClick={
                                 () => {
-                                    document.getElementById('welcome-page-main-container').scrollBy(0, -(100*10*5))
+                                    document.getElementById('welcome-page-main-container').scrollBy(0, -(100 * 10 * 5))
                                 }
                             }>
                                 <i className={'fas fa-angle-double-up go-up-button'} style={{
@@ -229,7 +273,7 @@ class WelcomePage extends React.Component {
                     </div>
 
 
-                    <FoodList catsFullInfo={this.state.catsFullInfo} currentActivePart={this.state.currentActivePart}
+                    <FoodList subsets={this.state.subsetFoods} catsFullInfo={this.state.catsFullInfo} currentActivePart={this.state.currentActivePart}
                               foodList={this.state.foodList} randomColors={this.randomColors}
                               openExpander={openExpander}/>
 

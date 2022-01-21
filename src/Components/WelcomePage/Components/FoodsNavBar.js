@@ -22,7 +22,7 @@ const FoodsNavBar = (props) => {
             }}
                         className={'navbar-navigation-btn'}
                         onClick={() => {
-                            document.getElementById('category-scroller').scrollBy(-100, 0)
+                            document.getElementById('category-scroller').scrollBy(-200, 0)
                         }}
             >
                 <i className="fas fa-angle-left " style={{
@@ -41,7 +41,8 @@ const FoodsNavBar = (props) => {
                          overflow: 'scroll',
                          scrollBehavior: 'smooth',
                          borderRadius: 15,
-                         position: 'relative'
+                         position: 'relative',
+                         justifyContent:'center'
                      }}>
                     {
                         props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map(eachCategory => {
@@ -113,7 +114,7 @@ const FoodsNavBar = (props) => {
                 fontSize: 20
             }}
                         onClick={() => {
-                            document.getElementById('category-scroller').scrollBy(100, 0)
+                            document.getElementById('category-scroller').scrollBy(200, 0)
                         }}
             >
                 <i className="fas fa-angle-right " style={{
