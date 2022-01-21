@@ -47,7 +47,7 @@ class WelcomePage extends React.Component {
     }
 
     changeTheme(){
-        if (Themes[this.state.currentTheme]['primary_color']){
+        if (Themes[this.state.currentTheme]){
             let colors = document.querySelector(':root')
             colors.style.setProperty('--primary-color',Themes[this.state.currentTheme]['primary_color'])
             colors.style.setProperty('--background-color',Themes[this.state.currentTheme]['background_color'])
