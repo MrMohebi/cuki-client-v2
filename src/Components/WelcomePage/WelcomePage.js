@@ -178,11 +178,11 @@ class WelcomePage extends React.Component {
                         <div className="text-right">
                             <span className="welcomePageDescription">اینجا میتونی غذاهای مورد علاقتو</span>
                             <br/>
-                            <span className="welcomePageDescription">با بالاترین کیفیت ببینی و بعد انتخابش کنی</span>
+                            <span className="welcomePageDescription">با بالاترین کیفیت ببینی و انتخابش کنی</span>
                             <br/>
-                            <span className="welcomePageDescription">حتی میتونی دونگی پرداخت کنی</span>
+
                         </div>
-                        <div id={'chef'} className="chefImage " style={{
+                        <div id={'chef'} className="chefImage mt-4" style={{
                             background: 'url("/img/WelcomePage/chefIcon.png")',
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
