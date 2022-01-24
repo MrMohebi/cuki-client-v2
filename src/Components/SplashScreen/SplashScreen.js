@@ -7,19 +7,19 @@ import * as actions from '../../stores/reduxStore/actions';
 import {Snackbar} from "@material-ui/core"
 import getComName from "../../functions/getComName";
 
-function url2paramsArray(search){
-    return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
+function url2paramsArray(search) {
+    return JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
 }
 
 
-class SplashScreen extends React.Component{
+class SplashScreen extends React.Component {
 
-    searchParam = this.props.history.location.search.replace("?", "").length > 2 ?  this.props.history.location.search.replace("?", "") : "null=null"
+    searchParam = this.props.history.location.search.replace("?", "").length > 2 ? this.props.history.location.search.replace("?", "") : "null=null"
     urlParams = url2paramsArray(this.searchParam) // 12827295
 
     componentDidMount() {
         this.props.setResEnglishName(getComName())
-        if(ls.getLSResParts().length > 1){
+        if (ls.getLSResParts() && ls.getLSResParts().length > 1) {
             this.props.history.push("/main");
         }
         this.getData();
@@ -27,40 +27,49 @@ class SplashScreen extends React.Component{
 
     state = {
         openSnackbar: false,
-        snackbarMessage:"فکر کنم اینترنتت قطعه :(",
+        snackbarMessage: "فکر کنم اینترنتت قطعه :(",
     }
 
-    setOpenSnackbar = (status) =>{
+    setOpenSnackbar = (status) => {
         this.setState({
-            openSnackbar:status
+            openSnackbar: status
         })
     }
 
-    goMainPage = (response) =>{
-        this.props.setTableScanned(this.urlParams["table"]?this.urlParams["table"]:0)
-        if(response.hasOwnProperty('statusCode') && response.statusCode === 200){
+    goMainPage = (response) => {
+        this.props.setTableScanned(this.urlParams["table"] ? this.urlParams["table"] : 0)
+        if (response.hasOwnProperty('statusCode') && response.statusCode === 200) {
+            if (!response.hasOwnProperty('data') || !response.data)
+                response.data = ['restaurant']
             this.props.setResParts(response.data)
             ls.setLSResParts(response.data);
             this.props.history.push("/main");
-        }else{
+
+
+        } else {
             this.setOpenSnackbar(true)
         }
     }
 
-    getData = () =>{
+    getData = () => {
         requests.getRestaurantParts(this.goMainPage);
     }
 
     render() {
-        return(
+        return (
             <div className='mainSplashScreen'>
                 <Snackbar
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                    anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
                     open={this.state.openSnackbar}
                     message={this.state.snackbarMessage}
                 />
                 <div className='d-flex h-100 justify-content-center'>
-                    <div className='splashScreenImage' style={{background:'url(./img/SplashScreen/splashicon.png)',backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}}/>
+                    <div className='splashScreenImage' style={{
+                        background: 'url(./img/SplashScreen/splashicon.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat'
+                    }}/>
                 </div>
             </div>
         )
@@ -68,15 +77,14 @@ class SplashScreen extends React.Component{
 }
 
 const mapStateToProps = () => {
-    return {
-    }
+    return {}
 }
 
 const mapDispatchToProps = () => {
     return {
-        setResParts:actions.setResParts,
-        setTableScanned:actions.setTableScanned,
-        setResEnglishName:actions.setResEnglishName,
+        setResParts: actions.setResParts,
+        setTableScanned: actions.setTableScanned,
+        setResEnglishName: actions.setResEnglishName,
     }
 }
 

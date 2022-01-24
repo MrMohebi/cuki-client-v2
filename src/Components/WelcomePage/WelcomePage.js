@@ -136,16 +136,16 @@ class WelcomePage extends React.Component {
                 </div>
 
                 <Expander/>
-                <div style={{
-                    zIndex: '99999'
-                }} className={'more-options'}
-                     onClick={
-                         () => {
-                             this.props.history.push('/resDetails')
-                         }
-                     }
-                >...
-                </div>
+                {/*<div style={{*/}
+                {/*    zIndex: '99999'*/}
+                {/*}} className={'more-options'}*/}
+                {/*     onClick={*/}
+                {/*         () => {*/}
+                {/*             this.props.history.push('/resDetails')*/}
+                {/*         }*/}
+                {/*     }*/}
+                {/*>...*/}
+                {/*</div>*/}
                 <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder'}>
                     <p className="welcomePageHeader">
                         <span

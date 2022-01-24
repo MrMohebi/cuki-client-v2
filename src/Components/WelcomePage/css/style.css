@@ -452,6 +452,9 @@
   overflow: hidden;
   white-space: nowrap;
   text-underline-position: under;
+  direction: rtl;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .sections-holder {
