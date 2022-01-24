@@ -42,14 +42,14 @@ const FoodsNavBar = (props) => {
                          scrollBehavior: 'smooth',
                          borderRadius: 15,
                          position: 'relative',
-                         justifyContent:'center'
+                         justifyContent:props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).length>3?'right':'center':'center'
                      }}>
                     {
                         props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map(eachCategory => {
                                 let persianName = props.catsFullInfo[props.currentActivePart][eachCategory]['persianName']
                                 return (
                                     <a style={{
-                                        display: 'contents'
+                                        background:'transparent'
                                     }} className={'menu-item'} href={'#' + eachCategory}>
                                         <ButtonBase style={{
                                             borderRadius: 15,
