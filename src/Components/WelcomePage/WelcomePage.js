@@ -16,7 +16,7 @@ import {Themes} from "../../assets/Themes";
 class WelcomePage extends React.Component {
 
     state = {
-        currentSliderImages: ['https://image.freepik.com/free-photo/delicious-vietnamese-food-including-pho-ga-noodles-spring-rolls-white-table_181624-34062.jpg', 'https://media.istockphoto.com/photos/food-backgrounds-table-filled-with-large-variety-of-food-picture-id1155240408?k=20&m=1155240408&s=612x612&w=0&h=Zvr3TwVQ-wlfBnvGrgJCtv-_P_LUcIK301rCygnirbk=', 'https://media.istockphoto.com/photos/top-view-table-full-of-food-picture-id1220017909?k=20&m=1220017909&s=170667a&w=0&h=4I_l8ZyiZ8sebPsRo6UpFmdrV-MZgEvxb3smE-TbgLE='],
+        currentSliderImages: [],
         foodList: ls.getLSResFoods(),
         currentFoodIDs: [],
         catsFullInfo: ls.getLSResFullInfoCategories(),
@@ -51,16 +51,13 @@ class WelcomePage extends React.Component {
             let colors = document.querySelector(':root')
             colors.style.setProperty('--primary-color',Themes[this.state.currentTheme]['primary_color'])
             colors.style.setProperty('--background-color',Themes[this.state.currentTheme]['background_color'])
-            console.log('set')
         }else{
-            console.log('theme doesnt exist')
+
         }
 
     }
 
-
-    componentDidMount() {
-        this.changeTheme()
+    updateScrollSpy = ()=>{
         const options = {
             sectionClass: '.sections',
             menuActiveTarget: '.menu-item',
@@ -68,8 +65,18 @@ class WelcomePage extends React.Component {
             scrollContainer: '#scroller',
             smoothScroll:true,
         }
+
+        scrollSpy('#category-scroller', options)
+    }
+
+    mounted=()=>{
+        this.setState({
+            currentSliderImages:[]
+        })
+        this.changeTheme()
+
         setTimeout(() => {
-            scrollSpy('#category-scroller', options)
+            this.updateScrollSpy()
         }, 1000)
 
         if (this.state.resParts.length < 1) {
@@ -83,6 +90,11 @@ class WelcomePage extends React.Component {
                 }
             })
         }
+        requests.getRestaurantFoods((response) => {
+            if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
+                ls.setLSResFoods(response.data)
+            }
+        })
         // save res info if it doesn't exist
         if (!ls.getLSResInfo().hasOwnProperty("id")) {
             requests.getRestaurantInfo((response) => {
@@ -91,6 +103,11 @@ class WelcomePage extends React.Component {
                 }
             })
         }
+        requests.getRestaurantInfo((response) => {
+            if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
+                ls.setLSResInfo(response.data)
+            }
+        })
         let subsets = {};
         let foodArray = [];
         for (let i = 0; i <= this.state.foodList.length; i++) {
@@ -114,7 +131,14 @@ class WelcomePage extends React.Component {
         this.setState({
             subsetFoods: subsets
         })
+    }
 
+
+    componentDidMount() {
+       this.mounted()
+        setTimeout(()=>{
+            this.mounted()
+        },1000)
     }
 
 
@@ -198,6 +222,10 @@ class WelcomePage extends React.Component {
                                 typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
                                     return (
                                         <div onClick={() => {
+                                            setTimeout(()=>{
+                                                this.updateScrollSpy()
+                                            },1000)
+                                            this.updateScrollSpy()
                                             document.getElementsByClassName('welcomePageMainContainerCover')[0].scrollBy(0, 1000)
                                             this.setState({
                                                 currentActivePart: eachPart
@@ -207,7 +235,6 @@ class WelcomePage extends React.Component {
                                         }}
                                              key={eachPart}
                                              className={"openIcons " + (this.state.currentActivePart === eachPart ? 'active-part' : '')}
-
 
                                         >
                                             <img alt={'F'} src={'/img/resParts/' + eachPart + '.png'}

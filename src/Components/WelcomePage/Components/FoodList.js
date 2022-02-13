@@ -55,7 +55,6 @@ const FoodList = (props) => {
                                                          key={eachFood['id']}
                                                          className='foodListEachFoodContainer animate__animated animate__fadeInDown'
                                                          onClick={(e) => {
-                                                             console.log(props.subsets[eachFood.persianName])
                                                              props.openExpander(e, true, !!subsets)
                                                          }}
                                                     >
@@ -133,7 +132,7 @@ const FoodList = (props) => {
 
                                                                      }}>
                                                                     <img
-                                                                        src={'https://cdn0.iconfinder.com/data/icons/foody-icons/32/FoodyIcons_color-06-512.png'}
+                                                                        src={eachFood.thumbnail}
                                                                         style={{
                                                                             width: '100%',
                                                                             height: '100%',
@@ -147,7 +146,7 @@ const FoodList = (props) => {
                                                                  className='foodName'
                                                                  style={{
                                                                      width: '100%',
-                                                                     top: '50px',
+                                                                     top: '60px',
                                                                      overflow: 'visible',
                                                                      right: '0',
                                                                      position: 'absolute',
@@ -160,7 +159,7 @@ const FoodList = (props) => {
                                                                           width: '100%',
                                                                           right: 0,
                                                                           position: 'absolute',
-                                                                          top: '90px',
+                                                                          top: '95px',
                                                                           overflow: 'hidden',
                                                                           opacity: subsets ? 0 : 1
                                                                       }}
@@ -175,7 +174,6 @@ const FoodList = (props) => {
                                                                          className={'size-price px-2 IranSans'}>
                                                                         {
                                                                             props.subsets[eachFood.persianName].map(subset => {
-                                                                                console.log(props.subsets)
                                                                                 return (
                                                                                     <div
                                                                                         className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>

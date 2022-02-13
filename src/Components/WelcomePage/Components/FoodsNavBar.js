@@ -11,7 +11,7 @@ const FoodsNavBar = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             flexFlow: 'row',
-            height:'101px'
+            height: '101px'
         }}>
             <ButtonBase style={{
                 width: '7.5%',
@@ -34,7 +34,7 @@ const FoodsNavBar = (props) => {
             </ButtonBase>
 
 
-            <div id={'category-scroller-outer'} >
+            <div id={'category-scroller-outer'}>
                 <div id={'category-scroller'} className={'d-flex flex-row-reverse '}
                      style={{
                          padding: '10px 0px 0 0px',
@@ -42,15 +42,18 @@ const FoodsNavBar = (props) => {
                          scrollBehavior: 'smooth',
                          borderRadius: 15,
                          position: 'relative',
-                         justifyContent:props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).length>3?'right':'center':'center'
+                         justifyContent: props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).length > 3 ? 'right' : 'center' : 'center'
                      }}>
                     {
                         props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map(eachCategory => {
                                 let persianName = props.catsFullInfo[props.currentActivePart][eachCategory]['persianName']
                                 return (
-                                    <a style={{
-                                        background:'transparent'
-                                    }} className={'menu-item'} href={'#' + eachCategory}>
+                                    <a
+                                        style={{
+                                            background: 'transparent'
+                                        }} className={'menu-item'} href={'#' + eachCategory}
+
+                                    >
                                         <ButtonBase style={{
                                             borderRadius: 15,
                                             transition: '0.2s ease ',

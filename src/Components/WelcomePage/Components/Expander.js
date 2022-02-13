@@ -45,7 +45,7 @@ export let openExpander = (e, open, multiplePrices) => {
         overlay.style.pointerEvents = 'all';
         let duplicated = e.currentTarget.firstChild.cloneNode(true)
         duplicated.style.transition = '0.3s ease';
-        duplicated.appendChild(slider)
+        // duplicated.appendChild(slider)
 
         e.currentTarget.firstChild.style.opacity = 0
         lastClickedFood.current = e.currentTarget.firstChild;
@@ -62,7 +62,7 @@ export let openExpander = (e, open, multiplePrices) => {
             expander.style.left = '0';
             expander.style.height = window.innerHeight + 'px';
             expander.style.top = '100%';
-            duplicated.style.height = '500px';
+            duplicated.style.height = '300px';
             duplicated.style.width = document.body.getBoundingClientRect().width - (10 * 5) + 'px';
 
         }, 0)
@@ -170,7 +170,7 @@ export let openExpander = (e, open, multiplePrices) => {
 
         name.style.width = '100%'
         name.style.right = '0px'
-        name.style.top = '50px'
+        name.style.top = '60px'
         name.classList.remove('normal-font-size')
         details.style.top = '90px'
         setTimeout(() => {
