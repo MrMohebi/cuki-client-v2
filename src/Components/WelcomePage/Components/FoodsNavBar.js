@@ -48,10 +48,21 @@ const FoodsNavBar = (props) => {
                         props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map(eachCategory => {
                                 let persianName = props.catsFullInfo[props.currentActivePart][eachCategory]['persianName']
                                 return (
-                                    <a
-                                        style={{
-                                            background: 'transparent'
-                                        }} className={'menu-item'} href={'#' + eachCategory}
+                                    <a key={eachCategory}
+                                       style={{
+                                           background: 'transparent'
+                                       }} className={`menu-item ${props.currentCategory === eachCategory ? 'active' : ''}`}
+                                       href={'#' + eachCategory}
+                                       onClick={(e) => {
+                                           props.setCurrentCategory(eachCategory)
+                                           if (props.lockCategory) {
+                                               let navItems = document.querySelectorAll('.menu-item')
+                                               navItems.forEach(item => {
+                                                   item ? item.className = 'menu-item' : item = null
+                                               })
+                                           }
+                                           e.currentTarget.classList.add('active')
+                                       }}
 
                                     >
                                         <ButtonBase style={{

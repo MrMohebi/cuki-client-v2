@@ -28,10 +28,18 @@ class WelcomePage extends React.Component {
         resInfo: ls.getLSResInfo(),
         currentTheme: '',
         subsetFoods: {},
+        lockCategory: true,
+        currentCategory: ''
     }
 
     constructor(props) {
         super(props);
+    }
+
+    changeCurrentCategory = (newState) => {
+        this.setState({
+            currentCategory: newState
+        })
     }
 
     updatePart() {
@@ -46,32 +54,32 @@ class WelcomePage extends React.Component {
         })
     }
 
-    changeTheme(){
-        if (Themes[this.state.currentTheme]){
+    changeTheme() {
+        if (Themes[this.state.currentTheme]) {
             let colors = document.querySelector(':root')
-            colors.style.setProperty('--primary-color',Themes[this.state.currentTheme]['primary_color'])
-            colors.style.setProperty('--background-color',Themes[this.state.currentTheme]['background_color'])
-        }else{
+            colors.style.setProperty('--primary-color', Themes[this.state.currentTheme]['primary_color'])
+            colors.style.setProperty('--background-color', Themes[this.state.currentTheme]['background_color'])
+        } else {
 
         }
 
     }
 
-    updateScrollSpy = ()=>{
+    updateScrollSpy = () => {
         const options = {
             sectionClass: '.sections',
             menuActiveTarget: '.menu-item',
             offset: 400,
             scrollContainer: '#scroller',
-            smoothScroll:true,
+            smoothScroll: true,
         }
 
         scrollSpy('#category-scroller', options)
     }
 
-    mounted=()=>{
+    mounted = () => {
         this.setState({
-            currentSliderImages:[]
+            currentSliderImages: []
         })
         this.changeTheme()
 
@@ -131,30 +139,33 @@ class WelcomePage extends React.Component {
         this.setState({
             subsetFoods: subsets
         })
+        this.initialActiveCat()
+
+
+    }
+
+    initialActiveCat = () => {
+        this.setState({
+            currentCategory: Object.keys(this.state.catsFullInfo[this.state.currentActivePart])[0]
+        })
     }
 
 
     componentDidMount() {
-       this.mounted()
-        setTimeout(()=>{
+        this.mounted()
+        setTimeout(() => {
             this.mounted()
-        },1000)
+        }, 1000)
     }
 
 
-
     render() {
-        return (
-            <div id={'welcome-page-main-container'}
-                 className={'welcomePageMainContainerCover w-100 h-100 theme-base ' } style={{
-                scrollSnapType: 'y mandatory',
-                position: 'relative',
+        return (<div id={'welcome-page-main-container'}
+                     className={'welcomePageMainContainerCover w-100 h-100 theme-base '} style={{
+                scrollSnapType: 'y mandatory', position: 'relative',
             }}>
                 <div style={{
-                    height: 0,
-                    overflow: 'hidden',
-                    opacity: 0,
-                    display: 'none'
+                    height: 0, overflow: 'hidden', opacity: 0, display: 'none'
                 }}>
                     <PhotoSlider images={this.state.currentSliderImages}/>
                 </div>
@@ -218,34 +229,32 @@ class WelcomePage extends React.Component {
                     <br/>
                     <div className="welcomePageFrames2 pt-1 ">
                         <div className="d-flex justify-content-around ">
-                            {
-                                typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
-                                    return (
-                                        <div onClick={() => {
-                                            setTimeout(()=>{
-                                                this.updateScrollSpy()
-                                            },1000)
-                                            this.updateScrollSpy()
-                                            document.getElementsByClassName('welcomePageMainContainerCover')[0].scrollBy(0, 1000)
-                                            this.setState({
-                                                currentActivePart: eachPart
-                                            }, () => {
-                                                this.updatePart()
-                                            })
-                                        }}
+                            {typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
+                                return (<div onClick={() => {
+                                    setTimeout(() => {
+                                        this.updateScrollSpy()
+                                        this.initialActiveCat()
+                                    }, 200)
+                                    this.updateScrollSpy()
+                                    document.getElementsByClassName('welcomePageMainContainerCover')[0].scrollBy(0, 1000)
+                                    this.setState({
+                                        currentActivePart: eachPart
+                                    }, () => {
+                                        this.updatePart()
+                                    })
+                                }}
                                              key={eachPart}
                                              className={"openIcons " + (this.state.currentActivePart === eachPart ? 'active-part' : '')}
 
-                                        >
-                                            <img alt={'F'} src={'/img/resParts/' + eachPart + '.png'}
-                                                 className="burger"/>
-                                            <span
-                                                className="burgersAndDonatDescription">{this.state.partsPersianNames[eachPart]}</span>
-                                            <br/>
-                                            <br/>
-                                        </div>
-                                    )
-                                }) : <div/>}
+                                >
+                                    <img alt={'F'} src={'/img/resParts/' + eachPart + '.png'}
+                                         className="burger"/>
+                                    <span
+                                        className="burgersAndDonatDescription">{this.state.partsPersianNames[eachPart]}</span>
+                                    <br/>
+                                    <br/>
+                                </div>)
+                            }) : <div/>}
                             <div
                                 onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
                                 className={"openIcons" + (ls.getLSResInfo().hasOwnProperty("permissions") && ls.getLSResInfo()["permissions"].indexOf("360tour") !== -1 ? "" : " d-none ")}>
@@ -266,25 +275,17 @@ class WelcomePage extends React.Component {
 
 
                 <div className={'sections-holder'} style={{
-                    scrollSnapAlign: 'center',
-                    paddingTop: 0
+                    scrollSnapAlign: 'center', paddingTop: 0
                 }}>
                     <div style={{}}>
                         <div className={' pb-1'} style={{
-                            position: 'relative',
-                            height: '35px'
+                            position: 'relative', height: '35px'
                         }}>
-                            <div onClick={
-                                () => {
-                                    document.getElementById('welcome-page-main-container').scrollBy(0, -(100 * 10 * 5))
-                                }
-                            }>
+                            <div onClick={() => {
+                                document.getElementById('welcome-page-main-container').scrollBy(0, -(100 * 10 * 5))
+                            }}>
                                 <i className={'fas fa-angle-double-up go-up-button'} style={{
-                                    position: 'absolute',
-                                    right: 10,
-                                    top: 5,
-                                    width: 10,
-                                    height: 10
+                                    position: 'absolute', right: 10, top: 5, width: 10, height: 10
                                 }}
                                 />
                             </div>
@@ -292,7 +293,10 @@ class WelcomePage extends React.Component {
                             <span className={'IranSans mt-3 cat-text-placeholder'}>دسته بندی</span>
                         </div>
 
-                        <FoodsNavBar catsFullInfo={this.state.catsFullInfo}
+
+                        <FoodsNavBar currentCategory={this.state.currentCategory} lockCategory={this.state.lockCategory}
+                                     setCurrentCategory={this.changeCurrentCategory}
+                                     catsFullInfo={this.state.catsFullInfo}
                                      currentActivePart={this.state.currentActivePart}
                                      setState={(object) => {
                                          this.setState(object)
@@ -300,7 +304,9 @@ class WelcomePage extends React.Component {
                     </div>
 
 
-                    <FoodList subsets={this.state.subsetFoods} catsFullInfo={this.state.catsFullInfo} currentActivePart={this.state.currentActivePart}
+                    <FoodList currentCategory={this.state.currentCategory} lockCategory={this.state.lockCategory}
+                              subsets={this.state.subsetFoods} catsFullInfo={this.state.catsFullInfo}
+                              currentActivePart={this.state.currentActivePart}
                               foodList={this.state.foodList} randomColors={this.randomColors}
                               openExpander={openExpander}/>
 
@@ -317,8 +323,7 @@ class WelcomePage extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
-        tableScanned: store.rTempData.tableScanned,
-        resParts: store.rRestaurantInfo.resParts
+        tableScanned: store.rTempData.tableScanned, resParts: store.rRestaurantInfo.resParts
     }
 }
 

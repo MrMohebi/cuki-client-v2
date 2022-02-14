@@ -24,8 +24,7 @@ export let openExpander = (e, open, multiplePrices) => {
         expander.style.width = expanderW + 'px'
 
         lastExpanderPosition.current = {
-            top: '',
-            left: ''
+            top: '', left: ''
         }
 
         let offset = 0;
@@ -53,8 +52,7 @@ export let openExpander = (e, open, multiplePrices) => {
         duplicated.style.marginTop = '0px';
         duplicated.style.overflow = 'hidden';
         duplicated.classList.add('expended');
-        if (!!multiplePrices && !multiplePrices)
-            duplicated.querySelector('.priceAndImage').children[1].style.margin = '10px'
+        if (!!multiplePrices && !multiplePrices) duplicated.querySelector('.priceAndImage').children[1].style.margin = '10px'
         setTimeout(() => {
             expander.style.left = ((window.innerWidth / 2 - expanderW / 2) - offset / 2) + 'px';
             expander.style.top = "calc(100vh + " + (window.innerHeight / 2 - expanderW / 2) + "px )";
@@ -67,8 +65,7 @@ export let openExpander = (e, open, multiplePrices) => {
 
         }, 0)
 
-        expander.firstChild ? expander.firstChild.replaceWith(duplicated) :
-            expander.append(duplicated)
+        expander.firstChild ? expander.firstChild.replaceWith(duplicated) : expander.append(duplicated)
         setTimeout(() => {
             let image = duplicated.querySelector('#food-image')
             let price = duplicated.querySelector('#food-price')
@@ -80,8 +77,7 @@ export let openExpander = (e, open, multiplePrices) => {
 
             image.style.setProperty('transition', elementTransitions, 'important')
 
-            if (!!multiplePrices && !multiplePrices)
-                price.style.setProperty('transition', elementTransitions, 'important')
+            if (!!multiplePrices && !multiplePrices) price.style.setProperty('transition', elementTransitions, 'important')
 
 
             name.style.setProperty('transition', elementTransitions, 'important')
@@ -102,10 +98,8 @@ export let openExpander = (e, open, multiplePrices) => {
             name.style.top = '20px'
             name.classList.add('normal-font-size')
 
-            if (multiplePrices)
-                details.style.top = '150px'
-            else
-                details.style.top = '90px'
+            if (multiplePrices) details.style.top = '150px'
+            else details.style.top = '90px'
             details.style.fontSize = '0.8rem'
             details.style.textAlign = 'right'
             details.style.padding = '20px'
@@ -116,11 +110,10 @@ export let openExpander = (e, open, multiplePrices) => {
                 prices.classList.add('extended-prices')
             }
 
-            if(discount){
-                discount.style.opacity='0'
+            if (discount) {
+                discount.style.opacity = '0'
             }
         }, (10 * 5))
-
 
 
     } else {
@@ -140,8 +133,7 @@ export let openExpander = (e, open, multiplePrices) => {
         setTimeout(() => {
             lastClickedFood.current.style.opacity = 1
         }, 300)
-        if (!!multiplePrices && !multiplePrices)
-            duplicated.querySelector('.priceAndImage').children[1].style.margin = '0px'
+        if (!!multiplePrices && !multiplePrices) duplicated.querySelector('.priceAndImage').children[1].style.margin = '0px'
 
 
         let image = duplicated.querySelector('#food-image')
@@ -152,8 +144,7 @@ export let openExpander = (e, open, multiplePrices) => {
         let discount = duplicated.querySelector('.discountPercentage')
 
         image.style.setProperty('transition', elementTransitions, 'important')
-        if (!!multiplePrices && !multiplePrices)
-            price.style.setProperty('transition', elementTransitions, 'important')
+        if (!!multiplePrices && !multiplePrices) price.style.setProperty('transition', elementTransitions, 'important')
         name.style.setProperty('transition', elementTransitions, 'important')
         details.style.setProperty('transition', elementTransitions, 'important')
 
@@ -178,10 +169,7 @@ export let openExpander = (e, open, multiplePrices) => {
         }, 200)
         details.style.padding = '0px'
         details.style.whiteSpace = 'nowrap'
-        multiplePrices ?
-            details.style.opacity = '0'
-            :
-            details.style.opacity = '1'
+        multiplePrices ? details.style.opacity = '0' : details.style.opacity = '1'
 
         setTimeout(() => {
             overlay.style.opacity = '0';
@@ -199,8 +187,7 @@ export let openExpander = (e, open, multiplePrices) => {
 const Expander = () => {
 
 
-    return (
-        <div>
+    return (<div>
             <div id={'expander-overlay'} className={'expander-overlay'}/>
 
 
@@ -211,24 +198,21 @@ const Expander = () => {
                          openExpander(null, false, lastOpenedMultiplePrices.current)
                      }
                  }}
-                 style={
-                     {
-                         position: "absolute",
-                         background: "transparent",
-                         width: expanderW,
-                         height: expanderW,
-                         zIndex: 9999,
-                         display: 'flex',
-                         justifyContent: 'center',
-                         alignItems: 'center',
-                         transition: '.3s ease',
-                         pointerEvents: 'none'
-                     }
-                 }
+                 style={{
+                     position: "absolute",
+                     background: "transparent",
+                     width: expanderW,
+                     height: expanderW,
+                     zIndex: 9999,
+                     display: 'flex',
+                     justifyContent: 'center',
+                     alignItems: 'center',
+                     transition: '.3s ease',
+                     pointerEvents: 'none'
+                 }}
             />
 
-        </div>
-    );
+        </div>);
 };
 
 export default Expander;
