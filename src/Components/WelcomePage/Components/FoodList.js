@@ -21,7 +21,7 @@ const FoodList = (props) => {
                     return null
                 }
 
-                return (<div className={'sections '} style={{
+                return (<div key={index} className={'sections '} style={{
                         paddingTop: 170, marginTop: '-130px'
                     }} id={category['englishName']}>
                         <p className={'food-category-text text-black-50 IranSans'}>{category['persianName']}
@@ -35,7 +35,10 @@ const FoodList = (props) => {
                                 let subsets = props.subsets[eachFood.persianName];
                                 if (eachFood && !eachFood['relatedMainPersianName']) {
                                     let colors = RandomColor.RandomColor(eachFood.id);
-                                    return (<div onContextMenu={(e) => {
+                                    return (
+                                        <div
+
+                                            onContextMenu={(e) => {
                                             e.preventDefault()
                                         }}
                                                  key={eachFood['id']}
@@ -136,7 +139,7 @@ const FoodList = (props) => {
                                                 {subsets ? <div id={'size-price'}
                                                                 className={'size-price px-2 IranSans'}>
                                                     {props.subsets[eachFood.persianName].map(subset => {
-                                                        return (<div
+                                                        return (<div key={subset['englishName']}
                                                                 className={'each-size-price d-flex flex-row justify-content-between align-items-center px-2'}>
                                                                 <span>{subset['price'] + " " + "T"}</span>
                                                                 <span>{subset['persianName']}</span>

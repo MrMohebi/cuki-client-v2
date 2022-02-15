@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const expanderW = 300;
 let lastExpanderPosition = React.createRef();
 let lastClickedFood = React.createRef();
@@ -45,6 +44,18 @@ export let openExpander = (e, open, multiplePrices) => {
         let duplicated = e.currentTarget.firstChild.cloneNode(true)
         duplicated.style.transition = '0.3s ease';
         // duplicated.appendChild(slider)
+
+        let closeButton = document.createElement('i')
+        closeButton.className = 'fas fa-times justify-content-center align-items-center d-flex flex-column position-absolute top-0 left-0 '
+        closeButton.style.color = '#565656'
+        closeButton.id = 'expander-close'
+        closeButton.style.width = '40px'
+        closeButton.style.height = '40px'
+        closeButton.addEventListener('click', () => {
+            openExpander(null, false)
+        })
+
+        duplicated.appendChild(closeButton)
 
         e.currentTarget.firstChild.style.opacity = 0
         lastClickedFood.current = e.currentTarget.firstChild;
@@ -119,6 +130,9 @@ export let openExpander = (e, open, multiplePrices) => {
     } else {
 
         let duplicated = document.getElementById('expander').firstChild
+        let closeButton = document.getElementById('expander-close') ? document.getElementById('expander-close') : null
+        if (closeButton)
+            closeButton.remove()
 
         expander.style.left = lastExpanderPosition.current.left
         expander.style.top = lastExpanderPosition.current.top
@@ -188,31 +202,31 @@ const Expander = () => {
 
 
     return (<div>
-            <div id={'expander-overlay'} className={'expander-overlay'}/>
+        <div id={'expander-overlay'} className={'expander-overlay'}/>
 
 
-            <div id={'expander'} className={'expander'}
+        <div id={'expander'} className={'expander'}
 
-                 onClick={(e) => {
-                     if (e.target.classList.contains('expander')) {
-                         openExpander(null, false, lastOpenedMultiplePrices.current)
-                     }
-                 }}
-                 style={{
-                     position: "absolute",
-                     background: "transparent",
-                     width: expanderW,
-                     height: expanderW,
-                     zIndex: 9999,
-                     display: 'flex',
-                     justifyContent: 'center',
-                     alignItems: 'center',
-                     transition: '.3s ease',
-                     pointerEvents: 'none'
-                 }}
-            />
+             onClick={(e) => {
+                 if (e.target.classList.contains('expander')) {
+                     openExpander(null, false, lastOpenedMultiplePrices.current)
+                 }
+             }}
+             style={{
+                 position: "absolute",
+                 background: "transparent",
+                 width: expanderW,
+                 height: expanderW,
+                 zIndex: 9999,
+                 display: 'flex',
+                 justifyContent: 'center',
+                 alignItems: 'center',
+                 transition: '.3s ease',
+                 pointerEvents: 'none'
+             }}
+        />
 
-        </div>);
+    </div>);
 };
 
 export default Expander;
