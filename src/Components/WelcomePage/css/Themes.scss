@@ -3,9 +3,10 @@
   --secondary-color: linen;
   --background-color: white;
   --text-color: black;
+  --text-secondary-color:black;
+  --app-title-color:black;
 }
 .theme-base {
-
   background: var(--background-color);
 
   #category-scroller-outer {
@@ -52,7 +53,7 @@
   }
 
   .food-category-text {
-    color: var(--text-color) !important;
+    color: var(--text-secondary-color) !important;
   }
 
   .food-section {
@@ -102,4 +103,14 @@
     color: var(--text-color);
     border: 1px solid var(--text-color);
   }
+
+  .welcomePageHeader{
+    span{
+      color: var(--app-title-color);
+    }
+  }
+  .secondary-text{
+    color: var(--text-secondary-color);
+  }
+
 }

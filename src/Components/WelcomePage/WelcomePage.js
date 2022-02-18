@@ -26,7 +26,7 @@ class WelcomePage extends React.Component {
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
         resInfo: ls.getLSResInfo(),
-        currentTheme: '',
+        currentTheme: 'wintone',
         subsetFoods: {},
         lockCategory: true,
         currentCategory: ''
@@ -59,6 +59,10 @@ class WelcomePage extends React.Component {
             let colors = document.querySelector(':root')
             colors.style.setProperty('--primary-color', Themes[this.state.currentTheme]['primary_color'])
             colors.style.setProperty('--background-color', Themes[this.state.currentTheme]['background_color'])
+            colors.style.setProperty('--secondary-color', Themes[this.state.currentTheme]['secondary_color'])
+            colors.style.setProperty('--text-color', Themes[this.state.currentTheme]['text_color'])
+            colors.style.setProperty('--app-title-color', Themes[this.state.currentTheme]['app_title_color'])
+            colors.style.setProperty('--text-secondary-color', Themes[this.state.currentTheme]['text_secondary_color'])
         } else {
 
         }
@@ -182,11 +186,11 @@ class WelcomePage extends React.Component {
                 {/*>...*/}
                 {/*</div>*/}
                 <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder'}>
-                    <p className="welcomePageHeader">
+                    <div className="welcomePageHeader">
                         <span
                             className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
-                        <span id={'app-placeholder'}> app</span>
-                    </p>
+                        <span className={'app-default-ending-title'}> ONLINE MENU</span>
+                    </div>
                     <div className="welcomePageFrames1">
                         <div className='HandAndHeaderText'>
                             <span className="welcomePageDescriptionH">چی میل داری؟</span>
@@ -284,13 +288,13 @@ class WelcomePage extends React.Component {
                             <div onClick={() => {
                                 document.getElementById('welcome-page-main-container').scrollBy(0, -(100 * 10 * 5))
                             }}>
-                                <i className={'fas fa-angle-double-up go-up-button'} style={{
+                                <i className={'fas fa-angle-double-up go-up-button secondary-text'} style={{
                                     position: 'absolute', right: 10, top: 5, width: 10, height: 10
                                 }}
                                 />
                             </div>
 
-                            <span className={'IranSans mt-3 cat-text-placeholder'}>دسته بندی</span>
+                            <span className={'IranSans mt-3 cat-text-placeholder secondary-text'}>دسته بندی</span>
                         </div>
 
 

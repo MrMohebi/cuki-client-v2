@@ -24,7 +24,7 @@ const FoodList = (props) => {
                 return (<div key={index} className={'sections '} style={{
                         paddingTop: 170, marginTop: '-130px'
                     }} id={category['englishName']}>
-                        <p className={'food-category-text text-black-50 IranSans'}>{category['persianName']}
+                        <p className={'food-category-text text-black-50 IranSans secondary-text'}>{category['persianName']}
                         </p>
 
                         <section className={'mt-3 d-flex flex-wrap food-section'} style={{

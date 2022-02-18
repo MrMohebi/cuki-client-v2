@@ -25,7 +25,7 @@ const FoodsNavBar = (props) => {
                             document.getElementById('category-scroller').scrollBy(-200, 0)
                         }}
             >
-                <i className="fas fa-angle-left " style={{
+                <i className="fas fa-angle-left secondary-text " style={{
                     width: 50,
                     height: 50,
                     lineHeight: 2.5,
@@ -131,7 +131,7 @@ const FoodsNavBar = (props) => {
                             document.getElementById('category-scroller').scrollBy(200, 0)
                         }}
             >
-                <i className="fas fa-angle-right " style={{
+                <i className="fas fa-angle-right secondary-text " style={{
                     width: 50,
                     height: 50,
                     lineHeight: 2.5,
