@@ -5,16 +5,13 @@ let lastExpanderPosition = React.createRef();
 let lastClickedFood = React.createRef();
 let lastOpenedMultiplePrices = React.createRef();
 
-export let openExpander = (e, open, multiplePrices) => {
+export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
     let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
     let expander = document.getElementById('expander')
     let overlay = document.getElementById('expander-overlay')
     lastOpenedMultiplePrices.current = multiplePrices
 
     if (open) {
-        let slider = document.getElementById('photo-slider')
-
-
         expander.style.transition = '0s ease'
 
         mainContainer.style.overflow = 'hidden'
@@ -98,6 +95,26 @@ export let openExpander = (e, open, multiplePrices) => {
             image.style.setProperty('width', '80px', 'important')
             image.style.right = '10px'
             image.style.top = '10px'
+            let handleThumbnailClick = () => {
+                image.removeEventListener('click',handleThumbnailClick)
+                thumbnailOpened = true;
+                image.style.width = '300px'
+                image.style.height = '300px'
+                image.style.margin = '0'
+                image.style.right = '50%'
+                image.style.transform = 'translateX(50%)'
+                image.style.borderRadius = '20px'
+                image.style.zIndex = 9999
+                duplicated.style.height = parseInt(duplicated.style.height) + 300 + 'px'
+                name.style.top = '320px'
+                name.style.right = '20px'
+                details.style.top = '360px'
+                if (!multiplePrices && !discount) {
+                    price.style.top = '350px'
+                    price.style.right = '20px'
+                }
+            }
+           image.addEventListener("click",handleThumbnailClick)
             if (!multiplePrices && !discount) {
                 price.style.top = '60px'
                 price.style.right = '110px'
@@ -128,6 +145,7 @@ export let openExpander = (e, open, multiplePrices) => {
 
 
     } else {
+         thumbnailOpened = false;
 
         let duplicated = document.getElementById('expander').firstChild
         let closeButton = document.getElementById('expander-close') ? document.getElementById('expander-close') : null
@@ -166,6 +184,8 @@ export let openExpander = (e, open, multiplePrices) => {
         image.style.setProperty('width', '', 'important')
         image.style.right = '0px'
         image.style.top = '0px'
+        image.style.borderRadius = '59px'
+        image.style.transform = 'translate(0,0)'
 
         if (!multiplePrices && !discount) {
             price.style.top = '0px'
@@ -200,6 +220,7 @@ export let openExpander = (e, open, multiplePrices) => {
 
 const Expander = () => {
 
+    let thumbnailOpened = React.useRef(false);
 
     return (<div>
         <div id={'expander-overlay'} className={'expander-overlay'}/>
@@ -209,7 +230,7 @@ const Expander = () => {
 
              onClick={(e) => {
                  if (e.target.classList.contains('expander')) {
-                     openExpander(null, false, lastOpenedMultiplePrices.current)
+                     openExpander(null, false, lastOpenedMultiplePrices.current,thumbnailOpened.current)
                  }
              }}
              style={{

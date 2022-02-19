@@ -1,6 +1,7 @@
 import React from 'react';
 import * as RandomColor from "../../../functions/RandomColor";
 
+//TODO turn thumbnail to a gallery
 const FoodList = (props) => {
     let randomColors = ["#FFF7F7", "#D7E2DE", "#D4EBEF", "#FFF7F7", "#fff1da", "#D4EBEF",]
     const sampleThumbnailURL = "https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png";
@@ -99,13 +100,14 @@ const FoodList = (props) => {
                                                              backgroundPosition: 'center',
                                                              position: 'absolute',
                                                              right: '0px',
-                                                             top: '0px'
+                                                             top: '0px',
+                                                             borderRadius:'50px'
 
                                                          }}>
                                                         <img
-                                                            src={eachFood.thumbnail === sampleThumbnailURL?`/img/categories/${eachFood.group.logo}.png`:eachFood.thumbnail}
+                                                            src={eachFood.thumbnail === sampleThumbnailURL?`/img/categories/${eachFood.group.englishName}.png`:eachFood.thumbnail}
                                                             style={{
-                                                                width: '100%', height: '100%', borderRadius: '50px'
+                                                                width: '100%', height: '100%'
                                                             }}
                                                             alt={'foodImage'}/>
                                                     </div>
