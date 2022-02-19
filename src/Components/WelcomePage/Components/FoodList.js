@@ -3,6 +3,7 @@ import * as RandomColor from "../../../functions/RandomColor";
 
 const FoodList = (props) => {
     let randomColors = ["#FFF7F7", "#D7E2DE", "#D4EBEF", "#FFF7F7", "#fff1da", "#D4EBEF",]
+    const sampleThumbnailURL = "https://dl.cuki.ir/sampleAssets/sampleThumbnail_96x96.png";
 
     let calculateTheFontSize = (foodName) => {
         return ((((10 * 2) / foodName.length) >= 1.5 ? 1.5 : (20 / foodName.length)) + 'rem')
@@ -61,7 +62,7 @@ const FoodList = (props) => {
                                                                     id={'food-price'}
                                                                     style={{
                                                                         position: 'absolute', right: '70px', top: 0
-                                                                    }} className='eachFoodPrice '>
+                                                                    }} className='eachFoodPrice IranSansNoEn '>
                                                                                 {eachFood.price / 1000} T
                                                                                 </span>
 
@@ -102,7 +103,7 @@ const FoodList = (props) => {
 
                                                          }}>
                                                         <img
-                                                            src={eachFood.thumbnail}
+                                                            src={eachFood.thumbnail === sampleThumbnailURL?`/img/categories/${eachFood.group.logo}.png`:eachFood.thumbnail}
                                                             style={{
                                                                 width: '100%', height: '100%', borderRadius: '50px'
                                                             }}

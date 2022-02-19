@@ -1,5 +1,6 @@
 import React from "react";
 import './css/style.css';
+import '../../assets/fonts/fonts.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import {connect} from "react-redux";
 import getComName, {getFullName} from "../../functions/getComName";
