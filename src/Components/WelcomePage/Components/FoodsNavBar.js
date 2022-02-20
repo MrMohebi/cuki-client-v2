@@ -46,6 +46,7 @@ const FoodsNavBar = (props) => {
                      }}>
                     {
                         props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map(eachCategory => {
+
                                 let persianName = props.catsFullInfo[props.currentActivePart][eachCategory]['persianName']
                                 return (
                                     <a key={eachCategory}
