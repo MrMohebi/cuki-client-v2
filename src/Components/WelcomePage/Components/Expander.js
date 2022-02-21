@@ -96,21 +96,22 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
             image.style.right = '10px'
             image.style.top = '10px'
             let handleThumbnailClick = () => {
+                let WH = document.getElementsByClassName('expended')[0].getBoundingClientRect().width - 50
                 image.removeEventListener('click',handleThumbnailClick)
                 thumbnailOpened = true;
-                image.style.width = '300px'
-                image.style.height = '300px'
+                image.style.width = WH+'px'
+                image.style.height = WH+'px'
                 image.style.margin = '0'
                 image.style.right = '50%'
                 image.style.transform = 'translateX(50%)'
                 image.style.borderRadius = '20px'
                 image.style.zIndex = 9999
                 duplicated.style.height = parseInt(duplicated.style.height) + 300 + 'px'
-                name.style.top = '320px'
+                name.style.top = WH+20+'px'
                 name.style.right = '20px'
-                details.style.top = '360px'
+                details.style.top = WH+60+'px'
                 if (!multiplePrices && !discount) {
-                    price.style.top = '350px'
+                    price.style.top = WH+50+'px'
                     price.style.right = '20px'
                 }
             }
