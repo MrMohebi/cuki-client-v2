@@ -262,20 +262,25 @@ class WelcomePage extends React.Component {
                                     <br/>
                                 </div>)
                             }) : <div/>}
-                            <div
-                                onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
-                                className={"openIcons"}>
-                                <div className="burger" style={{
-                                    background: 'url("/img/resParts/vr.png")',
-                                    backgroundSize: '95%',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                }}/>
-                                <span
-                                    className="burgersAndDonatDescription">تور مجازی</span>
-                                <br/>
-                                <br/>
-                            </div>
+                            {
+                                this.state.currentTheme === 'wintone'?
+                                    <div
+                                        onClick={() => window.location.href = 'https://vr.cuki.ir/' + getFullName()}
+                                        className={"openIcons"}>
+                                        <div className="burger" style={{
+                                            background: 'url("/img/resParts/vr.png")',
+                                            backgroundSize: '95%',
+                                            backgroundPosition: 'center',
+                                            backgroundRepeat: 'no-repeat',
+                                        }}/>
+                                        <span
+                                            className="burgersAndDonatDescription">تور مجازی</span>
+                                        <br/>
+                                        <br/>
+                                    </div>:
+                                    null
+                            }
+
                         </div>
                     </div>
                 </div>
