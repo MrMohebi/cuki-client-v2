@@ -524,7 +524,7 @@
   box-shadow: 0 0 4px 0 #646464;
 }
 .theme-base .foodListEachFood .eachFoodImage {
-  filter: drop-shadow(0 0 0 black) !important;
+  filter: drop-shadow(5px 0 2px #4b4b4b) !important;
 }
 .theme-base .foodListEachFood .eachFoodPrice {
   color: var(--text-color);

@@ -46,8 +46,8 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
         closeButton.className = 'fas fa-times justify-content-center align-items-center d-flex flex-column position-absolute top-0 left-0 '
         closeButton.style.color = '#565656'
         closeButton.id = 'expander-close'
-        closeButton.style.width = '40px'
-        closeButton.style.height = '40px'
+        closeButton.style.width = '30px'
+        closeButton.style.height = '30px'
         closeButton.addEventListener('click', () => {
             openExpander(null, false)
         })

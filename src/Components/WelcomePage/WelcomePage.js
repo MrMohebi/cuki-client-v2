@@ -27,7 +27,7 @@ class WelcomePage extends React.Component {
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
         resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
         resInfo: ls.getLSResInfo(),
-        currentTheme: 'wintone',
+        currentTheme: '',
         subsetFoods: {},
         lockCategory: true,
         currentCategory: ''
@@ -142,9 +142,11 @@ class WelcomePage extends React.Component {
 
         }
         this.setState({
-            subsetFoods: subsets
+            subsetFoods: subsets,
+            currentTheme:window.location.href.split('c-')[1].split('/')[0]
         })
         this.initialActiveCat()
+
 
 
     }

@@ -101,7 +101,9 @@ const FoodList = (props) => {
                                                              position: 'absolute',
                                                              right: '0px',
                                                              top: '0px',
-                                                             borderRadius:'50px'
+                                                             borderRadius:'50px',
+
+
 
                                                          }}>
                                                         <img
