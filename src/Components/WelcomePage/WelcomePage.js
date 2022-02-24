@@ -188,7 +188,7 @@ class WelcomePage extends React.Component {
                 {/*     }*/}
                 {/*>...*/}
                 {/*</div>*/}
-                <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder'}>
+                <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder d-flex flex-column'}>
                     <div className="welcomePageHeader">
                         <span
                             className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
@@ -234,7 +234,7 @@ class WelcomePage extends React.Component {
                         />
                     </div>
                     <br/>
-                    <div className="welcomePageFrames2 pt-1 ">
+                    <div className="welcomePageFrames2 pt-1 h-25 ">
                         <div className="d-flex justify-content-around ">
                             {typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
                                 return (<div onClick={() => {
