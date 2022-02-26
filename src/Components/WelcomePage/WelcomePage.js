@@ -148,13 +148,16 @@ class WelcomePage extends React.Component {
         this.initialActiveCat()
 
 
-
     }
 
     initialActiveCat = () => {
-        this.setState({
-            currentCategory: Object.keys(this.state.catsFullInfo[this.state.currentActivePart])[0]
-        })
+        try {
+            this.setState({
+                currentCategory: Object.keys(this.state.catsFullInfo[this.state.currentActivePart])[0]
+            })
+        }catch (e){
+            console.log(e)
+        }
     }
 
 
