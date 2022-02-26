@@ -77,7 +77,7 @@ class CukiCode extends React.Component {
     render() {
 
         return (
-            <div className={'w-100 h-100 d-flex flex-column align-items-center px-3  position-relative'}>
+            <div style={{overflow:'scroll'}} className={'w-100 h-100 d-flex flex-column align-items-center px-3  position-relative pb-5'}>
                 <div className={'main-code-section mt-4 mr-4 ml-4 d-flex flex-column align-items-center pt-4'}>
                     <img src="/img/logo/logoNoText64x64.png" width={150} height={150} alt="Cuki"/>
                     {/*<h6 className={'cuki-code-header-text'}>cuki</h6>*/}
