@@ -47,6 +47,8 @@ const FoodsNavBar = (props) => {
                     {
                         props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map(eachCategory => {
 
+
+                                let logo = props.catsFullInfo[props.currentActivePart][eachCategory]['logo']
                                 let persianName = props.catsFullInfo[props.currentActivePart][eachCategory]['persianName']
                                 return (
                                     <a key={eachCategory}
@@ -82,7 +84,7 @@ const FoodsNavBar = (props) => {
                                             }} className="categoryPageEachCategory">
                                                 <div className="categoryPageEachCategoryImage"
                                                      style={{
-                                                         backgroundImage: 'url(/img/categories/' + (eachCategory.toLowerCase().includes('pizza') ? 'pizza' : eachCategory) + '.png)',
+                                                         backgroundImage: 'url(/img/categories/' +(logo?logo+'.png':(eachCategory.toLowerCase().includes('pizza') ? 'pizza' : eachCategory) + '.png') + ')',
                                                          backgroundSize: 'cover',
                                                          backgroundPosition: 'center',
                                                          backgroundRepeat: 'no-repeat'

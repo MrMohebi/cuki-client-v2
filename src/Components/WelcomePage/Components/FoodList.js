@@ -9,11 +9,13 @@ const FoodList = (props) => {
     let calculateTheFontSize = (foodName) => {
         return ((((10 * 2) / foodName.length) >= 1.5 ? 1.5 : (20 / foodName.length)) + 'rem')
     }
-    return (<div style={{
+    return (
+        <div style={{
             height: 'calc(100% - 121px)', overflowY: 'scroll', scrollBehavior: 'smooth', marginTop: '-15px'
         }} id={'scroller'}>
             {props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map((eachCat, index) => {
                 let category = props.catsFullInfo[props.currentActivePart][eachCat]
+                console.log(category)
                 let filteredFoods = props.foodList.filter(eachFood => {
                     if (eachFood) {
                         return category.foodList.includes(eachFood.id);
@@ -39,7 +41,6 @@ const FoodList = (props) => {
                                     let colors = RandomColor.RandomColor(eachFood.id);
                                     return (
                                         <div
-
                                             onContextMenu={(e) => {
                                             e.preventDefault()
                                         }}
@@ -108,7 +109,7 @@ const FoodList = (props) => {
 
                                                          }}>
                                                         <img
-                                                            src={eachFood.thumbnail === sampleThumbnailURL?`/img/categories/${eachFood.group.englishName}.png`:eachFood.thumbnail}
+                                                            src={eachFood.thumbnail === sampleThumbnailURL?`/img/categories/${category.logo?category.logo:eachFood.group.englishName}.png`:eachFood.thumbnail}
                                                             style={{
                                                                 width: '100%', height: '100%'
                                                             }}

@@ -83,6 +83,8 @@ class WelcomePage extends React.Component {
     }
 
     mounted = () => {
+
+        console.log(this.state.catsFullInfo)
         this.setState({
             currentSliderImages: []
         })
