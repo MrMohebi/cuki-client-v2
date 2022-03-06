@@ -5,16 +5,17 @@ let lastExpanderPosition = React.createRef();
 let lastClickedFood = React.createRef();
 let lastOpenedMultiplePrices = React.createRef();
 
-export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
-    try {
+export let openExpander = (e, open, multiplePrices, thumbnailOpened) => {
+
+    let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
+    let expander = document.getElementById('expander')
+    let overlay = document.getElementById('expander-overlay')
+    lastOpenedMultiplePrices.current = multiplePrices
+
+    if (open) {
+        try {
 
 
-        let mainContainer = document.getElementsByClassName('welcomePageMainContainerCover ')[0]
-        let expander = document.getElementById('expander')
-        let overlay = document.getElementById('expander-overlay')
-        lastOpenedMultiplePrices.current = multiplePrices
-
-        if (open) {
             expander.style.transition = '0s ease'
 
             mainContainer.style.overflow = 'hidden'
@@ -80,6 +81,11 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
             setTimeout(() => {
                 let image = duplicated.querySelector('#food-image')
                 let price = duplicated.querySelector('#food-price')
+
+                if (price) {
+                    if (price.innerText === 'ناموجود')
+                        price.style.opacity = 0
+                }
                 let name = duplicated.querySelector('#food-name')
                 let details = duplicated.querySelector('#food-details')
                 let prices = duplicated.querySelector('#size-price')
@@ -113,15 +119,20 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
                     name.style.top = WH + 20 + 'px'
                     name.style.right = '20px'
                     details.style.top = WH + 60 + 'px'
+
                     if (!multiplePrices && !discount) {
-                        price.style.top = WH + 50 + 'px'
-                        price.style.right = '20px'
+                        if (price) {
+                            price.style.top = WH + 50 + 'px'
+                            price.style.right = '20px'
+                        }
                     }
                 }
                 image.addEventListener("click", handleThumbnailClick)
                 if (!multiplePrices && !discount) {
-                    price.style.top = '60px'
-                    price.style.right = '110px'
+                    if (price) {
+                        price.style.top = '60px'
+                        price.style.right = '110px'
+                    }
                 }
 
 
@@ -147,8 +158,13 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
                 }
             }, (10 * 5))
 
+        } catch (e) {
+            console.log(e)
+        }
+    } else {
+        try {
 
-        } else {
+
             thumbnailOpened = false;
 
             let duplicated = document.getElementById('expander').firstChild
@@ -180,7 +196,10 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
             let discount = duplicated.querySelector('.discountPercentage')
 
             image.style.setProperty('transition', elementTransitions, 'important')
-            if (!!multiplePrices && !multiplePrices) price.style.setProperty('transition', elementTransitions, 'important')
+            if (!!multiplePrices && !multiplePrices)
+                if (price) {
+                    price.style.setProperty('transition', elementTransitions, 'important')
+                }
             name.style.setProperty('transition', elementTransitions, 'important')
             details.style.setProperty('transition', elementTransitions, 'important')
 
@@ -192,8 +211,10 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
             image.style.transform = 'translate(0,0)'
 
             if (!multiplePrices && !discount) {
-                price.style.top = '0px'
-                price.style.right = '70px'
+                if (price) {
+                    price.style.top = '0px'
+                    price.style.right = '70px'
+                }
             }
 
 
@@ -215,12 +236,13 @@ export let openExpander = (e, open, multiplePrices,thumbnailOpened) => {
                 overlay.style.pointerEvents = 'none'
                 mainContainer.style.overflowY = 'scroll'
             }, (100 * 3))
-
-
+        }catch (e){
+            console.log(e)
         }
-    }catch (e){
-        console.log(e)
+
+
     }
+
 }
 
 
@@ -236,7 +258,7 @@ const Expander = () => {
 
              onClick={(e) => {
                  if (e.target.classList.contains('expander')) {
-                     openExpander(null, false, lastOpenedMultiplePrices.current,thumbnailOpened.current)
+                     openExpander(null, false, lastOpenedMultiplePrices.current, thumbnailOpened.current)
                  }
              }}
              style={{

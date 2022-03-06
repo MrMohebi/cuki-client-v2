@@ -33,7 +33,7 @@ const FoodList = (props) => {
                             backgroundColor: randomColors[index] ? randomColors[index] : randomColors[index - randomColors.length]
                         }}>
 
-                            {filteredFoods.map((eachFood, index) => {
+                            {filteredFoods.map((eachFood) => {
                                 let subsets = props.subsets[eachFood.persianName];
                                 if (eachFood && !eachFood['relatedMainPersianName']) {
                                     let colors = RandomColor.RandomColor(eachFood.id);
@@ -68,6 +68,7 @@ const FoodList = (props) => {
                                                                                 </span>
 
                                                             : subsets ? null : <div
+                                                                id={'food-price ' }
                                                                 className={'d-flex flex-column justify-content-center'}>
                                                                                 <span
                                                                                     style={{
@@ -81,7 +82,6 @@ const FoodList = (props) => {
                                                                                 </span>
 
                                                                 <span
-                                                                    id={'food-price ' + index}
                                                                     style={{fontWeight: 'bolder'}}
                                                                     className='eachFoodPriceDiscount'>
                                                                                         {eachFood.price * (1 - eachFood.discount / 100) / 1000} T
@@ -89,6 +89,7 @@ const FoodList = (props) => {
                                                             </div>
 
                                                         : <span
+                                                            id={'food-price'}
                                                             className='outOfStockTextHolder'>
                                                                                 ناموجود
                                                                         </span>}
