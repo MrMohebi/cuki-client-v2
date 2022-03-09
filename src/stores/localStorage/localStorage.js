@@ -3,13 +3,13 @@ import foodsListAdaptor from "../../functions/foodsListAdaptor";
 
 let ComName = getComName()
 
-const lSNameToken = "generalToken_010312"
-const lSNamePhone = "generalPhone_010312"
-const lSNamePager = ComName+"Pager_010312"
-const lSNameResParts = ComName+"ResParts_020626"
-const lSNameResInfo = ComName+"ResInfo_010626"
-const lSNameResFoods = ComName+"ResFoods_010626"
-const lSNameResFullInfoCategories = ComName+"ResFullInfoCategories_010626"
+const lSNameToken = "generalToken_010313"
+const lSNamePhone = "generalPhone_010313"
+const lSNamePager = ComName+"Pager_010313"
+const lSNameResParts = ComName+"ResParts_020627"
+const lSNameResInfo = ComName+"ResInfo_010627"
+const lSNameResFoods = ComName+"ResFoods_010627"
+const lSNameResFullInfoCategories = ComName+"ResFullInfoCategories_010627"
 
 
 // -------------------------------------------------------------------------------
