@@ -4,12 +4,12 @@
 }
 .codeButton{
     transition: all 0.2s ease !important;
-    color: red;
+    color: #ff0000;
     width: 140px;
     background-color: #bc845e !important;
 }
 .codeButton span {
-    color: white;
+    color: #ffffff;
 }
 .cukiCodeSnackbar div{
     background-color: #c21313;
@@ -21,11 +21,11 @@
 }
 .main-code-section{
      width: 100%;
-    background-color: rgb(254,250,239);
+    background-color: #fefaef;
     border-radius: 12px;
  }
 .input-section{
-    background: rgb(255,237,197);
+    background: #ffedc5;
     border-radius: 12px;
 }
 .search-place-holder{
@@ -35,7 +35,7 @@
 }
 .restaurants-container{
     width: 100%;
-    background: rgb(255,246,247);
+    background: #fff6f7;
     /*height: 50px;*/
     border-radius: 12px;
     /*position: absolute;*/
@@ -60,7 +60,7 @@
     right: -5px;
     top: -5px;
     border-radius: 10px;
-    color: white;
+    color: #ffffff;
     line-height: 20px;
     font-size: 0.7rem;
 }
@@ -68,7 +68,7 @@
     margin-top: 10px;
     min-height: 5px;
     min-width: 80px;
-    background: white;
+    background: #ffffff;
     border: 1px solid #ffffff;
 }
 
@@ -78,7 +78,7 @@
     width: 100%;
     transform: translate(50%, 0px);
     right: 50%;
-    background: rgb(255,237,197);
+    background: #ffedc5;
     border-radius:  0 0 15px 15px;
     overflow-x: hidden;
     transition: .2s ease;
@@ -88,8 +88,5 @@
     font-size: 0.9rem;
     padding-top: 5px;
     padding-bottom: 5px;
-}
-.each-res-image{
-
 }
 

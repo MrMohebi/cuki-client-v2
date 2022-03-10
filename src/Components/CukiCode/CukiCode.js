@@ -77,10 +77,10 @@ class CukiCode extends React.Component {
     render() {
 
         return (
-            <div className={'w-100 h-100 d-flex flex-column align-items-center px-3  position-relative'}>
+            <div style={{overflow:'scroll'}} className={'w-100 h-100 d-flex flex-column align-items-center px-3  position-relative pb-5'}>
                 <div className={'main-code-section mt-4 mr-4 ml-4 d-flex flex-column align-items-center pt-4'}>
-                    <img src="/img/logo/logoNoText64x64.png" alt="Cuki"/>
-                    <h6 className={'cuki-code-header-text'}>cuki</h6>
+                    <img src="/img/logo/logoNoText64x64.png" width={150} height={150} alt="Cuki"/>
+                    {/*<h6 className={'cuki-code-header-text'}>cuki</h6>*/}
                     <div
                         className={'input-section  px-2 mb-4 mt-5 d-flex flex-row align-items-center position-relative'}>
                         <div className={'d-flex justify-content-center align-items-center'} style={{
@@ -126,7 +126,7 @@ class CukiCode extends React.Component {
                                     if (eachRes.includes(this.state.inputValue) && this.state.inputValue) {
                                         return (
                                             <div className={'each-suggest IranSans'} onClick={() => {
-                                                window.location.href = `https://cuki.ir/c-${this.state.restaurantsEnglishName[index]}`
+                                                window.location.href = window.location.origin+`/c-${this.state.restaurantsEnglishName[index]}`
                                             }}>{eachRes}</div>
                                         )
 
@@ -144,9 +144,10 @@ class CukiCode extends React.Component {
                         <div className={'drawer shadow-sm'}/>
                         <h6 className={'mt-4'} style={{
                             fontFamily: 'AppIranSansBold'
-                        }}>ستوران های برتر</h6>
+                        }}>رستوران های برتر</h6>
                         <span className={'IranSansLight'} style={{
-                            fontSize: '0.7rem'
+                            fontSize: '0.7rem',
+                            whiteSpace:'nowrap'
                         }}>( بر اساس امتیاز)</span>
                     </div>
 
@@ -156,7 +157,8 @@ class CukiCode extends React.Component {
                             this.state.restaurantsPersianName.map((eachItem,index)=>{
                                 return(
                                     <div className={'each-res-holder'} onClick={()=>{
-                                        window.location.href = `https://cuki.ir/c-${this.state.restaurantsEnglishName[index]}`                                    }}>
+                                        window.location.href = window.location.origin+`/c-${this.state.restaurantsEnglishName[index]}`
+                                    }}>
                                     <div className={'each-res d-flex flex-row justify-content-between align-items-center px-3'}>
                                         <div className={'res-score'}>4.2</div>
                                         <img width={29} height={29} src="/img/logo/logoNoText64x64.png" alt=""/>
@@ -168,8 +170,7 @@ class CukiCode extends React.Component {
                                 :
                                 <CircleSpinner color={'#af9e9e'}/>
                         }
-
-
+                        
                     </div>
 
                 </div>
