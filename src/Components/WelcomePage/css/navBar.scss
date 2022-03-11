@@ -1,0 +1,136 @@
+#category-scroller-outer{
+  overflow:hidden;
+  position: relative;
+  background: #FFF1DA;
+  width: 85%;
+  border-radius: 15px;
+  div{
+    transition: 0.3s;
+    z-index: 999999999;
+  }
+}
+
+
+
+@media only screen and (max-width: 380px) {
+  .categoryPageEachCategoryImage {
+    height: 35px !important;
+    width: 35px !important;
+    border: none;
+    margin: 10px auto 0 auto;
+  }
+  .categoryPageEachCategory {
+    transition: all 0.2s ease;
+    height: 75px !important;
+    width: 75px !important;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 1px 2px 0 0 #b9b9b9;
+    display: flex;
+    flex-flow: column;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .categoryPageEachCategory {
+    transition: all 0.2s ease;
+    height: 100px !important;
+    width: 100px !important;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 1px 2px 0 0 #b9b9b9;
+    display: flex;
+    flex-flow: column;
+  }
+  .categoryPageEachCategory:active {
+    transition: all 0.2s ease;
+    height: 85px;
+    width: 85px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 0 0 #b9b9b9;
+    display: flex;
+    flex-flow: column;
+  }
+}
+
+
+.categoryPageEachCategoryImage {
+  height: 45px;
+  width: 45px;
+  border: none;
+  margin: 10px auto 0 auto;
+}
+
+.categoryPageEachCategory {
+  transition: all 0.2s ease;
+  height: 86px;
+  width: 85px;
+  background-color: white;
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  flex-flow: column;
+}
+
+.categoryPageEachCategory:active {
+  transition: all 0.2s ease;
+  height: 86px;
+  width: 85px;
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 0 0 #b9b9b9;
+  display: flex;
+  flex-flow: column;
+}
+.categoryPageSelectorText{
+  font-weight: 600;
+}
+
+.heightFitContent {
+  height: max-content;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  overflow: scroll;
+  padding-bottom: 10px;
+}
+
+.categoryPageEachCategoryContainer {
+  margin-top: 50px;
+  width: auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.eachOrderDetailsTotalHolder{
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.categoryPageEachCategoryName {
+  font-size: 0.7rem;
+  font-family: AppIranSans, serif;
+  font-weight: bold;
+  margin-top: 5px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-underline-position: under;
+  direction: rtl;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.sections-holder{
+  height: 100%;
+  padding-top: 1rem;
+  position: relative;
+}
+.navbar-navigation-btn{
+  background: transparent !important;
+}

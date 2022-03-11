@@ -1,0 +1,10 @@
+#category-scroller:after {
+  content: "";
+  height: 100%;
+  top: 0;
+  right: 0;
+  width: 50px;
+  background: #663399;
+}
+
+/*# sourceMappingURL=navBar.css.map */

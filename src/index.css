@@ -8,7 +8,7 @@ html, body,#root{
 }
 a{
   text-decoration: none ;
-  color: black !important;
+  color: #000000 !important;
 }
 .max500{
   max-width: 800px;
@@ -75,9 +75,19 @@ code {
     monospace;
 }
 
-*::-webkit-scrollbar {
+/**::-webkit-scrollbar {*/
+/*  display: none;*/
+/*}*/
+body::-webkit-scrollbar{
+
+}
+#category-scroller::-webkit-scrollbar{
   display: none;
 }
+#scroller::-webkit-scrollbar{
+  display: none;
+}
+
 
 /* Hide scrollbar for IE, Edge and Firefox */
 *{
