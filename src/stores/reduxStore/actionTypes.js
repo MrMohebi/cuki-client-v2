@@ -4,10 +4,9 @@ export const SET_USER_DATA = "setUserData"
 export const SET_CUSTOMER_DATA = "setCustomerData"
 export const DELETE_USER_ALL_DATA = "deleteAllUserData";
 
-export const SET_RESTAURANT_DATA = "setRestaurantData"
 export const SET_FOOD_LIST_CONVERTED = "setFoodListConverted"
-export const SET_RES_ENGLISH_NAME = "setResEnglishName"
-export const SET_RES_PARTS = "setResParts"
+export const SET_RES_FOODS = "setResFoods"
+export const SET_RES_INFO = "setResInfo"
 
 
 export const MISSING_USER_INFO = "missingUserInfo"

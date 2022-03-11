@@ -4,8 +4,6 @@ import '../../assets/fonts/fonts.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import {connect} from "react-redux";
 import getComName, {getFullName} from "../../functions/getComName";
-import * as ls from "../../stores/localStorage/localStorage"
-import * as requests from '../../ApiRequests/ApiRequests'
 import scrollSpy from 'simple-scrollspy'
 import PhotoSlider from "./Components/PhotoSlider";
 import FoodsNavBar from "./Components/FoodsNavBar";
@@ -18,15 +16,11 @@ class WelcomePage extends React.Component {
 
     state = {
         currentSliderImages: [],
-        foodList: ls.getLSResFoods(),
         currentFoodIDs: [],
-        catsFullInfo: ls.getLSResFullInfoCategories(),
         currentActivePart: 'restaurant',
         handClass: "shakeHands",
         allowToShake: true,
         partsPersianNames: {coffeeshop: 'کافی شاپ', restaurant: 'رستوران'},
-        resParts: this.props.resParts.length > 0 ? this.props.resParts : ls.getLSResParts(),
-        resInfo: ls.getLSResInfo(),
         currentTheme: '',
         subsetFoods: {},
         lockCategory: true,
@@ -45,8 +39,8 @@ class WelcomePage extends React.Component {
 
     updatePart() {
         let allCurrentPartIds = [];
-        Object.keys(this.state.catsFullInfo[this.state.currentActivePart]).forEach(key => {
-            this.state.catsFullInfo[this.state.currentActivePart][key]['foodList'].forEach(id => {
+        Object.keys(this.props.foodListConverted[this.state.currentActivePart]).forEach(key => {
+            this.props.foodListConverted[this.state.currentActivePart][key]['foodList'].forEach(id => {
                 allCurrentPartIds.push(id)
             });
         })
@@ -83,8 +77,10 @@ class WelcomePage extends React.Component {
     }
 
     mounted = () => {
+        if (!this.props.foodListConverted?.parts?.length > 0) {
+            this.props.history.push("/");
+        }
 
-        console.log(this.state.catsFullInfo)
         this.setState({
             currentSliderImages: []
         })
@@ -94,39 +90,11 @@ class WelcomePage extends React.Component {
             this.updateScrollSpy()
         }, 1000)
 
-        if (this.state.resParts.length < 1) {
-            this.props.history.push("/");
-        }
-        // create food list if it doesn't exist
-        if (ls.getLSResFoods().length < 1) {
-            requests.getRestaurantFoods((response) => {
-                if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
-                    ls.setLSResFoods(response.data)
-                }
-            })
-        }
-        requests.getRestaurantFoods((response) => {
-            if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
-                ls.setLSResFoods(response.data)
-            }
-        })
-        // save res info if it doesn't exist
-        if (!ls.getLSResInfo().hasOwnProperty("id")) {
-            requests.getRestaurantInfo((response) => {
-                if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
-                    ls.setLSResInfo(response.data)
-                }
-            })
-        }
-        requests.getRestaurantInfo((response) => {
-            if (response.hasOwnProperty('statusCode') && response.statusCode === 100 * 2) {
-                ls.setLSResInfo(response.data)
-            }
-        })
+
         let subsets = {};
         let foodArray = [];
-        for (let i = 0; i <= this.state.foodList.length; i++) {
-            let food = this.state.foodList[i]
+        for (let i = 0; i <= this.props.foodList.length; i++) {
+            let food = this.props.foodList[i]
             if (food) {
                 if (food['relatedMainPersianName']) {
                     if (subsets[food.relatedMainPersianName]) {
@@ -155,7 +123,7 @@ class WelcomePage extends React.Component {
     initialActiveCat = () => {
         try {
             this.setState({
-                currentCategory: Object.keys(this.state.catsFullInfo[this.state.currentActivePart])[0]
+                currentCategory: Object.keys(this.props.foodListConverted[this.state.currentActivePart])[0]
             })
         }catch (e){
             console.log(e)
@@ -196,7 +164,7 @@ class WelcomePage extends React.Component {
                 <div style={{height: '100%', scrollSnapAlign: 'center'}} className={'sections-holder d-flex flex-column'}>
                     <div className="welcomePageHeader">
                         <span
-                            className="textColor">{typeof this.state.resInfo == "object" ? this.state.resInfo.englishName : getComName()} </span>
+                            className="textColor">{typeof this.props.resInfo == "object" ? this.props.resInfo.englishName : getComName()} </span>
                         <span className={'app-default-ending-title'}> ONLINE MENU</span>
                     </div>
                     <div className="welcomePageFrames1">
@@ -241,7 +209,7 @@ class WelcomePage extends React.Component {
                     <br/>
                     <div className="welcomePageFrames2 pt-1 h-25 ">
                         <div className="d-flex justify-content-around ">
-                            {typeof this.state.resParts === "object" ? this.state.resParts.map(eachPart => {
+                            {typeof this.props.foodListConverted.parts === "object" ? this.props.foodListConverted.parts.map(eachPart => {
                                 return (<div onClick={() => {
                                     setTimeout(() => {
                                         this.updateScrollSpy()
@@ -313,7 +281,7 @@ class WelcomePage extends React.Component {
 
                         <FoodsNavBar currentCategory={this.state.currentCategory} lockCategory={this.state.lockCategory}
                                      setCurrentCategory={this.changeCurrentCategory}
-                                     catsFullInfo={this.state.catsFullInfo}
+                                     catsFullInfo={this.props.foodListConverted}
                                      currentActivePart={this.state.currentActivePart}
                                      setState={(object) => {
                                          this.setState(object)
@@ -322,9 +290,9 @@ class WelcomePage extends React.Component {
 
 
                     <FoodList currentCategory={this.state.currentCategory} lockCategory={this.state.lockCategory}
-                              subsets={this.state.subsetFoods} catsFullInfo={this.state.catsFullInfo}
+                              subsets={this.state.subsetFoods} catsFullInfo={this.props.foodListConverted}
                               currentActivePart={this.state.currentActivePart}
-                              foodList={this.state.foodList} randomColors={this.randomColors}
+                              foodList={this.props.foodList} randomColors={this.randomColors}
                               openExpander={openExpander}/>
 
 
@@ -340,7 +308,10 @@ class WelcomePage extends React.Component {
 
 const mapStateToProps = (store) => {
     return {
-        tableScanned: store.rTempData.tableScanned, resParts: store.rRestaurantInfo.resParts
+        tableScanned: store.rTempData.tableScanned,
+        foodList: store.rRestaurantInfo.foods,
+        foodListConverted: store.rRestaurantInfo.foodListConverted,
+        resInfo: store.rRestaurantInfo.info
     }
 }
 

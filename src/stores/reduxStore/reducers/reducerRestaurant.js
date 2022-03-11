@@ -4,22 +4,23 @@ import produce from "immer"
 
 export default function reducerRestaurant (state= __init__RestaurantInfo, action) {
     switch (action.type) {
-        case actionTypes.SET_RESTAURANT_DATA:
-            return produce(state, draftState =>{
-                draftState.foods = action.payload.restaurantData.foods;
-                draftState.restaurantInfo = action.payload.restaurantData.restaurantInfo;
-            });
         case actionTypes.SET_FOOD_LIST_CONVERTED:
             return produce(state, draftState =>{
                 draftState.foodListConverted = action.payload.foodListConverted;
             });
-        case actionTypes.SET_RES_ENGLISH_NAME:
+        case actionTypes.SET_RES_FOODS:
             return produce(state, draftState =>{
-                draftState.englishName = action.payload.resEnglishName;
+                // order foods base on id
+                let newFoodList = []
+                for(const eFood of action.payload.foodList){
+                    if (typeof eFood == "object")
+                        newFoodList[eFood.id] = eFood;
+                }
+                draftState.foods = newFoodList;
             });
-        case actionTypes.SET_RES_PARTS:
+        case actionTypes.SET_RES_INFO:
             return produce(state, draftState =>{
-                draftState.resParts = action.payload.resParts;
+                draftState.info = action.payload.resInfo;
             });
         default:
             return state;

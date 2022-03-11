@@ -15,7 +15,6 @@ const FoodList = (props) => {
         }} id={'scroller'}>
             {props.catsFullInfo[props.currentActivePart] ? Object.keys(props.catsFullInfo[props.currentActivePart]).map((eachCat, index) => {
                 let category = props.catsFullInfo[props.currentActivePart][eachCat]
-                console.log(category)
                 let filteredFoods = props.foodList.filter(eachFood => {
                     if (eachFood) {
                         return category.foodList.includes(eachFood.id);

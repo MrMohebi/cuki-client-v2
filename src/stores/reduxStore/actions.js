@@ -2,13 +2,6 @@ import * as actionTypes from './actionTypes'
 import {store} from './store'
 
 
-export const userDeleteAllData = () => (
-    store.dispatch({
-        type: actionTypes.DELETE_USER_ALL_DATA,
-    })
-)
-
-
 export const userSetPhone = phone => (
     store.dispatch({
         type: actionTypes.SET_PHONE,
@@ -17,6 +10,7 @@ export const userSetPhone = phone => (
         }
     })
 )
+
 
 export const userSetToken = token => (
     store.dispatch({
@@ -28,26 +22,6 @@ export const userSetToken = token => (
 )
 
 
-export const restaurantSetData = restaurantData => (
-    store.dispatch({
-        type: actionTypes.SET_RESTAURANT_DATA,
-        payload:{
-            restaurantData
-        }
-    })
-)
-
-
-
-export const setResParts = resParts => (
-    store.dispatch({
-        type: actionTypes.SET_RES_PARTS,
-        payload:{
-            resParts
-        }
-    })
-)
-
 export const userSetData = userData => (
     store.dispatch({
         type: actionTypes.SET_USER_DATA,
@@ -58,8 +32,6 @@ export const userSetData = userData => (
 )
 
 
-
-
 export const addFoodToOrders = food => (
     store.dispatch({
         type: actionTypes.ADD_FOOD_TO_ORDERS,
@@ -68,7 +40,6 @@ export const addFoodToOrders = food => (
         }
     })
 )
-
 
 
 export const deleteFoodFromOrders = id => (
@@ -120,14 +91,6 @@ export const setTrackingId = (trackingId) =>{
     })
 }
 
-export const setMissingUserInfo = (missingUserInfo) =>{
-    store.dispatch({
-        type: actionTypes.MISSING_USER_INFO,
-        payload:{
-            missingUserInfo
-        }
-    })
-}
 
 export const setSentVCode = (sentVCode) =>{
     store.dispatch({
@@ -174,6 +137,25 @@ export const setFoodListConverted = (foodListConverted) =>{
         type: actionTypes.SET_FOOD_LIST_CONVERTED,
         payload:{
             foodListConverted
+        }
+    })
+}
+
+
+export const setFoods = (foodList) =>{
+    store.dispatch({
+        type: actionTypes.SET_RES_FOODS,
+        payload:{
+            foodList
+        }
+    })
+}
+
+export const setResInfo = (resInfo) =>{
+    store.dispatch({
+        type: actionTypes.SET_RES_INFO,
+        payload:{
+            resInfo
         }
     })
 }
@@ -239,16 +221,6 @@ export const removeClosedBanner = (bannerName) =>{
         type: actionTypes.REMOVE_CLOSED_BANNER,
         payload:{
             bannerName
-        }
-    })
-}
-
-
-export const setResEnglishName = (resEnglishName) =>{
-    store.dispatch({
-        type: actionTypes.SET_RES_ENGLISH_NAME,
-        payload:{
-            resEnglishName
         }
     })
 }

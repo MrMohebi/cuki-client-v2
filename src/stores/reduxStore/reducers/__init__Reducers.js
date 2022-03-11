@@ -1,11 +1,10 @@
 export const __init__RestaurantInfo = {
     englishName:"",
     foods: [],
+    info: [],
     assets: [],
     comments: [],
     allTableList: [],
-    restaurantInfo: [],
-    reservedTableList: [],
     foodListConverted:{},
     resParts:[],
 }

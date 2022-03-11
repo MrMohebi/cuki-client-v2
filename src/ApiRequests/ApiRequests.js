@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import getReduxStore from "../stores/reduxStore/getRedux";
-import * as ls from "../stores/localStorage/localStorage"
 import getComName from "../functions/getComName";
 import * as adaptors from "./Adaptors";
 
@@ -39,7 +38,6 @@ export const getRestaurantInfo = (callbackFunction)=>{
     $.post(BASE_API_URL_CUKIM_V1+ "getResInfo" ,{resEnglishName:getComName()}).then(res=>{
         res = (res !== undefined && res !== null) ? res : {}
         if(res.statusCode === 200){
-            ls.setLSResInfo(res.data)
             document.title = res.data.englishName;
             document.getElementById('app-name').name = res.data.englishName
             document.getElementById('favicon').href = res.data['favicon_link']
